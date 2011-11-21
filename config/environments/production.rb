@@ -57,4 +57,7 @@ Dice::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  # Requirement of Devise Gem Installation (Dustin)
+  config.action_mailer.default_url_options = { :host => 'domain here' }
 end
