@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
       if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["user_hash"]
         user.email = data["email"]
       end
+      logger.info session["devise.twitter_data"]
+      if data = session["devise.twitter_data"] && session["devise.twitter_data"]["extra"]["user_hash"]
+        user.email = data["email"]
+      end
     end
   end
 end
