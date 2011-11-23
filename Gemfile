@@ -6,11 +6,15 @@ gem 'rails', '3.1.2'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'activerecord-postgresql-adapter'
 gem 'devise'
 gem 'json'
 gem "omniauth-facebook"
 gem "omniauth-twitter"
+
+group :production do
+  # gems specifically for Heroku go here
+  gem "pg"
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
