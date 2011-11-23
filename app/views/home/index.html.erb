@@ -1,6 +1,8 @@
 <h1>Home#index</h1>
 <p>Find me in app/views/home/index.html.erb</p>
 
+<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+
 <% if user_signed_in? %>
   You are signed in as <%= current_user.email %>. <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>.
 <% else %>
