@@ -29,6 +29,7 @@ GEM
       activesupport (= 3.1.2)
     activesupport (3.1.2)
       multi_json (~> 1.0)
+    addressable (2.2.6)
     arel (2.2.1)
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
@@ -46,6 +47,11 @@ GEM
     erubis (2.7.0)
     execjs (1.2.9)
       multi_json (~> 1.0)
+    faraday (0.7.5)
+      addressable (~> 2.2.6)
+      multipart-post (~> 1.1.3)
+      rack (>= 1.1.0, < 2)
+    hashie (1.2.0)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.18)
@@ -58,6 +64,24 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.17.2)
     multi_json (1.0.3)
+    multipart-post (1.1.3)
+    oauth (0.4.5)
+    oauth2 (0.5.1)
+      faraday (~> 0.7.4)
+      multi_json (~> 1.0.3)
+    omniauth (1.0.0)
+      hashie (~> 1.2)
+      rack
+    omniauth-facebook (1.0.0)
+      omniauth-oauth2 (~> 1.0.0)
+    omniauth-oauth (1.0.0)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-oauth2 (1.0.0)
+      oauth2 (~> 0.5.0)
+      omniauth (~> 1.0)
+    omniauth-twitter (0.0.6)
+      omniauth-oauth (~> 1.0)
     orm_adapter (0.0.5)
     polyglot (0.3.3)
     rack (1.3.5)
@@ -118,6 +142,8 @@ DEPENDENCIES
   devise
   jquery-rails
   json
+  omniauth-facebook
+  omniauth-twitter
   rails (= 3.1.2)
   sass-rails (~> 3.1.5.rc.2)
   sqlite3
