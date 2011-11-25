@@ -8,9 +8,6 @@ class HomeController < ApplicationController
 
       Pusher['home'].trigger('new_chat_line', @update)
 
-      render :update do |page|
-        page[:entry].clear
-        page[:entry].focus
-      end
+      render :text=>"Success", :status=>200
   end
 end
