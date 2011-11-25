@@ -7,6 +7,79 @@
   <%= yield :javascript_includes %>
 
   <%= csrf_meta_tags %>
+
+<style type="text/css" media="screen">
+* {
+font-family: Georgia;
+}
+a {
+color: #000;
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+div.bordered {
+margin: 0 auto;
+padding: 20px;
+border: 10px solid #ddd;
+-webkit-border-radius: 20px;
+}
+div#chat_window {
+overflow-y: scroll;
+height: 400px;
+padding:10px;
+}
+div#chat_window ul {
+list-style: none;
+padding: 0;
+margin: 0;
+text-align: left;
+}
+div#chat_window li {
+line-height: 20px;
+}
+div#chat_window li span.user {
+color: #ff9900;
+}
+div#chat_window li span.user.self {
+color: #aa2211;
+}
+div#chat_window li span.time {
+float: right;
+margin-right: 5px;
+color: #aaa;
+font-family: "Courier New";
+font-size: 12px;
+}
+div#chat_window li.control {
+text-align: center;
+}
+div#chat_window li.control span.message {
+color: #aaa;
+}
+.input {
+padding:5px;
+-webkit-border-radius: 3px;
+font-size: 1.2em;
+}
+
+      .common_button {
+        -moz-border-radius:5px;
+        -webkit-border-radius:5px;
+        border:1px solid #ADADAD;
+        background-color:#f1eeee;
+        font-weight:bold;
+        font-size: 1em;
+        padding:4px 15px;
+        margin-top:10px;
+
+        color: #333;
+        cursor: pointer;
+      }
+
+      .common_button:hover { background-color:#dcd9d9; }
+</style>
 </head>
 <body>
 
