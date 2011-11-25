@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username
   
+  validates_presence_of :email
+  validates_uniqueness_of :email
+  validates_presence_of :username
+  validates_uniqueness_of :username
   
   def self.find_for_oauth(access_token, signed_in_resource=nil)
     logger.info access_token
