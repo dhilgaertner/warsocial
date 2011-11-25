@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
     puts "hello"
     puts data.email
     puts data.username
+    puts data.attributes
     if user = User.find_by_email(data.email)
       user
     else # Create a user with a stub password. 
