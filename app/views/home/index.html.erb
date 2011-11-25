@@ -18,19 +18,22 @@
   </script>
 <% end %>
 
-<% form_tag url_for(:controller => 'home', :action => :add_line) do %>
-  Message: <%= text_field_tag( 'entry','', { :size => 70, :id => 'entry', :class => "input"} ) %>
-  <%= submit_tag "Say Something", :class => "common_button" %>
-<% end %>
-<br />
-<div id="chat_window" class="bordered">
-  <ul id="chat_list">
-  </ul>
-</div>
+
 
 <% if user_signed_in? %>
-  You are signed in as <%= current_user.username %>. <br />
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>.
+  	You are signed in as <%= current_user.username %>. <br />
+  	<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>.
+
+	<%= form_tag(add_line_home_index_path, :method=>'get') do %>
+  		Message: <%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
+  		<%= submit_tag "Say Something", { :class => "common_button" } %>
+	<% end %>
+
+	<br />
+	<div id="chat_window" class="bordered">
+  		<ul id="chat_list">
+  		</ul>
+	</div>
 <% else %>
   	<%= form_for @user, :url => user_session_path do |f| %>
   	<div><%= f.label :email %><br />
