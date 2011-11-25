@@ -13,6 +13,7 @@
     var pusher = new Pusher('f85901afd3e9eaff226f');
     var channel = pusher.subscribe('home');
     channel.bind('new_chat_line', function(data) {
+	  alert(data);
       Element.insert("chat_list", { top: data.name+": "+data.entry+"<br />" })
     });
   </script>
