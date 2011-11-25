@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
     if user = User.find_by_email(data.email)
       user
     else # Create a user with a stub password. 
-      User.create!(:email => data.email, :password => Devise.friendly_token[0,20]) 
+      User.create!(:email => data.email, :username => data.username, :password => Devise.friendly_token[0,20]) 
     end
   end
   
@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
     super.tap do |user|
       if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["user_hash"]
         user.email = data["email"]
+        user.username = data["username"]
       end
       logger.info session["devise.twitter_data"]
       if data = session["devise.twitter_data"] && session["devise.twitter_data"]["extra"]["user_hash"]
