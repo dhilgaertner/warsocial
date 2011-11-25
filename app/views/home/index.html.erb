@@ -18,7 +18,7 @@
   </script>
 <% end %>
 
-<% form_tag url_for(:controller => 'home', :action => :add_line), { :remote => true } do %>
+<% form_tag { url_for(:controller => 'home', :action => :add_line) }, { :remote => true } do %>
   Message: <%= text_field_tag( 'entry','', { :size => 70, :id => 'entry', :class => "input"} ) %>
   <%= submit_tag "Say Something", :class => "common_button" %>
 <% end %>
