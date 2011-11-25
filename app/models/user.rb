@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
     logger.info access_token
     
     data = access_token.extra.raw_info
-    puts data.inspect
+    puts access_token.inspect
     if user = User.find_by_email(data.email)
       user
     else # Create a user with a stub password. 
