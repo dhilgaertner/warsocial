@@ -18,7 +18,15 @@
   </script>
 <% end %>
 
-
+<% form_tag url_for(:controller => 'home', :action => :add_line), :remote => true do %>
+  Message: <%= text_field_tag( 'entry','', { :size => 70, :id => 'entry', :class => "input"} ) %>
+  <%= submit_tag "Say Something", :class => "common_button" %>
+<% end %>
+<br />
+<div id="chat_window" class="bordered">
+  <ul id="chat_list">
+  </ul>
+</div>
 
 <% if user_signed_in? %>
   You are signed in as <%= current_user.username %>. <br />
