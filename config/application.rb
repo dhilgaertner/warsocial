@@ -42,6 +42,9 @@ module Dice
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Part of admin_data install (Dustin)
+    config.assets.precompile += ['admin_data.css', 'admin_data.js']
+    
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     

@@ -10,6 +10,7 @@ gem 'devise'
 gem 'json'
 gem "omniauth-facebook"
 gem "omniauth-twitter"
+gem 'admin_data', '>= 1.1.16'
 
 group :production do
   # gems specifically for Heroku go here
