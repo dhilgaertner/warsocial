@@ -19,54 +19,149 @@
 		var user = <%= !current_user.nil? %>;
 
 		if (user) {
-			var stage = new Kinetic.Stage("container", 578, 200);
+			var stage = new Kinetic.Stage("container", 700, 500);
+			var size = 25;
+			/*for (row=0;row<1;row++) { //19
+				for (col=0;col<27;col++) { //27
+					(function(){
+						var c = col;
+						var r = row;
+						var block = new Kinetic.Shape(function(color){
+						    var context = this.getContext();
+							context.rect(13 + (c * size), 12 + (r * size), size, size);
+							context.lineWidth = 1;
+							context.strokeStyle = "black";
+							context.fillStyle = color;
+							//context.shadowColor = "#bbbbbb";
+							//context.shadowBlur = 20;
+							//context.shadowOffsetX = 5;
+							//context.shadowOffsetY = 5;
+							context.fill();
+							context.stroke();
+						});
+					
+						block.addEventListener("click", function(){
+							block.color = block.color == "yellow" ? "#00D2FF" : "yellow";
+						    block.draw(block.color);
+						});
 
-	   		var triangle = new Kinetic.Shape(function(color){
-			    var context = this.getContext();
-			    context.beginPath();
-			    context.lineWidth = 4;
-			    context.strokeStyle = "black";
-			    context.fillStyle = color;
-			    context.moveTo(120, 50);
-			    context.lineTo(250, 80);
-			    context.lineTo(150, 170);
-			    context.closePath();
-			    context.fill();
-			    context.stroke();
-			});
+						// add custom property
+						block.color = "#00D2FF";
 
-			triangle.addEventListener("click", function(){
-			    triangle.color = triangle.color == "yellow" ? "#00D2FF" : "yellow";
-			    triangle.draw(triangle.color);
-			});
+						stage.add(block);
+						block.draw(block.color);
+					}());
+				}
+			}*/
+			
+			var left = 13;
+			var top = 12;
+			var size = 25;
+			var map = [
+				[
+					{x: 0, y: 0},
+					{x: 3, y: 0},
+					{x: 3, y: 1},
+					{x: 4, y: 1},
+					{x: 4, y: 3},
+					{x: 3, y: 3},
+					{x: 3, y: 2},
+					{x: 2, y: 2},
+					{x: 2, y: 4},
+					{x: 1, y: 4},
+					{x: 1, y: 3},
+					{x: 0, y: 3} 
+				],
+				[
+					{x: 0, y: 3},
+					{x: 1, y: 3},
+					{x: 1, y: 4},
+					{x: 2, y: 4},
+					{x: 2, y: 5},
+					{x: 1, y: 5},
+					{x: 1, y: 6},
+					{x: 2, y: 6},
+					{x: 2, y: 7},
+					{x: 0, y: 7}
+				],
+				[
+					{x: 4, y: 2},
+					{x: 5, y: 2},
+					{x: 5, y: 1},
+					{x: 6, y: 1},
+					{x: 6, y: 4},
+					{x: 3, y: 4},
+					{x: 3, y: 3},
+					{x: 4, y: 3}
+				],
+				[
+					{x: 2, y: 2},
+					{x: 3, y: 2},
+					{x: 3, y: 4},
+					{x: 4, y: 4},
+					{x: 4, y: 5},
+					{x: 3, y: 5},
+					{x: 3, y: 6},
+					{x: 3, y: 6},
+					{x: 1, y: 6},
+					{x: 1, y: 5},
+					{x: 2, y: 5}
+				],
+				[
+					{x: 4, y: 4},
+					{x: 5, y: 4},
+					{x: 5, y: 6},
+					{x: 6, y: 6},
+					{x: 6, y: 7},
+					{x: 5, y: 7},
+					{x: 5, y: 8},
+					{x: 5, y: 8},
+					{x: 3, y: 8},
+					{x: 3, y: 7},
+					{x: 2, y: 7},
+					{x: 2, y: 6},
+					{x: 3, y: 6},
+					{x: 3, y: 5},
+					{x: 4, y: 5}
+				]
+			];
+			var colors = ["red", "silver", "green", "yellow", "orange"];
+			
+			for (x=0;x<map.length;x++) {
+				(function(){
+					var l = x;
+					var land = map[l];
+					var block = new Kinetic.Shape(function(color){
+						var context = this.getContext();
+						context.beginPath();
+		                context.lineWidth = 1;
+		                context.strokeStyle = "black";
+		                context.fillStyle = color;
+		                context.moveTo(left + (land[0].x * size), top + (land[0].y * size));
+						for (y=1;y<land.length;y++) {
+							context.lineTo(left + (land[y].x * size), top + (land[y].y * size));
+						}
+		                context.closePath();
+						//context.shadowColor = "#bbbbbb";
+						//context.shadowBlur = 20;
+						//context.shadowOffsetX = 5;
+						//context.shadowOffsetY = 5;
+		                context.fill();
+		                context.stroke();
+					});
 
-			// add custom property
-			triangle.color = "#00D2FF";
+					block.addEventListener("click", function(){
+						block.color = block.color == "yellow" ? "#00D2FF" : "yellow";
+					    block.draw(block.color);
+					});
+					
+					// add custom property
+					block.color = colors[l];
 
-			stage.add(triangle);
-			triangle.draw(triangle.color);
-
-			var circle = new Kinetic.Shape(function(color){
-			    var canvas = this.getCanvas();
-			    var context = this.getContext();
-			    context.beginPath();
-			    context.arc(380, canvas.height / 2, 70, 0, Math.PI * 2, true);
-			    context.fillStyle = color;
-			    context.fill();
-			    context.lineWidth = 4;
-			    context.stroke();
-			});
-
-			circle.addEventListener("click", function(){
-			    circle.color = circle.color == "red" ? "#00d00f" : "red";
-			    circle.draw(circle.color);
-			});
-
-			// add custom property
-			circle.color = "red";
-
-			stage.add(circle);
-			circle.draw(circle.color);
+					stage.add(block);
+					block.draw(block.color);
+				}());
+			}
 		}
 	});
   </script>
@@ -75,22 +170,21 @@
 
 
 <% if user_signed_in? %>
-  	You are signed in as <%= current_user.username %>. <br />
-  	<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>.
+  	You are signed in as <%= current_user.username %>. <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>.
 
-	<div id="container" style="width: 578px; height:200px">
+	<div id="container" style="margin-right:auto;margin-left:auto;width:700px; height:500px; border:1px solid black;">
 	</div>
-
-	<%= form_tag(add_line_home_index_path, :method=>'get', :remote=>true) do %>
-  		Message: <%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
-  		<%= submit_tag "Say Something", { :class => "common_button" } %>
-	<% end %>
-
-	<br />
 	<div id="chat_window" class="bordered">
   		<ul id="chat_list">
   		</ul>
 	</div>
+	
+	<center>
+	<%= form_tag(add_line_home_index_path, :method=>'get', :remote=>true) do %>
+		<%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
+		<%= submit_tag "Send", { :class => "common_button" } %>
+	<% end %>
+	</center>
 <% else %>
   	<%= form_for @user, :url => user_session_path do |f| %>
   	<div><%= f.label :email %><br />
