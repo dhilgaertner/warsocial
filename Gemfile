@@ -12,6 +12,7 @@ gem "omniauth-facebook"
 gem "omniauth-twitter"
 gem 'admin_data', '>= 1.1.16'
 gem 'pusher'
+gem 'delayed_job'
 
 group :production do
   # gems specifically for Heroku go here
