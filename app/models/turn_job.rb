@@ -18,7 +18,7 @@ class TurnJob < Struct.new(:channel)
     cur_player.save
     next_player.save
     
-    @url = URI.parse('http://localhost:3000/home/force_end_turn')
+    @url = URI.parse('/home/force_end_turn')
     @req = Net::HTTP::Get.new(@url.path)
     @res = Net::HTTP.start(@url.host, @url.port) {|http|
       http.request(@req)
