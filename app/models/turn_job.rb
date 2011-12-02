@@ -18,7 +18,7 @@ class TurnJob < Struct.new(:channel)
     cur_player.save
     next_player.save
     
-    base_url = Rails.env.production? ? "http://localhost:3000/" : "http://www.warsocial.com/"
+    base_url = Rails.env.production? ? "http://www.warsocial.com/" : "http://localhost:3000/"
     
     url = URI.join(base_url,'home/force_end_turn')
     req = Net::HTTP::Get.new(url.path)
