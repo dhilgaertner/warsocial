@@ -51,6 +51,24 @@ class Game < ActiveRecord::Base
     end
   end
   
+  # Attack
+  def attack(user)
+    player = self.players.where("user_id = ?", user.id).first
+    
+    if (player != nil && player.is_turn == true)
+      old_job = Delayed::Job.find(self.turn_timer_id)
+    
+      if old_job != nil
+        old_job.destroy
+        new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
+        self.turn_timer_id = new_job.id
+        self.save
+      
+        Pusher[self.name].trigger(MsgType::CHATLINE, {:entry => "Attack! (turn timer restarted)", :name => "Server"})
+      end
+    end
+  end
+  
   # Force the end of the current players turn
   def force_end_turn
     new_player = Player.where("game_id = ? AND is_turn = ?", self.id, true).first
