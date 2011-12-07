@@ -30,6 +30,8 @@ rails_admin/colorpicker/custom_rgb_b.png: rails_admin/colorpicker/custom_rgb_b-5
 rails_admin/colorpicker/custom_background.png: rails_admin/colorpicker/custom_background-71b3873cf6d5aca72339550beffd4fe7.png
 rails_admin/bullet_white.png: rails_admin/bullet_white-dce5f02c1b24a16fb197eb214fe10ec4.png
 application.css: application-95bd4fe1de99c1cd91ec8e6f348a44bd.css
+rails_admin/rails_admin.css: rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css
+rails_admin/rails_admin.js: rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js
 rails_admin/multiselect/ui-icon-circle-triangle-s-light.png: rails_admin/multiselect/ui-icon-circle-triangle-s-light-70f49f9affb497320b7926cbe197b8d8.png
 rails_admin/multiselect/ui-icon-circle-triangle-s-dark.png: rails_admin/multiselect/ui-icon-circle-triangle-s-dark-ccecd94c00cfaf503239d9dcb8e3ea81.png
 rails_admin/logo.png: rails_admin/logo-ad8e79e169f8b7bf180d263c5ad94aee.png
