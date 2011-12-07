@@ -10,7 +10,6 @@ gem 'devise'
 gem 'json'
 gem "omniauth-facebook"
 gem "omniauth-twitter"
-gem 'admin_data', '>= 1.1.16'
 gem 'pusher'
 gem 'delayed_job'
 gem 'fastercsv' # Only required on Ruby 1.8 and below

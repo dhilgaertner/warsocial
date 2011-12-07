@@ -56,8 +56,6 @@ GEM
     activesupport (3.1.2)
       multi_json (~> 1.0)
     addressable (2.2.6)
-    admin_data (1.1.16)
-      will_paginate (>= 3.0.0)
     arel (2.2.1)
     bbenezech-nested_form (0.0.2)
     bcrypt-ruby (3.0.1)
@@ -191,13 +189,11 @@ GEM
       multi_json (>= 1.0.2)
     warden (1.1.0)
       rack (>= 1.0)
-    will_paginate (3.0.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  admin_data (>= 1.1.16)
   cancan
   coffee-rails (~> 3.1.1)
   delayed_job
