@@ -1,12 +1,5 @@
 Dice::Application.routes.draw do
-  
-
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
-
-  devise_for :users
-
-  
-
   mount Forem::Engine, :at => "/forums"
   get "home/index"
 
