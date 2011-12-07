@@ -5,3 +5,30 @@
  *= require_self
  *= require_tree . 
 */
+
+body{
+  font: 12pt Helvetica;
+  color: $default-text;
+  margin-left: 20%;
+  margin-right: 20%;
+  background: #ddd;
+}
+
+a {
+  color: #0074FF;
+}
+
+form {
+  label {
+    display: block;
+    font-size: 80%;
+    padding: 5px;
+    abbr {
+      display: none;
+    }
+  }
+  input, textarea {
+    padding: .5em;
+    font-size: 110%;
+  }
+}

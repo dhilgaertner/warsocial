@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/radar/forem-theme-base.git
+  revision: 4de607b0524fced1d44c04eed68b9d1db4fe8744
+  specs:
+    forem-theme-base (0.0.1)
+
+GIT
   remote: git://github.com/radar/forem.git
   revision: 629406fdb30a86c677176293186b89ead820f3cd
   specs:
@@ -200,6 +206,7 @@ DEPENDENCIES
   devise
   fastercsv
   forem!
+  forem-theme-base!
   jquery-rails
   json
   omniauth-facebook
