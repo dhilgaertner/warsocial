@@ -44,7 +44,7 @@ module Dice
 
     # Part of admin_data install (Dustin)
     #config.assets.precompile += ['admin_data.css', 'admin_data.js']
-    config.assets.precompile += %w(... rails_admin/rails_admin.js rails_admin/rails_admin.css)
+    config.assets.precompile += ['rails_admin/rails_admin.js', 'rails_admin/rails_admin.css']
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     
