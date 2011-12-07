@@ -1,0 +1,24 @@
+<%= render :partial => 'forem/forums/head', :locals => { :forum => @forum } %>
+
+<% if @topics.num_pages > 1 %>
+  <div class='pages'>
+    <%= t('forem.common.pages') -%>: <%= forem_paginate @topics %>
+  </div>
+<% end %>
+<table class='topics subdued' cellspacing='0'>
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= t('forem.topic.headings.topic') -%></th>
+      <th><%= t('forem.topic.headings.latest') -%></th>
+      <th><%= t('forem.topic.headings.posts') -%></th>
+      <th><%= t('forem.topic.headings.views') -%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @topics.empty? %>
+      <tr><td colspan='5' align='center'><%= t('forem.topic.none') %></td></tr>
+    <% end %>
+    <%= render @topics %>
+  </tbody>
+</table>

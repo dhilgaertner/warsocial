@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   end
 
   def add_line
-    Pusher['home'].trigger(MsgType::CHATLINE, {:entry => params[:entry], :name => current_user.username})
+    Pusher['home'].trigger(GameMsgType::CHATLINE, {:entry => params[:entry], :name => current_user.username})
 
     case params[:entry]
       when "sit"

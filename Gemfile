@@ -13,6 +13,10 @@ gem "omniauth-twitter"
 gem 'admin_data', '>= 1.1.16'
 gem 'pusher'
 gem 'delayed_job'
+gem 'fastercsv' # Only required on Ruby 1.8 and below
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem "cancan"
+gem 'forem', :git => "git://github.com/radar/forem.git"
 
 group :production do
   # gems specifically for Heroku go here

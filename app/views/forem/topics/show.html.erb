@@ -1,0 +1,22 @@
+<div id='topic' class='<%= 'un' unless @topic.locked? %>locked'>
+  <%= render :partial => 'forem/topics/head', :locals => { :topic => @topic } %>
+
+  <menu>
+    <% if @topic.can_be_replied_to? && can?(:reply, @topic) %>
+      <%= link_to t(".reply"), new_topic_post_path(@topic) %>
+    <% end %>
+    <% if @topic.user == forem_user || forem_admin? %>
+      <%= link_to t(".delete"), forum_topic_path(@forum, @topic), :method => :delete, :confirm => t("are_you_sure") %>
+    <% end %>
+  </menu>
+
+  <% if forem_admin? %>
+    <%= link_to t(".hide.#{@topic.hidden}"), toggle_hide_admin_topic_path(@topic), :method => :put %> | 
+    <%= link_to t(".lock.#{@topic.locked}"), toggle_lock_admin_topic_path(@topic), :method => :put %> |
+    <%= link_to t(".pin.#{@topic.pinned}"), toggle_pin_admin_topic_path(@topic), :method => :put %>
+  <% end %>
+  <%= forem_paginate @posts %>
+  <div id='posts'>
+    <%= render :partial => "forem/posts/post", :collection => @posts %>
+  </div>
+</div>

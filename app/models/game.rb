@@ -29,7 +29,7 @@ class Game < ActiveRecord::Base
       seat = self.players.size + 1
       new_player = self.players.create(:user => user, :seat_number => seat, :is_turn => false)
       
-      Pusher[self.name].trigger(MsgType::CHATLINE, {:entry => "#{seat} player(s) seated.", :name => "Server"})
+      Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{seat} player(s) seated.", :name => "Server"})
       
       if self.players.size == 2 
         job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
@@ -41,8 +41,8 @@ class Game < ActiveRecord::Base
         player.is_turn = true;
         player.save
         
-        Pusher[self.name].trigger(MsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
-        Pusher[self.name].trigger(MsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
+        Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
+        Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
       end
       
       return new_player
@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
         self.turn_timer_id = new_job.id
         self.save
       
-        Pusher[self.name].trigger(MsgType::CHATLINE, {:entry => "Attack! (turn timer restarted)", :name => "Server"})
+        Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Attack! (turn timer restarted)", :name => "Server"})
       end
     end
   end
@@ -76,7 +76,7 @@ class Game < ActiveRecord::Base
     self.turn_timer_id = job.id
     self.save
     
-    Pusher[self.name].trigger(MsgType::CHATLINE, {:entry => "Turn Forfeit", :name => "Server"})
-    Pusher[self.name].trigger(MsgType::CHATLINE, {:entry => "#{new_player.user.username}'s turn has started.", :name => "Server"})
+    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Turn Forfeit", :name => "Server"})
+    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{new_player.user.username}'s turn has started.", :name => "Server"})
   end
 end
