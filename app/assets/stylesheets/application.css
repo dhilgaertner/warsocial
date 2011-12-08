@@ -6,6 +6,8 @@
  *= require_tree . 
 */
 
+$default-text: #444;
+
 body{
   font: 12pt Helvetica;
   color: $default-text;

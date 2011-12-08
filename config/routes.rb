@@ -12,10 +12,13 @@ Dice::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
   
+  match 'game/:game_name/' => 'home#index'
+  match 'game/:game_name/fet/:auth' => 'home#force_end_turn'
+  
   resources :home do
     collection do
       get :add_line, :as => :add_line
-      get :force_end_turn, :as => :force_end_turn
+  #    get :force_end_turn, :as => :force_end_turn
     end   
   end
   

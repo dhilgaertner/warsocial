@@ -11,10 +11,13 @@
 	    WEB_SOCKET_DEBUG = true;
 
 	    var pusher = new Pusher('f85901afd3e9eaff226f');
-	    var channel = pusher.subscribe('home');
+	    var channel = pusher.subscribe("<%= @game.name %>");
 	    channel.bind('new_chat_line', function(data) {
 		  	$('#chat_list').append($('<li>' + data.name + ': ' + data.entry + '</li>'));
 	    });
+	
+		WSClient.init();
+		initTestData();
 	});
   </script>
 <% end %>
@@ -22,6 +25,9 @@
 <% if user_signed_in? %>
   	You are signed in as <%= current_user.username %>. 
 	<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>.
+	
+	<!-- you can take that style declaration out, I just want a border there for testing purposes -->
+	<canvas id='gameboard' width=600 height=400 style="border: 1px solid black">If you don't see anything here, you are using a browser that does not support the HTML5 canvas element. Please use a browser that does support HTML5 to view this site.</canvas>
 
 	<div id="chat_window" class="bordered">
   		<ul id="chat_list">
@@ -30,6 +36,7 @@
 	
 	<center>
 	<%= form_tag(add_line_home_index_path, :method=>'get', :remote=>true) do %>
+		<%= hidden_field_tag 'game_name', @game.name %>
 		<%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
 		<%= submit_tag "Send", { :class => "common_button" } %>
 	<% end %>
