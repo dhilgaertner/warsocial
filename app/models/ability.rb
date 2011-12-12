@@ -26,10 +26,11 @@ class Ability
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
     
     user ||= User.new # guest user (not logged in)
-    #if user.admin?
+    if user.admin?
+      can :access, :rails_admin
       can :manage, :all
-    #else
-    #  can :read, :all
-    #end
+    else
+      can :manage, :all
+    end
   end
 end

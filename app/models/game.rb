@@ -79,4 +79,22 @@ class Game < ActiveRecord::Base
     Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Turn Forfeit", :name => "Server"})
     Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{new_player.user.username}'s turn has started.", :name => "Server"})
   end
+  
+  # Check whether or not the land is owned by the player
+  private
+  def does_player_own_land?(player, land)
+    
+  end
+  
+  # Check whether or not the lands are connected
+  private
+  def is_land_connected?(land1, land2)
+    
+  end
+  
+  # Get random roll results
+  private
+  def roll(num_dice)
+    num_dice.times.map{ 1+Random.rand(6) } 
+  end
 end

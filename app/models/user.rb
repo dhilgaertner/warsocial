@@ -1,13 +1,6 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -18,6 +11,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_presence_of :username
   validates_uniqueness_of :username
+  
+  def admin?
+    self.forem_admin?
+  end
   
   def self.find_for_oauth(access_token, signed_in_resource=nil)
     logger.info access_token
