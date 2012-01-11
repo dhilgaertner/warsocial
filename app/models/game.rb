@@ -43,6 +43,7 @@ class Game < ActiveRecord::Base
         
         Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
         Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
+        Pusher[self.name].trigger(GameMsgType::START, self.start_game)
       end
       
       return new_player
@@ -78,6 +79,12 @@ class Game < ActiveRecord::Base
     
     Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Turn Forfeit", :name => "Server"})
     Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{new_player.user.username}'s turn has started.", :name => "Server"})
+  end
+  
+  # Start Game
+  private
+  def start_game
+    
   end
   
   # Check whether or not the land is owned by the player

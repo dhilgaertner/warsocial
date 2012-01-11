@@ -1,5 +1,8 @@
 <% content_for :javascript_includes do %>
-  <script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+	<script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+	<script src="../../../Gameboard/ek-library.js" type="text/javascript"></script>
+	<script src="../../../Gameboard/client-test-data.js" type="text/javascript"></script>
+	<script src="../../../Gameboard/warsocial-client.js" type="text/javascript"></script>
   <script type="text/javascript">
 	$(document).ready(function() {
 	  	// Enable pusher logging - don't include this in production
@@ -9,15 +12,16 @@
 
 	    // Flash fallback logging - don't include this in production
 	    WEB_SOCKET_DEBUG = true;
-
-	    var pusher = new Pusher('f85901afd3e9eaff226f');
+			var pusher = new Pusher('f85901afd3e9eaff226f');
 	    var channel = pusher.subscribe("<%= @game.name %>");
 	    channel.bind('new_chat_line', function(data) {
 		  	$('#chat_list').append($('<li>' + data.name + ': ' + data.entry + '</li>'));
 	    });
 	
-		WSClient.init();
-		initTestData();
+			var terr = <%= @map.json %>;
+		
+			WSClient.init();
+			initTestData(terr);
 	});
   </script>
 <% end %>

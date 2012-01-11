@@ -3,6 +3,7 @@ class HomeController < ApplicationController
     @user = User.new(params[:user])
     name = params[:game_name] == nil ? "home" : params[:game_name]
     @game = Game.get_game(name)
+    @map = Map.first
   end
 
   def add_line

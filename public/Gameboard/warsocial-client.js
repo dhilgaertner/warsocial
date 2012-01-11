@@ -4,7 +4,7 @@
 var WSClient = new Object();
 
 //debug mode constants
-WSClient.USE_DEBUG_GRID = true;
+WSClient.USE_DEBUG_GRID = false;
 
 //bunch o' constants
 WSClient.GRID_TO_CANVAS = 15; //the scale used; 1 grid cell is this many pixels
@@ -14,21 +14,21 @@ WSClient.CORNER_CURVE_SIZE = WSClient.GRID_TO_CANVAS/5; //this determines how la
 //this happens when the body of the page is loaded
 WSClient.init = function() {
 	//we're going to be doing a LOT of work with the canvas, so may as well store it
-	this.canvas = document.getElementById('gameboard');
-	this.ctx = this.canvas.getContext('2d'); //ditto for the 2D drawing context
+	this.canvas = $("#gameboard");
+	this.ctx = this.canvas[0].getContext('2d'); //ditto for the 2D drawing context
 	
 	//initialize the grid that handles click-to-territory conversions (important!)
 	this.grid = [];
-	for (var i = 0; i < this.canvas.width / WSClient.GRID_TO_CANVAS; i++)
+	for (var i = 0; i < this.canvas[0].width / WSClient.GRID_TO_CANVAS; i++)
 	{
 		this.grid[i] = [];
-		for (var j = 0; j < this.canvas.height / WSClient.GRID_TO_CANVAS; j++)
+		for (var j = 0; j < this.canvas[0].height / WSClient.GRID_TO_CANVAS; j++)
 		{
 			this.grid[i][j] = null;
 		}
 	}
 	
-	this.canvas.onclick = function(e) { WSClient.handleClick(e) };
+	this.canvas.click(function(e){ WSClient.handleClick(e) });
 	
 	//a list of the territories on the game board (not actually ordered, but an array is handy
 	this.terr = []; //"territory" is long, I'd rather just type "terr"
@@ -38,6 +38,13 @@ WSClient.init = function() {
 
 //takes a territory in either JSON or object format
 WSClient.addTerritory = function(terrData) {
+	//check whether we need to parse JSON, or if we got an actual object
+	var territory = typeof terrData == 'string' ? JSON.parse(terrData) : terrData;
+	
+	this.terr.push(new WSTerritory(territory.points));
+}
+
+WSClient.addDeployments = function(terrColors) {
 	//check whether we need to parse JSON, or if we got an actual object
 	var territory = typeof terrData == 'string' ? JSON.parse(terrData) : terrData;
 	
@@ -74,8 +81,8 @@ WSClient.initializeGrid = function() {
 
 
 WSClient.handleClick = function(e) {
-	var x = Math.floor(e.offsetX / WSClient.GRID_TO_CANVAS);
-	var y = Math.floor(e.offsetY / WSClient.GRID_TO_CANVAS);
+	var x = Math.floor((e.clientX - this.canvas.offset().left) / WSClient.GRID_TO_CANVAS);
+	var y = Math.floor((e.clientY - this.canvas.offset().top) / WSClient.GRID_TO_CANVAS);
 	
 	this.selectedTerr = this.grid[x][y];
 	
@@ -83,7 +90,7 @@ WSClient.handleClick = function(e) {
 }
 
 WSClient.drawBoard = function() {
-	this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+	this.ctx.clearRect(0,0,this.canvas[0].width, this.canvas[0].height);
 	for (var i = 0; i < this.terr.length; i++)
 	{
 		this.terr[i].draw(this.ctx);
@@ -93,18 +100,18 @@ WSClient.drawBoard = function() {
 	{
 		this.ctx.strokeStyle = 'rgb(0,0,0)';
 		this.ctx.lineWidth = 1;
-		for (var x = 0; x < this.canvas.width; x += this.GRID_TO_CANVAS)
+		for (var x = 0; x < this.canvas[0].width; x += this.GRID_TO_CANVAS)
 		{
 			this.ctx.beginPath();
 			this.ctx.moveTo(x-0.5,0);
-			this.ctx.lineTo(x-0.5, this.canvas.height);
+			this.ctx.lineTo(x-0.5, this.canvas[0].height);
 			this.ctx.stroke();
 		}
-		for (var y = 0; y < this.canvas.height; y += this.GRID_TO_CANVAS)
+		for (var y = 0; y < this.canvas[0].height; y += this.GRID_TO_CANVAS)
 		{
 			this.ctx.beginPath();
 			this.ctx.moveTo(0,y-0.5);
-			this.ctx.lineTo(this.canvas.width, y-0.5);
+			this.ctx.lineTo(this.canvas[0].width, y-0.5);
 			this.ctx.stroke();
 		}
 	}
