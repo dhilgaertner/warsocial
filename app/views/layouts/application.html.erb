@@ -2,15 +2,27 @@
 <html>
 <head>
   <title>Dice</title>
-  <%= stylesheet_link_tag    "application" %>
+
+	<link rel="stylesheet" href="../../../css/grid960.css" type="text/css">
   <%= javascript_include_tag "application" %>
   <%= yield :javascript_includes %>
 
   <%= csrf_meta_tags %>
 
 <style type="text/css" media="screen">
+@font-face {
+	font-family: Atrament-BoldSC;
+	src: url('/Atrament/Atrament-7-BoldSC.otf');
+}
+
+body { 
+  background: #dbdbdb url(<%=image_path "background.png"%>);
+  background-position: center;
+	background-repeat: no-repeat;
+	margin: 0px;
+}
 * {
-font-family: Georgia;
+font-family: Arial;
 }
 a {
 color: #000;
@@ -19,44 +31,68 @@ text-decoration: none;
 a:hover {
 text-decoration: underline;
 }
+
+div#wrapper {
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div#footer {
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div#side-bar {
+	background: white url(<%=image_path "sidepattern.png"%>);
+	background-position: center;
+	background-repeat: repeat-y;
+	width: 190px;
+	height: 900px;
+	float:left;
+}
+
+div#side-bar .logo {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div#main-wrapper {
+	background: white url(<%=image_path "bodypattern.png"%>);
+	background-repeat: repeat;
+	width: 790px;
+	height: 900px;
+	float:left;
+}
+
+div#header {
+	width: 790px;
+	height: 130px;
+}
+
+div#header p {
+	margin-top: 10px;
+	margin-left: 17px;
+	line-height: 30px;
+	color: #3b3b3b;
+	text-shadow: 0.07em 0.07em #dbdbdb;
+	font-size: 1.7em;
+	font-family: Atrament-BoldSC;
+	width: 400px;
+	float: left;
+}
+
+div#header .button {
+	margin-top: 27px;
+	margin-left: 10px;
+	float: left;
+}
+
 div.bordered {
 margin: 0 auto;
 padding: 20px;
 border: 1px solid #ddd;
-}
-div#chat_window {
-overflow-y: scroll;
-width: 670px;
-height: 200px;
-padding:10px;
-}
-div#chat_window ul {
-list-style: none;
-padding: 0;
-margin: 0;
-text-align: left;
-}
-div#chat_window li {
-line-height: 20px;
-}
-div#chat_window li span.user {
-color: #ff9900;
-}
-div#chat_window li span.user.self {
-color: #aa2211;
-}
-div#chat_window li span.time {
-float: right;
-margin-right: 5px;
-color: #aaa;
-font-family: "Courier New";
-font-size: 12px;
-}
-div#chat_window li.control {
-text-align: center;
-}
-div#chat_window li.control span.message {
-color: #aaa;
 }
 .input {
 	width:550px;
@@ -64,27 +100,47 @@ color: #aaa;
 	-webkit-border-radius: 3px;
 	font-size: 1.2em;
 }
+.common_button {
+ -moz-border-radius:5px;
+ -webkit-border-radius:5px;
+ border:1px solid #ADADAD;
+ background-color:#f1eeee;
+ font-weight:bold;
+ font-size: 1em;
+ padding:4px 15px;
+ margin-top:10px;
 
-      .common_button {
-        -moz-border-radius:5px;
-        -webkit-border-radius:5px;
-        border:1px solid #ADADAD;
-        background-color:#f1eeee;
-        font-weight:bold;
-        font-size: 1em;
-        padding:4px 15px;
-        margin-top:10px;
+ color: #333;
+ cursor: pointer;
+}
 
-        color: #333;
-        cursor: pointer;
-      }
-
-      .common_button:hover { background-color:#dcd9d9; }
+.common_button:hover { background-color:#dcd9d9; }
 </style>
 </head>
 <body>
 
-<%= yield %>
+	<div id="wrapper">
+		<div id="side-bar">
+			<center>
+				<%=image_tag("logo.png", :class => 'logo')%>
+			</center>
+		</div>
+		<div id="main-wrapper">
+			<div id="header">
+				<p>WarSocial is a free online social strategy game similar to risk and dicewars. Try it now!</p>
+				<%= link_to image_tag("buttons/facebook_login_button.png", :border => 0), user_omniauth_authorize_path(:facebook), :class => 'button' %>
+				<%= image_tag("buttons/register_button.png", :class => 'button') %>
+				<%= image_tag("buttons/login_button.png", :class => 'button') %>
+				
+			</div>
+			<div id="content">
+				<%= yield %>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+	
+	</div>
 
 </body>
 </html>

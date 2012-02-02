@@ -38,7 +38,7 @@ class Game < ActiveRecord::Base
         self.save
         
         player = self.players.sample
-        player.is_turn = true;
+        player.is_turn = true
         player.save
         
         Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})

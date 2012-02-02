@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Dice</title>
+
+	<link rel="stylesheet" href="Dice_files/grid960.css" type="text/css">
+  <script src="Dice_files/application.js" type="text/javascript"></script>
+  	<script src="Dice_files/pusher.js" type="text/javascript"></script>
+	<script src="Dice_files/ek-library.js" type="text/javascript"></script>
+	<script src="Dice_files/client-test-data.js" type="text/javascript"></script>
+	<script src="Dice_files/warsocial-client.js" type="text/javascript"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+	  	// Enable pusher logging - don't include this in production
+	    Pusher.log = function(message) {
+	      if (window.console && window.console.log) window.console.log(message);
+	    };
+
+	    // Flash fallback logging - don't include this in production
+	    WEB_SOCKET_DEBUG = true;
+			var pusher = new Pusher('f85901afd3e9eaff226f');
+	    var channel = pusher.subscribe("home");
+	    channel.bind('new_chat_line', function(data) {
+		  	$('#chat_list').append($('<li>' + data.name + ': ' + data.entry + '</li>'));
+	    });
+	
+			var terr = [{points:[new Point(1,1),new Point(3,1),new Point(3,2),new Point(4,2),new Point(4,4),new Point(3,4),new Point(3,5),new Point(5,5),new Point(5,7),new Point(4,7),new Point(4,6),new Point(2,6),new Point(2,7),new Point(1,7)],connections:[1,2]},{points:[new Point(3,1),new Point(5,1),new Point(5,4),new Point(4,4),new Point(4,2),new Point(3,2)],connections:[0,2]},{points:[new Point(5,1),new Point(8,1),new Point(8,3),new Point(6,3),new Point(6,5),new Point(5,5)],connections:[0,1,3,4]},{points:[new Point(6,4),new Point(10,4),new Point(10,2),new Point(11,2),new Point(11,6),new Point(6,6)],connections:[2,4]},{points:[new Point(8,1),new Point(13,1),new Point(13,4),new Point(11,4),new Point(11,2),new Point(8,2)],connections:[2,3]}];
+		
+			WSClient.init();
+			initTestData(terr);
+	});
+  </script>
+
+
+  <meta content="authenticity_token" name="csrf-param">
+<meta content="LZd351yIUnik7X7JX+k9ovfFGqtG+duLXpFDplBl+vM=" name="csrf-token">
+
+<style type="text/css" media="screen">
+body { 
+  background: #dbdbdb url(/assets/background.png);
+  background-position: center;
+	background-repeat: no-repeat;
+}
+* {
+font-family: Arial;
+}
+a {
+color: #000;
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+div#side-bar {
+	background: white url(/assets/sidepattern.png);
+	background-position: center;
+	background-repeat: repeat-y;
+	height: 900px;
+}
+
+
+
+
+div.bordered {
+margin: 0 auto;
+padding: 20px;
+border: 1px solid #ddd;
+}
+div#chat_window {
+overflow-y: scroll;
+width: 670px;
+height: 200px;
+padding:10px;
+}
+div#chat_window ul {
+list-style: none;
+padding: 0;
+margin: 0;
+text-align: left;
+}
+div#chat_window li {
+line-height: 20px;
+}
+div#chat_window li span.user {
+color: #ff9900;
+}
+div#chat_window li span.user.self {
+color: #aa2211;
+}
+div#chat_window li span.time {
+float: right;
+margin-right: 5px;
+color: #aaa;
+font-family: "Courier New";
+font-size: 12px;
+}
+div#chat_window li.control {
+text-align: center;
+}
+div#chat_window li.control span.message {
+color: #aaa;
+}
+.input {
+	width:550px;
+	padding:5px;
+	-webkit-border-radius: 3px;
+	font-size: 1.2em;
+}
+
+.common_button {
+ -moz-border-radius:5px;
+ -webkit-border-radius:5px;
+ border:1px solid #ADADAD;
+ background-color:#f1eeee;
+ font-weight:bold;
+ font-size: 1em;
+ padding:4px 15px;
+ margin-top:10px;
+
+ color: #333;
+ cursor: pointer;
+}
+
+.common_button:hover { background-color:#dcd9d9; }
+</style>
+</head>
+<body>
+
+	<div class="container_12">
+		<div id="side-bar" class="grid_4">
+			
+		</div>
+		<div class="sub-wrapper">
+			<div class="side-bar">
+			
+			</div>
+			<div class="header">
+			
+			</div>
+			<div class="content">
+				
+  	<form accept-charset="UTF-8" action="/users/sign_in" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="LZd351yIUnik7X7JX+k9ovfFGqtG+duLXpFDplBl+vM=" type="hidden"></div>
+  	<div><label for="user_email">Email</label><br>
+  	<input id="user_email" name="user[email]" size="30" type="email"></div>
+  	<div><label for="user_password">Password</label><br>
+  	<input id="user_password" name="user[password]" size="30" type="password"></div>
+  	<div><input name="user[remember_me]" value="0" type="hidden"><input id="user_remember_me" name="user[remember_me]" value="1" type="checkbox"> <label for="user_remember_me">Remember me</label></div>
+  	<div><input name="commit" value="Sign in" type="submit"></div>
+</form>  	<a href="http://localhost:3000/users/auth/facebook">Sign in with Facebook</a> <br>
+
+			</div>
+		</div>
+	</div>
+	<div id="footer" class="container_12">
+	
+	</div>
+
+
+</body></html>
