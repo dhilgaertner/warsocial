@@ -18,7 +18,7 @@
 		  	$('#chat_list').append($('<li>' + data.name + ': ' + data.entry + '</li>'));
 	    });
 	
-			var terr = <%= @map.json %>;
+			var terr = "<%= @map.json %>";
 		
 			WSClient.init();
 			initTestData(terr);
