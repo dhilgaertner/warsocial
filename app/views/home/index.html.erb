@@ -8,6 +8,7 @@
 	<script src="../../../Gameboard/shared.js" type="text/javascript"></script>
 	<script src="../../../Gameboard/warsocial.js" type="text/javascript"></script>
   <script type="text/javascript">
+	var global_game_name;
 	$(document).ready(function() {
 	  	// Enable pusher logging - don't include this in production
 	    Pusher.log = function(message) {
@@ -25,7 +26,12 @@
 			channel.bind('game_start', function(data) {
 		  	init(data)
 	    });
+			
+			channel.bind('attack', function(data) {
+		  	attack(data)
+	    });
 	
+			global_game_name = "<%= @game.name %>";
 			game = null;
 			
 			init(<%= @init_data.to_json.html_safe %>);

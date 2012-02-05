@@ -15,7 +15,7 @@ function init( json ) {
 
 function attack( json ) {
     try {
-        var info = JSON.parse(json);
+        var info = json;
         if (game != undefined && game != null) game.attack(info);
     } catch(err) {
         alert(err + " json = " + json);
@@ -23,7 +23,7 @@ function attack( json ) {
 }
 
 function deploy( json ) {
-    var info = JSON.parse(json);
+    var info = json;
     if (game != undefined && game != null) game.deploy(info);
 }
 
@@ -42,14 +42,23 @@ function player_quit( id ) {
 function attack_out( attack_from, attack_to) {
     //alert("Attack out : land " + attack_from + " to " + attack_to);
     // DEMO : User attacks anyone
-    attack(get_attack_json(attack_from, attack_to));
+		
+		$.ajax({
+		  type: 'POST',
+		  url: '/game/' + global_game_name + '/attack',  //global_game_name is defined in index.html.erb
+		  data: { atk_land_id: attack_from, def_land_id: attack_to },
+		  success: function(data) {
+				
+			},
+		  dataType: 'text'
+		});
+		
+    //var json_deploy = '[' + get_json_deploy() + ']' ; // array; not json
+    //setTimeout(function() { deploy(json_deploy);}, 1500);
 
-    var json_deploy = '[' + get_json_deploy() + ']' ; // array; not json
-    setTimeout(function() { deploy(json_deploy);}, 1500);
-
-    var nextid = get_next_player();
-    setTimeout(function() { game.nextTurn(nextid);}, 2500);
-    $('textarea#jsonfeed').text("This is player " + nextid + "'s turn to play.");
+    //var nextid = get_next_player();
+    //setTimeout(function() { game.nextTurn(nextid);}, 2500);
+    //$('textarea#jsonfeed').text("This is player " + nextid + "'s turn to play.");
 }
 
 

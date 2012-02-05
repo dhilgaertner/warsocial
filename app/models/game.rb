@@ -44,20 +44,66 @@ class Game < ActiveRecord::Base
   end
   
   # Attack
-  def attack(user)
-    player = self.players.where("user_id = ?", user.id).first
+  def attack(attacking_land_id, defending_land_id)
+    lands = self.map.get_lands
     
-    if (player != nil && player.is_turn == true)
-      old_job = Delayed::Job.find(self.turn_timer_id)
-    
-      if old_job != nil
-        old_job.destroy
-        new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
-        self.turn_timer_id = new_job.id
-        self.save
+    if (lands[attacking_land_id].include?(defending_land_id))
       
-        Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Attack! (turn timer restarted)", :name => "Server"})
+      # maybe use does_player_own_land?
+      # player = self.players.where("user_id = ?", user.id).first
+
+      # if (player != nil && player.is_turn == true)
+      #   old_job = Delayed::Job.find(self.turn_timer_id)
+
+      #   if old_job != nil
+      #     old_job.destroy
+      #     new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
+      #     self.turn_timer_id = new_job.id
+      #     self.save
+
+      #     Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Attack! (turn timer restarted)", :name => "Server"})
+      #   end
+      # end
+      
+      atk_land = Land.where("game_id = ? AND map_land_id = ?", self.id, attacking_land_id).first
+      def_land = Land.where("game_id = ? AND map_land_id = ?", self.id, defending_land_id).first
+      
+      attack_results = roll(atk_land.deployment)
+      defend_results = roll(def_land.deployment)
+      
+      attack_sum = attack_results.inject{|sum,x| sum + x }
+      defend_sum = defend_results.inject{|sum,x| sum + x }
+      
+      Pusher[self.name].trigger(GameMsgType::INFO, { :attack_sum => attack_sum, :defend_sum => defend_sum })
+      
+      winner = attack_sum > defend_sum ? atk_land : def_land
+      loser = attack_sum > defend_sum ? def_land : atk_land
+      
+      Pusher[self.name].trigger(GameMsgType::INFO, { :winner_before => winner, :loser_before => loser })
+      
+      if (atk_land == winner)
+        loser.deployment = winner.deployment - 1
+        loser.player = winner.player
+        loser.save
+        
+        winner.deployment = 1
+        winner.save
+      else 
+        loser.deployment = 1
+        loser.save
       end
+      
+      Pusher[self.name].trigger(GameMsgType::INFO, { :winner_after => winner, :loser_after => loser })
+      
+      data = { :attack_info => { :attacker_land_id => attacking_land_id, 
+                                 :attacker_roll => attack_results, 
+                                 :defender_land_id => defending_land_id,
+                                 :defender_roll => defend_results 
+                               },
+               :deployment_changes => [atk_land, def_land]
+             }
+      
+      Pusher[self.name].trigger(GameMsgType::ATTACK, data)
     end
   end
   
@@ -128,6 +174,15 @@ class Game < ActiveRecord::Base
   # Get random roll results
   private
   def roll(num_dice)
-    num_dice.times.map{ 1+Random.rand(6) } 
+    num_dice.times.map{ rand_with_range(1..6) } 
+  end
+  
+  private
+  def rand_with_range(values = nil)
+    if values.respond_to? :sort_by
+      values.sort_by { rand }.first
+    else
+      rand(values)
+    end
   end
 end

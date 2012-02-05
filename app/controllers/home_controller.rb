@@ -24,18 +24,24 @@ class HomeController < ApplicationController
         else
           render :text=>"Game has already started.", :status=>500
         end
-      when "stand"
-
-      when "attack"
-        game = Game.get_game(game_name)
-    
-        if game.state == Game::STARTED_STATE
-          game.attack current_user
-        else
-          render :text=>"Game has already started.", :status=>500
-        end
     end
     render :text=>"Success", :status=>200
+  end
+  
+  def attack()
+    game_name = params[:game_name]
+    attacking_land_id = params[:atk_land_id]
+    defending_land_id = params[:def_land_id]
+    
+    game = Game.get_game(game_name)
+    
+    if game.state == Game::STARTED_STATE
+      game.attack(attacking_land_id.to_i, defending_land_id.to_i)
+      
+      render :text=>"Success", :status=>200
+    else
+      render :text=>"Game is not in started state.", :status=>500
+    end
   end
   
   def force_end_turn

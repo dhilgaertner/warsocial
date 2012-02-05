@@ -57,20 +57,32 @@ class Map < ActiveRecord::Base
           
           # now compare with left tile if exists
           if (left_tile_index != nil && tiles[t_index] != tiles[left_tile_index] && tiles[left_tile_index] != 0)
-            lands[tiles[t_index]].push(tiles[left_tile_index])
-            lands[tiles[left_tile_index]].push(tiles[t_index])
+            if (!lands[tiles[t_index]].include?(tiles[left_tile_index]))
+              lands[tiles[t_index]].push(tiles[left_tile_index])
+            end
+            if (!lands[tiles[left_tile_index]].include?(tiles[t_index]))
+              lands[tiles[left_tile_index]].push(tiles[t_index])
+            end
           end
 
           # with right tile if exists
           if (right_tile_index != nil && tiles[t_index] != tiles[right_tile_index] && tiles[right_tile_index] != 0) 
-            lands[tiles[t_index]].push(tiles[right_tile_index])
-            lands[tiles[right_tile_index]].push(tiles[t_index])
+            if (!lands[tiles[t_index]].include?(tiles[right_tile_index]))
+              lands[tiles[t_index]].push(tiles[right_tile_index])
+            end
+            if (!lands[tiles[right_tile_index]].include?(tiles[t_index]))
+              lands[tiles[right_tile_index]].push(tiles[t_index])
+            end
           end
 
           # with bottom tile if exists
           if (bottom_tile_index != nil && tiles[t_index] != tiles[bottom_tile_index] && tiles[bottom_tile_index] != 0)
-            lands[tiles[t_index]].push(tiles[bottom_tile_index])
-            lands[tiles[bottom_tile_index]].push(tiles[t_index])
+            if (!lands[tiles[t_index]].include?(tiles[bottom_tile_index]))
+              lands[tiles[t_index]].push(tiles[bottom_tile_index])
+            end
+            if (!lands[tiles[bottom_tile_index]].include?(tiles[t_index]))
+              lands[tiles[bottom_tile_index]].push(tiles[t_index])
+            end
           end
        end
     end

@@ -14,6 +14,7 @@ Dice::Application.routes.draw do
   
   match 'game/:game_name/' => 'home#index'
   match 'game/:game_name/fet/:auth' => 'home#force_end_turn'
+  match 'game/:game_name/attack' => 'home#attack'
   
   resources :home do
     collection do
