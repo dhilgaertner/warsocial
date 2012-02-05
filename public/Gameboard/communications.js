@@ -9,7 +9,7 @@ function init( json ) {
         game = null;
     }
     game = new WarSocial();
-    var info = JSON.parse(json);
+    var info = json;
     if (game != undefined && game != null) game.init(info);
 }
 

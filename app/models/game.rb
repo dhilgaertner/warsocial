@@ -1,6 +1,8 @@
 class Game < ActiveRecord::Base
+  belongs_to :map
   has_many :players, :dependent => :destroy
   has_many :game_logs, :dependent => :destroy
+  has_many :lands, :dependent => :destroy
   
   require 'constants/message_type'
   
@@ -17,7 +19,7 @@ class Game < ActiveRecord::Base
     games = Game.where("name = ? AND state != ?", name, Game::FINISHED_STATE)
     
     if games.size == 0 
-      return Game.create(:name => name)
+      return Map.first.games.create(:name => name)
     else
       return games.first
     end
@@ -32,18 +34,7 @@ class Game < ActiveRecord::Base
       Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{seat} player(s) seated.", :name => "Server"})
       
       if self.players.size == 2 
-        job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
-        self.state = Game::STARTED_STATE
-        self.turn_timer_id = job.id
-        self.save
-        
-        player = self.players.sample
-        player.is_turn = true
-        player.save
-        
-        Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
-        Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
-        Pusher[self.name].trigger(GameMsgType::START, self.start_game)
+        start_game
       end
       
       return new_player
@@ -85,17 +76,52 @@ class Game < ActiveRecord::Base
   private
   def start_game
     
+    lands = self.map.get_lands
+    land_ids = lands.keys
+    lands_each = (lands.length / self.players.length).to_i
+    random_picks = Array.new
+    
+    self.players.each do |player|
+       lands_each.times do |i|
+          random_picks.push(player)
+       end
+    end
+    
+    random_picks.shuffle
+    land_ids.shuffle
+    
+    land_ids.each do |id|
+      player = random_picks.pop
+      land = self.lands.create(:player => player, :deployment => 3, :map_land_id => id)
+      
+      if (player != nil)
+        player.lands << land
+      end
+    end
+    
+    job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 15.seconds.from_now)
+    self.state = Game::STARTED_STATE
+    self.turn_timer_id = job.id
+    self.save
+    
+    player = self.players.sample
+    player.is_turn = true
+    player.save
+    
+    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
+    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
+    
+    data = { :who_am_i => self.players.first.id, 
+             :map_layout => ActiveSupport::JSON.decode(self.map.json),
+             :players => self.players,
+             :deployment => self.lands }
+                   
+    Pusher[self.name].trigger(GameMsgType::START, data)
   end
   
   # Check whether or not the land is owned by the player
   private
   def does_player_own_land?(player, land)
-    
-  end
-  
-  # Check whether or not the lands are connected
-  private
-  def is_land_connected?(land1, land2)
     
   end
   

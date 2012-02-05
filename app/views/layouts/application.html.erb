@@ -3,8 +3,7 @@
 <head>
   <title>Dice</title>
 
-	<link rel="stylesheet" href="../../../css/grid960.css" type="text/css">
-  <%= javascript_include_tag "application" %>
+	<%= javascript_include_tag "application" %>
   <%= yield :javascript_includes %>
 
   <%= csrf_meta_tags %>
@@ -25,11 +24,11 @@ body {
 font-family: Arial;
 }
 a {
-color: #000;
-text-decoration: none;
+	color: #000;
+	text-decoration: none;
 }
 a:hover {
-text-decoration: underline;
+	text-decoration: underline;
 }
 
 div#wrapper {
@@ -45,12 +44,17 @@ div#footer {
 }
 
 div#side-bar {
+	color: white;
 	background: white url(<%=image_path "sidepattern.png"%>);
 	background-position: center;
 	background-repeat: repeat-y;
 	width: 190px;
 	height: 900px;
 	float:left;
+}
+
+div#side-bar a {
+	color: white;
 }
 
 div#side-bar .logo {
@@ -124,6 +128,11 @@ border: 1px solid #ddd;
 			<center>
 				<%=image_tag("logo.png", :class => 'logo')%>
 			</center>
+			
+			<% if user_signed_in? %>
+				You are signed in as <%= current_user.username %>.
+				<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>.
+			<% end %>
 		</div>
 		<div id="main-wrapper">
 			<div id="header">

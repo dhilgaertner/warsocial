@@ -3,7 +3,11 @@ class HomeController < ApplicationController
     @user = User.new(params[:user])
     name = params[:game_name] == nil ? "home" : params[:game_name]
     @game = Game.get_game(name)
-    @map = Map.get_map("default")
+    
+    @init_data = { :who_am_i => 0, 
+                   :map_layout => ActiveSupport::JSON.decode(@game.map.json),
+                   :players => Array.new,
+                   :deployment => Array.new }
   end
 
   def add_line
