@@ -2,6 +2,9 @@ class HomeController < ApplicationController
   def index
     @user = User.new(params[:user])
     name = params[:game_name] == nil ? "home" : params[:game_name]
+    
+    @dev = params[:dev] == nil ? false : true
+    
     @game = Game.get_game(name)
     
     @init_data = { :who_am_i => 0, 

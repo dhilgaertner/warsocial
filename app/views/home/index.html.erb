@@ -1,14 +1,29 @@
 <% content_for :javascript_includes do %>
+
 	<script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
-	<script src="../../../Gameboard/communications.js" type="text/javascript"></script>
-	<script src="../../../Gameboard/land.js" type="text/javascript"></script>
-	<script src="../../../Gameboard/map.js" type="text/javascript"></script>
-	<script src="../../../Gameboard/mapcanvas.js" type="text/javascript"></script>
-	<script src="../../../Gameboard/player.js" type="text/javascript"></script>
-	<script src="../../../Gameboard/shared.js" type="text/javascript"></script>
-	<script src="../../../Gameboard/warsocial.js" type="text/javascript"></script>
-  <script type="text/javascript">
+	
+	<% if @dev %>
+		<script src="../../../Gameboard/communications.js" type="text/javascript"></script>
+		<script src="../../../Gameboard/land.js" type="text/javascript"></script>
+		<script src="../../../Gameboard/map.js" type="text/javascript"></script>
+		<script src="../../../Gameboard/mapcanvas.js" type="text/javascript"></script>
+		<script src="../../../Gameboard/player.js" type="text/javascript"></script>
+		<script src="../../../Gameboard/shared.js" type="text/javascript"></script>
+		<script src="../../../Gameboard/warsocial.js" type="text/javascript"></script>
+	<% else %>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js" type="text/javascript"></script>
+	<% end %>
+	
+	<script type="text/javascript">
+	
 	var global_game_name;
+	
 	$(document).ready(function() {
 	  	// Enable pusher logging - don't include this in production
 	    Pusher.log = function(message) {
@@ -24,13 +39,17 @@
 	    });
 	
 			channel.bind('game_start', function(data) {
-		  	init(data)
+		  	init(data);
 	    });
 			
 			channel.bind('attack', function(data) {
-		  	attack(data)
+		  	attack(data);
 	    });
 	
+			channel.bind('new_turn', function(data) {
+		  	next_turn(data.player_id);
+	    });
+			
 			global_game_name = "<%= @game.name %>";
 			game = null;
 			
