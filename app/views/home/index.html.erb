@@ -38,7 +38,7 @@
 		  	$('#chat_list').append($('<li>' + data.name + ': ' + data.entry + '</li>'));
 	    });
 			
-			var who_am_i = <%= current_user.id %>;
+			var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
 			
 			channel.bind('game_start', function(data) {
 				data.who_am_i = who_am_i;
