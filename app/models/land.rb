@@ -7,6 +7,6 @@ class Land < ActiveRecord::Base
   def as_json(options={})
     { :deployment => self.deployment, 
       :land_id => self.map_land_id, 
-      :player_id => self.player != nil ? self.player.seat_number : nil }
+      :player_id => self.player != nil ? self.player.user.id : nil }
   end
 end

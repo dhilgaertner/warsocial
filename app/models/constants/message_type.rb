@@ -4,5 +4,6 @@ class GameMsgType
   START = "game_start"
   ATTACK = "attack"
   TURN = "new_turn"
+  FORCETURN = "force_turn"
   INFO = "info"
 end

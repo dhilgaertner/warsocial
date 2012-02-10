@@ -10,11 +10,10 @@ function Land(a_id) {
         id = a_id;
     }
 
-
     var owner = null; // Owner of the land
     var nb_troops = 0;  // Number of troops on the lands
+    var new_troops = 0; // Number of troops recently added
     var adjacent_land_ids = []; // Id of the lands bordering this one
-
 
     this.getId = function() { return id; };
     this.getOwner = function() { return owner; };
@@ -24,7 +23,13 @@ function Land(a_id) {
     this.getTroops = function() { return nb_troops; };
     this.setTroops = function(nb) {
         if (nb != undefined && nb.constructor === Number) {
+            new_troops = nb - nb_troops;
             nb_troops = nb; }
+    };
+    this.getNewTroops = function() {
+        var t = (new_troops < 0)? 0 : new_troops;
+        new_troops = 0;
+        return t;
     };
     this.getAdjacentLandIds = function() { return adjacent_land_ids; };
 

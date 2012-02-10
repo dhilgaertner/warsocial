@@ -2,7 +2,7 @@
 
 	<script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
 	
-	<% if @dev %>
+	<% if !@dev %>
 		<script src="../../../Gameboard/communications.js" type="text/javascript"></script>
 		<script src="../../../Gameboard/land.js" type="text/javascript"></script>
 		<script src="../../../Gameboard/map.js" type="text/javascript"></script>
@@ -29,7 +29,7 @@
 	    Pusher.log = function(message) {
 	      if (window.console && window.console.log) window.console.log(message);
 	    };
-
+			
 	    // Flash fallback logging - don't include this in production
 	    WEB_SOCKET_DEBUG = true;
 			var pusher = new Pusher('f85901afd3e9eaff226f');
@@ -37,8 +37,11 @@
 	    channel.bind('new_chat_line', function(data) {
 		  	$('#chat_list').append($('<li>' + data.name + ': ' + data.entry + '</li>'));
 	    });
-	
+			
+			var who_am_i = <%= current_user.id %>;
+			
 			channel.bind('game_start', function(data) {
+				data.who_am_i = who_am_i;
 		  	init(data);
 	    });
 			
@@ -60,15 +63,16 @@
 <% end %>
 
 <% if user_signed_in? %>
-	<%= link_to "Sit", add_line_home_index_path(:game_name => @game.name, :entry => "sit"), :remote=>true %>
+
+	<%= link_to "Sit", add_line_home_index_path(:game_name => @game.name, :entry => "sit"), :remote=>true, :id => "sit_in" %>
 	
-	<div id="stage" style="position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:400px;">
-		<canvas id="canvas_shadow" width="600" height="400" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
-		<canvas id="canvas_map" width="600" height="400" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
-		<canvas id="canvas_hilight_origin" width="600" height="400" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-		<canvas id="canvas_hilight_destination" width="600" height="400" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-	  <canvas id="canvas_dice" width="600" height="400" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
-	  <canvas id="canvas_dice_box" width="600" height="400" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
+	<div id="stage" style="position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
+		<canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
+		<canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+		<canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+		<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+	  <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
+	  <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
 		<%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
 		<%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
 		<%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
@@ -78,7 +82,7 @@
 		<%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
 		<%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
 	</div>
-	
+	<%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn" %>
 	<div id="chat_window" class="bordered">
   		<ul id="chat_list">
   		</ul>

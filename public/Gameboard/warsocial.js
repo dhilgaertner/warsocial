@@ -7,19 +7,20 @@ function WarSocial() {
     var playerList = [];
     var map = null;
     var canInteract = false; // Indicate if User can play now
+    var dicebox = null; // DiceBox to show attack result
 
     var attack_from = undefined; // Land id of the land User is going to attack
     var attack_to = undefined; // Land id of the land User wants to attack
 
     this.getPlayerList = function() { return playerList; };
     this.getCurrentPlayerId = function() { return current_player_id; };
-    this.setCurrentPlayerId = function( id ) { current_player_id = (id != undefined && id.constructor === Number)? id : -1;  };
+    this.setCurrentPlayerId = function( id ) { current_player_id = (id != undefined)? id : -1;  };
     this.getMap = function () { return map; };
     this.getCanInteract = function() { return canInteract; };
     this.setCanInteract = function(bool) { canInteract = (bool != undefined && bool.constructor === Boolean)? bool : false;  };
     this.getUserId = function() { return userId; };
     this.setUserId = function(id) { userId = id };
-
+    this.getDiceBox = function() { return dicebox; };
 
     this.setAttackFrom = function( land_id ) { if ( land_id == undefined || this.getMap().find_land_by_id(land_id) != null)  attack_from = land_id };
     this.getAttackFrom = function() { return attack_from; };
@@ -28,6 +29,8 @@ function WarSocial() {
 
     // Object creation
 
+    dicebox = new DiceBox();
+
     this.create_map = function(map_layout) {
         map = new Map(map_layout.width, map_layout.height, map_layout.land_id_tiles);
     };
@@ -35,13 +38,14 @@ function WarSocial() {
     this.create_playerList = function(player_list, who_am_i) {
         playerList = [];
         for (var p in player_list) {
-            if (player_list[p] != null && player_list[p] != undefined && player_list[p].player_id != undefined && player_list[p].player_id.constructor === Number) {
-                var isUser = false;
-                if (who_am_i.constructor === Number && player_list[p].player_id == who_am_i) {
-                    isUser = true;
-                    userId = who_am_i;
+            if (player_list[p] != null && player_list[p] != undefined && player_list[p].player_id != undefined) {
+                var user = false;
+                if (who_am_i != undefined && player_list[p].player_id == who_am_i) {
+                    user = true;
                 }
-                playerList.push(new Player(player_list[p].player_id, isUser, player_list[p].color));
+                var seatid = (player_list[p].seat_id == undefined)? player_list[p].player_id : player_list[p].seat_id;
+                playerList.push(new Player(player_list[p].player_id, user, player_list[p].color, seatid));
+                console.log("playerList : " + playerList[playerList.length-1].getSeatId());
                 if (player_list[p].is_turn) this.nextTurn(player_list[p].player_id);
             }
         }
@@ -53,7 +57,9 @@ function WarSocial() {
  * @param info Object containing 4 parts : "who_am_i":int (fac.), "map_layout" : Object, "players":Array of Objects and "deployment":Array of Objects
  */
 WarSocial.prototype.init = function( info ) {
+    this.reset();
     this.create_map(info.map_layout);
+    this.setUserId(info.who_am_i);
     this.create_playerList(info.players, info.who_am_i);
     this.deploy(info.deployment);
     for (var i = 0; i< info.players.length; i++) {
@@ -89,12 +95,14 @@ WarSocial.prototype.removeMouseListener = function() {
  * @param event
  */
 WarSocial.prototype.clickOnCanvas = function (event) {
+    
     var maincanvas = $('#stage');
 
     if (maincanvas != null && maincanvas != undefined) {
        var x = event.pageX - $(this).offset().left;
 	   var y = event.pageY - $(this).offset().top;
     }
+    //alert("Click on Canvas : " + x + ", " + y);    
     // go back to the game scope
     if (game != null) {
         game.userClicksOnLand(x,y);
@@ -105,6 +113,7 @@ WarSocial.prototype.clickOnCanvas = function (event) {
  * called by clickonCanvas if selection is valid
  */
 WarSocial.prototype.userClicksOnLand = function( x, y ) {
+    //alert("Click on LAND : " + x + ", " + y);  
     if (this.getUserId() != -1 && this.getAttackTo() == undefined && this.getUserId() == this.getCurrentPlayerId()) {
         var coords = this.getMap().getMapCanvas().getTileIndexFromCoords(x,y);
 
@@ -160,10 +169,17 @@ WarSocial.prototype.attack = function( info ) {
 
     if (attacker != null){ attacker_id = attacker.getId(); }
     if (defender != null){ defender_id = defender.getId(); }
-    this.getMap().getMapCanvas().show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker_id, defender_id);
-
     var this_scope = this;
-    setTimeout(function() {this_scope.deploy(info.deployment_changes);}, 500);   // delay before calling deployment
+    // make the graphical selection if the user is not the attacker
+    if (attacker_id != this.getUserId()) {
+        this.getMap().select(info.attack_info.attacker_land_id, true); // instantaneous selection of the origin land
+        setTimeout(function() {this_scope.getMap().select(info.attack_info.defender_land_id, false);}, 200); // selection of the destination within 200millisec
+    }
+
+    var dicebox = this.getDiceBox();
+    if (dicebox != null) dicebox.show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker_id, defender_id);
+    //this.getMap().getMapCanvas().show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker_id, defender_id);
+    setTimeout(function() {this_scope.deploy(info.deployment_changes);}, 400);   // delay before calling deployment
 };
 
 /**
@@ -177,11 +193,12 @@ WarSocial.prototype.deploy = function( deployment) {
 
         if (deployment[d].deployment != undefined && deployment[d].deployment.constructor === Number && deployment[d].land_id != undefined && deployment[d].land_id.constructor === Number) {
             var p = this.find_by_player_by_id(deployment[d].player_id);
-            m.claim(deployment[d].land_id, p, deployment[d].deployment);
+            if (p != null) m.claim(deployment[d].land_id, p, deployment[d].deployment);
         }
     }
     this.clear_all();
     m.drawcanvas();
+    next_turn(this.getCurrentPlayerId()); // Allow the player to play again if it's still its turn
 };
 
 /**
@@ -189,12 +206,12 @@ WarSocial.prototype.deploy = function( deployment) {
  * @param player_id integer representing player id
  */
 WarSocial.prototype.nextTurn = function( player_id ) {
-    if (player_id != undefined && player_id.constructor === Number) {
+    if (player_id != undefined) {
         this.removeMouseListener();
         this.setCurrentPlayerId(player_id);
 
         // DEMO : TO BE REMOVED !!
-        this.setUserId( player_id );
+        //this.setUserId( player_id );
 
         //alert("nextTurn : " + this.getCurrentPlayerId() + " playerId = " + this.getUserId() + " can interact : " + this.getCanInteract());
         this.addMouseListener();
@@ -222,7 +239,7 @@ WarSocial.prototype.playerQuit = function( player_id ) {
  * @param player_id integer
  */
 WarSocial.prototype.find_by_player_by_id = function( player_id ) {
-    if (player_id != undefined && player_id.constructor === Number ) {
+    if (player_id != undefined ) {
         var index = 0;
         var plist = this.getPlayerList();
         while (index < plist.length) {
@@ -252,14 +269,23 @@ WarSocial.prototype.removePlayer = function( player_id ) {
 /**
  * TO BE COMPLETED
  */
+
+WarSocial.prototype.reset = function () {
+    if (this.getMap() != null && this.getMap() != undefined) {
+        this.getMap().getMapCanvas().eraseMap();
+        this.clear_all();
+    }
+    this.removeMouseListener();
+    this.setUserId(-1);
+    this.setCurrentPlayerId(-1);
+};
+
 WarSocial.prototype.clear_all = function() {
     this.getMap().getMapCanvas().clear_all();
     this.getMap().unselect(true);
     this.getMap().unselect(false);
     this.setAttackFrom(undefined);
     this.setAttackTo(undefined);
-    this.removeMouseListener();
-    this.setUserId(-1);
-    this.setCurrentPlayerId(-1);
+
 };
 

@@ -47,6 +47,15 @@ class HomeController < ApplicationController
     end
   end
   
+  def end_turn
+    game_name = params[:game_name]
+    
+    game = Game.get_game(game_name)
+    game.end_turn
+    
+    render :text=>"Success", :status=>200
+  end
+  
   def force_end_turn
     auth = params[:auth]
     game_name = params[:game_name]

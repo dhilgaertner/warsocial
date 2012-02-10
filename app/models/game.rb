@@ -107,15 +107,28 @@ class Game < ActiveRecord::Base
     end
   end
   
-  # Force the end of the current players turn
-  def force_end_turn
-    new_player = Player.where("game_id = ? AND is_turn = ?", self.id, true).first
-    job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
+  # End the current players turn
+  def end_turn
+    cp = current_player
+    np = next_player
+    
+    cp.is_turn = false
+    np.is_turn = true
+    
+    cp.save
+    np.save
+    
+    job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 15.seconds.from_now)
     self.turn_timer_id = job.id
     self.save
     
-    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Turn Forfeit", :name => "Server"})
-    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{new_player.user.username}'s turn has started.", :name => "Server"})
+    Pusher[self.name].trigger(GameMsgType::TURN, {:player_id => np.user.id})
+    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{np.user.username}'s turn has started.", :name => "Server"})
+  end
+  
+  # Force the end of the current players turn
+  def force_end_turn
+    self.end_turn
   end
   
   # Start Game
@@ -157,12 +170,45 @@ class Game < ActiveRecord::Base
     Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
     Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
     
-    data = { :who_am_i => self.players.first.id, 
+    data = { :who_am_i => 0, 
              :map_layout => ActiveSupport::JSON.decode(self.map.json),
              :players => self.players,
              :deployment => self.lands }
                    
     Pusher[self.name].trigger(GameMsgType::START, data)
+  end
+  
+  # Check whether or not it is the user's turn
+  private
+  def is_user_turn?(user)
+    player = self.players.where("user_id = ? AND is_turn = ?", current_user.id, true)
+    
+    player.size > 0
+  end
+  
+  # Find which player is currently having a turn
+  private
+  def current_player
+    player = self.players.where("is_turn = ?", true).first
+  end
+  
+  # Find which player is next in line turn-wise
+  private
+  def next_player
+    sorted_players = self.players.sort { |a,b| a.seat_number <=> b.seat_number }
+    
+    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{sorted_players.size}", :name => "Server"})
+    
+    i = sorted_players.index(current_player)
+    
+    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{i}", :name => "Server"})
+    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{current_player.user.username}", :name => "Server"})
+    
+    if (i == (sorted_players.size - 1))
+      sorted_players[0]
+    else
+      sorted_players[i+1]
+    end
   end
   
   # Check whether or not the land is owned by the player

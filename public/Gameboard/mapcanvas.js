@@ -13,6 +13,10 @@ function MapCanvas() {
     var col_width = 16;				// width of one column of hexagons
     var player_colour_fill = ["#CCCCCC", "#f8af01", "#3760ae", "#c22b2b", "#5fb61f", "#603bb3", "#27a7b2", "#ad3bac", "#814f2e"];
     var player_colour_stroke = ["#CCCCCC", "#ffcc00", "#296dff", "#ed1a1a", "#86ce28", "#7743ec", "#2bb9dd", "#ca43ec", "#a26136"];
+    var first_display = true; // record if the shadows have been drawned or not
+    var DICE_DELAY = 200; // delay between 2 dices showing in millisec
+    var dicetimer; // timer for the dice
+    var delayed_dice_array; // Array of dice to display
 
     this.getColWidth = function() { return col_width; };
     this.getRowHeight = function() { return row_height; };
@@ -20,13 +24,28 @@ function MapCanvas() {
     this.getShapePointX = function() { return shape_points_x; };
     this.getShapePointY = function() { return shape_points_y; };
     this.getShapeWidth = function() { return SHAPE_WIDTH; };
-
+    this.getDiceTimer = function() { return dicetimer; };
+    this.setDiceTimer = function() { if (dicetimer != undefined) clearInterval(dicetimer); var scop = this; dicetimer = setInterval(function(){ scop.show_new_die()}, DICE_DELAY); };
     this.getTopLayerCanvas = function() { return document.getElementById("canvas_dice"); };
+    this.setDelayedDiceArray = function (d) { delayed_dice_array = d; };
+    this.getDelayedDiceArray = function() { return delayed_dice_array; };
+
+    this.get_first_display = function() { return first_display; };
+    this.set_first_display = function(bool) { first_display = bool; };
 
     // Careful, this player color stroke will be dynamic and might change
     this.getPlayerColourFill = function() { return player_colour_fill; };
     this.getPlayerColourStroke = function() { return player_colour_stroke; };
 }
+
+/**
+ *
+ * Hex to R, G, B
+ */
+MapCanvas.prototype.hexToR = function( h ) { return parseInt((this.cutHex(h)).substring(0,2),16) };
+MapCanvas.prototype.hexToG = function( h ) { return parseInt((this.cutHex(h)).substring(2,4),16) };
+MapCanvas.prototype.hexToB = function( h ) { return parseInt((this.cutHex(h)).substring(4,6),16) };
+MapCanvas.prototype.cutHex = function( h ) { return (h.charAt(0)=="#") ? h.substring(1,7):h };
 
 /**
 *	Get x coordinates on the canvas from the column number
@@ -61,7 +80,7 @@ MapCanvas.prototype.getTileIndexFromCoords = function( x, y) {
 *	Draw hexagon shape
 **/
 MapCanvas.prototype.draw_shape = function(x, y, canvas, fill, stroke) {
-	canvas.beginPath();
+    canvas.beginPath();
 	canvas.moveTo(x+this.getShapePointX()[0],y+this.getShapePointY()[0]);
 	for (var i=1; i<6; i++){
 		canvas.lineTo(x+this.getShapePointX()[i],y+this.getShapePointY()[i]);
@@ -80,7 +99,6 @@ MapCanvas.prototype.draw_shape = function(x, y, canvas, fill, stroke) {
 *	Draw border around hexagon shape
 **/
 MapCanvas.prototype.draw_border = function(x, y, canvas, border, stroke, line_width) {
-
 	canvas.lineWidth = line_width;
 	for (var i=0; i<6; i++){
 		// test binary bit, draw the border if the bit is 1
@@ -99,12 +117,11 @@ MapCanvas.prototype.draw_border = function(x, y, canvas, border, stroke, line_wi
 *	Draw a hexagon tile on the grid
 **/
 MapCanvas.prototype.draw_tile = function(row, col, player_colour_id, frontier_border, inside_border) {
-
 	var i;
 	var x, y;
 	var stroke = this.getPlayerColourStroke()[player_colour_id];
 	var fill = this.getPlayerColourFill()[player_colour_id];
-
+    //console.log ("Mapcanvas draw_tile - color fill = " + fill + " player color id = " + player_colour_id );
 	var c=document.getElementById("canvas_map");
 	var ctx=c.getContext("2d");
 	ctx.lineCap="round";
@@ -114,7 +131,7 @@ MapCanvas.prototype.draw_tile = function(row, col, player_colour_id, frontier_bo
 	y = this.get_y_from_row_col(row, col);
 
 	ctx.save();			// save context before clipping
-	this.draw_shape(x, y, ctx, fill, fill);		// draw shape
+    this.draw_shape(x, y, ctx, fill, fill);		// draw shape
 	ctx.clip();			// clip so that strokes don't extend out of the shape
 
 	//draw inside top borders (use binary operation to select only the top borders)
@@ -137,18 +154,19 @@ MapCanvas.prototype.draw_tile = function(row, col, player_colour_id, frontier_bo
 * - draw entire shape of the map and apply the shadow to it
 **/
 MapCanvas.prototype.draw_shadow = function (map_data, map_width, map_height, canvas) {
-	var ctx=canvas.getContext("2d");
+    var ctx=canvas.getContext("2d");
 	var r, c;
 	var shadow_offset_y = 1;
 	var shadow_offset_x = 0;
 	var shadow_shape_fill = "#444";
-
 	ctx.shadowOffsetX = 0;
 	ctx.shadowOffsetY = 3;
-	ctx.shadowBlur    = 15;
+	ctx.shadowBlur    = 7;
 	ctx.shadowColor   = "rgba(0,0,0,0.4)";
-
-	for (r=0; r<map_height; r++){
+    var canvas2 = document.getElementById("canvas_map");
+    var ctx2=canvas2.getContext("2d");
+    ctx.drawImage(canvas2, 0, 0, canvas2.width, canvas2.height);
+	/*for (r=0; r<map_height; r++){
 		for (c=0; c<map_width; c++){
 
 			// draw shape if not 0 (empty)
@@ -163,7 +181,7 @@ MapCanvas.prototype.draw_shadow = function (map_data, map_width, map_height, can
 				this.draw_shape(x, y, ctx, shadow_shape_fill, shadow_shape_fill);
 			}
 		}
-	}
+	} */
 };
 
 /**
@@ -171,23 +189,23 @@ MapCanvas.prototype.draw_shadow = function (map_data, map_width, map_height, can
 * - draw entire shape of the map and apply the pattern to it
 **/
 MapCanvas.prototype.draw_texture = function(map_data, map_width, map_height, canvas, img) {
-	var ctx=canvas.getContext("2d");
+    var ctx=canvas.getContext("2d");
 	var r, c;
     var pattern_fill=ctx.createPattern(img,"repeat");
+    if (pattern_fill != null) {
+        for (r=0; r<map_height; r++){
+            for (c=0; c<map_width; c++){
 
-	for (r=0; r<map_height; r++){
-		for (c=0; c<map_width; c++){
-
-			// draw shape if not 0 (empty)
-			if (map_data[r*map_width + c] != 0){
-				// get x, y coordinates from row, col
-				var	x = this.get_x_from_col(c);
-				var y = this.get_y_from_row_col(r, c);
-
-				this.draw_shape(x, y, ctx, pattern_fill);
-			}
-		}
-	}
+                // draw shape if not 0 (empty)
+                if (map_data[r*map_width + c] != 0){
+                    // get x, y coordinates from row, col
+                    var	x = this.get_x_from_col(c);
+                    var y = this.get_y_from_row_col(r, c);
+                    this.draw_shape(x, y, ctx, pattern_fill);
+                }
+            }
+        }
+    }
 };
 
 /**
@@ -195,7 +213,7 @@ MapCanvas.prototype.draw_texture = function(map_data, map_width, map_height, can
 * side is define bewteen 0-5, with 0 being the top side of the hexagon, then going clockwise ending at 5 being the top-left side of the hexagon
 **/
 MapCanvas.prototype.get_adjacent_tile_id = function (r, c, map_data, map_width, map_height, side) {
-	var adjacent_row, adjacent_col;
+    var adjacent_row, adjacent_col;
 
 	// get the row, col of the adjacent tile depending on the side it is on
 	switch (side){
@@ -231,7 +249,6 @@ MapCanvas.prototype.get_adjacent_tile_id = function (r, c, map_data, map_width, 
 			adjacent_row++;
 		}
 	}
-
     // check out of bounds
 	if ((adjacent_col >= map_width) || (adjacent_col < 0) || (adjacent_row >= map_height) || (adjacent_row < 0)){ return null; }
 	return(map_data[adjacent_row*map_width + adjacent_col]);
@@ -241,15 +258,14 @@ MapCanvas.prototype.get_adjacent_tile_id = function (r, c, map_data, map_width, 
 *	Draw tiles
 **/
 MapCanvas.prototype.draw_tiles = function (map_data, map_width, map_height, land_owner) {
-	var r, c;
+    var r, c;
 	for (r=0; r<map_height; r++){
 		for (c=0; c<map_width; c++){
 
 			// draw tile if not 0 (empty)
 			if (map_data[r*map_width + c] != 0){
-
 				var current_tile_id = map_data[r*map_width + c];		// map id of the current tile
-
+				var current_tile_id = map_data[r*map_width + c];		// map id of the current tile
 				// apply border
 				// - border is stored as a binary number where each bit corresponds to one side of the hexagon
 				// - setting a bit to 1 means the corresponding side of the hexagon has a border
@@ -282,22 +298,40 @@ MapCanvas.prototype.draw_tiles = function (map_data, map_width, map_height, land
 	}
 };
 
+/**
+ * Clear tiles
+ */
 MapCanvas.prototype.clear_all = function() {
     var canvas = document.getElementById("canvas_map");
     if (canvas != null) {
         var ctx=canvas.getContext("2d");
         ctx.clearRect ( 0 , 0 , canvas.width, canvas.height);
-        canvas = document.getElementById("canvas_shadow");
-        ctx=canvas.getContext("2d");
-        ctx.clearRect ( 0 , 0 , canvas.width, canvas.height);
     }
 };
 
+/**
+ * Clear shadow
+ */
+MapCanvas.prototype.eraseMap = function () {
+    this.clear_all();
+    canvas = document.getElementById("canvas_shadow");
+    if (canvas != null) {
+        ctx=canvas.getContext("2d");
+        ctx.clearRect ( 0 , 0 , canvas.width, canvas.height);
+    }
+    this.set_first_display(false); // Next time, shadows will have to be drawn too
+};
+
 MapCanvas.prototype.draw_canvas = function(land_id_tiles, map_width, map_height, land_owner, land_troops){
-	this.draw_tiles(land_id_tiles, map_width, map_height, land_owner, document.getElementById("canvas_map"));
-	this.draw_shadow(land_id_tiles, map_width, map_height, document.getElementById("canvas_shadow"));
+    var start = new Date().getTime();
+    this.draw_tiles(land_id_tiles, map_width, map_height, land_owner, document.getElementById("canvas_map"));
+	if (this.get_first_display()) this.draw_shadow(land_id_tiles, map_width, map_height, document.getElementById("canvas_shadow"));
 	this.draw_texture(land_id_tiles, map_width, map_height, document.getElementById("canvas_map"), document.getElementById("pattern"));
-    this.add_dice(land_id_tiles, map_width, map_height, land_troops);
+    this.add_dice(land_id_tiles, map_width, map_height, land_troops, land_owner);
+    var end = new Date().getTime();
+    var time = end - start;
+    this.set_first_display(false);
+    console.log('Execution time MapCanvas - draw_canvas: ' + time);
 };
 
 /**
@@ -346,30 +380,36 @@ MapCanvas.prototype.get_centre_row_col = function(map_data, map_width, map_heigh
 /**
 * Add dice to the map given the map data and the deployment
 **/
-MapCanvas.prototype.add_dice = function(map_data, map_width, map_height, deployment){
-	var DICE_HEIGHT_MAX = 4;
+MapCanvas.prototype.add_dice = function(map_data, map_width, map_height, deployment, land_owner){
+    var DICE_HEIGHT_MAX = 4;
 	var DICE_HEIGHT_OFFSET = 11;
   var DICE_WIDTH_X_OFFSET = 13;
-	var DICE_WIDTH_Y_OFFSET = 7;	
+	var DICE_WIDTH_Y_OFFSET = 7;
+    var TOTAL_TROOPS = 0; var NEW_TROOPS = 1; // constants used to navigate in deployment array
+    var total_delay = 0; // record cumulated delay
+
   var canvas = document.getElementById("canvas_dice");
 	var ctx = canvas.getContext("2d");
 	var r, c, i;
-
+    var this_scope = this;
 	// clear canvas
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    var first_display = this.get_first_display(); // if yes, no delay for the dice
+    var delayed_dice_array = new Array();
+    var index=0;
 	// look at the map and draw dice
 	for (r=0; r<map_height; r++){
 		for (c=0; c<map_width; c++){
 
 			// add dice if land it is not 0 and there are dices in the land
 			var current_tile_id = map_data[r*map_width + c];		// map id of the current tile
-			if ((current_tile_id != 0) && (deployment[current_tile_id] > 0)){
+			if ((current_tile_id != 0) && (deployment[current_tile_id][TOTAL_TROOPS] > 0)){
 				// get centre
 				var centre_row_col = this.get_centre_row_col(map_data, map_width, map_height, current_tile_id);
 				var	x = this.get_x_from_col(centre_row_col[1]);
 				var y = this.get_y_from_row_col(centre_row_col[0], centre_row_col[1]);
-				var num_of_dice = deployment[current_tile_id];
+				var num_of_dice = deployment[current_tile_id][TOTAL_TROOPS];
+                var new_dice = deployment[current_tile_id][NEW_TROOPS];
 
 				// add each dice
 				for (i=0; i<num_of_dice; i++){
@@ -377,18 +417,46 @@ MapCanvas.prototype.add_dice = function(map_data, map_width, map_height, deploym
 					var dice_column = Math.floor(i / DICE_HEIGHT_MAX);
 					var dice_row = i % DICE_HEIGHT_MAX;
 					var shadow = false;
-
 					// draw shadow if first dice in the column (dice is in the first row
-					if (dice_row == 0){
-						shadow = true;
-					}
-					this.draw_dice(x+(DICE_WIDTH_X_OFFSET*dice_column), y-(DICE_HEIGHT_OFFSET*dice_row)+(DICE_WIDTH_Y_OFFSET*dice_column), dice_value, shadow, ctx);
+					if (dice_row == 0){ shadow = true; }
+                    var delayed = !first_display;
+                    if (i < (num_of_dice-new_dice)) {
+                        delayed = false;
+                    }
+                    if (!delayed) {
+                        this.draw_dice(x+(DICE_WIDTH_X_OFFSET*dice_column), y-(DICE_HEIGHT_OFFSET*dice_row)+(DICE_WIDTH_Y_OFFSET*dice_column), dice_value, shadow, ctx, land_owner[current_tile_id]);   // delay before showing the dice
+                    } else {
+                        var d = new Object();
+                        d.x = x+(DICE_WIDTH_X_OFFSET*dice_column);
+                        d.y = y-(DICE_HEIGHT_OFFSET*dice_row)+(DICE_WIDTH_Y_OFFSET*dice_column);
+                        d.val = dice_value;
+                        d.shadow = shadow;
+                        d.ctx = ctx;
+                        d.colour_id = land_owner[current_tile_id];
+                        delayed_dice_array[index] = d;
+                        index++;
+                    }
 				}
 				// set deployment to 0, since we finished drawing the dice for this land id
 				deployment[current_tile_id] = 0;
 			}
 		}
 	}
+    if (delayed_dice_array.length > 0) {
+        this.setDiceTimer();
+        this.setDelayedDiceArray(delayed_dice_array);
+    }
+};
+
+MapCanvas.prototype.show_new_die = function() {
+     var list = this.getDelayedDiceArray();
+     if (list == undefined ) clearInterval(this.getDiceTimer());
+     if (list != undefined && list.length > 0) {
+         this.draw_dice(list[0].x, list[0].y, list[0].val, list[0].shadow, list[0].ctx, list[0].colour_id);
+         list.splice(0,1);
+         this.setDelayedDiceArray(list);
+         if ( list.length <= 0 ) clearInterval(this.getDiceTimer());
+     }
 };
 
 /**
@@ -403,11 +471,13 @@ MapCanvas.prototype.clearDice = function() {
 /**
 * Draw the dice graphics at a specific spot on the canvas
 **/
-MapCanvas.prototype.draw_dice = function(x, y, value, has_shadow, context){
-	var DICE_IMG_ID = "dice";
+MapCanvas.prototype.draw_dice = function(x, y, value, has_shadow, context, player_colour_id){
+    var DICE_IMG_ID = "dice";
 	var DICE_SHADOW_ID = "dice_shadow";
 	var IMG_OFFSET_X = 4;
 	var IMG_OFFSET_Y = -6;
+    var IMG_WIDTH = 20;
+	var IMG_HEIGHT = 20;
 	var SHADOW_OFFSET_X = IMG_OFFSET_X-2;
 	var SHADOW_OFFSET_Y = IMG_OFFSET_Y+4;
 
@@ -418,13 +488,31 @@ MapCanvas.prototype.draw_dice = function(x, y, value, has_shadow, context){
 		context.drawImage(img_shadow, x+SHADOW_OFFSET_X, y+SHADOW_OFFSET_Y);
 	}
 	context.drawImage(img, x+IMG_OFFSET_X, y+IMG_OFFSET_Y);
+
+    //hilight dice with a colour
+	var canvas_colour = document.createElement('canvas');	// create a temp canvas for the colour of the dice
+	var ctx_colour = canvas_colour.getContext('2d');
+    var colour_hex = this.getPlayerColourFill()[player_colour_id];
+    var colour_alpha = 0.4;
+    var colour_rgba = "rgba(" + this.hexToR(colour_hex) + "," + this.hexToG(colour_hex) + "," + this.hexToB(colour_hex) + "," + colour_alpha + ")";
+	canvas_colour.width = context.canvas.width;
+	canvas_colour.height = context.canvas.height;
+
+    ctx_colour.fillStyle = colour_rgba;     // set colour
+	ctx_colour.drawImage(img, x+IMG_OFFSET_X, y+IMG_OFFSET_Y);  // draw dice image
+	ctx_colour.globalCompositeOperation="lighter";      // use 'lighter' to create an overlay colour effect
+    ctx_colour.fillRect(x+IMG_OFFSET_X, y+IMG_OFFSET_Y, IMG_WIDTH, IMG_HEIGHT);   // draw a coloured rectangle
+    ctx_colour.globalCompositeOperation = "destination-in";   // use 'destination-in' to draw dice image again, removing parts of the coloured rectangle that are not on the dice
+    ctx_colour.drawImage(img, x+IMG_OFFSET_X, y+IMG_OFFSET_Y);
+
+    context.drawImage(canvas_colour, 0, 0);     // add the colour to the dice canvas
 };
 
 /**
  * HILIGHT
  */
 MapCanvas.prototype.hilight_land = function(map_data, map_width, map_height, id, canvas){
-	var ctx = canvas.getContext("2d");
+    var ctx = canvas.getContext("2d");
 	var canvas_mask = document.createElement('canvas');	// create a temp canvas for the mask
 	var ctx_mask = canvas_mask.getContext('2d');
 	var r, c;
@@ -527,144 +615,8 @@ MapCanvas.prototype.unhilight_destination_land = function(){
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
-/**
-* Draw dice box
-**/
-MapCanvas.prototype.draw_dice_box = function(x, y, width, height, corner, ctx){
-	// draw box
-	ctx.beginPath();
-	ctx.moveTo(x + corner, y);
-	ctx.lineTo(x + width - corner, y);
-	ctx.quadraticCurveTo(x + width, y, x + width, y + corner);
-	ctx.lineTo(x + width, y + height - corner);
-	ctx.quadraticCurveTo(x + width, y + height, x + width - corner, y + height);
-	ctx.lineTo(x + corner, y + height);
-	ctx.quadraticCurveTo(x, y + height, x, y + height - corner);
-	ctx.lineTo(x, y + corner);
-	ctx.quadraticCurveTo(x, y, x + corner, y);
-	ctx.closePath();
 
-	// put shadow
-	ctx.shadowBlur = 10;
-	ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-	ctx.fillStyle = "rgba(0, 0 ,0, 1.0)";
-	ctx.fill();             // draw shadow shape
-	ctx.globalCompositeOperation="xor";	// use xor to only get the shadow around the box
-    ctx.shadowBlur = 0;     // remove shadow
-	ctx.fill();             // draw shape to mask out previous shape, except for the shadow
-	ctx.globalCompositeOperation="source-over"; // return to default
 
-	// draw outline
-	ctx.strokeStyle = "rgba(0, 0, 0, 0.15)";
-	ctx.lineWidth = 4;
-	ctx.stroke();
-
-	// draw hilight line
-	ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
-	ctx.lineWidth = 2;
-	ctx.stroke();
-
-	// put gradient
-    var gradient = ctx.createLinearGradient(x, y, x, y+height);
-	gradient.addColorStop(1.0, "rgba(50, 50, 50, 0.95)");
-	gradient.addColorStop(0.0, "rgba(100, 100, 100, 0.95)");
-	ctx.fillStyle = gradient;
-	ctx.fill();
-};
-
-/**
-* Draw dice box with dice rolls
-**/
-MapCanvas.prototype.show_dice_box = function(attacker_roll, defender_roll, attacker_id, defender_id){
-	var BOX_X = 280;          // x location of the box
-	var BOX_Y = 330;          // y location of the box
-	var BOX_HEIGHT = 75;
-	var BOX_CORNER = 8;       // roundness of the box corner
-	var DICE_X = 38;          // x location of the row of dice
-	var DICE_Y = 18;          // y location of the row of dice
-	var DICE_X_SPACE = 20;    // x spacing between each dice
-	var DICE_Y_SPACE = 30;    // y spacing between each roll of dice
-	var TEXT_X = 8;           // x location of the dice roll text
-	var TEXT_Y = 31;          // y location of the dice roll text
-	var TEXT_Y_SPACE = 31;    // y spacing between the dice roll text
-
-	var box_width;     // width of the box, will calculate dynamically depending on the number of dice
-	var canvas = document.getElementById("canvas_dice_box");
-	var ctx = canvas.getContext('2d');
-	var x, y, i;
-	var sum1 = 0;      // sum of the dice rolls for player 1
-	var sum2 = 0;      // sum of the dice rolls for player 2
-
-    // clear
-    this.clear_dice_box();
-    
-	// change box width depending on the number of dice
-	if (attacker_roll.length > defender_roll.length){
-		box_width = DICE_X + (DICE_X_SPACE * (attacker_roll.length+1));
-	}
-	else {
-		box_width = DICE_X + (DICE_X_SPACE * (defender_roll.length+1));
-	}
-
-	// calculate x to centre the box
-	x = BOX_X - box_width/2;
-	y = BOX_Y;
-
-	// draw box
-	this.draw_dice_box(x, y, box_width, BOX_HEIGHT, BOX_CORNER, ctx);
-
-    // draw content
-	ctx.font="bold 24px Arial";
-
-	// draw result attacker
-	for (i=0; i<attacker_roll.length; i++){
-		this.draw_dice(x + DICE_X + (DICE_X_SPACE*i), y + DICE_Y, attacker_roll[i], true, ctx);
-		sum1 += attacker_roll[i];
-	}
-	ctx.fillStyle = this.getPlayerColourStroke()[attacker_id];
-	ctx.fillText(sum1, x + TEXT_X, y + TEXT_Y);
-
-	// draw result defender
-	for (i=0; i<defender_roll.length; i++){
-		this.draw_dice(x + DICE_X + (DICE_X_SPACE*i), y + DICE_Y + DICE_Y_SPACE, defender_roll[i], true, ctx);
-		sum2 += defender_roll[i];
-	}
-	ctx.fillStyle = this.getPlayerColourStroke()[defender_id];
-	ctx.fillText(sum2, x + TEXT_X, y + TEXT_Y + TEXT_Y_SPACE);
-
-	// fade out loser (draw on top with black text)
-	ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
-	if (sum1 > sum2){
-		ctx.fillText(sum2, x + TEXT_X, y + TEXT_Y + TEXT_Y_SPACE);
-	}
-	else if (sum1 < sum2){
-		ctx.fillText(sum1, x + TEXT_X, y + TEXT_Y);
-	}
-
-	//animate show
-	$("#canvas_dice_box").css({top:'-20px', opacity:0.0});
-	$("#canvas_dice_box").animate({top:0, opacity:1.0}, 500);
-
-    // set timer to hide
-    var this_scope = this;
-    setTimeout(function() { this_scope.hide_dice_box(this_scope);}, 2000);
-};
-
-/**
-* Hide dice box with animation
-**/
-MapCanvas.prototype.hide_dice_box = function(scope){
-	$("#canvas_dice_box").animate({top:'-20px', opacity:0.0}, 500, scope.clear_dice_box);
-};
-
-/**
-* Clear the canvas of the dice box
-**/
-MapCanvas.prototype.clear_dice_box = function(){
-    var canvas = document.getElementById("canvas_dice_box");
-	var ctx = canvas.getContext('2d');
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-};
 
 
 

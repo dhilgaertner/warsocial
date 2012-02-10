@@ -3,9 +3,6 @@
  */
 
 function Map(w, h, tilelist) {
-
-
-
     var width = (w != undefined && w.constructor === Number)? w : 0; // Number of cell in a row of the map
     var height = (h != undefined && h.constructor === Number)? h : 0; // Number of cell in a col of the map
     var tiles = (tilelist instanceof Array)? tilelist : []; // List of all tiles in the map from to top left to bottom right
@@ -37,22 +34,17 @@ Map.prototype.toString = function() {
 };
 
 Map.prototype.createLandList = function(list) {
-    var lands = [];
-    var id_list = [];
-    if (list instanceof Array && list.length > 0) {       // if not valid, land_list will remain empty
-          var index = 0;
-          while (index < list.length) {
-              if (list[index].constructor === Number && list[index] != 0) {
-                  if (id_list.indexOf(list[index]) == -1) {
-                      id_list.push(list[index]);
-                      lands.push(new Land(list[index]));
-                  }
-
-              }
-              index++;
+      var lands = new Array();
+      if (list == undefined) return lands;
+      var len = list.length;
+      var index = 0;
+      while (index < len) {
+          if (list[index] != 0 && lands[list[index]] == undefined) {
+             lands[list[index]] = new Land(list[index]);
           }
-    }
-    return lands;
+          index++;
+      }
+      return lands;
 };
 
 /**
@@ -112,13 +104,9 @@ Map.prototype.find_adjacent_lands_from_tiles = function ( tiles, width_line, hei
  * @return Land Object or null if not found
  */
 Map.prototype.find_land_by_id = function(land_id) {
-    if (land_id != undefined && land_id.constructor === Number ) {
-        var index = 0;
+    if (land_id != undefined) {
         var landlist = this.getLandList();
-        while (index < landlist.length) {
-            if (landlist[index].getId() == land_id) return landlist[index];
-            index++;
-        }
+        return landlist[land_id];
     }
     return null;
 };
@@ -134,7 +122,7 @@ Map.prototype.find_lands_by_player_id = function ( player_id ) {
     var index = 0;
     while (index < this.getLandList().length) {
         //alert("search : " + index + " " + this.getLandList())
-        if (this.getLandList()[index].getOwner() != null && this.getLandList()[index].getOwner().getId() == player_id) list.push(this.getLandList()[index]);
+        if (this.getLandList()[index] != undefined && this.getLandList()[index].getOwner() != null && this.getLandList()[index].getOwner().getId() == player_id) list.push(this.getLandList()[index]);
         index++;
     }
   }
@@ -179,7 +167,7 @@ Map.prototype.getLandPlayerList = function() {
     var l = this.getLandList();
     var index = 0;
     while (index < l.length) {
-        result[l[index].getId()] = (l[index].getOwner() != null)? l[index].getOwner().getId() : 0 ;
+        if (l[index]) result[l[index].getId()] = (l[index].getOwner() != null)? l[index].getOwner().getSeatId() : 0 ;
         index++;
     }
     return result;
@@ -206,7 +194,12 @@ Map.prototype.getDeploymentLandList = function() {
     var l = this.getLandList();
     var index = 0;
     while (index < l.length) {
-        result[l[index].getId()] = l[index].getTroops();
+        if (l[index]) {
+            result[l[index].getId()] = new Array();
+            result[l[index].getId()][0] = l[index].getTroops();
+            result[l[index].getId()][1] = l[index].getNewTroops();
+        }
+        // on pourrait supprimer new troops ici
         index++;
     }
     return result;
