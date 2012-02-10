@@ -11,13 +11,13 @@
 		<script src="../../../Gameboard/shared.js" type="text/javascript"></script>
 		<script src="../../../Gameboard/warsocial.js" type="text/javascript"></script>
 	<% else %>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=2" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=2" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=2" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=2" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=2" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=2" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=2" type="text/javascript"></script>
 	<% end %>
 	
 	<script type="text/javascript">
@@ -91,6 +91,8 @@
 		<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
 	  <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
 	  <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
+		<div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+		<div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
 		<%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
 		<%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
 		<%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
