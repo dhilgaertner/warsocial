@@ -38,10 +38,23 @@
 		  	$('#chat_list').append($('<li>' + data.name + ': ' + data.entry + '</li>'));
 	    });
 			
+			$('#end_turn').hide();
+			
 			var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
 			
 			channel.bind('game_start', function(data) {
 				data.who_am_i = who_am_i;
+				
+				$('#end_turn').hide();
+				for(var i=0; i<data.players.length; i++) {
+		    	if (data.players[i].is_turn == true) {
+						if (data.players[i].player_id == who_am_i) {
+							$('#end_turn').show();
+						}
+					}
+		    }
+				
+				data.players
 		  	init(data);
 	    });
 			
@@ -50,6 +63,11 @@
 	    });
 	
 			channel.bind('new_turn', function(data) {
+				if (data.player_id == who_am_i) {
+					$('#end_turn').show();
+				} else {
+					$('#end_turn').hide();
+				}
 		  	next_turn(data.player_id);
 	    });
 			
