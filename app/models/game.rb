@@ -19,7 +19,7 @@ class Game < ActiveRecord::Base
     games = Game.where("name = ? AND state != ?", name, Game::FINISHED_STATE)
     
     if games.size == 0 
-      return Map.first.games.create(:name => name)
+      return Map.where("name = ?", "jurgen1").first.games.create(:name => name)
     else
       return games.first
     end
@@ -215,6 +215,22 @@ class Game < ActiveRecord::Base
   private
   def does_player_own_land?(player, land)
     
+  end
+  
+  # Check whether or not the land is owned by the player
+  private
+  def how_many_reenforcements(player)
+    lands = self.map.get_lands
+    
+    islands = Array.new
+    
+    player.lands.each { |land| 
+      id = land.map_land_id
+      
+      a.select {|v| v =~ /[aeiou]/}
+    }
+    
+    lands[land_id].include?(land2_id)
   end
   
   # Get random roll results
