@@ -112,6 +112,8 @@ class Game < ActiveRecord::Base
     cp = current_player
     np = next_player
     
+    reenforce(cp, how_many_reenforcements(cp))
+    
     cp.is_turn = false
     np.is_turn = true
     
@@ -220,17 +222,82 @@ class Game < ActiveRecord::Base
   # Check whether or not the land is owned by the player
   private
   def how_many_reenforcements(player)
-    lands = self.map.get_lands
+    connects = self.map.get_lands
+    
+    own_land_ids = Array.new
+    
+    player.lands.each { |land| own_land_ids.push(land.map_land_id) }
+    
+    not_connected = own_land_ids.select { |id| (connects[id] & own_land_ids).size == 0 }
+    
+    connected = own_land_ids - not_connected  
     
     islands = Array.new
     
-    player.lands.each { |land| 
-      id = land.map_land_id
+    connected.each { |id| 
+      segment = [ id ].concat(connects[id].uniq & connected)
       
-      a.select {|v| v =~ /[aeiou]/}
+      con_islands = islands.select { |island| (segment & island).size > 0 }
+      
+      if (con_islands.size == 0)
+        islands.push(segment.uniq)
+      else
+        con_islands.each { |ci| 
+          index = islands.index(ci)
+          islands[index] = ci.concat(segment).uniq
+        }
+      end
     }
     
-    lands[land_id].include?(land2_id)
+    final_islands = Array.new
+    
+    islands.each { |island| 
+      con_islands = final_islands.select { |fi| (island & fi).size > 0 }
+      
+      if (con_islands.size == 0)
+        final_islands.push(island.uniq)
+      else
+        con_islands.each { |ci| 
+          index = final_islands.index(ci)
+          final_islands[index] = ci.concat(island).uniq
+        }
+      end
+    }
+    
+    result = 0
+    
+    final_islands.each { |island| 
+      if (result < island.size)
+        result = island.size
+      end
+    }
+    
+    Pusher[self.name].trigger(GameMsgType::INFO, {:islands => final_islands, :reenforcements => result })
+    
+    result
+  end
+  
+  # Re-enforce player's lands randomly
+  private
+  def reenforce(player, num_armies)
+    lands = player.lands
+    
+    Pusher[self.name].trigger(GameMsgType::INFO, lands)
+    
+    changed = Array.new
+    num_armies.times do |x|
+       land = rand_with_range(lands)
+       land.deployment += 1
+       changed.push(land)
+    end
+    
+    Land.transaction do
+      changed.uniq.each { |land| 
+        land.save
+      }
+    end
+    
+    Pusher[self.name].trigger(GameMsgType::DEPLOY, changed)
   end
   
   # Get random roll results

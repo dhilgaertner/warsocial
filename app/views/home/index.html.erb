@@ -62,6 +62,10 @@
 		  	attack(data);
 	    });
 	
+			channel.bind('deploy', function(data) {
+		  	deploy(data);
+	    });
+	
 			channel.bind('new_turn', function(data) {
 				if (data.player_id == who_am_i) {
 					$('#end_turn').show();
