@@ -9,8 +9,8 @@ class HomeController < ApplicationController
     
     @init_data = { :who_am_i => 0, 
                    :map_layout => ActiveSupport::JSON.decode(@game.map.json),
-                   :players => Array.new,
-                   :deployment => Array.new }
+                   :players => @game.players,
+                   :deployment => @game.lands }
   end
 
   def add_line
