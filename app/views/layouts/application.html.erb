@@ -32,25 +32,36 @@ a:hover {
 }
 
 div#wrapper {
-	width: 980px;
+	background: url(<%=image_path "middle_background.png"%>);
+	background-position: center;
+	background-repeat: repeat-y;
+	width: 1049px;
 	margin-left: auto;
 	margin-right: auto;
+	overflow: auto;
 }
 
 div#footer {
-	width: 980px;
+	background: url(<%=image_path "footer_background.png"%>);
+	background-position: center;
+	width: 1033px;
+	height: 295px;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: -8px;
 }
 
 div#side-bar {
 	color: white;
-	background: white url(<%=image_path "sidepattern.png"%>);
+	background: url(<%=image_path "sidepattern.png"%>);
 	background-position: center;
 	background-repeat: repeat-y;
-	width: 190px;
+	margin-left: 8px;
+	width: 185px;
 	height: 900px;
 	float:left;
+	border-left: 3px solid black;
+	border-right: 3px solid black;
 }
 
 div#side-bar a {
@@ -63,21 +74,19 @@ div#side-bar .logo {
 }
 
 div#main-wrapper {
-	background: white url(<%=image_path "bodypattern.png"%>);
-	background-repeat: repeat;
-	width: 790px;
+	width: 849px;
 	height: 900px;
 	float:left;
 }
 
 div#header {
-	width: 790px;
+	width: 849px;
 	height: 130px;
 }
 
 div#header p {
 	margin-top: 10px;
-	margin-left: 17px;
+	margin-left: 35px;
 	line-height: 30px;
 	color: #3b3b3b;
 	text-shadow: 0.07em 0.07em #dbdbdb;
@@ -98,6 +107,34 @@ margin: 0 auto;
 padding: 20px;
 border: 1px solid #ddd;
 }
+
+div#game {
+	width: 776px;
+	padding: 0;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: auto;
+}
+
+div#game_header {
+	background: url(<%=image_path "game_header.png"%>);
+	background-position: center;
+	width: 776px;
+	height: 42px;
+}
+
+div#game_main {
+	width: 773px;
+	border-left: 1px solid gray;
+	border-right: 1px solid gray;
+	border-bottom: 1px solid gray;
+	margin-top: -2px;
+	-moz-border-radius-bottomright: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	-moz-border-radius-bottomleft: 5px 5px;
+	border-bottom-left-radius: 5px 5px;
+}
+
 .input {
 	width:550px;
 	padding:5px;
@@ -117,7 +154,6 @@ border: 1px solid #ddd;
  color: #333;
  cursor: pointer;
 }
-
 .common_button:hover { background-color:#dcd9d9; }
 </style>
 </head>
@@ -137,10 +173,11 @@ border: 1px solid #ddd;
 		<div id="main-wrapper">
 			<div id="header">
 				<p>WarSocial is a free online social strategy game similar to risk and dicewars. Try it now!</p>
-				<%= link_to image_tag("buttons/facebook_login_button.png", :border => 0), user_omniauth_authorize_path(:facebook), :class => 'button' %>
-				<%= image_tag("buttons/register_button.png", :class => 'button') %>
-				<%= image_tag("buttons/login_button.png", :class => 'button') %>
-				
+				<% if !user_signed_in? %>
+					<%= link_to image_tag("buttons/facebook_login_button.png", :border => 0), user_omniauth_authorize_path(:facebook), :class => 'button' %>
+					<%= link_to image_tag("buttons/register_button.png", :border => 0), new_user_registration_path, :class => 'button' %>
+					<%= link_to image_tag("buttons/login_button.png", :border => 0), new_user_session_path,:class => 'button' %>
+				<% end %>
 			</div>
 			<div id="content">
 				<%= yield %>

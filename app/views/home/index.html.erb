@@ -11,13 +11,13 @@
 		<script src="../../../Gameboard/shared.js" type="text/javascript"></script>
 		<script src="../../../Gameboard/warsocial.js" type="text/javascript"></script>
 	<% else %>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=2" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=2" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=2" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=2" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=2" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=2" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=2" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=3" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=3" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=3" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=3" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=3" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=3" type="text/javascript"></script>
+		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=3" type="text/javascript"></script>
 	<% end %>
 	
 	<script type="text/javascript">
@@ -85,26 +85,30 @@
 <% end %>
 
 <% if user_signed_in? %>
-
-	<%= link_to "Sit", add_line_home_index_path(:game_name => @game.name, :entry => "sit"), :remote=>true, :id => "sit_in" %>
+	<div id="game">
+		<div id="game_header"></div>
+		<div id="game_main">
+			<%= link_to "Sit", add_line_home_index_path(:game_name => @game.name, :entry => "sit"), :remote=>true, :id => "sit_in" %>
 	
-	<div id="stage" style="position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
-		<canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
-		<canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
-		<canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-		<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-	  <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
-	  <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
-		<div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
-		<div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
-		<%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
-		<%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
-		<%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
-		<%= image_tag("gameboard/dice3.png", :id => 'dice3', :style => 'display:none') %>
-		<%= image_tag("gameboard/dice4.png", :id => 'dice4', :style => 'display:none') %>
-		<%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
-		<%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
-		<%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
+			<div id="stage" style="position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
+				<canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
+				<canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+				<canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+				<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+			  <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
+			  <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
+				<div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+				<div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+				<%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
+				<%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
+				<%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
+				<%= image_tag("gameboard/dice3.png", :id => 'dice3', :style => 'display:none') %>
+				<%= image_tag("gameboard/dice4.png", :id => 'dice4', :style => 'display:none') %>
+				<%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
+				<%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
+				<%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
+			</div>
+		</div>
 	</div>
 	<%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn" %>
 	<div id="chat_window" class="bordered">
