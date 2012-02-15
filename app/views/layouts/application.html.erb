@@ -14,6 +14,11 @@
 	src: url('/Atrament/Atrament-7-BoldSC.otf');
 }
 
+@font-face {
+	font-family: Atrament-Medium;
+	src: url('/Atrament/Atrament-5-Medium.otf');
+}
+
 body { 
   background: #dbdbdb url(<%=image_path "background.png"%>);
   background-position: center;
@@ -49,6 +54,29 @@ div#footer {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: -8px;
+	color: white;
+}
+
+div#footer .fourth {
+	float: left;
+	width: 210px;
+	margin-top: -5px;
+	margin-left: 40px;
+}
+
+div#footer a {
+	color: white;
+	font-size: .9em;
+}
+
+div#footer p.item {
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
+div#footer p.title {
+	font-size: 25px;
+	font-family: Atrament-Medium;
 }
 
 div#side-bar {
@@ -185,8 +213,36 @@ div#game_main {
 		</div>
 	</div>
 	<div id="footer">
-	
+		<div class="fourth"> 
+			<p class="title">Play Anywhere</p>
+			<div style="height: 175px">
+				
+			</div>
+		</div>
+		<div class="fourth"> 
+			<p class="title">Connect With Us</p>
+			<p class="item"><%= link_to "Follow us on Facebook", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Press Resources", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Press Releases", new_user_registration_path %></p>
+		</div>
+		<div class="fourth"> 
+			<p class="title">About Us</p>
+			<p class="item"><%= link_to "About WarSocial", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Jobs", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Customer Stories", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Press Resources", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Press Releases", new_user_registration_path %></p>
+		</div>
+		<div class="fourth"> 
+			<p class="title">Contact Us</p>
+			<p class="item"><%= link_to "Contact WarSocial", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Partner With Us", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Abuse Desk", new_user_registration_path %></p>
+			<p class="item"><%= link_to "WarSocial Status", new_user_registration_path %></p>
+		</div>
+		<div style="width:100%; float:left; margin-left:30px; font-size:.8em; color:gray;">
+			<p>&copy; 2011-2012 WarSocial. All Rights Reserved.</p>
+		</div>
 	</div>
-
 </body>
 </html>
