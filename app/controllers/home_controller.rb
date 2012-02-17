@@ -56,6 +56,43 @@ class HomeController < ApplicationController
     render :text=>"Success", :status=>200
   end
   
+  def sit
+    game = Game.get_game(game_name)
+
+    if game.state == Game::WAITING_STATE
+      game.add_player current_user
+    else
+      render :text=>"Game has already started.", :status=>500
+    end
+    
+    render :text=>"Success", :status=>200
+  end
+  
+  def stand
+    game = Game.get_game(game_name)
+    
+    if (game.is_user_in_game?(current_user)
+      Pusher[game_name].trigger(GameMsgType::STAND, {:user => current_user.id})
+      
+      render :text=>"Success", :status=>200
+    else
+      render :text=>"User not in game", :status=>500
+    end
+    
+  end
+  
+  def flag
+    game = Game.get_game(game_name)
+    
+    if (game.is_user_in_game?(current_user)
+      Pusher[game_name].trigger(GameMsgType::FLAG, {:user => current_user.id})
+      
+      render :text=>"Success", :status=>200
+    else
+      render :text=>"User not in game", :status=>500
+    end
+  end
+  
   def force_end_turn
     auth = params[:auth]
     game_name = params[:game_name]

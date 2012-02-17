@@ -20,6 +20,9 @@ Dice::Application.routes.draw do
     collection do
       get :add_line, :as => :add_line
       get :end_turn, :as => :end_turn
+      get :sit, :as => :sit
+      get :stand, :as => :stand
+      get :flag, :as => :flag
   #    get :force_end_turn, :as => :force_end_turn
     end   
   end

@@ -92,6 +92,35 @@ div#side-bar {
 	border-right: 3px solid black;
 }
 
+div#side-bar div.avatar {
+	background-color: white;
+	height: 50px;
+	width: 50px;
+	float: left;
+	margin-left: 10px;
+	-moz-border-radius: 5px 5px;
+	border-radius: 5px 5px;
+	-moz-border-radius: 5px 5px;
+	border-radius: 5px 5px;
+}
+
+div#side-bar #username {
+	float:left;
+	width: 110px;
+	margin-left: 10px;
+	margin-top: -3px;
+	margin-bottom: 0px;
+	font-size: 1.7em;
+	font-family: Atrament-BoldSC;
+}
+
+div#side-bar .top_links {
+	float:left;
+	color: gray;
+	font-size: .8em;
+	margin-left: 10px;
+}
+
 div#side-bar a {
 	color: white;
 }
@@ -194,8 +223,12 @@ div#game_main {
 			</center>
 			
 			<% if user_signed_in? %>
-				You are signed in as <%= current_user.username %>.
-				<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>.
+				<div style="margin-top: 30px;">
+					<div class="avatar"></div>
+					<p id="username"><%= current_user.username %></p><br>
+					<%= link_to "Settings", "#", :class => "top_links" %>
+					<%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => "top_links" %>
+				</div>
 			<% end %>
 		</div>
 		<div id="main-wrapper">
@@ -221,24 +254,24 @@ div#game_main {
 		</div>
 		<div class="fourth"> 
 			<p class="title">Connect With Us</p>
-			<p class="item"><%= link_to "Follow us on Facebook", new_user_registration_path %></p>
-			<p class="item"><%= link_to "Press Resources", new_user_registration_path %></p>
-			<p class="item"><%= link_to "Press Releases", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Follow us on Facebook", "http://apps.facebook.com/warsocial" %></p>
+			<p class="item"><%= link_to "Press Resources", "#" %></p>
+			<p class="item"><%= link_to "Press Releases", "#" %></p>
 		</div>
 		<div class="fourth"> 
 			<p class="title">About Us</p>
-			<p class="item"><%= link_to "About WarSocial", new_user_registration_path %></p>
-			<p class="item"><%= link_to "Jobs", new_user_registration_path %></p>
-			<p class="item"><%= link_to "Customer Stories", new_user_registration_path %></p>
-			<p class="item"><%= link_to "Press Resources", new_user_registration_path %></p>
-			<p class="item"><%= link_to "Press Releases", new_user_registration_path %></p>
+			<p class="item"><%= link_to "About WarSocial", "#" %></p>
+			<p class="item"><%= link_to "Jobs", "#" %></p>
+			<p class="item"><%= link_to "Customer Stories", "#" %></p>
+			<p class="item"><%= link_to "Press Resources", "#" %></p>
+			<p class="item"><%= link_to "Press Releases", "#" %></p>
 		</div>
 		<div class="fourth"> 
 			<p class="title">Contact Us</p>
-			<p class="item"><%= link_to "Contact WarSocial", new_user_registration_path %></p>
-			<p class="item"><%= link_to "Partner With Us", new_user_registration_path %></p>
-			<p class="item"><%= link_to "Abuse Desk", new_user_registration_path %></p>
-			<p class="item"><%= link_to "WarSocial Status", new_user_registration_path %></p>
+			<p class="item"><%= link_to "Contact WarSocial", "#" %></p>
+			<p class="item"><%= link_to "Partner With Us", "#" %></p>
+			<p class="item"><%= link_to "Abuse Desk", "#" %></p>
+			<p class="item"><%= link_to "WarSocial Status", "#" %></p>
 		</div>
 		<div style="width:100%; float:left; margin-left:30px; font-size:.8em; color:gray;">
 			<p>&copy; 2011-2012 WarSocial. All Rights Reserved.</p>

@@ -3,6 +3,8 @@ class Player < ActiveRecord::Base
   belongs_to :user
   has_many :lands
   
+  DEFAULT_PLAYER_STATE = "waiting"
+  
   attr_accessible :seat_number, :is_turn, :user
   
   def as_json(options={})

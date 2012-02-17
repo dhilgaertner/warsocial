@@ -6,5 +6,7 @@ class GameMsgType
   TURN = "new_turn"
   DEPLOY = "deploy"
   FORCETURN = "force_turn"
+  QUIT = "player_quit"
+  STAND = "player_stand"
   INFO = "info"
 end

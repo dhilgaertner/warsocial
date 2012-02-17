@@ -3,10 +3,10 @@ class Game < ActiveRecord::Base
   has_many :players, :dependent => :destroy
   has_many :game_logs, :dependent => :destroy
   has_many :lands, :dependent => :destroy
-  
+  has_many :users, :through => :players
   require 'constants/message_type'
   
-  # Game States
+  # Game States: Default for Migration
   WAITING_STATE = "waiting for players"
   STARTED_STATE = "game started"
   FINISHED_STATE = "game finished"
@@ -19,9 +19,31 @@ class Game < ActiveRecord::Base
     games = Game.where("name = ? AND state != ?", name, Game::FINISHED_STATE)
     
     if games.size == 0 
-      return Map.where("name = ?", "jurgen1").first.games.create(:name => name)
+      return Map.where("name = ?", "default").first.games.create(:name => name)
     else
       return games.first
+    end
+  end
+  
+  # Is the user in the game?
+  def is_user_in_game?
+    user = self.users.get(current_user.id)
+    
+    if (user != nil)
+      return true
+    else
+      return false
+    end
+  end
+  
+  # Is it the user's turn?
+  def is_users_turn?
+    user = self.users.get(current_user.id)
+    
+    if (user != nil)
+      return user.players.where(game_id = ?, games.first.id).first.is_turn
+    else
+      return false
     end
   end
   
