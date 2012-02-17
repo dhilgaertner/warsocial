@@ -6,7 +6,7 @@ class HomeController < ApplicationController
     
     @dev = params[:dev] == nil ? false : true
     
-    @game = Game.get_game(name, map_name == nil ? "jurgen1" : map_name)
+    @game = Game.get_game(name, map_name)
     
     @init_data = { :who_am_i => 0, 
                    :map_layout => ActiveSupport::JSON.decode(@game.map.json),
@@ -54,7 +54,6 @@ class HomeController < ApplicationController
     game = Game.get_game(game_name)
     
     if (game.is_users_turn?(current_user))
-      game = Game.get_game(game_name)
       game.end_turn
     
       render :text=>"Success", :status=>200
@@ -114,7 +113,7 @@ class HomeController < ApplicationController
     game_name = params[:game_name]
     
     if auth == "whisper" #TODO: Better auth (Dustin)
-      game = Game.get_game(game_name)
+      game = Game.get_game(game_name, nil)
       game.force_end_turn
     end
     

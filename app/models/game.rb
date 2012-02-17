@@ -15,8 +15,10 @@ class Game < ActiveRecord::Base
   attr_accessible :name, :state, :turn_timer_id
   
   # Find running game by name or create a new one
-  def self.get_game(name, map_name)
+  def self.get_game(name, map_name = nil)
     games = Game.where("name = ? AND state != ?", name, Game::FINISHED_STATE)
+    
+    map_name = map_name == nil ? "jurgen1" : map_name
     
     if games.size == 0 
       return Map.where("name = ?", map_name).first.games.create(:name => name)
