@@ -2,10 +2,11 @@ class HomeController < ApplicationController
   def index
     @user = User.new(params[:user])
     name = params[:game_name] == nil ? "home" : params[:game_name]
+    map_name = params[:map_name]
     
     @dev = params[:dev] == nil ? false : true
     
-    @game = Game.get_game(name)
+    @game = Game.get_game(name, map_name == nil ? "jurgen1" : map_name)
     
     @init_data = { :who_am_i => 0, 
                    :map_layout => ActiveSupport::JSON.decode(@game.map.json),
