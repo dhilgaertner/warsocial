@@ -19,7 +19,7 @@ class Game < ActiveRecord::Base
     games = Game.where("name = ? AND state != ?", name, Game::FINISHED_STATE)
     
     if games.size == 0 
-      return Map.where("name = ?", "default").first.games.create(:name => name)
+      return Map.where("name = ?", "jurgen1").first.games.create(:name => name)
     else
       return games.first
     end
