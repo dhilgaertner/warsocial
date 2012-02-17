@@ -38,12 +38,12 @@ class HomeController < ApplicationController
     
     game = Game.get_game(game_name)
     
-    if game.state == Game::STARTED_STATE
+    if (game.is_users_turn?(current_user))
       game.attack(attacking_land_id.to_i, defending_land_id.to_i)
-      
+    
       render :text=>"Success", :status=>200
     else
-      render :text=>"Game is not in started state.", :status=>500
+      render :text=>"Not your turn", :status=>500
     end
   end
   
@@ -51,27 +51,40 @@ class HomeController < ApplicationController
     game_name = params[:game_name]
     
     game = Game.get_game(game_name)
-    game.end_turn
     
-    render :text=>"Success", :status=>200
+    if (game.is_users_turn?(current_user))
+      game = Game.get_game(game_name)
+      game.end_turn
+    
+      render :text=>"Success", :status=>200
+    else
+      render :text=>"Not your turn", :status=>500
+    end
   end
   
   def sit
+    game_name = params[:game_name]
+    
     game = Game.get_game(game_name)
 
-    if game.state == Game::WAITING_STATE
-      game.add_player current_user
+    if (!game.is_user_in_game?(current_user))
+      if game.state == Game::WAITING_STATE
+        game.add_player current_user
+        render :text=>"Success", :status=>200
+      else
+        render :text=>"Game has already started.", :status=>500
+      end
     else
-      render :text=>"Game has already started.", :status=>500
+      render :text=>"Already in game", :status=>500
     end
-    
-    render :text=>"Success", :status=>200
   end
   
   def stand
+    game_name = params[:game_name]
+    
     game = Game.get_game(game_name)
     
-    if (game.is_user_in_game?(current_user)
+    if (game.is_user_in_game?(current_user))
       Pusher[game_name].trigger(GameMsgType::STAND, {:user => current_user.id})
       
       render :text=>"Success", :status=>200
@@ -82,9 +95,11 @@ class HomeController < ApplicationController
   end
   
   def flag
+    game_name = params[:game_name]
+    
     game = Game.get_game(game_name)
     
-    if (game.is_user_in_game?(current_user)
+    if (game.is_user_in_game?(current_user))
       Pusher[game_name].trigger(GameMsgType::FLAG, {:user => current_user.id})
       
       render :text=>"Success", :status=>200

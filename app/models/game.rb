@@ -26,10 +26,8 @@ class Game < ActiveRecord::Base
   end
   
   # Is the user in the game?
-  def is_user_in_game?
-    user = self.users.get(current_user.id)
-    
-    if (user != nil)
+  def is_user_in_game?(user)
+    if (self.users.exists?(user))
       return true
     else
       return false
@@ -37,11 +35,11 @@ class Game < ActiveRecord::Base
   end
   
   # Is it the user's turn?
-  def is_users_turn?
-    user = self.users.get(current_user.id)
+  def is_users_turn?(user)
+    player = Player.where("game_id = ? AND user_id = ?", self.id, user.id)
     
-    if (user != nil)
-      return user.players.where(game_id = ?, games.first.id).first.is_turn
+    if (player.size > 0)
+      return player.first.is_turn 
     else
       return false
     end
@@ -221,12 +219,12 @@ class Game < ActiveRecord::Base
   def next_player
     sorted_players = self.players.sort { |a,b| a.seat_number <=> b.seat_number }
     
-    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{sorted_players.size}", :name => "Server"})
+    Pusher[self.name].trigger(GameMsgType::INFO, {:entry => "#{sorted_players.size}", :name => "Server"})
     
     i = sorted_players.index(current_player)
     
-    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{i}", :name => "Server"})
-    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{current_player.user.username}", :name => "Server"})
+    Pusher[self.name].trigger(GameMsgType::INFO, {:entry => "#{i}", :name => "Server"})
+    Pusher[self.name].trigger(GameMsgType::INFO, {:entry => "#{current_player.user.username}", :name => "Server"})
     
     if (i == (sorted_players.size - 1))
       sorted_players[0]
