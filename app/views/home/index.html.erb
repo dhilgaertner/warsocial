@@ -35,6 +35,7 @@
 			var pusher = new Pusher('f85901afd3e9eaff226f');
 	    var channel = pusher.subscribe("<%= @game.name %>");
 	    channel.bind('new_chat_line', function(data) {
+				$('#main_discussion tbody').append($('<tr><td>' + data.name + ': ' + data.entry + '</td></tr>'));
 		  	$('#chat_list').append($('<li>' + data.name + ': ' + data.entry + '</li>'));
 	    });
 			
@@ -90,33 +91,51 @@
 		<div id="game_main">
 			<%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote=>true, :id => "sit_in" %>
 			<%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote=>true %>
-	
-			<div id="stage" style="position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
-				<canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
-				<canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
-				<canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-				<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-			  <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
-			  <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
-				<div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
-				<div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
-				<%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
-				<%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
-				<%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
-				<%= image_tag("gameboard/dice3.png", :id => 'dice3', :style => 'display:none') %>
-				<%= image_tag("gameboard/dice4.png", :id => 'dice4', :style => 'display:none') %>
-				<%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
-				<%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
-				<%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
+			<div>
+				<div id="top_players">
+					<div class="player"><div class="player_stat1"><div class="avatar"></div></div><div class="player_stat2"></div></div>
+					<div class="player"><div class="player_stat1"><div class="avatar"></div></div><div class="player_stat2"></div></div>
+					<div class="player"><div class="player_stat1"><div class="avatar"></div></div><div class="player_stat2"></div></div>
+				</div>
+				<div style="position: relative">
+					<div id="left_players">
+						<div class="player"><div class="player_stat1"><div class="avatar"></div></div><div class="player_stat2"></div></div>
+						<div class="player"><div class="player_stat1"><div class="avatar"></div></div><div class="player_stat2"></div></div>
+					</div>
+					<div id="stage" style="top: 0px; left: 0px; position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
+						<canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
+						<canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+						<canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+						<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+					  <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
+					  <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
+						<div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+						<div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+						<%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
+						<%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
+						<%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
+						<%= image_tag("gameboard/dice3.png", :id => 'dice3', :style => 'display:none') %>
+						<%= image_tag("gameboard/dice4.png", :id => 'dice4', :style => 'display:none') %>
+						<%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
+						<%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
+						<%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
+					</div>
+					<div id="right_players">
+						<div class="player"><div class="player_stat1"><div class="avatar"></div></div><div class="player_stat2"></div></div>
+						<div class="player"><div class="player_stat1"><div class="avatar"></div></div><div class="player_stat2"></div></div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn" %>
-	<%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote=>true %>
-	
-	<div id="chat_window" class="bordered">
-  		<ul id="chat_list">
-  		</ul>
+		<%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn" %>
+		<%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote=>true %>
+
+		<div id="chat_window">
+			<table id="main_discussion">
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	
 	<center>
