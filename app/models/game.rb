@@ -170,8 +170,8 @@ class Game < ActiveRecord::Base
        end
     end
     
-    random_picks.shuffle
-    land_ids.shuffle
+    random_picks = random_picks.shuffle
+    land_ids = land_ids.shuffle
     
     land_ids.each do |id|
       player = random_picks.pop
@@ -331,7 +331,7 @@ class Game < ActiveRecord::Base
   private
   def rand_with_range(values = nil)
     if values.respond_to? :sort_by
-      values.sort_by { rand }.first
+      result = values.sort_by { rand }.first
     else
       rand(values)
     end
