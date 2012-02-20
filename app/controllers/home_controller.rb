@@ -104,8 +104,8 @@ class HomeController < ApplicationController
     
     if (game.is_user_in_game?(current_user))
       if game.state == Game::STARTED_STATE
-        Pusher[game_name].trigger(GameMsgType::FLAG, {:user => current_user.id})
-
+        game.flag_player(current_user)
+        
         render :text=>"Success", :status=>200
       else
         render :text=>"Game has not started.", :status=>500

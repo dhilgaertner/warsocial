@@ -82,6 +82,27 @@ class Game < ActiveRecord::Base
     end
   end
   
+  # Player flags
+  def flag_player(user)
+    if self.state == Game::STARTED_STATE
+      player = user.players.where("game_id = ?", self.id).first
+      
+      if (player != nil)
+        player.state = Player::DEAD_PLAYER_STATE
+        player.lands.clear
+        player.save
+        
+        Pusher[self.name].trigger(GameMsgType::QUIT, player) 
+        
+        check_for_winner
+      end 
+      
+      return player
+    else 
+      return nil
+    end
+  end
+  
   # Attack
   def attack(attacking_land_id, defending_land_id)
     lands = self.map.get_lands
@@ -121,12 +142,23 @@ class Game < ActiveRecord::Base
       Pusher[self.name].trigger(GameMsgType::INFO, { :winner_before => winner, :loser_before => loser })
       
       if (atk_land == winner)
+        loser_player = loser.player
+        
         loser.deployment = winner.deployment - 1
         loser.player = winner.player
         loser.save
         
         winner.deployment = 1
         winner.save
+        
+        if (loser_player != nil)
+          if (loser_player.lands.size == 0)
+            loser_player.state = Player::DEAD_PLAYER_STATE
+            loser_player.save
+          
+            check_for_winner
+          end
+        end
       else 
         loser.deployment = 1
         loser.save
@@ -200,6 +232,7 @@ class Game < ActiveRecord::Base
     end
     
     job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 15.seconds.from_now)
+    
     self.state = Game::STARTED_STATE
     self.turn_timer_id = job.id
     self.save
@@ -252,10 +285,21 @@ class Game < ActiveRecord::Base
     end
   end
   
-  # Check whether or not the land is owned by the player
+  # Check whether or not the game is over
   private
-  def does_player_own_land?(player, land)
+  def check_for_winner
+    players_left = self.players.where('state != ?', Player::DEAD_PLAYER_STATE)
     
+    if (players_left.size == 1)
+      winner = players_left.first
+      
+      self.state = Game::FINISHED_STATE
+      self.save
+      
+      Pusher[self.name].trigger(GameMsgType::WINNER, winner)
+      
+      return winner
+    end 
   end
   
   # Check whether or not the land is owned by the player
@@ -313,7 +357,7 @@ class Game < ActiveRecord::Base
     
     Pusher[self.name].trigger(GameMsgType::INFO, {:islands => final_islands, :reenforcements => result })
     
-    result
+    result == 0 ? 1 : result
   end
   
   # Re-enforce player's lands randomly
