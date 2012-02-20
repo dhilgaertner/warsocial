@@ -1,32 +1,44 @@
 
 function Seats(numberOfSeats) {
-  var _seats = new Object();
+  var ctx = this;
+	this._seats = new Object();
 	
 	for (i = 0;i < numberOfSeats;i++) {
-		_seats[i.toString()] = { player: null, seat: $('#game_seat_' + i.toString()) };
+		this._seats[i.toString()] = { player: null, seat: $('#game_seat_' + i.toString()) };
 	}
 	
 	this.occupySeat = function(key, player) {
+		var item = ctx._seats[key];
 		
+		item.player = player;
+		$(item.seat).find('.name').html(player.name);
 	};
 	
 	this.emptySeat = function(key) {
+		var item = ctx._seats[key];
 		
+		item.player = null;
+		$(item.seat).find('.name').html("");
 	};
 }
 
 Seats.prototype.sit = function(player) {
-  $.each(_seats, function(key, occupant) { 
-		if (occupant == null) {
-			this.occupySeat(key, player);
+	var ctx = this;
+  $.each(this._seats, function(key, occupant) { 
+		if (occupant.player == null) {
+			ctx.occupySeat(key, player);
+			return false;
 		}
 	});
 };
 
 Seats.prototype.stand = function(player) {
-	$.each(_seats, function(key, occupant) {
-		if (occupant.player_id == player.player_id) {
-			this.emptySeat(key);
+	var ctx = this;
+	$.each(this._seats, function(key, occupant) {
+		if (occupant.player != null) {
+			if (occupant.player.player_id == player.player_id) {
+				ctx.emptySeat(key);
+			}
 		}
 	});
 };
