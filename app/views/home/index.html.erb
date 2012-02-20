@@ -89,7 +89,10 @@
 		  	next_turn(data.player_id);
 	    });
 	
-			
+			$("#form_chat")
+			.bind("ajax:complete", function(xhr, status) {
+				$('#entry').val("");
+			});
 	});
 	
 	$(window).load(function() {
@@ -98,11 +101,6 @@
 		game = null;
 		
 		init(global_init_data);
-		
-		$("#form_chat").bind("ajax:success", function(data, status, xhr) {
-			alert('hello');
-			$('#entry').text = "";
-		});
 	});
 	
   </script>
