@@ -50,7 +50,7 @@ class Game < ActiveRecord::Base
   # Sit player at game table.
   def add_player(user)
     if self.state == Game::WAITING_STATE
-      new_player = self.players.create(:user => user, :seat_number => seat, :is_turn => false)
+      new_player = self.players.create(:user => user, :seat_number => self.players.size, :is_turn => false)
       
       Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{self.players.size} player(s) seated.", :name => "Server"})
       Pusher[self.name].trigger(GameMsgType::SIT, player)
