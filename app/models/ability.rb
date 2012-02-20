@@ -30,7 +30,7 @@ class Ability
       can :access, :rails_admin
       can :manage, :all
     else
-      can :manage, :all
+      can :read, :all
     end
   end
 end
