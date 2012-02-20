@@ -28,82 +28,87 @@
 	var global_init_data;
 	
 	$(document).ready(function() {
-	  	// Enable pusher logging - don't include this in production
-	    Pusher.log = function(message) {
-	      if (window.console && window.console.log) window.console.log(message);
-	    };
-			
-	    // Flash fallback logging - don't include this in production
-	    WEB_SOCKET_DEBUG = true;
-			var pusher = new Pusher('f85901afd3e9eaff226f');
-	    var channel = pusher.subscribe("<%= @game.name %>");
-			
-			$('#end_turn').hide();
-			
-			var seats = new Seats(8);
-			
-			var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
-			
-			channel.bind('new_chat_line', function(data) {
-				$('#main_discussion tbody').append($('<tr><td>' + data.name + ': ' + data.entry + '</td></tr>'));
-	    });
-	
-			channel.bind('game_start', function(data) {
-				data.who_am_i = who_am_i;
-				
-				$('#end_turn').hide();
-				for(var i=0; i<data.players.length; i++) {
-		    	if (data.players[i].is_turn == true) {
-						if (data.players[i].player_id == who_am_i) {
-							$('#end_turn').show();
-						}
-					}
-		    }
-				
-				data.players
-		  	init(data);
-	    });
-			
-			channel.bind('player_sit', function(player) {
-		  	seats.sit(player);
-	    });
-	
-			channel.bind('player_stand', function(player) {
-		  	seats.stand(player);
-	    });
-	
-			channel.bind('player_quit', function(player) {
-		  	player_quit(player.player_id);
-	    });
-	
-			channel.bind('attack', function(data) {
-		  	attack(data);
-	    });
-	
-			channel.bind('deploy', function(data) {
-		  	deploy(data);
-	    });
-	
-			channel.bind('new_turn', function(data) {
-				if (data.player_id == who_am_i) {
-					$('#end_turn').show();
-				} else {
-					$('#end_turn').hide();
-				}
-		  	next_turn(data.player_id);
-	    });
-	
-			$("#form_chat")
-			.bind("ajax:complete", function(xhr, status) {
-				$('#entry').val("");
-			});
-	});
-	
-	$(window).load(function() {
 		global_game_name = "<%= @game.name %>";
 		global_init_data = <%= @init_data.to_json.html_safe %>;
 		game = null;
+	
+  	// Enable pusher logging - don't include this in production
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) window.console.log(message);
+    };
 		
+    // Flash fallback logging - don't include this in production
+    WEB_SOCKET_DEBUG = true;
+		var pusher = new Pusher('f85901afd3e9eaff226f');
+    var channel = pusher.subscribe("<%= @game.name %>");
+		
+		$('#end_turn').hide();
+		
+		var seats = new Seats(8, global_init_data.players);
+		
+		var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
+		
+		channel.bind('new_chat_line', function(data) {
+			$('#main_discussion tbody').append($('<tr><td>' + data.name + ': ' + data.entry + '</td></tr>'));
+    });
+
+		channel.bind('game_start', function(data) {
+			data.who_am_i = who_am_i;
+			
+			$('#end_turn').hide();
+			for(var i=0; i<data.players.length; i++) {
+	    	if (data.players[i].is_turn == true) {
+					if (data.players[i].player_id == who_am_i) {
+						$('#end_turn').show();
+					}
+				}
+	    }
+			
+			data.players
+	  	init(data);
+    });
+		
+		channel.bind('player_sit', function(player) {
+	  	seats.sit(player);
+    });
+
+		channel.bind('player_stand', function(player) {
+	  	seats.stand(player);
+    });
+
+		channel.bind('player_quit', function(player) {
+	  	player_quit(player.player_id);
+    });
+
+		channel.bind('attack', function(data) {
+	  	attack(data);
+    });
+
+		channel.bind('deploy', function(data) {
+	  	deploy(data);
+    });
+
+		channel.bind('game_winner', function(player) {
+	  	seats.clear();
+			alert(player.name + " won!");
+    });
+
+		channel.bind('new_turn', function(data) {
+			if (data.player_id == who_am_i) {
+				$('#end_turn').show();
+			} else {
+				$('#end_turn').hide();
+			}
+	  	next_turn(data.player_id);
+    });
+
+		$("#form_chat")
+		.bind("ajax:complete", function(xhr, status) {
+			$('#entry').val("");
+		});
+	});
+	
+	$(window).load(function() {
 		init(global_init_data);
 	});
 	
@@ -114,8 +119,9 @@
 	<div id="game">
 		<div id="game_header"></div>
 		<div id="game_main">
-			<%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote=>true, :id => "sit_in" %>
-			<%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote=>true %>
+			<%= link_to image_tag("buttons/sit_button.png", :border => 0), sit_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
+			<%= link_to image_tag("buttons/stand_button.png", :border => 0), stand_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
+			
 			<div>
 				<div id="top_players">
 					<div class="player">
@@ -212,9 +218,10 @@
 				</div>
 			</div>
 		</div>
-		<%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn" %>
-		<%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote=>true %>
 
+		<%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :style => "float: right; margin-right:10px; margin-top: 4px" %>
+		<%= link_to image_tag("buttons/flag_button.png", :border => 0), flag_home_index_path(:game_name => @game.name), :remote=>true, :style => "float: right; margin-right:10px; margin-top: 4px" %>
+		
 		<div id="chat_window">
 			<table id="main_discussion">
 				<tbody>

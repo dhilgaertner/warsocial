@@ -1,5 +1,5 @@
 
-function Seats(numberOfSeats) {
+function Seats(numberOfSeats, players) {
   var ctx = this;
 	this._seats = new Object();
 	
@@ -24,7 +24,25 @@ function Seats(numberOfSeats) {
 		
 		$(item.seat).hide();
 	};
+	
+	if (players != null) {
+		for (i = 0;i < players.length;i++) {
+			player = players[i];
+			if (player.state != "dead") {
+				this.occupySeat((player.seat_id - 1).toString(), player);
+			}
+		}
+	}
 }
+
+Seats.prototype.clear = function() {
+	var ctx = this;
+  $.each(this._seats, function(key, occupant) { 
+		if (occupant.player != null) {
+			ctx.emptySeat(key);
+		}
+	});
+};
 
 Seats.prototype.sit = function(player) {
 	var ctx = this;
