@@ -25,6 +25,7 @@
 	<script type="text/javascript">
 	
 	var global_game_name;
+	var global_init_data;
 	
 	$(document).ready(function() {
 	  	// Enable pusher logging - don't include this in production
@@ -36,9 +37,6 @@
 	    WEB_SOCKET_DEBUG = true;
 			var pusher = new Pusher('f85901afd3e9eaff226f');
 	    var channel = pusher.subscribe("<%= @game.name %>");
-	    channel.bind('new_chat_line', function(data) {
-				$('#main_discussion tbody').append($('<tr><td>' + data.name + ': ' + data.entry + '</td></tr>'));
-	    });
 			
 			$('#end_turn').hide();
 			
@@ -46,6 +44,10 @@
 			
 			var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
 			
+			channel.bind('new_chat_line', function(data) {
+				$('#main_discussion tbody').append($('<tr><td>' + data.name + ': ' + data.entry + '</td></tr>'));
+	    });
+	
 			channel.bind('game_start', function(data) {
 				data.who_am_i = who_am_i;
 				
@@ -86,13 +88,16 @@
 				}
 		  	next_turn(data.player_id);
 	    });
-			
-			global_game_name = "<%= @game.name %>";
-			game = null;
-			
-			init(<%= @init_data.to_json.html_safe %>);
-			
 	});
+	
+	$(window).load(function() {
+		global_game_name = "<%= @game.name %>";
+		global_init_data = <%= @init_data.to_json.html_safe %>;
+		game = null;
+		
+		init(global_init_data);
+	});
+	
   </script>
 <% end %>
 
@@ -104,45 +109,55 @@
 			<%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote=>true %>
 			<div>
 				<div id="top_players">
-					<div id="game_seat_2" class="player">
-						<div class="player_stat1">
-							<div class="avatar"></div>
-							<div class="name"></div>
+					<div class="player">
+						<div id="game_seat_2" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar"></div>
+								<div class="name"></div>
+							</div>
+							<div class="player_stat2"></div>
 						</div>
-						<div class="player_stat2"></div>
 					</div>
-					<div id="game_seat_3" class="player">
-						<div class="player_stat1">
-							<div class="avatar"></div>
-							<div class="name"></div>
+					<div class="player">
+						<div id="game_seat_3" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar"></div>
+								<div class="name"></div>
+							</div>
+							<div class="player_stat2"></div>
 						</div>
-						<div class="player_stat2"></div>
 					</div>
-					<div id="game_seat_4" class="player">
-						<div class="player_stat1">
-							<div class="avatar"></div>
-							<div class="name"></div>
+					<div class="player">
+						<div id="game_seat_4" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar"></div>
+								<div class="name"></div>
+							</div>
+							<div class="player_stat2"></div>
 						</div>
-						<div class="player_stat2"></div>
 					</div>
 				</div>
 				<div style="position: relative">
 					<div id="left_players">
-						<div id="game_seat_1" class="player">
-							<div class="player_stat1">
-								<div class="avatar"></div>
-								<div class="clear"></div>
-								<div class="name"></div>
+						<div class="player">
+							<div id="game_seat_1" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+								</div>
+								<div class="player_stat2"></div>
 							</div>
-							<div class="player_stat2"></div>
 						</div>
-						<div id="game_seat_0" class="player">
-							<div class="player_stat1">
-								<div class="avatar"></div>
-								<div class="clear"></div>
-								<div class="name"></div>
+						<div class="player">
+							<div id="game_seat_0" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+								</div>
+								<div class="player_stat2"></div>
 							</div>
-							<div class="player_stat2"></div>
 						</div>
 					</div>
 					<div id="stage" style="top: 0px; left: 0px; position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
@@ -164,21 +179,25 @@
 						<%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
 					</div>
 					<div id="right_players">
-						<div id="game_seat_5" class="player">
-							<div class="player_stat1">
-								<div class="avatar"></div>
-								<div class="clear"></div>
-								<div class="name"></div>
+						<div class="player">
+							<div id="game_seat_5" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+								</div>
+								<div class="player_stat2"></div>
 							</div>
-							<div class="player_stat2"></div>
 						</div>
-						<div id="game_seat_6" class="player">
-							<div class="player_stat1">
-								<div class="avatar"></div>
-								<div class="clear"></div>
-								<div class="name"></div>
+						<div class="player">
+							<div id="game_seat_6" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+								</div>
+								<div class="player_stat2"></div>
 							</div>
-							<div class="player_stat2"></div>
 						</div>
 					</div>
 				</div>

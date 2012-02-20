@@ -12,6 +12,8 @@ function Seats(numberOfSeats) {
 		
 		item.player = player;
 		$(item.seat).find('.name').html(player.name);
+		
+		$(item.seat).show();
 	};
 	
 	this.emptySeat = function(key) {
@@ -19,6 +21,8 @@ function Seats(numberOfSeats) {
 		
 		item.player = null;
 		$(item.seat).find('.name').html("");
+		
+		$(item.seat).hide();
 	};
 }
 

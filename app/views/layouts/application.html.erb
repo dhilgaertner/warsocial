@@ -253,28 +253,22 @@ div#game_main #right_players{
 
 div#game_main #left_players .player{
 	margin-top: 40px;
-	position:relative;
-	width: 75px;
-	height: 150px;
+	width: 77px;
+	height: 152px;
 	float: left;
-	border: 1px solid #C0C0C0;
-	-moz-border-radius: 5px 5px;
-	border-radius: 5px 5px;
-	-moz-border-radius: 5px 5px;
-	border-radius: 5px 5px;
 }
 
 div#game_main #right_players .player{
 	margin-top: 40px;
+	width: 77px;
+	height: 152px;
+	float: left;
+}
+
+div#game_main .player div.ws_bordered{
 	position:relative;
 	width: 75px;
 	height: 150px;
-	float: left;
-	border: 1px solid #C0C0C0;
-	-moz-border-radius: 5px 5px;
-	border-radius: 5px 5px;
-	-moz-border-radius: 5px 5px;
-	border-radius: 5px 5px;
 }
 
 div#game_main #left_players div.avatar {
@@ -313,6 +307,14 @@ div#chat_window {
 	overflow: auto; 
 }
 
+.ws_bordered {
+	border: 1px solid #C0C0C0;
+	-moz-border-radius: 5px 5px;
+	border-radius: 5px 5px;
+	-moz-border-radius: 5px 5px;
+	border-radius: 5px 5px;
+}
+
 </style>
 </head>
 <body>
@@ -331,6 +333,13 @@ div#chat_window {
 					<%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => "top_links" %>
 				</div>
 			<% end %>
+			<br>
+			<div>
+				<p><%= link_to "jurgen1", "/game/jurgen1?map_name=jurgen1" %></p>
+				<p><%= link_to "jurgen2", "/game/jurgen2?map_name=jurgen2" %></p>
+				<p><%= link_to "jurgen3", "/game/jurgen3?map_name=jurgen3" %></p>
+				<p><%= link_to "alex1", "/game/alex1?map_name=alex1" %></p>
+			</div>
 		</div>
 		<div id="main-wrapper">
 			<div id="header">
