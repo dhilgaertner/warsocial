@@ -19,16 +19,6 @@ class HomeController < ApplicationController
     
     Pusher[game_name].trigger(GameMsgType::CHATLINE, {:entry => params[:entry], :name => current_user.username})
 
-    case params[:entry]
-      when "sit"
-        game = Game.get_game(game_name)
-    
-        if game.state == Game::WAITING_STATE
-          game.add_player current_user
-        else
-          render :text=>"Game has already started.", :status=>500
-        end
-    end
     render :text=>"Success", :status=>200
   end
   
@@ -40,9 +30,13 @@ class HomeController < ApplicationController
     game = Game.get_game(game_name)
     
     if (game.is_users_turn?(current_user))
-      game.attack(attacking_land_id.to_i, defending_land_id.to_i)
-    
-      render :text=>"Success", :status=>200
+      if game.state == Game::STARTED_STATE
+        game.attack(attacking_land_id.to_i, defending_land_id.to_i)
+
+        render :text=>"Success", :status=>200
+      else
+        render :text=>"Game has not started.", :status=>500
+      end
     else
       render :text=>"Not your turn", :status=>500
     end
@@ -54,9 +48,13 @@ class HomeController < ApplicationController
     game = Game.get_game(game_name)
     
     if (game.is_users_turn?(current_user))
-      game.end_turn
-    
-      render :text=>"Success", :status=>200
+      if game.state == Game::STARTED_STATE
+        game.end_turn
+
+        render :text=>"Success", :status=>200
+      else
+        render :text=>"Game has not started.", :status=>500
+      end
     else
       render :text=>"Not your turn", :status=>500
     end
@@ -69,7 +67,8 @@ class HomeController < ApplicationController
 
     if (!game.is_user_in_game?(current_user))
       if game.state == Game::WAITING_STATE
-        game.add_player current_user
+        game.add_player(current_user)
+        
         render :text=>"Success", :status=>200
       else
         render :text=>"Game has already started.", :status=>500
@@ -85,9 +84,13 @@ class HomeController < ApplicationController
     game = Game.get_game(game_name)
     
     if (game.is_user_in_game?(current_user))
-      Pusher[game_name].trigger(GameMsgType::STAND, {:user => current_user.id})
-      
-      render :text=>"Success", :status=>200
+      if game.state == Game::WAITING_STATE
+        game.remove_player(current_user)
+        
+        render :text=>"Success", :status=>200
+      else
+        render :text=>"Game has already started.", :status=>500
+      end
     else
       render :text=>"User not in game", :status=>500
     end
@@ -100,9 +103,13 @@ class HomeController < ApplicationController
     game = Game.get_game(game_name)
     
     if (game.is_user_in_game?(current_user))
-      Pusher[game_name].trigger(GameMsgType::FLAG, {:user => current_user.id})
-      
-      render :text=>"Success", :status=>200
+      if game.state == Game::STARTED_STATE
+        Pusher[game_name].trigger(GameMsgType::FLAG, {:user => current_user.id})
+
+        render :text=>"Success", :status=>200
+      else
+        render :text=>"Game has not started.", :status=>500
+      end
     else
       render :text=>"User not in game", :status=>500
     end

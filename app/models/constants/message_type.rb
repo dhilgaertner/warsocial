@@ -7,6 +7,7 @@ class GameMsgType
   DEPLOY = "deploy"
   FORCETURN = "force_turn"
   QUIT = "player_quit"
+  SIT = "player_sit"
   STAND = "player_stand"
   INFO = "info"
 end

@@ -50,16 +50,32 @@ class Game < ActiveRecord::Base
   # Sit player at game table.
   def add_player(user)
     if self.state == Game::WAITING_STATE
-      seat = self.players.size + 1
       new_player = self.players.create(:user => user, :seat_number => seat, :is_turn => false)
       
-      Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{seat} player(s) seated.", :name => "Server"})
+      Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{self.players.size} player(s) seated.", :name => "Server"})
+      Pusher[self.name].trigger(GameMsgType::SIT, player)
       
       if self.players.size == 2 
         start_game
       end
       
       return new_player
+    else 
+      return nil
+    end
+  end
+  
+  # Remove player at game table.
+  def remove_player(user)
+    if self.state == Game::WAITING_STATE
+      player = user.players.where("game_id = ?", self.id).first
+      
+      if (player != nil)
+        Player.destroy(player.id)
+        Pusher[self.name].trigger(GameMsgType::STAND, player) 
+      end 
+      
+      return player
     else 
       return nil
     end
