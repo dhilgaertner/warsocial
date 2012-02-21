@@ -53,7 +53,6 @@ class Game < ActiveRecord::Base
       seat = self.players.size + 1
       new_player = self.players.create(:user => user, :seat_number => seat, :is_turn => false)
       
-      Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{seat} player(s) seated.", :name => "Server"})
       Pusher[self.name].trigger(GameMsgType::SIT, new_player)
       
       if self.players.size == 2 
@@ -134,12 +133,8 @@ class Game < ActiveRecord::Base
       attack_sum = attack_results.inject{|sum,x| sum + x }
       defend_sum = defend_results.inject{|sum,x| sum + x }
       
-      Pusher[self.name].trigger(GameMsgType::INFO, { :attack_sum => attack_sum, :defend_sum => defend_sum })
-      
       winner = attack_sum > defend_sum ? atk_land : def_land
       loser = attack_sum > defend_sum ? def_land : atk_land
-      
-      Pusher[self.name].trigger(GameMsgType::INFO, { :winner_before => winner, :loser_before => loser })
       
       if (atk_land == winner)
         loser_player = loser.player
@@ -163,8 +158,6 @@ class Game < ActiveRecord::Base
         loser.deployment = 1
         loser.save
       end
-      
-      Pusher[self.name].trigger(GameMsgType::INFO, { :winner_after => winner, :loser_after => loser })
       
       data = { :attack_info => { :attacker_land_id => attacking_land_id, 
                                  :attacker_roll => attack_results, 
@@ -271,12 +264,7 @@ class Game < ActiveRecord::Base
   def next_player
     sorted_players = self.players.sort { |a,b| a.seat_number <=> b.seat_number }
     
-    Pusher[self.name].trigger(GameMsgType::INFO, {:entry => "#{sorted_players.size}", :name => "Server"})
-    
     i = sorted_players.index(current_player)
-    
-    Pusher[self.name].trigger(GameMsgType::INFO, {:entry => "#{i}", :name => "Server"})
-    Pusher[self.name].trigger(GameMsgType::INFO, {:entry => "#{current_player.user.username}", :name => "Server"})
     
     if (i == (sorted_players.size - 1))
       sorted_players[0]
@@ -355,8 +343,6 @@ class Game < ActiveRecord::Base
       end
     }
     
-    Pusher[self.name].trigger(GameMsgType::INFO, {:islands => final_islands, :reenforcements => result })
-    
     result == 0 ? 1 : result
   end
   
@@ -364,8 +350,6 @@ class Game < ActiveRecord::Base
   private
   def reenforce(player, num_armies)
     lands = player.lands
-    
-    Pusher[self.name].trigger(GameMsgType::INFO, lands)
     
     changed = Array.new
     num_armies.times do |x|
