@@ -197,6 +197,13 @@ class Game < ActiveRecord::Base
     self.end_turn
   end
   
+  # Check whether or not it is the user's turn
+  def is_user_turn?(user)
+    player = self.players.where("user_id = ? AND is_turn = ?", user.id, true)
+    
+    player.size > 0
+  end
+  
   # Start Game
   private
   def start_game
@@ -243,14 +250,6 @@ class Game < ActiveRecord::Base
              :deployment => self.lands }
                    
     Pusher[self.name].trigger(GameMsgType::START, data)
-  end
-  
-  # Check whether or not it is the user's turn
-  private
-  def is_user_turn?(user)
-    player = self.players.where("user_id = ? AND is_turn = ?", current_user.id, true)
-    
-    player.size > 0
   end
   
   # Find which player is currently having a turn

@@ -36,23 +36,23 @@ class Map < ActiveRecord::Base
           if (tiles[t_index] == 0) 
             next 
           end   # continue if this tile is an empty land
-          if ((col%2 == 0) && (row == height-1)) 
+          if ((col%2 == 1) && (row == height-1)) 
             next 
           end
           
           right_tile_index = nil
           if (col != width-1)  #If this tile is the last one of the column, no comparison with the right
-            right_tile_index = (col%2 == 0) ? t_index + 1 + width : t_index + 1   #Right tile is one line further for even id tiles
+            right_tile_index = (col%2 == 0) ? t_index + 1 : t_index + 1 + width   #Right tile is one line further for even id tiles
           end
           
           left_tile_index = nil
           if (col != 0)   # If this tile is the first one of the column, no comparison with the left
-            left_tile_index = (col%2 == 0) ? t_index - 1 + width : t_index - 1   # Left tile is one line further for even id tiles
+            left_tile_index = (col%2 == 0) ? t_index - 1 : t_index - 1 + width    # Left tile is one line further for even id tiles
           end
           
           bottom_tile_index = nil
           if (row != height-1)   # If this tile is in the last row of the map, no comparison with bottom line
-            bottom_tile_index = t_index + width;
+            bottom_tile_index = t_index + width
           end
           
           # now compare with left tile if exists
@@ -86,6 +86,8 @@ class Map < ActiveRecord::Base
           end
        end
     end
+    
+    Pusher["jurgen"].trigger(GameMsgType::INFO, lands)
     
     return lands
   end
