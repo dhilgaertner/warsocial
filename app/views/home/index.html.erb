@@ -48,8 +48,17 @@
 		
 		var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
 		
+		for(var i=0; i<global_init_data.players.length; i++) {
+    	if (global_init_data.players[i].is_turn == true) {
+				if (global_init_data.players[i].player_id == who_am_i) {
+					$('#end_turn').show();
+				}
+			}
+    }
+
 		channel.bind('new_chat_line', function(data) {
 			$('#main_discussion tbody').append($('<tr><td>' + data.name + ': ' + data.entry + '</td></tr>'));
+			$("#chat_window").animate({ scrollTop: $("#chat_window").prop("scrollHeight") }, 300);
     });
 
 		channel.bind('game_start', function(data) {
