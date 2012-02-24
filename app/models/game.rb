@@ -299,7 +299,7 @@ class Game < ActiveRecord::Base
   # Find which player is next in line turn-wise
   private
   def next_player
-    sorted_players = self.players.sort { |a,b| a.seat_number <=> b.seat_number }
+    sorted_players = self.players.where('state != ?', Player::DEAD_PLAYER_STATE).sort { |a,b| a.seat_number <=> b.seat_number }
     
     i = sorted_players.index(current_player)
     
