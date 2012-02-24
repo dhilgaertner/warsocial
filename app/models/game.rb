@@ -18,7 +18,15 @@ class Game < ActiveRecord::Base
   def self.get_game(name, map_name = nil)
     games = Game.where("name = ? AND state != ?", name, Game::FINISHED_STATE)
     
-    map_name = map_name == nil ? "jurgen1" : map_name
+    if (map_name == nil)
+      settings = GameRule.where("game_name = ?", name).first
+      
+      if (settings == nil)
+        map_name = "default"
+      else
+        map_name = settings.map_name
+      end 
+    end 
     
     if games.size == 0 
       return Map.where("name = ?", map_name).first.games.create(:name => name)

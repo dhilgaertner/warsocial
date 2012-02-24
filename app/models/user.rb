@@ -16,8 +16,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
   
   def admin?
-    Pusher["game1"].trigger(GameMsgType::INFO, self.forem_admin)
-    
     self.forem_admin
   end
   

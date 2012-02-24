@@ -1,12 +1,11 @@
 # RailsAdmin config file. Generated on December 06, 2011 17:42
 # See github.com/sferik/rails_admin for more informations
 
-RailsAdmin.config do |config|
-
+RailsAdmin.config do |config|  
   # If your default_local is different from :en, uncomment the following 2 lines and set your default locale here:
   # require 'i18n'
   # I18n.default_locale = :de
-
+  
   config.current_user_method { current_user } # auto-generated
 
   # Set the admin name here (optional second array element will appear in a beautiful RailsAdmin red ©)

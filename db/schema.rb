@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120216003811) do
+ActiveRecord::Schema.define(:version => 20120224080839) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -82,6 +82,14 @@ ActiveRecord::Schema.define(:version => 20120216003811) do
     t.integer  "game_id"
     t.string   "type"
     t.string   "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "game_rules", :force => true do |t|
+    t.string   "game_name"
+    t.string   "map_name"
+    t.integer  "player_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
