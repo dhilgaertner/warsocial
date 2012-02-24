@@ -30,4 +30,10 @@ Dice::Application.configure do
   
   # Requirement of Devise Gem Installation (Dustin)
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  
+  require 'pusher'
+
+  Pusher.app_id = '11348'
+  Pusher.key    = '3b4da07cf40986103601'
+  Pusher.secret = 'b6d3f6d0a643ea2dea6f'
 end
