@@ -103,7 +103,11 @@ class Game < ActiveRecord::Base
       player = user.players.where("game_id = ?", self.id).first
       
       if (player != nil)
-        end_turn
+        
+        if (is_user_turn?(user))
+          end_turn
+        end 
+        
         player.state = Player::DEAD_PLAYER_STATE
         player.lands.clear
         player.save
