@@ -126,7 +126,7 @@
 
 <% if user_signed_in? %>
 	<div id="game">
-		<div id="game_header"></div>
+		<div id="game_header"><div>This is our alpha release, so expect some bugs. If you can't play, try refreshing your browser. If it still doesn't work, flag and try a new game. Please report any bugs to dustin@warsocial.com or leave a comment at blog.warsocial.com. Thanks!</div></div>
 		<div id="game_main">
 			<%= link_to image_tag("buttons/sit_button.png", :border => 0), sit_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/stand_button.png", :border => 0), stand_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
