@@ -213,6 +213,7 @@ class Game < ActiveRecord::Base
     lands_each = (lands.length / self.players.length).to_i
     random_picks = Array.new
     
+    #Randomly distribute the land amongst the players
     self.players.each do |player|
        lands_each.times do |i|
           random_picks.push(player)
@@ -224,13 +225,33 @@ class Game < ActiveRecord::Base
     
     land_ids.each do |id|
       player = random_picks.pop
-      land = self.lands.create(:player => player, :deployment => 3, :map_land_id => id)
+      land = self.lands.create(:player => player, :deployment => 1, :map_land_id => id)
       
       if (player != nil)
         player.lands << land
       end
     end
     
+    #Randomly distribute the armies amongst the player's lands
+    self.players.each do |player|
+      dice = player.lands.size * 2
+      
+      results = Array.new(player.lands.size, 0)
+      
+      dice.times do |i|
+        index = rand_with_range(0..(player.lands.size-1))
+        results[index] = results[index] + 1
+      end
+      
+      Land.transaction do
+        results.each_with_index do |result, index|
+          player.lands[index].deployment += result 
+          player.lands[index].save
+        end
+      end
+    end
+    
+    #Queue up the turn timer
     job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 15.seconds.from_now)
     
     self.state = Game::STARTED_STATE
