@@ -63,7 +63,15 @@ class Game < ActiveRecord::Base
       
       Pusher[self.name].trigger(GameMsgType::SIT, new_player)
       
-      if self.players.size == 2 
+      rules = GameRule.where("game_name = ?", self.name).first
+
+      if (rules == nil)
+        max_players = 2
+      else
+        max_players = rules.player_count
+      end 
+      
+      if self.players.size == max_players
         start_game
       end
       
