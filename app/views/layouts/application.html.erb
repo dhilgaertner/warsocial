@@ -338,10 +338,10 @@ div#chat_window {
 			<div style="margin-left: 10px">
 				<h2>Maps</h2>
 				<p>
-					<%= link_to "default", "/game/default" %>
+					<%= link_to "default", "/game/default?map_name=default" %>
 				</p>
 				<p>
-					<%= link_to "jurgen", "/game/jurgen" %>
+					<%= link_to "jurgen", "/game/jurgen?map_name=jurgen1" %>
 					
 					<% if (false) %>
 						,
@@ -350,7 +350,7 @@ div#chat_window {
 					<% end %>
 				</p>
 				<p>
-					<%= link_to "alex", "/game/alex" %>
+					<%= link_to "alex", "/game/alex?map_name=alex2" %>
 					
 					<% if (false) %>
 						,
@@ -367,7 +367,7 @@ div#chat_window {
 					<% end %>
 				</p>
 				<p>
-					<%= link_to "k8dice", "/game/k8dice?map_name=k8dice1" %>
+					<%= link_to "k8dice", "/game/k8dice" %>
 					
 					<% if (false) %>
 						,
