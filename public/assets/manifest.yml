@@ -1,6 +1,7 @@
 --- 
 rails_admin/colorpicker/custom_hsb_s.png: rails_admin/colorpicker/custom_hsb_s-f3d312e99cd392dae4e204ff44247e7a.png
 rails_admin/colorpicker/colorpicker_select.gif: rails_admin/colorpicker/colorpicker_select-d9e20217de04c93fcbbd01c0ec667c6a.gif
+icon.png: icon-cb619a760e9c6b327f0651027f2119d9.png
 rails_admin/colorpicker/colorpicker_indic.gif: rails_admin/colorpicker/colorpicker_indic-0d080292300de6a4cd361be98052b0ec.gif
 gameboard/dice6.png: gameboard/dice6-60231ae00a6f6a8b8179d10a326e4590.png
 buttons/facebook_login_button_hover.png: buttons/facebook_login_button_hover-c3b793e26fac0f8c6cb9768b9e5c4a81.png
@@ -49,11 +50,11 @@ rails_admin/colorpicker/custom_hex.png: rails_admin/colorpicker/custom_hex-07d2a
 rails_admin/rails_admin.js: rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js
 rails_admin/colorpicker/slider.png: rails_admin/colorpicker/slider-6bc93fedf8bf0156959e814dac47577d.png
 rails_admin/colorpicker/select.png: rails_admin/colorpicker/select-152494401b99f0b06aa2dc352a909e2c.png
+rails_admin/colorpicker/custom_hsb_b.png: rails_admin/colorpicker/custom_hsb_b-492da6e2209b588ce70f19d00293d84f.png
 forem/lock_icon.png: forem/lock_icon-1dd9305fcd6f3653aa168ad9be9ddb2e.png
 buttons/change_seat_button_hover.png: buttons/change_seat_button_hover-1f999801148d3b0738e09b755a7a47c2.png
 application.css: application-4a5695cc433e7b4367f5a3a58212a544.css
 buttons/login_button.png: buttons/login_button-d833130131ae6f2582826b27598c4ca6.png
-rails_admin/colorpicker/custom_hsb_b.png: rails_admin/colorpicker/custom_hsb_b-492da6e2209b588ce70f19d00293d84f.png
 background.png: background-03a8390468d6adedca16338efcb0143b.png
 rails_admin/colorpicker/custom_hsb_h.png: rails_admin/colorpicker/custom_hsb_h-a0f80241bf5aad8c0156eb6e846285a0.png
 buttons/stand_button.png: buttons/stand_button-cc9fd45c64b71f2160d0672b349ee630.png
