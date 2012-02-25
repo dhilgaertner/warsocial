@@ -87,8 +87,6 @@ class Map < ActiveRecord::Base
        end
     end
     
-    Pusher["jurgen"].trigger(GameMsgType::INFO, lands)
-    
     return lands
   end
   
