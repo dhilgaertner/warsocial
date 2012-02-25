@@ -134,7 +134,8 @@
 		<div id="game_main">
 			<%= link_to image_tag("buttons/sit_button.png", :border => 0), sit_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/stand_button.png", :border => 0), stand_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
-			
+			<%= link_to image_tag("buttons/flag_button.png", :border => 0), flag_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
+			<%= link_to image_tag("buttons/end_turn_button.png", :border => 0), end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :style => "margin-left: 10px; margin-top: 10px;" %>
 			<div>
 				<div id="top_players">
 					<div class="player">
@@ -233,9 +234,6 @@
 				</div>
 			</div>
 		</div>
-
-		<%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :style => "float: right; margin-right:10px; margin-top: 4px" %>
-		<%= link_to image_tag("buttons/flag_button.png", :border => 0), flag_home_index_path(:game_name => @game.name), :remote=>true, :style => "float: right; margin-right:10px; margin-top: 4px" %>
 		
 		<div id="chat_window">
 			<table id="main_discussion">

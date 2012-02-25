@@ -14,6 +14,7 @@ buttons/send_button_hover.png: buttons/send_button_hover-b6fb454bdd99dcffe450582
 game_header.png: game_header-046975ada87404b8503844d554a09ee7.png
 dice.png: dice-74e28465ebf00c3250376e3c45f91084.png
 rails_admin/colorpicker/custom_rgb_g.png: rails_admin/colorpicker/custom_rgb_g-3882d7938b858e12625436d1935a2ccc.png
+buttons/end_turn_button_hover.png: buttons/end_turn_button_hover-54054801c7c60e7f891cee4e3333e3eb.png
 buttons/facebook_login_button.png: buttons/facebook_login_button-7d45dd922b4feb60444857c57eb57d82.png
 buttons/register_button.png: buttons/register_button-b25072461c986d8272278f07363d4799.png
 buttons/send_button.png: buttons/send_button-326346da35e55299e918a8bdd089926e.png
@@ -32,6 +33,7 @@ buttons/register_button_hover.png: buttons/register_button_hover-05767c9e1afa0e7
 rails_admin/rails_admin.css: rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css
 rails_admin/colorpicker/custom_indic.gif: rails_admin/colorpicker/custom_indic-0f452ab0d716f50198f712d709bf7433.gif
 sidepattern.png: sidepattern-232d6e475df586e1879837ab0a362b87.png
+buttons/end_turn_button.png: buttons/end_turn_button-e4d732bdc8e88c9af91d28a9f7cad618.png
 rails_admin/multiselect/ui-icon-circle-triangle-s-dark.png: rails_admin/multiselect/ui-icon-circle-triangle-s-dark-ccecd94c00cfaf503239d9dcb8e3ea81.png
 gameboard/texture.png: gameboard/texture-e58c5e6b0506e92e6144e97d46010488.png
 gameboard/dice2.png: gameboard/dice2-6cbf07d5fa6d13e51d6554602f72a368.png
@@ -42,11 +44,11 @@ forem/pin_icon.png: forem/pin_icon-9c685081fe7382618e997dc1035906d0.png
 default_avatar.png: default_avatar-5c3a290a17b5a4fc17b0b40d333ef0e8.png
 gameboard/dice1.png: gameboard/dice1-ff7db1811c83cfef91ac380aef9164ba.png
 rails_admin/multiselect/ui-icon-circle-triangle-n-dark.png: rails_admin/multiselect/ui-icon-circle-triangle-n-dark-586957aed964bb1715194be6a285b6c5.png
-logo.png: logo-20c973e86eaf913878fb4c757ff3fe0e.png
+rails_admin/colorpicker/custom_hex.png: rails_admin/colorpicker/custom_hex-07d2a92b30ced081f0194b9e6dd6c5f5.png
 rails_admin/colorpicker/custom_background.png: rails_admin/colorpicker/custom_background-71b3873cf6d5aca72339550beffd4fe7.png
+logo.png: logo-20c973e86eaf913878fb4c757ff3fe0e.png
 gameboard/dice_shadow.png: gameboard/dice_shadow-a37ea3b9feb9b81b603e61da3f0c2fe6.png
 buttons/find_seat_button.png: buttons/find_seat_button-fee9f1f94c853311cbaab7772eea4e38.png
-rails_admin/colorpicker/custom_hex.png: rails_admin/colorpicker/custom_hex-07d2a92b30ced081f0194b9e6dd6c5f5.png
 rails_admin/rails_admin.js: rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js
 rails_admin/colorpicker/slider.png: rails_admin/colorpicker/slider-6bc93fedf8bf0156959e814dac47577d.png
 rails_admin/colorpicker/select.png: rails_admin/colorpicker/select-152494401b99f0b06aa2dc352a909e2c.png
