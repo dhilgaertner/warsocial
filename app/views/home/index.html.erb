@@ -32,13 +32,16 @@
 		global_init_data = <%= @init_data.to_json.html_safe %>;
 		game = null;
 	
-  	// Enable pusher logging - don't include this in production
-    Pusher.log = function(message) {
-      if (window.console && window.console.log) window.console.log(message);
-    };
+		if (!<%= Rails.env.production? %>) {
+			// Enable pusher logging - don't include this in production
+	    Pusher.log = function(message) {
+	      if (window.console && window.console.log) window.console.log(message);
+	    };
 		
-    // Flash fallback logging - don't include this in production
-    WEB_SOCKET_DEBUG = true;
+	    // Flash fallback logging - don't include this in production
+	    WEB_SOCKET_DEBUG = true;
+		}
+		
 		var pusher = new Pusher('<%= Pusher.key %>');
     var channel = pusher.subscribe("<%= @game.name %>");
 		
