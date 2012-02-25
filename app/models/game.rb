@@ -394,9 +394,14 @@ class Game < ActiveRecord::Base
     
     changed = Array.new
     num_armies.times do |x|
-       land = rand_with_range(lands)
-       land.deployment += 1
-       changed.push(land)
+      candidates = lands.select{|x| x.deployment < 8}
+      
+      if (!candidates.empty?)
+        land = rand_with_range(candidates)
+        land.deployment += 1
+    
+        changed.push(land)
+      end
     end
     
     Land.transaction do
