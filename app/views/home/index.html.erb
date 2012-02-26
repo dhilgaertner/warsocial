@@ -102,6 +102,7 @@
 
 		channel.bind('game_winner', function(player) {
 	  	seats.clear();
+			$('#end_turn').hide();
 			alert(player.name + " won!");
     });
 
@@ -247,7 +248,8 @@
 	<%= form_tag(add_line_home_index_path, :id => "form_chat", :remote=>true) do %>
 		<%= hidden_field_tag 'game_name', @game.name %>
 		<%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
-		<%= submit_tag "Send", { :class => "common_button" } %>
+		<%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending..." } 
+		 %>
 	<% end %>
 	</center>
 <% else %>
