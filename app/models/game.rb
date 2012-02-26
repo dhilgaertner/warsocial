@@ -148,6 +148,10 @@ class Game < ActiveRecord::Base
       atk_land = Land.where("game_id = ? AND map_land_id = ?", self.id, attacking_land_id).first
       def_land = Land.where("game_id = ? AND map_land_id = ?", self.id, defending_land_id).first
       
+      if (atk_land.player == def_land.player)
+        return
+      end 
+      
       attack_results = roll(atk_land.deployment)
       defend_results = roll(def_land.deployment)
       
