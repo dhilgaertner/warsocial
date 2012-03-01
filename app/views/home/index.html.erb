@@ -68,6 +68,7 @@
 		
 		for(var i=0; i<global_init_data.players.length; i++) {
     	if (global_init_data.players[i].is_turn == true) {
+				seats.turn_start(global_init_data.players[i])
 				if (global_init_data.players[i].player_id == who_am_i) {
 					$('#end_turn').show();
 				}
@@ -84,13 +85,14 @@
 			$('#end_turn').hide();
 			for(var i=0; i<data.players.length; i++) {
 	    	if (data.players[i].is_turn == true) {
+					seats.turn_start(data.players[i])
+					
 					if (data.players[i].player_id == who_am_i) {
 						$('#end_turn').show();
 					}
 				}
 	    }
 			
-			data.players
 	  	init(data);
     });
 		
@@ -127,7 +129,7 @@
 				$('#end_turn').hide();
 			}
 	  	next_turn(data.player_id);
-			seats.turn_start({ id: data.player_id});
+			seats.turn_start({ player_id: data.player_id});
     });
 
 		$("#form_chat")
@@ -159,6 +161,7 @@
 							<div class="player_stat1">
 								<div class="avatar" style="background-color: #c22b2b"></div>
 								<div class="name"></div>
+								<div class="turn_progress" style="display:none"></div>
 							</div>
 							<div class="player_stat2"></div>
 						</div>
@@ -168,6 +171,7 @@
 							<div class="player_stat1">
 								<div class="avatar" style="background-color: #5fb61f"></div>
 								<div class="name"></div>
+								<div class="turn_progress" style="display:none"></div>
 							</div>
 							<div class="player_stat2"></div>
 						</div>
@@ -177,6 +181,7 @@
 							<div class="player_stat1">
 								<div class="avatar" style="background-color: #603bb3"></div>
 								<div class="name"></div>
+								<div class="turn_progress" style="display:none"></div>
 							</div>
 							<div class="player_stat2"></div>
 						</div>
@@ -190,6 +195,7 @@
 									<div class="avatar" style="background-color: #3760ae"></div>
 									<div class="clear"></div>
 									<div class="name"></div>
+									<div class="turn_progress" style="display:none"></div>
 								</div>
 								<div class="player_stat2"></div>
 							</div>
@@ -200,6 +206,7 @@
 									<div class="avatar" style="background-color: #f8af01"></div>
 									<div class="clear"></div>
 									<div class="name"></div>
+									<div class="turn_progress" style="display:none"></div>
 								</div>
 								<div class="player_stat2"></div>
 							</div>
@@ -232,6 +239,7 @@
 									<div class="avatar" style="background-color: #27a7b2"></div>
 									<div class="clear"></div>
 									<div class="name"></div>
+									<div class="turn_progress" style="display:none"></div>
 								</div>
 								<div class="player_stat2"></div>
 							</div>
@@ -242,6 +250,7 @@
 									<div class="avatar" style="background-color: #ad3bac"></div>
 									<div class="clear"></div>
 									<div class="name"></div>
+									<div class="turn_progress" style="display:none"></div>
 								</div>
 								<div class="player_stat2"></div>
 							</div>

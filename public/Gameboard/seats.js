@@ -49,7 +49,7 @@ Seats.prototype.sit = function(player) {
   $.each(this._seats, function(key, occupant) { 
 		if (occupant.player == null) {
 			ctx.occupySeat(key, player);
-			return true;
+			return false; // Returning false get's you out of the $.each()
 		}
 	});
 };
@@ -57,7 +57,7 @@ Seats.prototype.sit = function(player) {
 Seats.prototype.turn_start = function(player_thin) {
 	var ctx = this;
   $.each(this._seats, function(key, occupant) { 
-		if (occupant.player.id == player_thin.id) {
+		if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
 			occupant.seat.find(".turn_progress").show();
 		} else {
 			occupant.seat.find(".turn_progress").hide();
