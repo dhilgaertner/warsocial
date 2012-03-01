@@ -18,7 +18,7 @@ class HomeController < ApplicationController
   def add_line
     game_name = params[:game_name]
     
-    Pusher["presense-" + game_name].trigger(GameMsgType::CHATLINE, {:entry => CGI.escapeHTML(params[:entry]), :name => current_user.username})
+    Pusher["presence-" + game_name].trigger(GameMsgType::CHATLINE, {:entry => CGI.escapeHTML(params[:entry]), :name => current_user.username})
 
     render :text=>"Success", :status=>200
   end

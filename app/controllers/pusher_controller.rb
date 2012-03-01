@@ -1,6 +1,23 @@
 class PusherController < ApplicationController
-  protect_from_forgery :except => :auth # stop rails CSRF protection for this action
+  protect_from_forgery :except => [:auth, :webhook]
   
+  def webhook
+    webhook = Pusher::WebHook.new(request)
+    if webhook.valid?
+      webhook.events.each do |event|
+        case event["name"]
+        when "channel_occupied"
+          #puts "Channel occupied: #{event["channel"]}"
+        when "channel_vacated"
+          #puts "Channel vacated: #{event["channel"]}"
+        end
+      end
+      render :text => "ok"
+    else
+      render :text => "invalid", :status => "401"
+    end
+  end
+    
   def auth
     if current_user
       response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
