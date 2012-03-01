@@ -32,6 +32,11 @@
 		global_init_data = <%= @init_data.to_json.html_safe %>;
 		game = null;
 	
+		var addToChat = function(name, chat) {
+			$('#main_discussion tbody').append($('<tr><td>' + name + ': ' + chat + '</td></tr>'));
+			$("#chat_window").animate({ scrollTop: $("#chat_window").prop("scrollHeight") }, 300);
+		};
+	
 		<% if !Rails.env.production? %>
 			// Enable pusher logging - don't include this in production
 	    Pusher.log = function(message) {
@@ -43,7 +48,22 @@
 		<% end %>
 		
 		var pusher = new Pusher('<%= Pusher.key %>');
-    var channel = pusher.subscribe("<%= @game.name %>");
+		var channel = pusher.subscribe("presence-<%= @game.name %>");
+		Pusher.channel_auth_endpoint = '<%= auth_pusher_index_path %>';
+		
+		channel.bind('pusher:subscription_error', function(status) {
+		  if(status == 408 || status == 503){
+		    // retry?
+		  }
+		});
+		
+		channel.bind('pusher:member_added', function(member) {
+		  addToChat("Room", member.info.name + " is here.");
+		});
+		
+		channel.bind('pusher:member_removed', function(member) {
+		  addToChat("Room", member.info.name + " has left.")
+		});
 		
 		$('#end_turn').hide();
 		
@@ -60,8 +80,7 @@
     }
 
 		channel.bind('new_chat_line', function(data) {
-			$('#main_discussion tbody').append($('<tr><td>' + data.name + ': ' + data.entry + '</td></tr>'));
-			$("#chat_window").animate({ scrollTop: $("#chat_window").prop("scrollHeight") }, 300);
+			addToChat(data.name, data.entry);
     });
 
 		channel.bind('game_start', function(data) {

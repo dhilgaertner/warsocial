@@ -61,7 +61,7 @@ class Game < ActiveRecord::Base
       seat = self.players.size + 1
       new_player = self.players.create(:user => user, :seat_number => seat, :is_turn => false)
       
-      Pusher[self.name].trigger(GameMsgType::SIT, new_player)
+      broadcast(self.name, GameMsgType::SIT, new_player)
       
       rules = GameRule.where("game_name = ?", self.name).first
 
@@ -88,7 +88,8 @@ class Game < ActiveRecord::Base
       
       if (player != nil)
         Player.destroy(player.id)
-        Pusher[self.name].trigger(GameMsgType::STAND, player) 
+        
+        broadcast(self.name, GameMsgType::STAND, player)
       end 
       
       return player
@@ -112,7 +113,7 @@ class Game < ActiveRecord::Base
         player.lands.clear
         player.save
         
-        Pusher[self.name].trigger(GameMsgType::QUIT, player) 
+        broadcast(self.name, GameMsgType::QUIT, player)
         
         check_for_winner
       end 
@@ -192,7 +193,8 @@ class Game < ActiveRecord::Base
                :deployment_changes => [atk_land, def_land]
              }
       
-      Pusher[self.name].trigger(GameMsgType::ATTACK, data)
+      broadcast(self.name, GameMsgType::ATTACK, data)
+      
     end
   end
   
@@ -213,8 +215,8 @@ class Game < ActiveRecord::Base
     self.turn_timer_id = job.id
     self.save
     
-    Pusher[self.name].trigger(GameMsgType::TURN, {:player_id => np.user.id})
-    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{np.user.username}'s turn has started.", :name => "Server"})
+    broadcast(self.name, GameMsgType::TURN, {:player_id => np.user.id})
+    broadcast(self.name, GameMsgType::CHATLINE, {:entry => "#{np.user.username}'s turn has started.", :name => "Server"})
   end
   
   # Force the end of the current players turn
@@ -287,15 +289,16 @@ class Game < ActiveRecord::Base
     player.is_turn = true
     player.save
     
-    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
-    Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
+    broadcast(self.name, GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
+    broadcast(self.name, GameMsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
     
     data = { :who_am_i => 0, 
              :map_layout => ActiveSupport::JSON.decode(self.map.json),
              :players => self.players,
              :deployment => self.lands }
-                   
-    Pusher[self.name].trigger(GameMsgType::START, data)
+    
+    broadcast(self.name, GameMsgType::START, data)
+
   end
   
   # Find which player is currently having a turn
@@ -329,7 +332,7 @@ class Game < ActiveRecord::Base
       self.state = Game::FINISHED_STATE
       self.save
       
-      Pusher[self.name].trigger(GameMsgType::WINNER, winner)
+      broadcast(self.name, GameMsgType::START, data)
       
       return winner
     end 
@@ -414,7 +417,12 @@ class Game < ActiveRecord::Base
       }
     end
     
-    Pusher[self.name].trigger(GameMsgType::DEPLOY, changed)
+    broadcast(self.name, GameMsgType::DEPLOY, changed)
+  end
+  
+  private
+  def broadcast(room, type, message)
+    Pusher["presence-" + room].trigger(type, message)
   end
   
   # Get random roll results

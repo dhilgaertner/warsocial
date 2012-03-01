@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  
   def index
     @user = User.new(params[:user])
     name = params[:game_name] == nil ? "home" : params[:game_name]
@@ -17,12 +18,12 @@ class HomeController < ApplicationController
   def add_line
     game_name = params[:game_name]
     
-    Pusher[game_name].trigger(GameMsgType::CHATLINE, {:entry => CGI.escapeHTML(params[:entry]), :name => current_user.username})
+    Pusher["presense-" + game_name].trigger(GameMsgType::CHATLINE, {:entry => CGI.escapeHTML(params[:entry]), :name => current_user.username})
 
     render :text=>"Success", :status=>200
   end
   
-  def attack()
+  def attack
     game_name = params[:game_name]
     attacking_land_id = params[:atk_land_id]
     defending_land_id = params[:def_land_id]
@@ -126,4 +127,5 @@ class HomeController < ApplicationController
     
     render :text=>"Success", :status=>200
   end
+  
 end
