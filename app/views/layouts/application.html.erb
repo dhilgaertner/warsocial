@@ -28,7 +28,7 @@
 		}
 
 		body { 
-		  background: #dbdbdb url(<%=image_path "background.png"%>);
+		  /*background: #dbdbdb url(<%=image_path "background.png"%>);*/
 		  background-position: center;
 			background-repeat: no-repeat;
 			margin: 0px;
@@ -267,39 +267,38 @@
 			float: left;
 		}
 
-		div#game_main #left_players .turn_progress{
+		div#game_main .turn_progress {
+			background-color: #5DFC0A;
+		}
+		div#game_main #left_players .turn_progress {
 			width: 55px;
 			height: 6px;
-			background-color: green;
 			margin-left: auto;
 			margin-right: auto;
 		}
 		
-		div#game_main #right_players .turn_progress{
+		div#game_main #right_players .turn_progress {
 			width: 55px;
 			height: 6px;
-			background-color: green;
 			margin-left: auto;
 			margin-right: auto;
 		}
 		
-		div#game_main #top_players .turn_progress{
-			margin-top: 0px;
+		div#game_main #top_players .turn_progress {
 			width: 55px;
 			height: 6px;
-			background-color: green;
 			float: left;
 			margin-left: 23px;
 		}
 		
-		div#game_main #right_players .player{
+		div#game_main #right_players .player {
 			margin-top: 40px;
 			width: 77px;
 			height: 152px;
 			float: left;
 		}
 
-		div#game_main .player div.ws_bordered{
+		div#game_main .player div.ws_bordered {
 			position:relative;
 			width: 75px;
 			height: 150px;
