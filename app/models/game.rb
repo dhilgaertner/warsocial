@@ -332,7 +332,7 @@ class Game < ActiveRecord::Base
       self.state = Game::FINISHED_STATE
       self.save
       
-      broadcast(self.name, GameMsgType::START, data)
+      broadcast(self.name, GameMsgType::WINNER, winner)
       
       return winner
     end 
