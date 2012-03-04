@@ -87,8 +87,8 @@ class Game < ActiveRecord::Base
       player = user.players.where("game_id = ?", self.id).first
       
       if (player != nil)
+        #noinspection RubyArgCount
         Player.destroy(player.id)
-        
         broadcast(self.name, GameMsgType::STAND, player)
       end 
       
@@ -99,6 +99,7 @@ class Game < ActiveRecord::Base
   end
   
   # Player flags
+  # @param user [User]
   def flag_player(user)
     if self.state == Game::STARTED_STATE
       player = user.players.where("game_id = ?", self.id).first
@@ -149,7 +150,7 @@ class Game < ActiveRecord::Base
       atk_land = Land.where("game_id = ? AND map_land_id = ?", self.id, attacking_land_id).first
       def_land = Land.where("game_id = ? AND map_land_id = ?", self.id, defending_land_id).first
       
-      if (atk_land.player == def_land.player)
+      if (atk_land.player == def_land.player || atk_land.deployment == 1)
         return
       end 
       

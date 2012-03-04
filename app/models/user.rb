@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
     
     data = access_token.info
     puts access_token.inspect
-    if user = User.find_by_email(data.email)
+    if user == User.find_by_email(data.email)
       user
     else # Create a user with a stub password. 
       User.create!(:email => data.email, :username => data.name, :password => Devise.friendly_token[0,20]) 
@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["info"]
+      if data == session["devise.facebook_data"] && session["devise.facebook_data"]["info"]
         user.email = data["email"]
         user.username = data["name"]
       end
