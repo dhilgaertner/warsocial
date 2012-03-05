@@ -4,6 +4,7 @@ class Game < ActiveRecord::Base
   has_many :game_logs, :dependent => :destroy
   has_many :lands, :dependent => :destroy
   has_many :users, :through => :players
+
   require 'constants/message_type'
   
   # Game States: Default for Migration
@@ -131,22 +132,6 @@ class Game < ActiveRecord::Base
     
     if (lands[attacking_land_id].include?(defending_land_id))
       
-      # maybe use does_player_own_land?
-      # player = self.players.where("user_id = ?", user.id).first
-
-      # if (player != nil && player.is_turn == true)
-      #   old_job = Delayed::Job.find(self.turn_timer_id)
-
-      #   if old_job != nil
-      #     old_job.destroy
-      #     new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
-      #     self.turn_timer_id = new_job.id
-      #     self.save
-
-      #     Pusher[self.name].trigger(GameMsgType::CHATLINE, {:entry => "Attack! (turn timer restarted)", :name => "Server"})
-      #   end
-      # end
-      
       atk_land = Land.where("game_id = ? AND map_land_id = ?", self.id, attacking_land_id).first
       def_land = Land.where("game_id = ? AND map_land_id = ?", self.id, defending_land_id).first
       
@@ -185,7 +170,9 @@ class Game < ActiveRecord::Base
         loser.deployment = 1
         loser.save
       end
-      
+
+      restart_turn_timer
+
       data = { :attack_info => { :attacker_land_id => attacking_land_id, 
                                  :attacker_roll => attack_results, 
                                  :defender_land_id => defending_land_id,
@@ -198,31 +185,29 @@ class Game < ActiveRecord::Base
       
     end
   end
-  
+
   # End the current players turn
   def end_turn
     cp = current_player
     np = next_player
-    
+
     reenforce(cp, how_many_reenforcements(cp))
-    
+
     cp.is_turn = false
     np.is_turn = true
     
     cp.save
     np.save
-    
-    job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 15.seconds.from_now)
-    self.turn_timer_id = job.id
-    self.save
-    
+
+    restart_turn_timer
+
     broadcast(self.name, GameMsgType::TURN, {:player_id => np.user.id})
     broadcast(self.name, GameMsgType::CHATLINE, {:entry => "#{np.user.username}'s turn has started.", :name => "Server"})
   end
   
   # Force the end of the current players turn
   def force_end_turn
-    self.end_turn
+    end_turn
   end
   
   # Check whether or not it is the user's turn
@@ -278,14 +263,10 @@ class Game < ActiveRecord::Base
         end
       end
     end
-    
-    #Queue up the turn timer
-    job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 15.seconds.from_now)
-    
-    self.state = Game::STARTED_STATE
-    self.turn_timer_id = job.id
-    self.save
-    
+
+    self.state = Game::STARTED_STATE # We don't save this because 'restart_turn_timer' will save for us'
+    restart_turn_timer  # self.save happens here
+
     player = self.players.sample
     player.is_turn = true
     player.save
@@ -305,21 +286,22 @@ class Game < ActiveRecord::Base
   # Find which player is currently having a turn
   private
   def current_player
-    player = self.players.where("is_turn = ?", true).first
+    self.players.where("is_turn = ?", true).first
   end
   
   # Find which player is next in line turn-wise
   private
   def next_player
     sorted_players = self.players.where('state != ?', Player::DEAD_PLAYER_STATE).sort { |a,b| a.seat_number <=> b.seat_number }
-    
+
     i = sorted_players.index(current_player)
-    
-    if (i == (sorted_players.size - 1))
-      sorted_players[0]
-    else
-      sorted_players[i+1]
+
+    index = 0
+    if (i != (sorted_players.size - 1))
+      index = i+1
     end
+
+    sorted_players[index]
   end
   
   # Check whether or not the game is over
@@ -332,7 +314,9 @@ class Game < ActiveRecord::Base
       
       self.state = Game::FINISHED_STATE
       self.save
-      
+
+      kill_turn_timer
+
       broadcast(self.name, GameMsgType::WINNER, winner)
       
       return winner
@@ -420,7 +404,28 @@ class Game < ActiveRecord::Base
     
     broadcast(self.name, GameMsgType::DEPLOY, changed)
   end
-  
+
+  private
+  def restart_turn_timer
+    kill_turn_timer
+
+    new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
+    self.turn_timer_id = new_job.id
+    self.save
+  end
+
+  private
+  def kill_turn_timer
+    if (self.turn_timer_id != nil)
+      old_job = Delayed::Job.find(self.turn_timer_id)
+      if old_job != nil
+        old_job.destroy
+        self.turn_timer_id = nil
+        self.save
+      end
+    end
+  end
+
   private
   def broadcast(room, type, message)
     Pusher["presence-" + room].trigger(type, message)

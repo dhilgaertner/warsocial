@@ -121,7 +121,7 @@ class HomeController < ApplicationController
     game_name = params[:game_name]
     
     if auth == "whisper" #TODO: Better auth (Dustin)
-      game = Game.get_game(game_name, nil)
+      game = Game.get_game(game_name)
       game.force_end_turn
     end
     
