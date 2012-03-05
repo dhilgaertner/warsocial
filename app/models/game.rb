@@ -174,9 +174,11 @@ class Game < ActiveRecord::Base
       restart_turn_timer
 
       data = { :attack_info => { :attacker_land_id => attacking_land_id, 
-                                 :attacker_roll => attack_results, 
+                                 :attacker_roll => attack_results,
+                                 :attacker_player_id => atk_land.player.user.id,
                                  :defender_land_id => defending_land_id,
-                                 :defender_roll => defend_results 
+                                 :defender_roll => defend_results,
+                                 :defender_player_id => def_land.player.user.id
                                },
                :deployment_changes => [atk_land, def_land]
              }
@@ -409,7 +411,7 @@ class Game < ActiveRecord::Base
   def restart_turn_timer
     kill_turn_timer
 
-    new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 10.seconds.from_now)
+    new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 20.seconds.from_now)
     self.turn_timer_id = new_job.id
     self.save
   end

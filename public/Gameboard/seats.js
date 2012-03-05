@@ -4,9 +4,10 @@ function Seats(numberOfSeats, players) {
 	this._seats = new Object();
 	
 	for (i = 0;i < numberOfSeats;i++) {
-		this._seats[i.toString()] = { player: null, seat: $('#game_seat_' + i.toString()) };
+        var s = $('#game_seat_' + i.toString());
+		this._seats[i.toString()] = { player: null, seat: s, timer: new TurnTimer(s, 20) };
 	}
-	
+
 	this.occupySeat = function(key, player) {
 		var item = ctx._seats[key];
 		
@@ -21,7 +22,7 @@ function Seats(numberOfSeats, players) {
 		
 		item.player = null;
 		$(item.seat).find('.name').html("");
-		
+        $(item.seat).find('.turn_progress').hide();
 		$(item.seat).hide();
 	};
 	
@@ -59,10 +60,20 @@ Seats.prototype.turn_start = function(player_thin) {
   $.each(this._seats, function(key, occupant) { 
 		if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
 			occupant.seat.find(".turn_progress").show();
+            occupant.timer.restart();
 		} else {
 			occupant.seat.find(".turn_progress").hide();
 		}
 	});
+};
+
+Seats.prototype.turn_timer_restart = function(player_thin) {
+    var ctx = this;
+    $.each(this._seats, function(key, occupant) {
+        if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
+            occupant.timer.restart();
+        }
+    });
 };
 
 Seats.prototype.stand = function(player) {
