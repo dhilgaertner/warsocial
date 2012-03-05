@@ -53,6 +53,14 @@
             }
         });
 
+        channel.bind('pusher:subscription_succeeded', function(members) {
+            var memArray = [];
+            members.each(function(member) {
+                memArray.push(member.info.name);
+            });
+            addToChat("Room", "Welcome to " + global_game_name + ". Players here: " + memArray.join(", ") + ".");
+        });
+
         channel.bind('pusher:member_added', function(member) {
             addToChat("Room", member.info.name + " is here.");
         });
