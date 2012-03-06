@@ -68,7 +68,7 @@ class HomeController < ApplicationController
     
     game = Game.get_game(game_name)
 
-    if (!game.is_user_in_game?(current_user))
+    if (current_user != nil && !game.is_user_in_game?(current_user))
       if game.state == Game::WAITING_STATE
         game.add_player(current_user)
         
@@ -77,7 +77,7 @@ class HomeController < ApplicationController
         render :text=>"Game has already started.", :status=>500
       end
     else
-      render :text=>"Already in game", :status=>500
+      render :text=>"Already in game or not logged in.", :status=>500
     end
   end
   
