@@ -203,7 +203,7 @@ class Game < ActiveRecord::Base
 
     restart_turn_timer
 
-    broadcast(self.name, GameMsgType::TURN, {:player_id => np.user.id})
+    broadcast(self.name, GameMsgType::TURN, {:player_id => np.user.id, :name => np.user.username})
   end
   
   # Force the end of the current players turn
