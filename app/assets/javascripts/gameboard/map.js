@@ -58,16 +58,16 @@ Map.prototype.find_adjacent_lands_from_tiles = function ( tiles, width_line, hei
              // get all needed tiles index
              var t_index = row*width_line + col;
              if (tiles[t_index] == 0) continue; // Continue if this tile is an empty land
-             if ((col%2 == 0) && (row == height_col-1)) continue; // no search in the last row for even number id tile
+             if ((col%2 == 1) && (row == height_col-1)) continue; // no search in the last row for even number id tile
 
              var right_tile_index = undefined;
              if (col != width_line-1) { // If this tile is the last one of the column, no comparison with the right
-                 right_tile_index = (col%2 == 0)? t_index + 1 + width_line : t_index + 1; // Right tile is one line further for even id tiles
+                 right_tile_index = (col%2 == 0)? t_index + 1 : t_index + 1 + width_line; // Right tile is one line further for even id tiles
              }
 
              var left_tile_index = undefined;
              if (col != 0) { // If this tile is the first one of the column, no comparison with the left
-                left_tile_index = (col%2 == 0)? t_index - 1 + width_line : t_index - 1; // Left tile is one line further for even id tiles
+                left_tile_index = (col%2 == 0)? t_index - 1 : t_index - 1 + width_line; // Left tile is one line further for even id tiles
              }
 
              var bottom_tile_index = undefined;
@@ -206,8 +206,9 @@ Map.prototype.getDeploymentLandList = function() {
 };
 
 
-Map.prototype.drawcanvas = function() {
-    this.getMapCanvas().draw_canvas(this.getTiles(), this.getWidth(), this.getHeight(), this.getLandPlayerList(), this.getDeploymentLandList());
+Map.prototype.drawcanvas = function(dicedelay) {
+    if (dicedelay == undefined) dicedelay = true;
+    this.getMapCanvas().draw_canvas(this.getTiles(), this.getWidth(), this.getHeight(), this.getLandPlayerList(), this.getDeploymentLandList(), dicedelay);
 };
 
 /**

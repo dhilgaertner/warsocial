@@ -66,6 +66,7 @@ WarSocial.prototype.init = function( info ) {
         if (info.players[i].is_turn) this.nextTurn(info.players[i].player_id);
     }
     this.addMouseListener();
+		SoundManager.init();
 };
 
 /**
@@ -91,8 +92,8 @@ WarSocial.prototype.removeMouseListener = function() {
 
 /**
  * EventListener created by addMouseListener method.
- * Get the ref back to the game throught a GLOBAL variable :(
- * @param event
+ * Get the ref back to the game throught the "game" global variable
+ * @param event this = object triggering the event
  */
 WarSocial.prototype.clickOnCanvas = function (event) {
     
@@ -110,7 +111,10 @@ WarSocial.prototype.clickOnCanvas = function (event) {
 };
 
 /**
- * called by clickonCanvas if selection is valid
+ * Called by clickonCanvas if selection is valid.
+ * Select / unselect land, and trigger an attack if two lands are selected.
+ * @param x X coord of the mouse click
+ * @param y Y coord of the mouse click
  */
 WarSocial.prototype.userClicksOnLand = function( x, y ) {
     //alert("Click on LAND : " + x + ", " + y);  
@@ -129,22 +133,26 @@ WarSocial.prototype.userClicksOnLand = function( x, y ) {
         } else if (attack_from == undefined && land != null && land_owner != null && land_owner.getId() != this.getUserId()) {
            // user clicked on someone else land as an attack land. Ignore.
         } else if (attack_from == undefined && land != null && land_owner != null && land_owner.getId() == this.getUserId() && land.getTroops() <= 1) {
-            alert("You can attack with only one troop on this land");
+            // You can attack with only one troop on this land
         } else if (attack_from == undefined && land != null && land_owner != null && land_owner.getId() == this.getUserId()) {
              this.getMap().select(land_id, true);
              this.setAttackFrom(land_id);
         } else if (attack_from != undefined && attack_from == land_id) {
             this.getMap().unselect( true ); // true because this land is the origin
             this.setAttackFrom(undefined);
-        } else if (attack_from != undefined && land_owner == this.getMap().find_land_by_id(attack_from).getOwner() && attack_to == undefined) {
-            this.getMap().unselect( true ); // true because this land is the origin
-            this.getMap().select(land_id, true);
-            this.setAttackFrom(land_id);
+        } else if (attack_from != undefined && attack_to == undefined && land_owner == this.getMap().find_land_by_id(attack_from).getOwner() ) {
+            if (land.getTroops() > 1) { // if the land has more than ONE troop
+                this.getMap().unselect( true ); // true because this land is the origin
+                this.getMap().select(land_id, true);
+                this.setAttackFrom(land_id);
+            } else {
+                // do nothing, you can't attack from a land that has less than 2 troops on it
+            }
         } else if ( attack_from != undefined && attack_to == undefined) { // land is destination and should be valid before being sent
             // check if it's a neighbour of origin land
             if (land != null) {
                 if (!land.isAdjacentTo( attack_from)) {
-                    alert("You can only attack neighbouring lands.");
+                    // alert("You can only attack neighbouring lands.");
                 } else {
                     this.setAttackTo(land_id);
                     this.getMap().select(land_id, false);
@@ -177,16 +185,17 @@ WarSocial.prototype.attack = function( info ) {
     }
 
     var dicebox = this.getDiceBox();
-    if (dicebox != null) dicebox.show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker_id, defender_id);
+    if (dicebox != null && defender != null) dicebox.show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker.getSeatId(), defender.getSeatId());
     //this.getMap().getMapCanvas().show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker_id, defender_id);
-    setTimeout(function() {this_scope.deploy(info.deployment_changes);}, 400);   // delay before calling deployment
+    setTimeout(function() {this_scope.deploy(info.deployment_changes, false);}, 400);   // delay before calling deployment
 };
 
 /**
  * Modify land ownership and troop numbers
  * @param deployment Object list from json. Each object contains "deployment":int (number of troops), "player_id" : int and land_id : int
  */
-WarSocial.prototype.deploy = function( deployment) {
+WarSocial.prototype.deploy = function( deployment, animation) {
+    if (animation == undefined) animation = true;
     var m = this.getMap();
 
     for (var d in deployment) {
@@ -197,7 +206,7 @@ WarSocial.prototype.deploy = function( deployment) {
         }
     }
     this.clear_all();
-    m.drawcanvas();
+    m.drawcanvas(animation);
     next_turn(this.getCurrentPlayerId()); // Allow the player to play again if it's still its turn
 };
 

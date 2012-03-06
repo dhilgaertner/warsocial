@@ -3,10 +3,13 @@
 <head>
   <title>WarSocial Alpha</title>
 
-	<META NAME="Description" CONTENT="Your descriptive sentence or two goes here.">
-	<link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
-	
-	<%= javascript_include_tag "application" %>
+  <META NAME="Description" CONTENT="Your descriptive sentence or two goes here.">
+  <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
+
+  <% if !Rails.env.development? %>
+    <%= javascript_include_tag "application" %>
+  <% end %>
+
   <%= yield :javascript_includes %>
 
   <%= csrf_meta_tags %>

@@ -1,23 +1,37 @@
 <% content_for :javascript_includes do %>
 
 	<script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
-	
-	<% if !@dev %>
-		<script src="../../../Gameboard/min/warsocial.js?v=2" type="text/javascript"></script>
-		<script src="../../../Gameboard/communications.js?v=2" type="text/javascript"></script>
-	<% else %>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=4" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=4" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=4" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=4" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=4" type="text/javascript"></script>
-		<script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=4" type="text/javascript"></script>
-	<% end %>
 
-    <script src="../../../Gameboard/turn_timer.js?v=2" type="text/javascript"></script>
-    <script src="../../../Gameboard/seats.js?v=2" type="text/javascript"></script>
-	
+    <% if Rails.env.development? %>
+        <script src="/jquery/jquery-1.7.min.js?v=2" type="text/javascript"></script>
+        <script src="/jquery/jquery_ujs.js?v=2" type="text/javascript"></script>
+
+        <% if !@dev %>
+            <script src="/assets/gameboard/communications.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/soundmanager.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/dicebox.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/land.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/map.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/mapcanvas.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/player.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/shared.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/warsocial.js?v=2" type="text/javascript"></script>
+        <% else %>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/soundmanager.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/dicebox.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=4" type="text/javascript"></script>
+        <% end %>
+
+        <script src="/assets/gameboard/turn_timer.js?v=2" type="text/javascript"></script>
+        <script src="/assets/gameboard/seats.js?v=2" type="text/javascript"></script>
+    <% end %>
+
 	<script type="text/javascript">
 	
 	var global_game_name;
@@ -77,7 +91,7 @@
 
         for(var i=0; i<global_init_data.players.length; i++) {
             if (global_init_data.players[i].is_turn == true) {
-                seats.turn_start(global_init_data.players[i])
+                seats.turn_start(global_init_data.players[i]);
                 if (global_init_data.players[i].player_id == who_am_i) {
                     $('#end_turn').show();
                 }
@@ -93,12 +107,16 @@
 
             $('#end_turn').hide();
             for(var i=0; i<data.players.length; i++) {
-                if (data.players[i].is_turn == true) {
-                    seats.turn_start(data.players[i])
+                var p = data.players[i];
 
-                    if (data.players[i].player_id == who_am_i) {
+                if (p.is_turn == true) {
+                    seats.turn_start(p);
+                    if (p.player_id == who_am_i) {
                         $('#end_turn').show();
                     }
+
+                    addToChat("Room", "Game has started.");
+                    addToChat("Room", p.name + "'s turn to move.");
                 }
             }
 
@@ -129,17 +147,18 @@
         channel.bind('game_winner', function(player) {
             seats.clear();
             $('#end_turn').hide();
-            alert(player.name + " won!");
         });
 
-        channel.bind('new_turn', function(data) {
-            if (data.player_id == who_am_i) {
+        channel.bind('new_turn', function(player) {
+            if (player.player_id == who_am_i) {
                 $('#end_turn').show();
             } else {
                 $('#end_turn').hide();
             }
-            next_turn(data.player_id);
-            seats.turn_start({ player_id: data.player_id});
+            next_turn(player.player_id);
+            seats.turn_start({ player_id: player.player_id});
+
+            addToChat("Room", player.name + "'s turn to move.");
         });
 
         $("#form_chat")

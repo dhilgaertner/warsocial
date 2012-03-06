@@ -204,7 +204,6 @@ class Game < ActiveRecord::Base
     restart_turn_timer
 
     broadcast(self.name, GameMsgType::TURN, {:player_id => np.user.id})
-    broadcast(self.name, GameMsgType::CHATLINE, {:entry => "#{np.user.username}'s turn has started.", :name => "Server"})
   end
   
   # Force the end of the current players turn
@@ -272,11 +271,8 @@ class Game < ActiveRecord::Base
     player = self.players.sample
     player.is_turn = true
     player.save
-    
-    broadcast(self.name, GameMsgType::CHATLINE, {:entry => "Game Started", :name => "Server"})
-    broadcast(self.name, GameMsgType::CHATLINE, {:entry => "#{player.user.username}'s turn has started.", :name => "Server"})
-    
-    data = { :who_am_i => 0, 
+
+    data = { :who_am_i => 0,
              :map_layout => ActiveSupport::JSON.decode(self.map.json),
              :players => self.players,
              :deployment => self.lands }
