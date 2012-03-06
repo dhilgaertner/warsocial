@@ -147,6 +147,8 @@
         channel.bind('game_winner', function(player) {
             seats.clear();
             $('#end_turn').hide();
+
+            addToChat("Room", player.name + " wins!");
         });
 
         channel.bind('new_turn', function(player) {
