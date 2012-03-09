@@ -24,7 +24,8 @@ function SoundManager()
                 snd = new Audio("/sounds/start" + this.ext);
                 break;
             case "sound_click":
-                snd = new Audio("/sounds/click" + this.ext);
+                return;
+                //snd = new Audio("/sounds/click" + this.ext);
                 break;
             default:
                 return;
