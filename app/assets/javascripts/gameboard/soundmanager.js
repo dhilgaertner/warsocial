@@ -8,50 +8,27 @@ function SoundManager()
 
     this.init = function ()
     {
-//        var audio = $("audio");
-//        for(var i=0;i<audio.length;i++){
-//
-//            this.sounds[audio[i].id] = new Array();
-//
-//            for(var j=0; j<maxchannels; j++)
-//            {
-//                var src;
-//                // choose the right source depending on what the browser can play
-//                if (audio[i].canPlayType('audio/mpeg')) {
-//                    src = $("#" + audio[i].id + " source[type='audio/mpeg']").attr("src");
-//                }
-//                else if (audio[i].canPlayType('audio/ogg')){
-//                    src = $("#" + audio[i].id + " source[type='audio/ogg']").attr("src");
-//                }
-//                else {
-//                    // fall back
-//                }
-//                this.sounds[audio[i].id][j] = new Audio(src);
-//                this.sounds[audio[i].id][j].is_playing = false;
-//            }
-//        }
+        this.ext = "";
+
+        this.ext = Audio().canPlayType('audio/mpeg') ? ".mp3" : this.ext;
+        this.ext = Audio().canPlayType('audio/ogg') ? ".ogg" : this.ext;
     }
 
     this.play = function(effectname){
+        var snd = null;
 
-//        if (Audio().canPlayType('audio/mpeg')) {
-//            var snd = new Audio("/sounds/click.mo3");
-//            snd.play();
-//        } else if (Audio().canPlayType('audio/ogg')) {
-//            var snd = new Audio("/sounds/click.ogg");
-//            snd.play();
-//        }
+        switch(effectname) {
+            case "game_start":
+                snd = new Audio("/sounds/start" + this.ext);
+                break;
+            case "sound_click":
+                snd = new Audio("/sounds/click" + this.ext);
+                break;
+            default:
+                return;
+        }
 
-//        for(var i=0; i < maxchannels; i++)
-//        {
-//            if(this.sounds[effectname][i].ended == true || this.sounds[effectname][i].is_playing == false)
-//            {
-//                this.sounds[effectname][i].play();
-//                this.sounds[effectname][i].is_playing = true;
-//                //console.log("play: " + effectname + " " + i);
-//                return;
-//            }
-//        }
+        snd.play();
     }
 
 }

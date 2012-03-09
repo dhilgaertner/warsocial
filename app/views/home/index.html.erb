@@ -121,6 +121,8 @@
             }
 
             init(data);
+
+            SoundManager.play("game_start");
         });
 
         channel.bind('player_sit', function(player) {
@@ -262,10 +264,6 @@
                         <%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
                         <%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
                         <%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
-                        <audio id="sound_click" preload="auto" autobuffer style="display:none">
-                            <source src=/sounds/click.ogg" type="audio/ogg" />
-                            <source src="/sounds/click.mp3" type="audio/mpeg" />
-                        </audio>
 					</div>
 					<div id="right_players">
 						<div class="player">
