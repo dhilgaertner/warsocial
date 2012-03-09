@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/gameboard/soundmanager.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/gameboard/soundmanager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-4a5695cc433e7b4367f5a3a58212a544.css.gz" afterPath="$PROJECT_DIR$/public/assets/application-4a5695cc433e7b4367f5a3a58212a544.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.css.gz" afterPath="$PROJECT_DIR$/public/assets/application.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.js.gz" afterPath="$PROJECT_DIR$/public/assets/application.js.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.js" afterPath="$PROJECT_DIR$/public/assets/application.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/manifest.yml" afterPath="$PROJECT_DIR$/public/assets/manifest.yml" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
