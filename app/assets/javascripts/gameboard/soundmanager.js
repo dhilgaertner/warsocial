@@ -10,8 +10,10 @@ function SoundManager()
     {
         this.ext = "";
 
-        this.ext = Audio().canPlayType('audio/mpeg') ? ".mp3" : this.ext;
-        this.ext = Audio().canPlayType('audio/ogg') ? ".ogg" : this.ext;
+        var audio = new Audio();
+
+        if (audio.canPlayType('audio/mpeg')) this.ext = ".mp3";
+        if (audio.canPlayType('audio/ogg')) this.ext = ".ogg";
     }
 
     this.play = function(effectname){
