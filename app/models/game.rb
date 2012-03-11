@@ -14,28 +14,44 @@ class Game < ActiveRecord::Base
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :state, :turn_timer_id
-  
+
+  def as_json(options={})
+    rules = GameRule.where("game_name = ?", self.name).first
+
+    { :name => self.name,
+      :state => self.state,
+      :players => self.players,
+      :max_players => rules == nil ? 2 : rules.player_count,
+      :map => self.map.name
+    }
+  end
+
   # Find running game by name or create a new one
   def self.get_game(name, map_name = nil)
     games = Game.where("name = ? AND state != ?", name, Game::FINISHED_STATE)
     
-    if (map_name == nil)
-      settings = GameRule.where("game_name = ?", name).first
-      
-      if (settings == nil)
-        map_name = "default"
-      else
-        map_name = settings.map_name
-      end 
-    end 
-    
-    if games.size == 0 
+    if games.size == 0
+      if (map_name == nil)
+        settings = GameRule.where("game_name = ?", name).first
+
+        if (settings == nil)
+          map_name = "default"
+        else
+          map_name = settings.map_name
+        end
+      end
+
       return Map.where("name = ?", map_name).first.games.create(:name => name)
     else
       return games.first
     end
   end
-  
+
+  # Find games to be shown in the lobby
+  def self.get_lobby_games()
+    Game.includes([:players, :map]).where("state != ?", Game::FINISHED_STATE)
+  end
+
   # Is the user in the game?
   def is_user_in_game?(user)
     if (self.users.exists?(user))

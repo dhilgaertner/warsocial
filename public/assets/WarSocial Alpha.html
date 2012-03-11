@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>WarSocial Alpha</title>
+
+  <meta name="Description" content="Your descriptive sentence or two goes here.">
+  <link rel="icon" type="image/png" href="http://localhost:3000/assets/icon.png">
+
+
+      <link rel="stylesheet" type="text/css" href="WarSocial%20Alpha_files/jquery-ui-1.css">
+
+    <script src="WarSocial%20Alpha_files/ga.js" async="" type="text/javascript"></script><script src="WarSocial%20Alpha_files/pusher.js" type="text/javascript"></script>
+
+        <script src="WarSocial%20Alpha_files/jquery-1.js" type="text/javascript"></script>
+        <script src="WarSocial%20Alpha_files/jquery_ujs.js" type="text/javascript"></script>
+        <script src="WarSocial%20Alpha_files/jquery_002.js" type="text/javascript"></script>
+        <script src="WarSocial%20Alpha_files/jquery.js" type="text/javascript"></script>
+
+            <script src="WarSocial%20Alpha_files/communications.js" type="text/javascript"></script>
+            <script src="WarSocial%20Alpha_files/soundmanager.js" type="text/javascript"></script>
+            <script src="WarSocial%20Alpha_files/dicebox.js" type="text/javascript"></script>
+            <script src="WarSocial%20Alpha_files/land.js" type="text/javascript"></script>
+            <script src="WarSocial%20Alpha_files/map.js" type="text/javascript"></script>
+            <script src="WarSocial%20Alpha_files/mapcanvas.js" type="text/javascript"></script>
+            <script src="WarSocial%20Alpha_files/player.js" type="text/javascript"></script>
+            <script src="WarSocial%20Alpha_files/shared.js" type="text/javascript"></script>
+            <script src="WarSocial%20Alpha_files/warsocial.js" type="text/javascript"></script>
+
+        <script src="WarSocial%20Alpha_files/turn_timer.js" type="text/javascript"></script>
+        <script src="WarSocial%20Alpha_files/seats.js" type="text/javascript"></script>
+        <script src="WarSocial%20Alpha_files/lobby.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+	
+	var global_game_name;
+	var global_init_data;
+
+    $(document).ready(function() {
+        global_game_name = "home";
+        global_init_data = {"players":[{"name":"dc2","seat_id":1,"player_id":2,"is_turn":false,"state":"waiting"},{"name":"dc","seat_id":2,"player_id":1,"is_turn":true,"state":"waiting"}],"who_am_i":1,"map_layout":{"neutral_land_color":"#CCCCCC","land_id_tiles":[0,0,13,13,0,0,0,0,4,4,4,4,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,13,13,13,13,0,0,0,4,4,4,4,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,0,0,0,0,0,13,13,13,13,13,1,1,1,0,0,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,13,13,13,13,1,1,1,1,0,0,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,13,13,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,10,10,8,8,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,10,10,10,8,8,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,2,2,2,2,4,4,4,4,5,5,5,5,5,5,10,10,10,10,8,8,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,2,2,2,2,4,4,4,4,5,5,5,5,5,10,10,10,10,8,8,8,8,0,0,0,0,1,1,1,1,1,0,2,2,2,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,8,8,8,8,8,8,8,8,0,0,3,3,3,3,3,0,0,0,2,2,2,2,2,2,2,2,0,0,6,6,6,6,6,6,6,8,8,8,8,8,8,8,8,0,3,3,3,3,3,3,0,0,0,0,2,2,2,2,2,2,0,0,6,6,6,6,6,6,6,6,6,6,8,8,8,8,8,8,8,3,3,3,3,3,3,3,3,0,0,2,2,2,2,2,2,0,0,0,6,6,6,6,6,6,6,6,6,8,8,8,8,8,8,8,3,3,3,3,3,3,3,3,3,3,3,11,11,11,2,2,2,0,0,6,6,6,6,6,6,6,8,8,8,8,8,8,8,8,8,3,3,3,3,3,3,3,3,3,3,3,11,11,11,11,2,2,2,6,6,6,6,6,6,6,6,8,8,8,8,8,8,8,8,8,3,3,3,3,3,3,3,3,3,3,3,11,11,11,9,9,9,9,9,6,6,6,6,6,6,7,7,7,7,7,8,8,8,8,8,3,3,3,3,3,3,3,3,3,3,3,11,11,11,9,9,9,9,9,6,6,6,6,6,6,7,7,7,7,7,7,8,8,8,8,0,0,3,3,3,3,3,3,3,3,0,0,0,0,9,9,9,9,9,9,9,9,9,9,7,7,7,7,7,7,7,7,8,8,0,0,0,3,3,3,3,3,3,3,3,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,7,7,7,7,7,7,7,8,0,0,0,0,0,0,3,3,3,3,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,12,12,7,7,7,7,7,7,0,0,0,0,0,0,0,0,3,3,3,3,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,12,12,12,7,7,7,7,0,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,12,12,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,12,12,12,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,12,12,12,12,12,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,12,12,12,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,12,12,12,12,0,0,0,0,0,0,0,0],"height":25,"width":35},"deployment":[{"player_id":1,"land_id":6,"deployment":3},{"player_id":2,"land_id":12,"deployment":1},{"player_id":1,"land_id":13,"deployment":1},{"player_id":1,"land_id":3,"deployment":5},{"player_id":2,"land_id":1,"deployment":4},{"player_id":2,"land_id":5,"deployment":5},{"player_id":1,"land_id":4,"deployment":2},{"player_id":2,"land_id":7,"deployment":5},{"player_id":1,"land_id":9,"deployment":6},{"player_id":2,"land_id":11,"deployment":3},{"player_id":1,"land_id":10,"deployment":5},{"player_id":2,"land_id":2,"deployment":3},{"player_id":null,"land_id":8,"deployment":1}]};
+        game = null;
+
+        var addToChat = function(name, chat) {
+            $('#main_discussion tbody').append($('<tr><td>' + name + ': ' + chat + '</td></tr>'));
+            $("#chat_window").animate({ scrollTop: $("#chat_window").prop("scrollHeight") }, 300);
+        };
+
+        // Enable pusher logging - don't include this in production
+        Pusher.log = function(message) {
+            if (window.console && window.console.log) window.console.log(message);
+        };
+
+        // Flash fallback logging - don't include this in production
+        WEB_SOCKET_DEBUG = true;
+
+        var pusher = new Pusher('3b4da07cf40986103601');
+        var channel = pusher.subscribe("presence-home");
+        Pusher.channel_auth_endpoint = '/pusher/auth';
+
+        channel.bind('pusher:subscription_error', function(status) {
+            if(status == 408 || status == 503){
+                // retry?
+            }
+        });
+
+        channel.bind('pusher:subscription_succeeded', function(members) {
+            var memArray = [];
+            members.each(function(member) {
+                memArray.push(member.info.name);
+            });
+            addToChat("Room", "Welcome to " + global_game_name + ". Players here: " + memArray.join(", ") + ".");
+        });
+
+        channel.bind('pusher:member_added', function(member) {
+            addToChat("Room", member.info.name + " is here.");
+        });
+
+        channel.bind('pusher:member_removed', function(member) {
+            addToChat("Room", member.info.name + " has left.")
+        });
+
+        $('#end_turn').hide();
+
+        var seats = new Seats(8, global_init_data.players);
+        var lobby = new Lobby("game_lobby_wrapper");
+
+        var who_am_i = 1;
+
+        for(var i=0; i<global_init_data.players.length; i++) {
+            if (global_init_data.players[i].is_turn == true) {
+                seats.turn_start(global_init_data.players[i]);
+                if (global_init_data.players[i].player_id == who_am_i) {
+                    $('#end_turn').show();
+                }
+            }
+        }
+
+        channel.bind('new_chat_line', function(data) {
+            addToChat(data.name, data.entry);
+        });
+
+        channel.bind('game_start', function(data) {
+            data.who_am_i = who_am_i;
+
+            $('#end_turn').hide();
+            for(var i=0; i<data.players.length; i++) {
+                var p = data.players[i];
+
+                if (p.is_turn == true) {
+                    seats.turn_start(p);
+                    if (p.player_id == who_am_i) {
+                        $('#end_turn').show();
+                    }
+
+                    addToChat("Room", "Game has started.");
+                    addToChat("Room", p.name + "'s turn to move.");
+                }
+            }
+
+            init(data);
+
+            SoundManager.play("game_start");
+        });
+
+        channel.bind('player_sit', function(player) {
+            seats.sit(player);
+        });
+
+        channel.bind('player_stand', function(player) {
+            seats.stand(player);
+        });
+
+        channel.bind('player_quit', function(player) {
+            player_quit(player.player_id);
+        });
+
+        channel.bind('attack', function(data) {
+            seats.turn_timer_restart({player_id: data.attack_info.attacker_player_id});
+            attack(data);
+        });
+
+        channel.bind('deploy', function(data) {
+            deploy(data);
+        });
+
+        channel.bind('game_winner', function(player) {
+            seats.clear();
+            $('#end_turn').hide();
+
+            addToChat("Room", player.name + " wins!");
+        });
+
+        channel.bind('new_turn', function(player) {
+            if (player.player_id == who_am_i) {
+                $('#end_turn').show();
+            } else {
+                $('#end_turn').hide();
+            }
+            next_turn(player.player_id);
+            seats.turn_start({ player_id: player.player_id});
+
+            addToChat("Room", player.name + "'s turn to move.");
+        });
+
+        $("#form_chat")
+                .bind("ajax:complete", function(xhr, status) {
+                    $('#entry').val("");
+                });
+
+        $('#lobby_button').click(function() {
+            lobby.open();
+        });
+    });
+
+    $(window).load(function() {
+        init(global_init_data);
+    });
+	
+  </script>
+
+
+  <meta content="authenticity_token" name="csrf-param">
+<meta content="+uxMJd1UhQReDNRpRjKlwpcrYqupEPat5wjpAN7jCeQ=" name="csrf-token">
+
+	<script type="text/javascript">
+		var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-29117828-1']); _gaq.push(['_setDomainName', 'warsocial.com']); _gaq.push(['_trackPageview']);
+		(function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+	</script>
+	
+	<style type="text/css" media="screen">
+		@font-face {
+			font-family: Atrament-BoldSC;
+			src: url('/Atrament/Atrament-7-BoldSC.otf');
+		}
+
+		@font-face {
+			font-family: Atrament-Medium;
+			src: url('/Atrament/Atrament-5-Medium.otf');
+		}
+
+		body { 
+		  background-color: #dbdbdb;
+		  margin: 0px;
+		}
+		* {
+		font-family: Arial;
+		}
+		a {
+			color: #000;
+			text-decoration: none;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+
+		div#wrapper {
+			background: url(/assets/middle_background.png);
+			background-position: center;
+			background-repeat: repeat-y;
+			width: 1049px;
+			margin-left: auto;
+			margin-right: auto;
+			overflow: auto;
+		}
+
+		div#footer {
+			background: url(/assets/footer_background.png);
+			background-position: center;
+			width: 1033px;
+			height: 295px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: -8px;
+			color: white;
+		}
+
+		div#footer .fourth {
+			float: left;
+			width: 210px;
+			margin-top: -5px;
+			margin-left: 40px;
+		}
+
+		div#footer a {
+			color: white;
+			font-size: .9em;
+		}
+
+		div#footer p.item {
+			margin-top: 6px;
+			margin-bottom: 6px;
+		}
+
+		div#footer p.title {
+			font-size: 25px;
+			font-family: Atrament-Medium;
+		}
+
+		div#side-bar {
+			color: white;
+			background: url(/assets/sidepattern.png);
+			background-position: center;
+			background-repeat: repeat-y;
+			margin-left: 8px;
+			width: 185px;
+			height: 1100px;
+			float:left;
+			border-left: 3px solid black;
+			border-right: 3px solid black;
+		}
+
+		div.avatar {
+			background-color: gray;
+			background: url(/assets/default_avatar2.png);
+			height: 50px;
+			width: 50px;
+			-moz-border-radius: 5px 5px;
+			border-radius: 5px 5px;
+			-moz-border-radius: 5px 5px;
+			border-radius: 5px 5px;
+		}
+
+		div#side-bar div.avatar {
+			margin-left: 10px;
+			float:left;
+		}
+
+		div#side-bar #username {
+			float:left;
+			width: 110px;
+			margin-left: 10px;
+			margin-top: -3px;
+			margin-bottom: 0px;
+			font-size: 1.7em;
+			font-family: Atrament-BoldSC;
+		}
+
+		div#side-bar .top_links {
+			float:left;
+			color: gray;
+			font-size: .8em;
+			margin-left: 10px;
+		}
+
+		div#side-bar a {
+			color: white;
+		}
+
+		div#side-bar .logo {
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		div#main-wrapper {
+			width: 849px;
+			height: 1100px;
+			float:left;
+		}
+
+		div#header {
+			width: 849px;
+			height: 130px;
+		}
+
+		div#header p {
+			margin-top: 10px;
+			margin-left: 35px;
+			line-height: 30px;
+			color: #3b3b3b;
+			text-shadow: 0.07em 0.07em #dbdbdb;
+			font-size: 1.7em;
+			font-family: Atrament-BoldSC;
+			width: 400px;
+			float: left;
+		}
+
+		div#header .button {
+			margin-top: 27px;
+			margin-right: 10px;
+			float: right;
+		}
+
+		div.bordered {
+		margin: 0 auto;
+		padding: 20px;
+		border: 1px solid #ddd;
+		}
+
+		div#game {
+			width: 776px;
+			padding: 0;
+			margin-left: auto;
+			margin-right: auto;
+			overflow: auto;
+		}
+
+		div#game_header {
+			background: url(/assets/game_header.png);
+			background-position: center;
+			width: 776px;
+			height: 42px;
+		}
+
+		div#game_main {
+			width: 773px;
+			border-left: 1px solid #C0C0C0;
+			border-right: 1px solid #C0C0C0;
+			border-bottom: 1px solid #C0C0C0;
+			margin-top: -2px;
+			-moz-border-radius-bottomright: 5px 5px;
+			border-bottom-right-radius: 5px 5px;
+			-moz-border-radius-bottomleft: 5px 5px;
+			border-bottom-left-radius: 5px 5px;
+			padding-top:10px;
+		}
+
+		div#game_main div.avatar {
+			float:left;
+		}
+
+		div#game_main #top_players{
+			width: 100%;
+			height: 85px;
+		}
+
+		div#game_main #top_players .player{
+			width: 150px;
+			height: 85px;
+			margin-left: 80px;
+			float: left;
+		}
+
+		div#game_main #top_players .player_stat1{
+			width: 150px;
+			height: 50px;
+			border: 1px solid #C0C0C0;
+			-moz-border-radius: 5px 5px;
+			border-radius: 5px 5px;
+			-moz-border-radius: 5px 5px;
+			border-radius: 5px 5px;
+		}
+
+		div#game_main #top_players .player_stat2{
+			width: 150px;
+			height: 25px;
+			margin-top: -3px;
+			border-left: 1px solid #C0C0C0;
+			border-bottom: 1px solid #C0C0C0;
+			border-right: 1px solid #C0C0C0;
+			-moz-border-radius-bottomright: 5px 5px;
+			border-bottom-right-radius: 5px 5px;
+			-moz-border-radius-bottomleft: 5px 5px;
+			border-bottom-left-radius: 5px 5px;
+		}
+
+		div#game_main #left_players{
+			position: absolute;
+			top:0px;
+			left: 6px;
+			width: 85px;
+			height: 410px;
+		}
+
+		div#game_main #right_players{
+			position: absolute;
+			top:0px;
+			left: 690px;
+			width: 75px;
+			height: 410px;
+		}
+
+		div#game_main #left_players .player{
+			margin-top: 40px;
+			width: 77px;
+			height: 152px;
+			float: left;
+		}
+
+		div#game_main .turn_progress {
+			background-color: #5DFC0A;
+		}
+		
+		div#game_main #left_players .turn_progress {
+			width: 55px;
+			height: 6px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		div#game_main #right_players .turn_progress {
+			width: 55px;
+			height: 6px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		div#game_main #top_players .turn_progress {
+			width: 55px;
+			height: 6px;
+			float: left;
+			margin-left: 23px;
+		}
+		
+		div#game_main #right_players .player {
+			margin-top: 40px;
+			width: 77px;
+			height: 152px;
+			float: left;
+		}
+
+		div#game_main .player div.ws_bordered {
+			position:relative;
+			width: 75px;
+			height: 150px;
+		}
+
+		div#game_main #left_players div.avatar {
+			margin-left: 13px;
+		}
+
+		div#game_main #right_players div.avatar {
+			margin-left: 13px;
+		}
+
+		div#game_main div#top_players .name  {
+			float: left;
+			margin-left: 5px;
+			width: 95px;
+		}
+
+		div#game_main div.player .name  {
+			text-align: center;
+			overflow: hidden;
+			font-size: 1.0em;
+			font-family: Atrament-BoldSC;
+		}
+
+        div#game_lobby_wrapper {
+            height: 400px;
+            width: 600px;
+            display: none;
+            background-color: #e2f5f0;
+            border: 1px solid grey;
+            -moz-border-radius: 5px 5px;
+            border-radius: 5px 5px;
+            -moz-border-radius: 5px 5px;
+            border-radius: 5px 5px;
+        }
+
+        div#game_lobby_wrapper div.content_page {
+            height: 300px;
+            width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        table#open_tables {
+            width: 580px;
+        }
+
+        table#running_tables {
+            width: 580px;
+        }
+
+        #simplemodal-container a.modalCloseImg {
+            background:url(/assets/x.png) no-repeat; /* adjust url as required */
+            width:25px;
+            height:29px;
+            display:inline;
+            z-index:3200;
+            position:absolute;
+            top:-15px;
+            right:-18px;
+            cursor:pointer;
+        }
+
+		.clear {
+			clear: both;
+		}
+
+		div#chat_window {
+			width: 773px;
+			border: 1px solid #C0C0C0;
+			-moz-border-radius: 5px 5px;
+			border-radius: 5px 5px;
+			-moz-border-radius: 5px 5px;
+			border-radius: 5px 5px;
+			height: 175px; 
+			overflow: auto; 
+		}
+
+		.ws_bordered {
+			border: 1px solid #C0C0C0;
+			-moz-border-radius: 5px 5px;
+			border-radius: 5px 5px;
+			-moz-border-radius: 5px 5px;
+			border-radius: 5px 5px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div id="wrapper">
+		<div id="side-bar">
+			<center>
+				<a href="http://localhost:3000/" class="logo"><img alt="Logo" src="WarSocial%20Alpha_files/logo.png" border="0"></a>
+			</center>
+			
+				<div style="margin-top: 30px;">
+					<div class="avatar"></div>
+					<p id="username">dc</p><br>
+					<a href="#" class="top_links">Settings</a>
+					<a href="http://localhost:3000/users/sign_out" class="top_links" data-method="delete" rel="nofollow">Logout</a>
+				</div>
+			<br>
+			<div style="margin-left: 10px">
+				<h2>Maps</h2>
+				<p>
+					<a href="http://localhost:3000/">home</a>
+				</p>
+				<p>
+					<a href="http://localhost:3000/game/default">default</a>
+				</p>
+				<p>
+					<a href="http://localhost:3000/game/jurgen">jurgen (3 seats)</a>
+					
+				</p>
+				<p>
+					<a href="http://localhost:3000/game/alex">alex (3 seats)</a>
+					
+				</p>
+				<p>
+					<a href="http://localhost:3000/game/k8dice">k8dice</a>
+					
+				</p>
+
+              <h2><a href="http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy" style="color: green; text-decoration: underline;">How to Play</a></h2>
+			</div>
+		</div>
+		<div id="main-wrapper">
+				<br>
+			<div id="content">
+				
+	<div id="game">
+		<div style="margin-bottom: 5px;">This is our alpha release, so expect 
+some bugs. If you can't play, try refreshing your browser. If it still 
+doesn't work, flag and try a new game. Please report any bugs to <a href="mailto:bugs@warsocial.com" style="color: blue;">bugs@warsocial.com</a> or leave a comment at <a href="http://blog.warsocial.com/" style="color: blue;" target="_blank">blog.warsocial.com</a>. Thanks!</div>
+		<div id="game_header"></div>
+		<div id="game_main">
+            <a href="#" id="lobby_button" style="margin-left: 10px; margin-top: 10px;">Lobby</a>
+            <a href="http://localhost:3000/home/sit?game_name=home" data-remote="true" style="margin-left: 10px; margin-top: 10px;"><img alt="Sit_button" src="WarSocial%20Alpha_files/sit_button.png" border="0"></a>
+			<a href="http://localhost:3000/home/stand?game_name=home" data-remote="true" style="margin-left: 10px; margin-top: 10px;"><img alt="Stand_button" src="WarSocial%20Alpha_files/stand_button.png" border="0"></a>
+			<a href="http://localhost:3000/home/flag?game_name=home" data-remote="true" style="margin-left: 10px; margin-top: 10px;"><img alt="Flag_button" src="WarSocial%20Alpha_files/flag_button.png" border="0"></a>
+			<a href="http://localhost:3000/home/end_turn?game_name=home" data-remote="true" id="end_turn" style="margin-left: 10px; margin-top: 10px; display: inline;"><img alt="End_turn_button" src="WarSocial%20Alpha_files/end_turn_button.png" border="0"></a>
+			<div>
+				<div id="top_players">
+					<div class="player">
+						<div id="game_seat_2" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar" style="background-color: #c22b2b"></div>
+								<div class="name"></div>
+								<div class="turn_progress" style="display: none;"></div>
+							</div>
+							<div class="player_stat2"></div>
+						</div>
+					</div>
+					<div class="player">
+						<div id="game_seat_3" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar" style="background-color: #5fb61f"></div>
+								<div class="name"></div>
+								<div class="turn_progress" style="display: none;"></div>
+							</div>
+							<div class="player_stat2"></div>
+						</div>
+					</div>
+					<div class="player">
+						<div id="game_seat_4" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar" style="background-color: #603bb3"></div>
+								<div class="name"></div>
+								<div class="turn_progress" style="display: none;"></div>
+							</div>
+							<div class="player_stat2"></div>
+						</div>
+					</div>
+				</div>
+				<div style="position: relative">
+					<div id="left_players">
+						<div class="player">
+							<div id="game_seat_1" class="ws_bordered" style="">
+								<div class="player_stat1">
+									<div class="avatar" style="background-color: #3760ae"></div>
+									<div class="clear"></div>
+									<div class="name">dc</div>
+									<div class="turn_progress" style="width: 0px;"></div>
+								</div>
+								<div class="player_stat2"></div>
+							</div>
+						</div>
+						<div class="player">
+							<div id="game_seat_0" class="ws_bordered" style="">
+								<div class="player_stat1">
+									<div class="avatar" style="background-color: #f8af01"></div>
+									<div class="clear"></div>
+									<div class="name">dc2</div>
+									<div class="turn_progress" style="display: none;"></div>
+								</div>
+								<div class="player_stat2"></div>
+							</div>
+						</div>
+					</div>
+					<div id="stage" style="top: 0px; left: 0px; position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
+						<canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
+						<canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+						<canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+
+						<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+					    <canvas id="canvas_dice" width="40" height="40" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
+					    <div id="dice_container" style="z-index:3; position:absolute; left:0px; top:0px; width:600px; height:420px;"><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 0;" height="420" width="600" id="dice_canvas_13"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 1;" height="420" width="600" id="dice_canvas_5"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 2;" height="420" width="600" id="dice_canvas_4"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 3;" height="420" width="600" id="dice_canvas_1"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 4;" height="420" width="600" id="dice_canvas_10"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 5;" height="420" width="600" id="dice_canvas_2"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 6;" height="420" width="600" id="dice_canvas_6"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 7;" height="420" width="600" id="dice_canvas_8"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 8;" height="420" width="600" id="dice_canvas_11"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 9;" height="420" width="600" id="dice_canvas_3"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 10;" height="420" width="600" id="dice_canvas_7"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 11;" height="420" width="600" id="dice_canvas_9"></canvas><canvas style="position: absolute; left: 0pt; top: 0pt; z-index: 12;" height="420" width="600" id="dice_canvas_12"></canvas></div>
+					    <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
+					    <div id="dice_box_text_attacker" style="z-index: 5; position: absolute; left: 0px; top: 0px; margin: 0pt; padding: 0pt; font-family: arial; font-size: 24px; font-weight: bold;"></div>
+					    <div id="dice_box_text_defender" style="z-index: 5; position: absolute; left: 0px; top: 0px; margin: 0pt; padding: 0pt; font-family: arial; font-size: 24px; font-weight: bold;"></div>
+					    <img alt="Texture" id="pattern" src="WarSocial%20Alpha_files/texture.png" style="display: none;">
+                        <img alt="Dice1" id="dice1" src="WarSocial%20Alpha_files/dice1.png" style="display: none;">
+                        <img alt="Dice2" id="dice2" src="WarSocial%20Alpha_files/dice2.png" style="display: none;">
+                        <img alt="Dice3" id="dice3" src="WarSocial%20Alpha_files/dice3.png" style="display: none;">
+                        <img alt="Dice4" id="dice4" src="WarSocial%20Alpha_files/dice4.png" style="display: none;">
+                        <img alt="Dice5" id="dice5" src="WarSocial%20Alpha_files/dice5.png" style="display: none;">
+                        <img alt="Dice6" id="dice6" src="WarSocial%20Alpha_files/dice6.png" style="display: none;">
+                        <img alt="Dice_shadow" id="dice_shadow" src="WarSocial%20Alpha_files/dice_shadow.png" style="display: none;">
+					</div>
+					<div id="right_players">
+						<div class="player">
+							<div id="game_seat_5" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar" style="background-color: #27a7b2"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+									<div class="turn_progress" style="display: none;"></div>
+								</div>
+								<div class="player_stat2"></div>
+							</div>
+						</div>
+						<div class="player">
+							<div id="game_seat_6" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar" style="background-color: #ad3bac"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+									<div class="turn_progress" style="display: none;"></div>
+								</div>
+								<div class="player_stat2"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="chat_window">
+			<table id="main_discussion">
+				<tbody>
+				<tr><td>Room: Welcome to home. Players here: dc.</td></tr></tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div style="text-align: center;">
+	<form accept-charset="UTF-8" action="/home/add_line" data-remote="true" id="form_chat" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="+uxMJd1UhQReDNRpRjKlwpcrYqupEPat5wjpAN7jCeQ=" type="hidden"></div>
+		<input id="game_name" name="game_name" value="home" type="hidden">
+		<input class="input" id="entry" name="entry" size="70" type="text">
+		<input class="common_button" data-disable-with="Sending..." name="commit" value="Send" type="submit">
+</form>	</div>
+
+    <span style="display: none;" id="simplemodal-placeholder"></span>
+
+
+
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="fourth"> 
+			<p class="title">Alpha Version</p>
+			<div style="height: 175px">
+				
+			</div>
+		</div>
+		<div style="width:100%; float:left; margin-left:30px; font-size:.8em; color:gray;">
+			<p>© 2011-2012 WarSocial. All Rights Reserved.</p>
+		</div>
+	</div>
+
+<div style="background-color: rgb(255, 255, 255); opacity: 0.6; height: 1387px; width: 1429px; position: fixed; left: 0px; top: 0px; z-index: 1001;" class="simplemodal-overlay" id="simplemodal-overlay"></div><div style="position: fixed; z-index: 1002; height: 402px; width: 602px; left: 413.5px; top: 36.5px;" class="simplemodal-container" id="simplemodal-container"><a class="modalCloseImg simplemodal-close" title="Close"></a><div style="height: 100%; outline: 0px none; width: 100%; overflow: visible;" class="simplemodal-wrap" tabindex="-1"><div style="display: block;" class="simplemodal-data" id="game_lobby_wrapper">
+    <div style="height: 30px;">
+        <a href="#" class="tab" name="online">Online</a>
+        <a href="#" class="tab" name="open_tables">Open Tables</a>
+        <a href="#" class="tab" name="running_tables">Running Tables</a>
+        <a href="#" class="tab" name="create_table">Create Table</a>
+    </div>
+    <div>
+        <div style="display: none;" class="content_page" name="online">
+            Online
+        </div>
+        <div style="display: none;" class="content_page" name="open_tables">
+          <div id="open_tables_wrapper" class="dataTables_wrapper" role="grid"><div style="display: none;" class="fg-toolbar ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"></div><table class="dataTable" style="" id="open_tables">
+            <thead>
+            <tr role="row"><th aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="open_tables" tabindex="0" role="columnheader" class="ui-state-default"><div class="DataTables_sort_wrapper">Name<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span></div></th><th aria-label="Players: activate to sort column ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="open_tables" tabindex="0" role="columnheader" class="ui-state-default"><div class="DataTables_sort_wrapper">Players<span class="DataTables_sort_icon css_right ui-icon ui-icon-carat-2-n-s"></span></div></th><th aria-label="Map: activate to sort column ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="open_tables" tabindex="0" role="columnheader" class="ui-state-default"><div class="DataTables_sort_wrapper">Map<span class="DataTables_sort_icon css_right ui-icon ui-icon-carat-2-n-s"></span></div></th></tr>
+            </thead>
+            
+          <tbody aria-relevant="all" aria-live="polite" role="alert"><tr class="odd"><td class="  sorting_1">alex</td><td class=" ">0</td><td class=" ">default</td></tr><tr class="even"><td class="  sorting_1">default</td><td class=" ">0</td><td class=" ">default</td></tr><tr class="odd"><td class="  sorting_1">jurgen</td><td class=" ">0</td><td class=" ">default</td></tr><tr class="even"><td class="  sorting_1">k8dice</td><td class=" ">0</td><td class=" ">default</td></tr></tbody></table><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div id="open_tables_paginate" class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_two_button"><a aria-controls="open_tables" id="open_tables_previous" class="fg-button ui-button ui-state-default ui-corner-left ui-state-disabled" tabindex="0" role="button"><span class="ui-icon ui-icon-circle-arrow-w"></span></a><a aria-controls="open_tables" id="open_tables_next" class="fg-button ui-button ui-state-default ui-corner-right ui-state-disabled" tabindex="0" role="button"><span class="ui-icon ui-icon-circle-arrow-e"></span></a></div></div></div>
+        </div>
+        <div style="display: block;" class="content_page" name="running_tables">
+          <div id="running_tables_wrapper" class="dataTables_wrapper" role="grid"><div style="display: none;" class="fg-toolbar ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"></div><table class="dataTable" style="" id="running_tables">
+            <thead>
+            <tr role="row"><th aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="running_tables" tabindex="0" role="columnheader" class="ui-state-default"><div class="DataTables_sort_wrapper">Name<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span></div></th><th aria-label="Players: activate to sort column ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="running_tables" tabindex="0" role="columnheader" class="ui-state-default"><div class="DataTables_sort_wrapper">Players<span class="DataTables_sort_icon css_right ui-icon ui-icon-carat-2-n-s"></span></div></th><th aria-label="Map: activate to sort column ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="running_tables" tabindex="0" role="columnheader" class="ui-state-default"><div class="DataTables_sort_wrapper">Map<span class="DataTables_sort_icon css_right ui-icon ui-icon-carat-2-n-s"></span></div></th></tr>
+            </thead>
+            
+          <tbody aria-relevant="all" aria-live="polite" role="alert"><tr class="odd"><td class="  sorting_1">home</td><td class=" ">2</td><td class=" ">default</td></tr></tbody></table><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div id="running_tables_paginate" class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_two_button"><a aria-controls="running_tables" id="running_tables_previous" class="fg-button ui-button ui-state-default ui-corner-left ui-state-disabled" tabindex="0" role="button"><span class="ui-icon ui-icon-circle-arrow-w"></span></a><a aria-controls="running_tables" id="running_tables_next" class="fg-button ui-button ui-state-default ui-corner-right ui-state-disabled" tabindex="0" role="button"><span class="ui-icon ui-icon-circle-arrow-e"></span></a></div></div></div>
+        </div>
+        <div style="display: none;" class="content_page" name="create_table">
+            Create Tables
+        </div>
+    </div>
+</div></div></div></body></html>

@@ -129,5 +129,16 @@ class HomeController < ApplicationController
     
     render :text=>"Success", :status=>200
   end
-  
+
+  def get_lobby_games
+    if current_user
+      games = Game.get_lobby_games
+
+      response = { :games => games }
+
+      render :json => response
+    else
+      render :text => "Not authorized", :status => '403'
+    end
+  end
 end

@@ -327,6 +327,50 @@
 			font-family: Atrament-BoldSC;
 		}
 
+        div#game_lobby_wrapper {
+            height: 400px;
+            width: 600px;
+            display: none;
+            background-color: #e2f5f0;
+            border: 1px solid grey;
+            -moz-border-radius: 5px 5px;
+            border-radius: 5px 5px;
+            -moz-border-radius: 5px 5px;
+            border-radius: 5px 5px;
+        }
+
+        div#game_lobby_wrapper div.content_page {
+            height: 300px;
+            width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        div#game_lobby_wrapper tr.row_selected {
+            background-color: grey;
+        }
+
+        table#open_tables {
+            width: 580px;
+        }
+
+        table#running_tables {
+            width: 580px;
+        }
+
+        #simplemodal-container a.modalCloseImg {
+            background:url(<%=image_path "x.png"%>) no-repeat; /* adjust url as required */
+            width:25px;
+            height:29px;
+            display:inline;
+            z-index:3200;
+            position:absolute;
+            top:-15px;
+            right:-18px;
+            cursor:pointer;
+        }
+
 		.clear {
 			clear: both;
 		}

@@ -36,4 +36,7 @@ Dice::Application.configure do
   Pusher.app_id = '11348'
   Pusher.key    = '3b4da07cf40986103601'
   Pusher.secret = 'b6d3f6d0a643ea2dea6f'
+
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:fc83d03c5d4b949803cd1d1fc9a21446@cod.redistogo.com:9771/'
+
 end

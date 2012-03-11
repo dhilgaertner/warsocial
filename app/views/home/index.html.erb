@@ -1,10 +1,13 @@
 <% content_for :javascript_includes do %>
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.8.18.custom.css">
 
-	<script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+    <script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
 
     <% if Rails.env.development? %>
         <script src="/jquery/jquery-1.7.min.js?v=2" type="text/javascript"></script>
         <script src="/jquery/jquery_ujs.js?v=2" type="text/javascript"></script>
+        <script src="/assets/lib/jquery.dataTables.min.js?v=2" type="text/javascript"></script>
+        <script src="/assets/lib/jquery.simplemodal.1.4.2.min.js" type="text/javascript"></script>
 
         <% if !@dev %>
             <script src="/assets/gameboard/communications.js?v=2" type="text/javascript"></script>
@@ -30,6 +33,7 @@
 
         <script src="/assets/gameboard/turn_timer.js?v=2" type="text/javascript"></script>
         <script src="/assets/gameboard/seats.js?v=2" type="text/javascript"></script>
+        <script src="/assets/gameboard/lobby.js?v=2" type="text/javascript"></script>
     <% end %>
 
 	<script type="text/javascript">
@@ -86,6 +90,7 @@
         $('#end_turn').hide();
 
         var seats = new Seats(8, global_init_data.players);
+        var lobby = new Lobby("game_lobby_wrapper");
 
         var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
 
@@ -169,6 +174,10 @@
                 .bind("ajax:complete", function(xhr, status) {
                     $('#entry').val("");
                 });
+
+        $('#lobby_button').click(function() {
+            lobby.open();
+        });
     });
 
     $(window).load(function() {
@@ -183,7 +192,10 @@
 		<div style="margin-bottom: 5px;">This is our alpha release, so expect some bugs. If you can't play, try refreshing your browser. If it still doesn't work, flag and try a new game. Please report any bugs to <%= link_to "bugs@warsocial.com", "mailto:bugs@warsocial.com", :style => "color: blue" %> or leave a comment at <%= link_to "blog.warsocial.com", "http://blog.warsocial.com", :target => "_blank", :style => "color: blue" %>. Thanks!</div>
 		<div id="game_header"></div>
 		<div id="game_main">
-			<%= link_to image_tag("buttons/sit_button.png", :border => 0), sit_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
+            <% if(current_user != nil && current_user.admin?) %>
+              <%= link_to "Lobby", "#", :id => "lobby_button", :style => "margin-left: 10px; margin-top: 10px;" %>
+            <% end %>
+            <%= link_to image_tag("buttons/sit_button.png", :border => 0), sit_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/stand_button.png", :border => 0), stand_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/flag_button.png", :border => 0), flag_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/end_turn_button.png", :border => 0), end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :style => "margin-left: 10px; margin-top: 10px;" %>
@@ -301,14 +313,17 @@
 		</div>
 	</div>
 	
-	<center>
+	<div style="text-align: center;">
 	<%= form_tag(add_line_home_index_path, :id => "form_chat", :remote=>true) do %>
 		<%= hidden_field_tag 'game_name', @game.name %>
 		<%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
 		<%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending..." } 
 		 %>
 	<% end %>
-	</center>
+	</div>
+
+    <%= render "shared/game_lobby" %>
+
 <% else %>
   	<%= form_for @user, :url => user_session_path do |f| %>
   		<div><%= f.label :email %><br />

@@ -73,6 +73,7 @@
     <orderEntry type="library" scope="PROVIDED" name="railties (v3.1.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v0.9.2.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rdoc (v3.11, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="redis (v2.2.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="remotipart (v1.0.1, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-hmac (v0.4.0, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass (v3.1.11, ruby-1.8.7-p249) [gem]" level="application" />
@@ -81,6 +82,7 @@
     <orderEntry type="library" scope="PROVIDED" name="simple_form (v1.5.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v2.1.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sqlite3 (v1.3.4, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="system_timer (v1.2.4, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v0.14.6, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tilt (v1.3.3, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="treetop (v1.4.10, ruby-1.8.7-p249) [gem]" level="application" />
