@@ -13,6 +13,9 @@ Lobby.prototype.setupLobby = function() {
     this._pages.hide();
 
     this._tabs.click(function() {
+        $('#lobby_header').removeClass();
+        $('#lobby_header').addClass($(this).attr('name'));
+
         ctx._pages.hide();
         ctx._lobby.find('div.content_page[name="' + $(this).attr('name') + '"]').show();
     });

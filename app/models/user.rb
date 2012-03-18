@@ -39,4 +39,40 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  # Defining the keys
+  private
+  def self.current_key
+    key(Time.now.strftime("%M"))
+  end
+
+  private
+  def self.keys_in_last_5_minutes
+    now = Time.now
+    times = (0..5).collect {|n| now - n.minutes }
+    times.collect{ |t| key(t.strftime("%M")) }
+  end
+
+  private
+  def self.key(minute)
+    "online_users_minute_#{minute}"
+  end
+
+# Tracking an Active User
+  def self.track_user_id(data)
+    key = current_key
+    REDIS.sadd(key, data.userId)
+    REDIS.expire(key, 60 * 20)
+  end
+
+# Who's online
+  def self.online_user_ids
+    REDIS.sunion(*keys_in_last_5_minutes)
+  end
+
+  private
+  def self.online_friend_ids(interested_user_id)
+    REDIS.sunionstore("online_users", *keys_in_last_5_minutes)
+    REDIS.sinter("online_users", "user:#{interested_user_id}:friend_ids")
+  end
 end

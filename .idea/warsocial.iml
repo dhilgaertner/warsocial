@@ -40,6 +40,8 @@
     <orderEntry type="library" scope="PROVIDED" name="execjs (v1.2.9, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="faraday (v0.7.5, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="fastercsv (v1.5.4, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="forem (v629406, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="forem-theme-base (v4de607, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="haml (v3.1.4, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hashie (v1.2.0, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hike (v1.2.1, ruby-1.8.7-p249) [gem]" level="application" />
@@ -70,6 +72,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rack-ssl (v1.3.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-test (v0.6.1, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails (v3.1.2, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rails_admin (v0.0.1, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="railties (v3.1.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v0.9.2.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rdoc (v3.11, ruby-1.8.7-p249) [gem]" level="application" />

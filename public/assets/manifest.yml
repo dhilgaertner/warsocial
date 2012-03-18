@@ -6,12 +6,15 @@ icon.png: icon-cb619a760e9c6b327f0651027f2119d9.png
 gameboard/dice6.png: gameboard/dice6-60231ae00a6f6a8b8179d10a326e4590.png
 buttons/facebook_login_button_hover.png: buttons/facebook_login_button_hover-c3b793e26fac0f8c6cb9768b9e5c4a81.png
 default_avatar2.png: default_avatar2-73f32948bff3e4ed27b3f59a48180b52.png
+lobby/lobby_running_header.png: lobby/lobby_running_header-a3f5f598ba36d9097a17a65d8e1e8604.png
 rails_admin/colorpicker/select2.png: rails_admin/colorpicker/select2-b7236e040080c96324574ae80b26ecb3.png
 rails_admin/colorpicker/colorpicker_overlay.png: rails_admin/colorpicker/colorpicker_overlay-32116457424e9e243332894aef679798.png
 rails_admin/colorpicker/colorpicker_hex.png: rails_admin/colorpicker/colorpicker_hex-3373a79b43ac902fde21e97e6f34160c.png
-application.js: application-bc96fb6cca28681cf364bde21443efea.js
+application.js: application-c43092eaaac0cf85ac204e10c4362e3e.js
 WarSocial Alpha_files/sit_button.png: WarSocial Alpha_files/sit_button-5860e3a4aef69ce52e723f588d37618d.png
+lobby/lobby_open_header.png: lobby/lobby_open_header-174c7c61b3f5001223db2d584407a598.png
 x.png: x-cf23604fbf25a7c4d3016ea757009b1f.png
+lobby/x.png: lobby/x-3c66c4460d2f1cd312f1a22f766e33df.png
 buttons/send_button_hover.png: buttons/send_button_hover-b6fb454bdd99dcffe45058259a27b45a.png
 game_header.png: game_header-046975ada87404b8503844d554a09ee7.png
 dice.png: dice-74e28465ebf00c3250376e3c45f91084.png
@@ -29,9 +32,9 @@ footer_background.png: footer_background-b570fc08349fe8712abbee83783573bf.png
 rails_admin/base/README: rails_admin/base/README
 rails_admin/logo.png: rails_admin/logo-ad8e79e169f8b7bf180d263c5ad94aee.png
 rails_admin/colorpicker/colorpicker_rgb_r.png: rails_admin/colorpicker/colorpicker_rgb_r-d29709eec292e4a52f402193a8268ba7.png
+rails_admin/aristo/images/slider_handles.png: rails_admin/aristo/images/slider_handles-9e63e5254cb771ffff94804a0f8bb849.png
 buttons/flag_button_hover.png: buttons/flag_button_hover-7d5f8a84017577829a42c10a218957d5.png
 buttons/find_seat_button_hover.png: buttons/find_seat_button_hover-cb6932e92ee35bb4ec2dff950e563afe.png
-rails_admin/aristo/images/slider_handles.png: rails_admin/aristo/images/slider_handles-9e63e5254cb771ffff94804a0f8bb849.png
 buttons/register_button_hover.png: buttons/register_button_hover-05767c9e1afa0e723c11562eea3a261a.png
 rails_admin/rails_admin.css: rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css
 rails_admin/colorpicker/custom_indic.gif: rails_admin/colorpicker/custom_indic-0f452ab0d716f50198f712d709bf7433.gif
@@ -66,6 +69,7 @@ application.css: application-c70fbd9d2d77a7c3b3b811da62444400.css
 buttons/login_button.png: buttons/login_button-d833130131ae6f2582826b27598c4ca6.png
 WarSocial Alpha_files/dice2.png: WarSocial Alpha_files/dice2-6cbf07d5fa6d13e51d6554602f72a368.png
 background.png: background-03a8390468d6adedca16338efcb0143b.png
+lobby/lobby_create_header.png: lobby/lobby_create_header-573b9ea6c967fe65a0f2ba6ef9326ad3.png
 rails_admin/colorpicker/custom_hsb_h.png: rails_admin/colorpicker/custom_hsb_h-a0f80241bf5aad8c0156eb6e846285a0.png
 WarSocial Alpha_files/flag_button.png: WarSocial Alpha_files/flag_button-544ad7a120a1a08d3c9bde15ee50213c.png
 buttons/stand_button.png: buttons/stand_button-cc9fd45c64b71f2160d0672b349ee630.png
@@ -83,9 +87,9 @@ gameboard/dice4.png: gameboard/dice4-5d171179aa1b9614668b097da34eca4c.png
 rails_admin/colorpicker/custom_rgb_r.png: rails_admin/colorpicker/custom_rgb_r-3e6f59ab7c245bddb6da8289ae054d46.png
 rails_admin/colorpicker/colorpicker_hsb_h.png: rails_admin/colorpicker/colorpicker_hsb_h-9ea01a4d98629408a54a2dbbca408577.png
 rails_admin/bullet_white.png: rails_admin/bullet_white-dce5f02c1b24a16fb197eb214fe10ec4.png
-WarSocial Alpha.html: WarSocial Alpha-f5354016561c286826c836e1f2ec2364.html
 rails_admin/bullet_black.png: rails_admin/bullet_black-48647a6b5b4a043471749034a752eb55.png
 rails_admin/aristo/images/ui-icons_454545_256x240.png: rails_admin/aristo/images/ui-icons_454545_256x240-05f848ec342542e941874c74a734e4a5.png
+WarSocial Alpha.html: WarSocial Alpha-f5354016561c286826c836e1f2ec2364.html
 gameboard/dice5.png: gameboard/dice5-d0248fe58d360a48d21b848afb5f4533.png
 rails_admin/colorpicker/colorpicker_submit.png: rails_admin/colorpicker/colorpicker_submit-bf18ec014ed3b113d2d677bcc318f1de.png
 rails_admin/colorpicker/colorpicker_rgb_g.png: rails_admin/colorpicker/colorpicker_rgb_g-e4c8dd0d31b56edfd8e3b979dc9fcee0.png
@@ -93,8 +97,9 @@ gameboard/dice3.png: gameboard/dice3-485ab1fc6d521a10c6bedc1eebc567bf.png
 WarSocial Alpha_files/dice5.png: WarSocial Alpha_files/dice5-d0248fe58d360a48d21b848afb5f4533.png
 rails_admin/multiselect/ui-icon-circle-triangle-s-light.png: rails_admin/multiselect/ui-icon-circle-triangle-s-light-70f49f9affb497320b7926cbe197b8d8.png
 rails_admin/colorpicker/colorpicker_rgb_b.png: rails_admin/colorpicker/colorpicker_rgb_b-f13cbd5aa34d6699f12795932f2d81a5.png
-buttons/sit_button.png: buttons/sit_button-5860e3a4aef69ce52e723f588d37618d.png
 rails_admin/aristo/images/progress_bar.gif: rails_admin/aristo/images/progress_bar-374c1675d24b303e4896637ca037d36c.gif
+buttons/sit_button.png: buttons/sit_button-5860e3a4aef69ce52e723f588d37618d.png
+lobby/lobby_online_header.png: lobby/lobby_online_header-286e59447c19b16343d7452402dc5614.png
 rails_admin/aristo/images/bg_fallback.png: rails_admin/aristo/images/bg_fallback-48d06888881d148b8b5b341024ff87ce.png
 rails_admin/colorpicker/colorpicker_hsb_b.png: rails_admin/colorpicker/colorpicker_hsb_b-f13cbd5aa34d6699f12795932f2d81a5.png
 WarSocial Alpha_files/dice4.png: WarSocial Alpha_files/dice4-5d171179aa1b9614668b097da34eca4c.png

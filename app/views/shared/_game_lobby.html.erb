@@ -1,11 +1,11 @@
 <div id="game_lobby_wrapper">
-    <div style="height: 30px;">
-        <%= link_to "Online", "#", :name => "online", :class => "tab" %>
-        <%= link_to "Open Tables", "#", :name => "open_tables", :class => "tab" %>
-        <%= link_to "Running Tables", "#", :name => "running_tables", :class => "tab" %>
-        <%= link_to "Create Table", "#", :name => "create_table", :class => "tab" %>
+    <div id="lobby_header" class="online">
+        <%= link_to "Who's Online", "#", :name => "online", :class => "tab", :style => "left: 11px;" %>
+        <%= link_to "Open Tables", "#", :name => "open_tables", :class => "tab", :style => "left: 28px;" %>
+        <%= link_to "Running", "#", :name => "running_tables", :class => "tab", :style => "left: 46px;" %>
+        <%= link_to "Create", "#", :name => "create_table", :class => "tab", :style => "left: 63px;" %>
     </div>
-    <div>
+    <div id="lobby_content_wrapper">
         <div class="content_page" name="online">
             Online
         </div>

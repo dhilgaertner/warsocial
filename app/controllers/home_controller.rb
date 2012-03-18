@@ -134,7 +134,7 @@ class HomeController < ApplicationController
     if current_user
       games = Game.get_lobby_games
 
-      response = { :games => games }
+      response = { :games => games, :online => User.online_user_ids }
 
       render :json => response
     else
