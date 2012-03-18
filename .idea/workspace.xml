@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-c70fbd9d2d77a7c3b3b811da62444400.css.gz" afterPath="$PROJECT_DIR$/public/assets/application-c70fbd9d2d77a7c3b3b811da62444400.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-cf070ccbeed8ea21702482cffbc372d5.js.gz" afterPath="$PROJECT_DIR$/public/assets/application-cf070ccbeed8ea21702482cffbc372d5.js.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.css.gz" afterPath="$PROJECT_DIR$/public/assets/application.css.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.js.gz" afterPath="$PROJECT_DIR$/public/assets/application.js.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" />
@@ -10,12 +11,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb" afterPath="$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.js" afterPath="$PROJECT_DIR$/public/assets/application.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/manifest.yml" afterPath="$PROJECT_DIR$/public/assets/manifest.yml" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,28 +38,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_game_lobby.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="_game_lobby.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="52" selection-start="1083" selection-end="1083" vertical-scroll-proportion="-13.75">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/user.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="0" selection-start="1786" selection-end="1786" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pusher_controller.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="20" selection-start="636" selection-end="636" vertical-scroll-proportion="0.75789475">
+            <state line="12" column="48" selection-start="729" selection-end="729" vertical-scroll-proportion="0.2660754">
               <folding />
             </state>
           </provider>
@@ -80,7 +59,7 @@
       <file leaf-file-name="application.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="377" column="30" selection-start="7938" selection-end="7938" vertical-scroll-proportion="-10.75">
+            <state line="369" column="23" selection-start="7721" selection-end="7721" vertical-scroll-proportion="-7.625">
               <folding />
             </state>
           </provider>
@@ -112,9 +91,9 @@
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
+        <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
       </list>
     </option>
   </component>
@@ -978,23 +957,9 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="377" column="30" selection-start="7938" selection-end="7938" vertical-scroll-proportion="-10.75">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="31" column="22" selection-start="795" selection-end="795" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="52" selection-start="1083" selection-end="1083" vertical-scroll-proportion="-13.75">
           <folding />
         </state>
       </provider>
@@ -1008,7 +973,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="20" selection-start="636" selection-end="636" vertical-scroll-proportion="0.75789475">
+        <state line="19" column="32" selection-start="545" selection-end="545" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="369" column="23" selection-start="7721" selection-end="7721" vertical-scroll-proportion="-7.625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="48" selection-start="729" selection-end="729" vertical-scroll-proportion="0.2660754">
           <folding />
         </state>
       </provider>
