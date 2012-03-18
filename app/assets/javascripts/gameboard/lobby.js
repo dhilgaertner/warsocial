@@ -92,7 +92,7 @@ Lobby.prototype.open = function() {
     this._lobby.modal({
         opacity:60,
         overlayCss: {
-            backgroundColor:"#fff"
+            backgroundColor:"black"
         }
     });
 };
