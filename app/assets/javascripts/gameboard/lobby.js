@@ -76,7 +76,11 @@ Lobby.prototype.injectDomData = function(data) {
     $.each(data.games, function(i, game) {
         var add_to_me = game.state == 'game started' ? $('#running_tables tbody') : $('#open_tables tbody');
 
-        add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.players.length.toString() + "/" + game.max_players + "</td><td>" + game.map + "</td>");
+        add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.players.length.toString() + "/" + game.max_players + "</td><td>" + game.map + "</td></tr>");
+    });
+
+    this._lobby.find('tr').click(function() {
+        window.location.href = "/game/" + $(this).find('td:first').text();
     });
 };
 
