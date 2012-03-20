@@ -1,8 +1,6 @@
 class PusherController < ApplicationController
   protect_from_forgery :except => [:auth, :webhook]
 
-  require "pusher"
-
   def webhook
     webhook = Pusher::WebHook.new(request)
     if webhook.valid?
