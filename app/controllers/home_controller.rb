@@ -13,6 +13,7 @@ class HomeController < ApplicationController
                    :map_layout => ActiveSupport::JSON.decode(@game.map.json),
                    :players => @game.players,
                    :deployment => @game.lands }
+
   end
 
   def add_line

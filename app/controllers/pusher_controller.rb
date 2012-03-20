@@ -6,10 +6,10 @@ class PusherController < ApplicationController
     if webhook.valid?
       webhook.events.each do |event|
         case event["name"]
-        when "channel_occupied"
-          #puts "Channel occupied: #{event["channel"]}"
-        when "channel_vacated"
-          #puts "Channel vacated: #{event["channel"]}"
+          when "channel_occupied"
+            logger.info "Channel occupied: #{event["channel"]}"
+          when "channel_vacated"
+            logger.info "Channel vacated: #{event["channel"]}"
         end
       end
       render :text => "ok"
