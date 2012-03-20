@@ -31,6 +31,7 @@ Dice::Application.routes.draw do
   resources :pusher do
     collection do
       post :auth, :as => :auth
+      post :webhook, :as => :webhook
     end   
   end
     
