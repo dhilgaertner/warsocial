@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/warsocial.iml" afterPath="$PROJECT_DIR$/.idea/warsocial.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
     </list>
     <ignored path="warsocial.iws" />
@@ -43,7 +40,7 @@
       <file leaf-file-name="pusher_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="20" selection-start="263" selection-end="263" vertical-scroll-proportion="0.19480519">
+            <state line="13" column="62" selection-start="549" selection-end="549" vertical-scroll-proportion="0.31655845">
               <folding />
             </state>
           </provider>
@@ -1046,7 +1043,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="20" selection-start="263" selection-end="263" vertical-scroll-proportion="0.19480519">
+        <state line="13" column="62" selection-start="549" selection-end="549" vertical-scroll-proportion="0.31655845">
           <folding />
         </state>
       </provider>

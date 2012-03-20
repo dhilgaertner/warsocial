@@ -8,7 +8,9 @@ class PusherController < ApplicationController
         case event["name"]
           when "channel_occupied"
             logger.info "Channel occupied: #{event["channel"]}"
+            puts "Channel occupied: #{event["channel"]}"
           when "channel_vacated"
+            puts "Channel vacated: #{event["channel"]}"
             logger.info "Channel vacated: #{event["channel"]}"
         end
       end
