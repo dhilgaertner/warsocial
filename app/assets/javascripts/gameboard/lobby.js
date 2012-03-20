@@ -99,6 +99,8 @@ Lobby.prototype.open = function() {
             backgroundColor:"black"
         }
     });
+
+    this._tabs[1].click();
 };
 
 Lobby.prototype.close = function() {
