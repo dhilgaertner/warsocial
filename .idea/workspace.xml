@@ -2,8 +2,87 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/add-196bd383f0457d66ba16bc653cd64143.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/add-7916714d3bd655ca33c942e51f4b89b3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/add.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data-0a5d0b1e4864beb76641df45d5ddf9c7.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data-0a5d0b1e4864beb76641df45d5ddf9c7.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data-251bc72c7cc2d16e17e8595052b69ef9.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data-251bc72c7cc2d16e17e8595052b69ef9.css.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data-3635ba96e984df14f5fff29050b8e6a3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data-3635ba96e984df14f5fff29050b8e6a3.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data-9c1c7ea802b7c142c32cba6de678df30.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data-9c1c7ea802b7c142c32cba6de678df30.css.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data.css.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/admin_data.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-1a191044085b015aafd7e2d10c9f62ec.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-1a191044085b015aafd7e2d10c9f62ec.css.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-1f42d6ed86f2745badf7e697467e1915.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-1f42d6ed86f2745badf7e697467e1915.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-235c0ec277eb68e61c67b239622c68a8.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-235c0ec277eb68e61c67b239622c68a8.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-2aa12a9a7b421e59ef707c1a6d3428d3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-2aa12a9a7b421e59ef707c1a6d3428d3.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-3c549f6da036ce1aae42f0f41d6824da.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-3c549f6da036ce1aae42f0f41d6824da.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-4a5695cc433e7b4367f5a3a58212a544.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-4a5695cc433e7b4367f5a3a58212a544.css.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-55874583892be9375db3469cc37e7a47.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-55874583892be9375db3469cc37e7a47.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-67109b818fe0a36c5de47c2c39676f6a.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-67109b818fe0a36c5de47c2c39676f6a.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-84cdea7a4a4302a6bef8c8f4fbda34f6.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-84cdea7a4a4302a6bef8c8f4fbda34f6.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-87c2d0e4f23bcc728fa2246c9cfb4129.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-87c2d0e4f23bcc728fa2246c9cfb4129.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-95bd4fe1de99c1cd91ec8e6f348a44bd.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-95bd4fe1de99c1cd91ec8e6f348a44bd.css.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-979217c4e1351c6a5d58a3517513ca90.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-979217c4e1351c6a5d58a3517513ca90.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-bc96fb6cca28681cf364bde21443efea.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-bc96fb6cca28681cf364bde21443efea.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-c43092eaaac0cf85ac204e10c4362e3e.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-c43092eaaac0cf85ac204e10c4362e3e.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-c4e41a216e4525a7af03d95230cb736f.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-c4e41a216e4525a7af03d95230cb736f.css.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-df4133df5492e618809350917ede538a.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-df4133df5492e618809350917ede538a.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-e70629413c556b915043b94223e35367.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-e70629413c556b915043b94223e35367.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-e9600491750ec7ab1a235291970c93c3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-e9600491750ec7ab1a235291970c93c3.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-ea6751ce1eafb6dda823db18e5e7ebb0.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-ea6751ce1eafb6dda823db18e5e7ebb0.css.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-f9df3c7354e93967c8290c254df0c9a5.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-f9df3c7354e93967c8290c254df0c9a5.js.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/no-69cf87ea5488155091219110b1c0cfa5.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/no-f28a7bfa39a38ae8387edffa474921ed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/no.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails-782b548cc1ba7f898cdad2d9eb8420d2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails-9dd6cb09c6272d5724c9f439cac0aecd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/site-2970d3f4b06818a54b565ad590bfb80d.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/site-d038b2876f73e447e3053410615df928.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/site.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_asc-1235df1dd6cdf3bd7c710d6d8aa38ba6.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_asc-6792358d132b025caec25a6424f23152.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_asc.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_desc-614e34bfec8b28b2f5fdc18fd21073e0.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_desc-b215c2c3a9a5ecb9ffd303963df57ede.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_desc.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_nothing-9fabb2acce1d0b0a7d9375853d9c6b19.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_nothing-bb771eee2138aa0b6c77451431eea229.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/sort_by_nothing.jpg" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-c70fbd9d2d77a7c3b3b811da62444400.css.gz" afterPath="$PROJECT_DIR$/public/assets/application-c70fbd9d2d77a7c3b3b811da62444400.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-cf070ccbeed8ea21702482cffbc372d5.js.gz" afterPath="$PROJECT_DIR$/public/assets/application-cf070ccbeed8ea21702482cffbc372d5.js.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.css.gz" afterPath="$PROJECT_DIR$/public/assets/application.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.js.gz" afterPath="$PROJECT_DIR$/public/assets/application.js.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -499,7 +578,7 @@
       <recent name="$PROJECT_DIR$/public/Gameboard" />
     </key>
   </component>
-  <component name="RunManager" selected="Rails.Development: warsocial">
+  <component name="RunManager" selected="Rake.assets:precompile">
     <configuration default="false" name="assets:precompile" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
       <module name="warsocial" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
@@ -530,6 +609,30 @@
       <option name="VM_PARAMETERS" value="" />
       <option name="USER_CFG_CLASS" />
       <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
+    <configuration default="false" name="assets:clean" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
+      <module name="warsocial" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_NAME" VALUE="assets:clean" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ARGS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ATTACHED_TEST_FRAMEWORKS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TRACE" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_DRYRUN" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_PREREQS" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
       <method />
     </configuration>
     <configuration default="true" type="RakeRunConfigurationType" factoryName="Rake">
@@ -779,13 +882,14 @@
       <ConfigurationWrapper RunnerId="RubyRunner" />
       <method />
     </configuration>
-    <list size="6">
+    <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Rake.test" />
       <item index="1" class="java.lang.String" itemvalue="Rake.spec" />
       <item index="2" class="java.lang.String" itemvalue="Rails.Production: warsocial" />
       <item index="3" class="java.lang.String" itemvalue="Rails.Development: warsocial" />
       <item index="4" class="java.lang.String" itemvalue="Rake.assets:precompile" />
       <item index="5" class="java.lang.String" itemvalue="Query Language Console.Default" />
+      <item index="6" class="java.lang.String" itemvalue="Rake.assets:clean" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
