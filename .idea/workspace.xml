@@ -40,7 +40,16 @@
       <file leaf-file-name="pusher_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="62" selection-start="549" selection-end="549" vertical-scroll-proportion="0.31655845">
+            <state line="19" column="19" selection-start="612" selection-end="612" vertical-scroll-proportion="0.46266234">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="game.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/game.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="2" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -956,11 +965,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/models/ability.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="dbDummy://dbElement:/1f2fa9a/355e7bee-8e80-4dd1-be42-0d52b4444cfe/..users">
       <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
         <state />
@@ -1041,9 +1045,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/game.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="2" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="62" selection-start="549" selection-end="549" vertical-scroll-proportion="0.31655845">
+        <state line="19" column="19" selection-start="612" selection-end="612" vertical-scroll-proportion="0.46266234">
           <folding />
         </state>
       </provider>

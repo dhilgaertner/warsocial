@@ -7,11 +7,15 @@ class PusherController < ApplicationController
       webhook.events.each do |event|
         case event["name"]
           when "channel_occupied"
-            logger.info "Channel occupied: #{event["channel"]}"
             puts "Channel occupied: #{event["channel"]}"
           when "channel_vacated"
-            puts "Channel vacated: #{event["channel"]}"
-            logger.info "Channel vacated: #{event["channel"]}"
+            game_name = event["channel"].split("-", 2)[1]
+
+            game = Game.get_game(game_name)
+
+            if (game.players.size == 0 && game.state == Game::WAITING_STATE)
+              game.destroy
+            end
         end
       end
       render :text => "ok"
