@@ -418,6 +418,18 @@
             border-spacing: 0px 2px;
         }
 
+        div#create-header-top {
+            width: 741px;
+            height: 47px;
+            background:url(<%=image_path "lobby/create_game_top.png"%>) no-repeat center right;
+        }
+
+        div#create-header-bottom {
+            width: 741px;
+            height: 44px;
+            background:url(<%=image_path "lobby/create_game_bottom.png"%>) no-repeat center right;
+        }
+
         #simplemodal-container a.modalCloseImg {
             background:url(<%=image_path "lobby/x.png"%>) no-repeat; /* adjust url as required */
             background-position: center;
@@ -452,6 +464,31 @@
 			border-radius: 5px 5px;
 		}
 
+        /* These styles are related to SelectBox plugin */
+        .customStyleSelectBox {
+            background-color: #FFFFFF;
+            border-radius: 5px 5px 5px 5px;
+            color: #7C7C7C;
+            font-size: 20px;
+            height: 29px;
+            width: 200px;
+            padding: 0px 0px 0px 10px;
+            margin-top: 8px;
+            margin-left: 10px;
+        }
+
+        .customStyleSelectBox.changed {
+
+        }
+
+        /* on the next line we add a down arrow on the right to indicate that it is a select box */
+        .customStyleSelectBoxInner {
+            vertical-align: center;
+            height: 29px;
+            width: 200px;
+            float: right;
+            background:url(<%=image_path "combo_arrow.png"%>) no-repeat center right;
+        }
 	</style>
 </head>
 <body>

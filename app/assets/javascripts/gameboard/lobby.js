@@ -70,6 +70,8 @@ Lobby.prototype.setupDataTables = function() {
 
     $('#open_tables_wrapper div:first').hide();
     $('#running_tables_wrapper div:first').hide();
+
+    $('select.styled').customStyle();
 };
 
 Lobby.prototype.injectDomData = function(data) {
