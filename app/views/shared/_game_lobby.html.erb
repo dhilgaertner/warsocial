@@ -41,18 +41,19 @@
           <div id="create-header-top">
               <select class="styled" style="margin-top: 8px; margin-left: 10px; width:210px;">
                 <option>Choose Map</option>
-                <option>two</option>
-                <option>something</option>
-                <option>4</option>
-                <option>5</option>
+                <% @maps.each do |map| %>
+                    <option><%= map.name %></option>
+                <% end %>
               </select>
 
               <select class="styled" style="margin-top: 8px; margin-left: 10px; width:210px;">
                 <option>Players</option>
-                <option>two</option>
-                <option>something</option>
+                <option>2</option>
+                <option>3</option>
                 <option>4</option>
                 <option>5</option>
+                <option>6</option>
+                <option>7</option>
               </select>
           </div>
         </div>

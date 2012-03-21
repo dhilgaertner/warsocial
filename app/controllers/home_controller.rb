@@ -8,7 +8,9 @@ class HomeController < ApplicationController
     @dev = params[:dev] == nil ? false : true
     
     @game = Game.get_game(name, map_name)
-    
+
+    @maps = Map.all(:select => "name")
+
     @init_data = { :who_am_i => current_user == nil ? 0 : current_user.id, 
                    :map_layout => ActiveSupport::JSON.decode(@game.map.json),
                    :players => @game.players,
