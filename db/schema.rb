@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120224181420) do
+ActiveRecord::Schema.define(:version => 20120322004609) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -117,6 +117,9 @@ ActiveRecord::Schema.define(:version => 20120224181420) do
     t.text     "json"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "preview_url"
+    t.boolean  "is_public",     :default => false
+    t.boolean  "is_admin_only", :default => true
   end
 
   create_table "players", :force => true do |t|
