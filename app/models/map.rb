@@ -1,7 +1,7 @@
 class Map < ActiveRecord::Base
   has_many :games
   
-  attr_accessible :name, :json
+  attr_accessible :name, :json, :preview_url, :is_public, :is_admin_only
 
   def self.get_map(name)
     maps = Map.where("name = ?", name)
