@@ -100,7 +100,9 @@ Lobby.prototype.injectDomData = function(data) {
     });
 
     this._lobby.find('tr').click(function() {
-        window.location.href = "/game/" + $(this).find('td:first').text();
+        if($(this).parent().parent().find('tr:first')[0] != $(this)[0]) {
+            window.location.href = "/game/" + $(this).find('td:first').text();
+        }
     });
 };
 
