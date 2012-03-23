@@ -3,6 +3,11 @@ class Map < ActiveRecord::Base
   
   attr_accessible :name, :json, :preview_url, :is_public, :is_admin_only
 
+  def as_json(options={})
+    { :name => self.name,
+      :preview_url => self.preview_url }
+  end
+
   def self.get_map(name)
     maps = Map.where("name = ?", name)
 

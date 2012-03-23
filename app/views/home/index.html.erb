@@ -45,6 +45,7 @@
     $(document).ready(function() {
         global_game_name = "<%= @game.name %>";
         global_init_data = <%= @init_data.to_json.html_safe %>;
+        lobby_maps = <%= @maps.to_json.html_safe %>;
         game = null;
 
         var addToChat = function(name, chat) {
@@ -91,9 +92,10 @@
         $('#end_turn').hide();
 
         var seats = new Seats(8, global_init_data.players);
-        var lobby = new Lobby("game_lobby_wrapper");
+        var lobby = new Lobby("game_lobby_wrapper", lobby_maps);
 
         var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
+        var who_am_i_name = "<%= current_user != nil ? current_user.username : "Guest" %>";
 
         for(var i=0; i<global_init_data.players.length; i++) {
             if (global_init_data.players[i].is_turn == true) {
@@ -105,7 +107,9 @@
         }
 
         channel.bind('new_chat_line', function(data) {
-            addToChat(data.name, data.entry);
+            if (data.name != who_am_i_name) {
+                addToChat(data.name, data.entry);
+            }
         });
 
         channel.bind('game_start', function(data) {
@@ -172,7 +176,8 @@
         });
 
         $("#form_chat")
-                .bind("ajax:complete", function(xhr, status) {
+                .bind("ajax:beforeSend", function(xhr, settings) {
+                    addToChat(who_am_i_name, $('#entry').val());
                     $('#entry').val("");
                 });
 

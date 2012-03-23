@@ -13,9 +13,11 @@ class PusherController < ApplicationController
 
             if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
               game = Game.get_game(game_name)
+              gr = GameRule.find_by_game_name(game_name)
 
               if (game.players.size == 0 && game.state == Game::WAITING_STATE)
                 game.destroy
+                gr.destroy
               end
             end
         end

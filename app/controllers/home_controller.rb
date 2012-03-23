@@ -3,15 +3,14 @@ class HomeController < ApplicationController
   def index
     @user = User.new(params[:user])
     name = params[:game_name] == nil ? "home" : params[:game_name]
-    map_name = params[:map_name]
-    
+
     @dev = params[:dev] == nil ? false : true
     
-    @game = Game.get_game(name, map_name)
+    @game = Game.get_game(name)
 
-    @maps = Map.all(:select => "name")
+    @maps = Map.all(:select => %W(name preview_url))
 
-    @init_data = { :who_am_i => current_user == nil ? 0 : current_user.id, 
+    @init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
                    :map_layout => ActiveSupport::JSON.decode(@game.map.json),
                    :players => @game.players,
                    :deployment => @game.lands }
@@ -27,7 +26,34 @@ class HomeController < ApplicationController
 
     render :text=>"Success", :status=>200
   end
-  
+
+  def create_game
+    if (current_user != nil)
+      map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
+      number_of_players = [2,3,4,5,6,7].include?(params[:select_players].to_i) ? params[:select_players].to_i : 2
+      game_name = nil
+
+      try_name = current_user.username
+      try = 1
+
+      while game_name == nil
+        gr = GameRule.find_by_game_name(try_name)
+
+        if (gr == nil)
+          game_name = try_name
+          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players)
+        else
+          try = try + 1
+          try_name = current_user.username + try.to_s
+        end
+      end
+
+      render :text=>game_name, :status=>200
+    else
+      render :text=>"Forbidden", :status=>403
+    end
+  end
+
   def attack
     game_name = params[:game_name]
     attacking_land_id = params[:atk_land_id]

@@ -19,6 +19,7 @@ Dice::Application.routes.draw do
   resources :home do
     collection do
       post :add_line, :as => :add_line
+      post :create_game, :as => :create_game
       get :end_turn, :as => :end_turn
       get :sit, :as => :sit
       get :stand, :as => :stand

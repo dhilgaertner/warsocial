@@ -1,6 +1,7 @@
 
-function Lobby(elementId) {
+function Lobby(elementId, lobby_maps) {
     this.elementId = elementId;
+    this.maps = lobby_maps;
 }
 
 Lobby.prototype.setupLobby = function() {
@@ -72,6 +73,23 @@ Lobby.prototype.setupDataTables = function() {
     $('#running_tables_wrapper div:first').hide();
 
     $('select.styled').customStyle();
+
+    $('#create_game_form')
+        .bind('ajax:beforeSend', function(xhr, settings) {
+
+        })
+        .bind('ajax:success',    function(data, status, xhr) {
+
+        })
+        .bind('ajax:complete', function(xhr, status) {
+            if (status.status == 200) {
+                window.location.href = "/game/" + status.responseText;
+            }
+        })
+        .bind('ajax:error', function(xhr, status, error) {
+
+        });
+
 };
 
 Lobby.prototype.injectDomData = function(data) {
