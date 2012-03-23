@@ -74,6 +74,29 @@ Lobby.prototype.setupDataTables = function() {
 
     $('select.styled').customStyle();
 
+    $('select.styled:first').change(function() {
+        $.each(ctx.maps, function(index, map){
+            var map_name = $('select.styled:first option:selected').val();
+            var clear_bg = function() {
+                $('#map_preview').attr("style", "");
+            };
+
+            if (map_name == $('select.styled:first option:first').val()) {
+                clear_bg();
+                return false;
+            }
+
+            if (map.name == map_name) {
+                if (map.preview_url != null) {
+                    $('#map_preview').attr("style", "background: url('" + map.preview_url + "') no-repeat scroll center transparent");
+                } else {
+                    clear_bg();
+                }
+            }
+        });
+    });
+
+
     $('#create_game_form')
         .bind('ajax:beforeSend', function(xhr, settings) {
 
