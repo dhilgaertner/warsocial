@@ -8,7 +8,11 @@ class HomeController < ApplicationController
     
     @game = Game.get_game(name)
 
-    @maps = Map.all(:select => %W(name preview_url))
+    if(current_user != nil && current_user.admin?)
+      @maps = Map.where("is_public = ?", true).select("name, preview_url")
+    else
+      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false).select("name, preview_url")
+    end
 
     @init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
                    :map_layout => ActiveSupport::JSON.decode(@game.map.json),
