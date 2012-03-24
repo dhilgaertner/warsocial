@@ -30,7 +30,10 @@ Lobby.prototype.setupDataTables = function() {
         bFilter: false,
         bInfo: false,
         bLengthChange: false,
-        bDestroy: true
+        bDestroy: true,
+        oLanguage: {
+            sEmptyTable: "None"
+        }
     });
 
     this.rtable = $('#running_tables').dataTable({
@@ -38,7 +41,10 @@ Lobby.prototype.setupDataTables = function() {
         bFilter: false,
         bInfo: false,
         bLengthChange: false,
-        bDestroy: true
+        bDestroy: true,
+        oLanguage: {
+            sEmptyTable: "None"
+        }
     });
 
     /* Add a click handler to the rows - this could be used as a callback */
