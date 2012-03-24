@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/index.html.erb" afterPath="$PROJECT_DIR$/app/views/home/index.html.erb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-b070e051caf3c69a82c87356a945bdbe.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-b070e051caf3c69a82c87356a945bdbe.js.gz" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.css.gz" afterPath="$PROJECT_DIR$/public/assets/application.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.js.gz" afterPath="$PROJECT_DIR$/public/assets/application.js.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.js" afterPath="$PROJECT_DIR$/public/assets/application.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/manifest.yml" afterPath="$PROJECT_DIR$/public/assets/manifest.yml" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,19 +75,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lobby.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="lobby.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="51" selection-start="1984" selection-end="1984" vertical-scroll-proportion="0.0">
+            <state line="144" column="19" selection-start="4297" selection-end="4297" vertical-scroll-proportion="0.65625">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="197" column="31" selection-start="8177" selection-end="8177" vertical-scroll-proportion="0.61359864">
+            <state line="197" column="31" selection-start="8177" selection-end="8177" vertical-scroll-proportion="-40.416668">
               <folding />
             </state>
           </provider>
@@ -115,8 +123,8 @@
         <option value="$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
         <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
       </list>
     </option>
   </component>
@@ -962,13 +970,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="51" selection-start="1984" selection-end="1984" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="46" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
@@ -978,7 +979,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="197" column="31" selection-start="8177" selection-end="8177" vertical-scroll-proportion="0.61359864">
+        <state line="197" column="31" selection-start="8177" selection-end="8177" vertical-scroll-proportion="-40.416668">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="144" column="19" selection-start="4297" selection-end="4297" vertical-scroll-proportion="0.65625">
           <folding />
         </state>
       </provider>

@@ -145,7 +145,7 @@ Lobby.prototype.open = function() {
         }
     });
 
-    this._tabs[1].click();
+    $(this._tabs[1]).click();
 };
 
 Lobby.prototype.close = function() {
