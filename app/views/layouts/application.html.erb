@@ -500,9 +500,9 @@
 
 	<div id="wrapper">
 		<div id="side-bar">
-			<center>
+			<div style="text-align: center;">
 				<%= link_to image_tag("logo.png", :border => 0), "/", :class => 'logo' %>
-			</center>
+			</div>
 			
 			<% if user_signed_in? %>
 				<div style="margin-top: 30px;">
@@ -516,7 +516,8 @@
 			<div style="margin-left: 10px">
               <br>
               <h2><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :style => "color: green; text-decoration: underline;" %></h2>
-			</div>
+              <h2><%= link_to "Blog", "http://blog.warsocial.com", :target => "_blank", :style => "color: green; text-decoration: underline;" %></h2>
+            </div>
 		</div>
 		<div id="main-wrapper">
 			<% if !user_signed_in? %>

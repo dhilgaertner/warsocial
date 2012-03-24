@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/index.html.erb" afterPath="$PROJECT_DIR$/app/views/home/index.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
     </list>
     <ignored path="warsocial.iws" />
@@ -76,19 +77,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
+      <file leaf-file-name="application.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="197" column="31" selection-start="8177" selection-end="8177" vertical-scroll-proportion="45.208332">
+            <state line="518" column="140" selection-start="11914" selection-end="11914" vertical-scroll-proportion="0.5522388">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="502" column="33" selection-start="11057" selection-end="11057" vertical-scroll-proportion="0.19900498">
+            <state line="197" column="187" selection-start="8333" selection-end="8333" vertical-scroll-proportion="-9.791667">
               <folding />
             </state>
           </provider>
@@ -123,8 +124,8 @@
         <option value="$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
+        <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
       </list>
     </option>
@@ -980,14 +981,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="197" column="31" selection-start="8177" selection-end="8177" vertical-scroll-proportion="45.208332">
+        <state line="197" column="187" selection-start="8333" selection-end="8333" vertical-scroll-proportion="-9.791667">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="502" column="33" selection-start="11057" selection-end="11057" vertical-scroll-proportion="0.19900498">
+        <state line="518" column="140" selection-start="11914" selection-end="11914" vertical-scroll-proportion="0.5522388">
           <folding />
         </state>
       </provider>
