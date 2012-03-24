@@ -198,9 +198,7 @@
 		<div style="margin-bottom: 5px;">This is our alpha release, so expect some bugs. If you can't play, try refreshing your browser. If it still doesn't work, flag and try a new game. Please report any bugs to <%= link_to "bugs@warsocial.com", "mailto:bugs@warsocial.com", :style => "color: blue" %> or leave a comment at <%= link_to "blog.warsocial.com", "http://blog.warsocial.com", :target => "_blank", :style => "color: blue" %>. Thanks!</div>
 		<div id="game_header"></div>
 		<div id="game_main">
-            <% if(current_user != nil && current_user.admin?) %>
-              <%= link_to image_tag("buttons/lobby_button.png", :border => 0), "#", :id => "lobby_button", :style => "margin-left: 10px; margin-top: 10px;" %>
-            <% end %>
+            <%= link_to image_tag("buttons/lobby_button.png", :border => 0), "#", :id => "lobby_button", :style => "margin-left: 10px; margin-top: 10px;" %>
             <%= link_to image_tag("buttons/sit_button.png", :border => 0), sit_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/stand_button.png", :border => 0), stand_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/flag_button.png", :border => 0), flag_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
