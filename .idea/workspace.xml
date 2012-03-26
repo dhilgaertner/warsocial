@@ -5,81 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/dice1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/dice2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/dice3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/dice4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/dice5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/dice6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/dice_shadow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/end_turn_button.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/flag_button.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/logo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/sit_button.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/stand_button.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/WarSocial Alpha_files/texture.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-35e2a3c0b04801a6c683e7539f7a4307.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application-35e2a3c0b04801a6c683e7539f7a4307.js.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application.css.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/application.js.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/forem/lock_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/forem/pin_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/aristo/images/bg_fallback.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/aristo/images/icon_sprite.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/aristo/images/progress_bar.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/aristo/images/slider_handles.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/aristo/images/ui-icons_222222_256x240.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/aristo/images/ui-icons_454545_256x240.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/bullet_black.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/bullet_white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/calendar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/clock.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_background.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_hex.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_hsb_b.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_hsb_h.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_hsb_s.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_indic.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_overlay.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_rgb_b.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_rgb_g.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_rgb_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_select.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/colorpicker_submit.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_background.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_hex.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_hsb_b.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_hsb_h.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_hsb_s.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_indic.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_rgb_b.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_rgb_g.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_rgb_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/custom_submit.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/select.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/select2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/colorpicker/slider.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/logo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/magnifier.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/multiselect/icon_sprite.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/multiselect/ui-icon-circle-triangle-n-dark.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/multiselect/ui-icon-circle-triangle-n-light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/multiselect/ui-icon-circle-triangle-s-dark.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/multiselect/ui-icon-circle-triangle-s-light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-c70fbd9d2d77a7c3b3b811da62444400.css.gz" afterPath="$PROJECT_DIR$/public/assets/application-c70fbd9d2d77a7c3b3b811da62444400.css.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/gamestate/game_state.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/gamestate/land_state.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/gamestate/map_state.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/gamestate/player_state.rb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/constants/enum.rb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/constants/game_state.rb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/constants/player_state.rb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/index.html.erb" afterPath="$PROJECT_DIR$/app/views/home/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/manifest.yml" afterPath="$PROJECT_DIR$/public/assets/manifest.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/game.rb" afterPath="$PROJECT_DIR$/app/models/game.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/land.rb" afterPath="$PROJECT_DIR$/app/models/land.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/map.rb" afterPath="$PROJECT_DIR$/app/models/map.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/development.rb" afterPath="$PROJECT_DIR$/config/environments/development.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/production.rb" afterPath="$PROJECT_DIR$/config/environments/production.rb" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -105,19 +46,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_game_lobby.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb">
+      <file leaf-file-name="game_state.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/gamestate/game_state.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="55" selection-start="1605" selection-end="1605" vertical-scroll-proportion="-26.25">
+            <state line="81" column="31" selection-start="2174" selection-end="2174" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+      <file leaf-file-name="development.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="46" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
+            <state line="36" column="56" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.6566901">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/environments/test.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="production.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="67" column="39" selection-start="2406" selection-end="2406" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="redis.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/initializers/redis.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -126,43 +94,34 @@
       <file leaf-file-name="game.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/game.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="41" selection-start="2051" selection-end="2051" vertical-scroll-proportion="0.0">
+            <state line="18" column="30" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pusher_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
+      <file leaf-file-name="player_state.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/gamestate/player_state.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="75" selection-start="911" selection-end="911" vertical-scroll-proportion="0.0">
+            <state line="2" column="23" selection-start="85" selection-end="85" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lobby.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js">
+      <file leaf-file-name="land_state.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/gamestate/land_state.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="30" selection-start="836" selection-end="836" vertical-scroll-proportion="0.3984375">
+            <state line="5" column="23" selection-start="135" selection-end="135" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+      <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="518" column="140" selection-start="11914" selection-end="11914" vertical-scroll-proportion="-13.875">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="201" column="158" selection-start="8834" selection-end="8834" vertical-scroll-proportion="-12.291667">
+            <state line="107" column="0" selection-start="3011" selection-end="3011" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -184,22 +143,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/helpers/home_helper.rb" />
-        <option value="$PROJECT_DIR$/app/models/user.rb" />
-        <option value="$PROJECT_DIR$/db/migrate/20120322004609_add_preview_url_to_map.rb" />
-        <option value="$PROJECT_DIR$/app/models/game.rb" />
-        <option value="$PROJECT_DIR$/app/models/map.rb" />
-        <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/lib/image_submit_tag_ext.rb" />
-        <option value="$PROJECT_DIR$/config/application.rb" />
-        <option value="$PROJECT_DIR$/config/environment.rb" />
-        <option value="$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/lib/jquery.dataTables.min.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
+        <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/config/environments/production.rb" />
+        <option value="$PROJECT_DIR$/app/models/game_state.rb" />
+        <option value="$PROJECT_DIR$/app/models/map.rb" />
+        <option value="$PROJECT_DIR$/app/models/gamestate/map_state.rb" />
+        <option value="$PROJECT_DIR$/app/models/land.rb" />
+        <option value="$PROJECT_DIR$/app/models/game.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+        <option value="$PROJECT_DIR$/app/models/gamestate/player_state.rb" />
+        <option value="$PROJECT_DIR$/app/models/gamestate/land_state.rb" />
+        <option value="$PROJECT_DIR$/app/models/gamestate/game_state.rb" />
+        <option value="$PROJECT_DIR$/config/environments/development.rb" />
       </list>
     </option>
   </component>
@@ -315,6 +274,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="environments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="warsocial" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="warsocial" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -404,6 +381,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="warsocial" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="warsocial" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gamestate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -524,13 +523,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/models/gamestate" />
       <recent name="$PROJECT_DIR$/public/jquery" />
       <recent name="$PROJECT_DIR$/app/assets/images" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts/gameboard" />
       <recent name="$PROJECT_DIR$/app/views/shared" />
-      <recent name="$PROJECT_DIR$/public/Gameboard" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/models/gamestate" />
       <recent name="$PROJECT_DIR$/public/css" />
       <recent name="$PROJECT_DIR$/public/Gameboard" />
     </key>
@@ -912,17 +912,17 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.0" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46539026" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1474359" sideWeight="0.33055267" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2596154" sideWeight="0.69551617" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43899897" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16880342" sideWeight="0.620438" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37956205" sideWeight="0.9994658" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1474359" sideWeight="0.2189781" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30448383" sideWeight="0.97596157" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30448383" sideWeight="0.97596157" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -984,112 +984,114 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/gamestate/map_state.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/environment.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///Library/Ruby/Gems/1.8/gems/actionpack-3.1.2/lib/action_view/helpers/form_tag_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="501" column="0" selection-start="25235" selection-end="25235" vertical-scroll-proportion="0.33268103">
+        <state line="21" column="44" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/game_rule.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/map.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="28" selection-start="120" selection-end="129" vertical-scroll-proportion="0.08806262">
+        <state line="9" column="14" selection-start="225" selection-end="225" vertical-scroll-proportion="0.234375">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Ruby/Gems/1.8/gems/activesupport-3.1.2/lib/active_support/notifications/instrumenter.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/land.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="679" selection-end="679" vertical-scroll-proportion="0.33268103">
+        <state line="11" column="2" selection-start="299" selection-end="299" vertical-scroll-proportion="0.28645834">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Ruby/Gems/1.8/gems/actionpack-3.1.2/lib/action_controller/metal/rescue.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="494" selection-end="494" vertical-scroll-proportion="0.52837574">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Ruby/Gems/1.8/gems/actionpack-3.1.2/lib/action_controller/metal/implicit_render.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="101" selection-end="101" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/lib/jquery.simplemodal.1.4.2.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="23" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/shared/_game_lobby.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="55" selection-start="1605" selection-end="1605" vertical-scroll-proportion="-26.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="46" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/game.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="41" selection-start="2051" selection-end="2051" vertical-scroll-proportion="0.0">
+        <state line="40" column="58" selection-start="3148" selection-end="3148" vertical-scroll-proportion="-1.92">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="75" selection-start="911" selection-end="911" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+    <entry file="file:///Library/Ruby/Gems/1.8/gems/actionpack-3.1.2/lib/action_controller/metal/rescue.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="518" column="140" selection-start="11914" selection-end="11914" vertical-scroll-proportion="-13.875">
+        <state line="18" column="0" selection-start="494" selection-end="494" vertical-scroll-proportion="0.675">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/lib/jquery.dataTables.min.js">
+    <entry file="file://$PROJECT_DIR$/app/models/gamestate/land_state.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="502" selection-start="59371" selection-end="59382" vertical-scroll-proportion="0.3078203">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="158" selection-start="8834" selection-end="8834" vertical-scroll-proportion="-12.291667">
+        <state line="5" column="23" selection-start="135" selection-end="135" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js">
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="30" selection-start="836" selection-end="836" vertical-scroll-proportion="0.3984375">
+        <state line="107" column="0" selection-start="3011" selection-end="3011" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Ruby/Gems/1.8/gems/ohm-0.1.5/lib/ohm.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="472" column="0" selection-start="13611" selection-end="13611" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/gamestate/player_state.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="23" selection-start="85" selection-end="85" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/game.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="30" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/gamestate/game_state.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="31" selection-start="2174" selection-end="2174" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environments/test.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="39" selection-start="2406" selection-end="2406" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/redis.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="56" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.6566901">
           <folding />
         </state>
       </provider>

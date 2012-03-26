@@ -9,4 +9,5 @@ class Land < ActiveRecord::Base
       :land_id => self.map_land_id, 
       :player_id => self.player != nil ? self.player.user.id : nil }
   end
+
 end

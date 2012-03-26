@@ -111,10 +111,14 @@ GEM
     mime-types (1.17.2)
     multi_json (1.0.4)
     multipart-post (1.1.4)
+    nest (1.1.0)
+      redis (~> 2.1)
     oauth (0.4.5)
     oauth2 (0.5.1)
       faraday (~> 0.7.4)
       multi_json (~> 1.0.3)
+    ohm (0.1.5)
+      nest (~> 1.0)
     omniauth (1.0.1)
       hashie (~> 1.2)
       rack
@@ -212,6 +216,7 @@ DEPENDENCIES
   forem-theme-base!
   jquery-rails
   json
+  ohm
   omniauth-facebook
   omniauth-twitter
   pg
