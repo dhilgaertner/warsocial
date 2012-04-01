@@ -107,9 +107,15 @@ class HomeController < ApplicationController
 
     if (current_user.admin?)
       game = GameState.get_game_state(game_name)
-      gr = GameRule.find_all_by_game_name(game_name).first
 
-      gr.destroy
+      if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
+        gr = GameRule.find_all_by_game_name(game_name).first
+
+        if gr
+          gr.destroy
+        end
+      end
+
       game.delete_all
 
       redirect_to :root

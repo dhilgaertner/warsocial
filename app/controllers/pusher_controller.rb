@@ -17,7 +17,9 @@ class PusherController < ApplicationController
               if (game.players.size == 0 && game.state == Game::WAITING_STATE)
                 gr = GameRule.find_all_by_game_name(game_name).first
 
-                gr.destroy
+                if gr
+                  gr.destroy
+                end
                 game.delete_all
               end
             end
