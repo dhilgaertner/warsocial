@@ -81,6 +81,9 @@ GEM
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
+    delayed_job_admin (1.0.3)
+      delayed_job
+      rails
     devise (1.5.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -210,6 +213,7 @@ DEPENDENCIES
   cancan
   coffee-rails (~> 3.1.1)
   delayed_job
+  delayed_job_admin
   devise
   fastercsv
   forem!

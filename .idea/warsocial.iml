@@ -53,6 +53,7 @@
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v1.17.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.0.4, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multipart-post (v1.1.4, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="nest (v1.1.0, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="oauth (v0.4.5, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="oauth2 (v0.5.1, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="omniauth (v1.0.1, ruby-1.8.7-p249) [gem]" level="application" />

@@ -8,17 +8,18 @@ gem 'rails', '3.1.2'
 gem 'sqlite3'
 gem 'devise'
 gem 'json'
-gem "omniauth-facebook"
-gem "omniauth-twitter"
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 gem 'pusher'
 gem 'delayed_job'
 gem 'fastercsv' # Only required on Ruby 1.8 and below
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
-gem "cancan"
+gem 'cancan'
 gem 'forem', :git => "git://github.com/radar/forem.git"
 gem 'forem-theme-base', :git => "git://github.com/radar/forem-theme-base.git"
 gem 'redis'
 gem 'ohm'
+gem 'delayed_job_admin'
 
 group :production do
   # gems specifically for Heroku go here
