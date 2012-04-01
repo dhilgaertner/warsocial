@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/turn_job.rb" afterPath="$PROJECT_DIR$/app/models/turn_job.rb" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,6 +40,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="turn_job.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models/turn_job.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="30" selection-start="175" selection-end="175" vertical-scroll-proportion="0.1171875">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="development.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
           <provider selected="true" editor-type-id="text-editor">
@@ -58,10 +67,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pusher_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pusher_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="49" selection-start="712" selection-end="712" vertical-scroll-proportion="0.421875">
+            <state line="13" column="27" selection-start="453" selection-end="453" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -97,7 +106,7 @@
       <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="0" selection-start="2184" selection-end="2184" vertical-scroll-proportion="0.0">
+            <state line="165" column="17" selection-start="4552" selection-end="4552" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -119,7 +128,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/lib/jquery.dataTables.min.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
         <option value="$PROJECT_DIR$/Gemfile" />
@@ -135,6 +143,7 @@
         <option value="$PROJECT_DIR$/app/models/gamestate/map_state.rb" />
         <option value="$PROJECT_DIR$/app/models/gamestate/game_state.rb" />
         <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
+        <option value="$PROJECT_DIR$/app/models/turn_job.rb" />
       </list>
     </option>
   </component>
@@ -493,7 +502,7 @@
       <recent name="$PROJECT_DIR$/public/Gameboard" />
     </key>
   </component>
-  <component name="RunManager" selected="Rake.assets:precompile">
+  <component name="RunManager" selected="Rake.jobs:work">
     <configuration default="false" name="assets:precompile" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
       <module name="warsocial" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
@@ -524,6 +533,30 @@
       <option name="VM_PARAMETERS" value="" />
       <option name="USER_CFG_CLASS" />
       <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
+    <configuration default="false" name="jobs:work" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
+      <module name="warsocial" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_NAME" VALUE="jobs:work" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ARGS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ATTACHED_TEST_FRAMEWORKS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TRACE" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_DRYRUN" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_PREREQS" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
       <method />
     </configuration>
     <configuration default="true" type="RakeRunConfigurationType" factoryName="Rake">
@@ -797,7 +830,7 @@
       <ConfigurationWrapper RunnerId="RubyRunner" />
       <method />
     </configuration>
-    <list size="7">
+    <list size="8">
       <item index="0" class="java.lang.String" itemvalue="Rake.test" />
       <item index="1" class="java.lang.String" itemvalue="Rake.spec" />
       <item index="2" class="java.lang.String" itemvalue="Rails.Production: warsocial" />
@@ -805,6 +838,7 @@
       <item index="4" class="java.lang.String" itemvalue="Rake.assets:precompile" />
       <item index="5" class="java.lang.String" itemvalue="Query Language Console.Default" />
       <item index="6" class="java.lang.String" itemvalue="Rake.assets:clean" />
+      <item index="7" class="java.lang.String" itemvalue="Rake.jobs:work" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -865,7 +899,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1920" height="1054" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.0" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -876,7 +910,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33263817" sideWeight="0.9994658" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1474359" sideWeight="0.2189781" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30448383" sideWeight="0.97596157" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30448383" sideWeight="0.97596157" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -942,13 +976,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/models/land.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="2" selection-start="299" selection-end="299" vertical-scroll-proportion="0.28645834">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="40" column="58" selection-start="3148" selection-end="3148" vertical-scroll-proportion="-1.92">
@@ -998,13 +1025,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="0" selection-start="2184" selection-end="2184" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/gamestate/map_state.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="95" column="7" selection-start="3362" selection-end="3362" vertical-scroll-proportion="0.0">
@@ -1040,6 +1060,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="27" selection-start="453" selection-end="453" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="165" column="17" selection-start="4552" selection-end="4552" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/gamestate/game_state.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="261" column="23" selection-start="6903" selection-end="6903" vertical-scroll-proportion="0.0">
@@ -1047,9 +1081,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/turn_job.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="49" selection-start="712" selection-end="712" vertical-scroll-proportion="0.421875">
+        <state line="5" column="30" selection-start="175" selection-end="175" vertical-scroll-proportion="0.1171875">
           <folding />
         </state>
       </provider>
