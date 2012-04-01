@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/gamestate/game_state.rb" afterPath="$PROJECT_DIR$/app/models/gamestate/game_state.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/gamestate/land_state.rb" afterPath="$PROJECT_DIR$/app/models/gamestate/land_state.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/gamestate/map_state.rb" afterPath="$PROJECT_DIR$/app/models/gamestate/map_state.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/gamestate/player_state.rb" afterPath="$PROJECT_DIR$/app/models/gamestate/player_state.rb" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,19 +31,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="game_state.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="game_state.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/gamestate/game_state.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="261" column="23" selection-start="6903" selection-end="6903" vertical-scroll-proportion="0.2578125">
+            <state line="261" column="23" selection-start="6903" selection-end="6903" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pusher_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="development.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="56" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="production.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="21" selection-start="1701" selection-end="1701" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pusher_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="31" selection-start="680" selection-end="680" vertical-scroll-proportion="0.0">
+            <state line="18" column="49" selection-start="712" selection-end="712" vertical-scroll-proportion="0.421875">
               <folding />
             </state>
           </provider>
@@ -120,8 +133,8 @@
         <option value="$PROJECT_DIR$/app/models/gamestate/land_state.rb" />
         <option value="$PROJECT_DIR$/app/models/gamestate/player_state.rb" />
         <option value="$PROJECT_DIR$/app/models/gamestate/map_state.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/gamestate/game_state.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
       </list>
     </option>
   </component>
@@ -964,20 +977,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="39" selection-start="2406" selection-end="2406" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="56" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.6566901">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/initializers/redis.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1027,16 +1026,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
+    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="31" selection-start="680" selection-end="680" vertical-scroll-proportion="0.0">
+        <state line="36" column="56" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="21" selection-start="1701" selection-end="1701" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/gamestate/game_state.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="261" column="23" selection-start="6903" selection-end="6903" vertical-scroll-proportion="0.2578125">
+        <state line="261" column="23" selection-start="6903" selection-end="6903" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="49" selection-start="712" selection-end="712" vertical-scroll-proportion="0.421875">
           <folding />
         </state>
       </provider>
