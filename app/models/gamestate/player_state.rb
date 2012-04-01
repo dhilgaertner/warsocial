@@ -9,15 +9,17 @@ class PlayerState < Ohm::Model
   attribute :state
 
   index :user_id
+  index :is_turn
+  index :state
 
   def validate
     assert_present :user_id
   end
 
   def as_json(options={})
-    { :player_id => self.user_id,
-      :seat_id => self.seat_number,
-      :is_turn => self.is_turn,
+    { :player_id => self.user_id.to_i,
+      :seat_id => self.seat_number.to_i,
+      :is_turn => self.is_turn == "true" ? true : false,
       :name => self.username,
       :state => self.state }
   end

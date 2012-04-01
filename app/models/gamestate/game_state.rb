@@ -1,6 +1,8 @@
 require 'game_rule'
 require 'map'
 require 'game'
+require 'turn_job'
+require 'player'
 
 class GameState < Ohm::Model
   attribute :name
@@ -24,14 +26,14 @@ class GameState < Ohm::Model
     { :name => self.name,
       :state => self.state,
       :players => self.players.as_json,
-      :max_players => self.max_player_count,
+      :max_players => self.max_player_count.to_i,
       :map => self.map.name
     }
   end
 
   # Find running game by name or create a new one
   def self.get_game_state(name)
-    games = GameState.find(:name => name)
+    games = GameState.find(:name => name).except(:state => Game::FINISHED_STATE)
 
     if games.size == 0
       settings = GameRule.where("game_name = ?", name).first
@@ -98,7 +100,7 @@ class GameState < Ohm::Model
   def is_users_turn?(user)
     self.players.each do |player|
       if (user.id.to_s == player.user_id)
-        if (player.is_turn == true)
+        if (player.is_turn == "true")
           return true
         end
       end
@@ -110,12 +112,15 @@ class GameState < Ohm::Model
   def attack(attacking_land_id, defending_land_id)
     lands = self.map.get_lands
 
-    if (lands[attacking_land_id].include?(defending_land_id))
+    if (lands[attacking_land_id.to_s].include?(defending_land_id))
 
       atk_land = LandState.find(:game_state_id => self.id, :map_land_id => attacking_land_id).first
       def_land = LandState.find(:game_state_id => self.id, :map_land_id => defending_land_id).first
 
-      if (atk_land.player == def_land.player || atk_land.deployment == 1)
+      attack_user_id = atk_land.player_state != nil ? atk_land.player_state.id : nil
+      defend_user_id = def_land.player_state != nil ? def_land.player_state.id : nil
+
+      if (attack_user_id == defend_user_id || atk_land.deployment.to_i == 1)
         return
       end
 
@@ -129,10 +134,10 @@ class GameState < Ohm::Model
       loser = attack_sum > defend_sum ? def_land : atk_land
 
       if (atk_land == winner)
-        loser_player = loser.player
+        loser_player = loser.player_state
 
-        loser.deployment = winner.deployment - 1
-        loser.player = winner.player
+        loser.deployment = winner.deployment.to_i - 1
+        loser.player_state = winner.player_state
         loser.save
 
         winner.deployment = 1
@@ -155,10 +160,10 @@ class GameState < Ohm::Model
 
       data = { :attack_info => { :attacker_land_id => attacking_land_id,
                                  :attacker_roll => attack_results,
-                                 :attacker_player_id => atk_land.player.user_id,
+                                 :attacker_player_id => atk_land.player_state.user_id,
                                  :defender_land_id => defending_land_id,
                                  :defender_roll => defend_results,
-                                 :defender_player_id => def_land.player.user_id
+                                 :defender_player_id => def_land.player_state.user_id
       },
                :deployment_changes => [atk_land, def_land]
       }
@@ -177,7 +182,7 @@ class GameState < Ohm::Model
 
       broadcast(self.name, GameMsgType::SIT, new_player.as_json)
 
-      if self.players.size == self.max_player_count
+      if self.players.size == self.max_player_count.to_i
         start_game
       end
 
@@ -208,18 +213,20 @@ class GameState < Ohm::Model
   # @param user [User]
   def flag_player(user)
     if self.state == Game::STARTED_STATE
-      player = PlayerState.find(:game_state_id => self.id, :user_id => user.id)
+      player = PlayerState.find(:game_state_id => self.id, :user_id => user.id).first
 
       if (player != nil)
 
-        if (is_user_turn?(user))
+        if (self.is_users_turn?(user))
           end_turn
         end
 
         player.state = Player::DEAD_PLAYER_STATE
+        player.save
 
         player.lands.each do |land|
-          land.player = nil
+          land.player_state = nil
+          land.save
         end
 
         broadcast(self.name, GameMsgType::QUIT, player)
@@ -243,6 +250,9 @@ class GameState < Ohm::Model
     cp.is_turn = false
     np.is_turn = true
 
+    cp.save
+    np.save
+
     restart_turn_timer
 
     broadcast(self.name, GameMsgType::TURN, {:player_id => np.user_id, :name => np.username})
@@ -253,11 +263,21 @@ class GameState < Ohm::Model
     end_turn
   end
 
-  # Check whether or not it is the user's turn
-  def is_user_turn?(user)
-    player = PlayerState.find(:game_state_id => self.id, :is_turn => true)
+  # Delete All
+  def delete_all
+    if self.map != nil
+      self.map.delete
+    end
 
-    player != nil ? player.user_id == user.id.to_s : false
+    if self.players.size != 0
+      self.players.delete
+    end
+
+    if self.lands.size != 0
+      self.lands.delete
+    end
+
+    self.delete
   end
 
   # Start Game
@@ -281,7 +301,7 @@ class GameState < Ohm::Model
 
     land_ids.each do |id|
       player = random_picks.pop
-      land = LandState.create(:player => player, :deployment => 1, :map_land_id => id)
+      land = LandState.create(:game_state_id => self.id, :player_state => player, :deployment => 1, :map_land_id => id)
       self.lands << land
 
     end
@@ -297,19 +317,23 @@ class GameState < Ohm::Model
         results[index] = results[index] + 1
       end
 
-      Land.transaction do
-        results.each_with_index do |result, index|
-          player.lands[index].deployment += result
-          player.lands[index].save
-        end
+      results.each_with_index do |result, index|
+        land_id = player.lands.to_a[index].id
+        land = LandState[land_id]
+
+        total = land.deployment.to_i + result
+        land.deployment = total
+        land.save
       end
     end
 
     self.state = Game::STARTED_STATE # We don't save this because 'restart_turn_timer' will save for us'
     restart_turn_timer  # self.save happens here
 
-    player = self.players.sample
-    player.is_turn = true
+    player = self.players.to_a.sample
+    next_player = PlayerState[player.id]
+    next_player.is_turn = true
+    next_player.save
 
     data = { :who_am_i => 0,
              :map_layout => ActiveSupport::JSON.decode(self.map.json),
@@ -323,7 +347,7 @@ class GameState < Ohm::Model
   # Find which player is currently having a turn
   private
   def current_player
-    PlayerState.find(:game_state_id => self.id, :is_turn => true).first
+    PlayerState.find(:game_state_id => self.id, :is_turn => "true").first
   end
 
   # Find which player is next in line turn-wise
@@ -350,10 +374,11 @@ class GameState < Ohm::Model
       winner = players_left.first
 
       self.state = Game::FINISHED_STATE
+      self.save
 
       kill_turn_timer
 
-      broadcast(self.name, GameMsgType::WINNER, winner)
+      broadcast(self.name, GameMsgType::WINNER, winner.as_json)
 
       return winner
     end
@@ -366,16 +391,16 @@ class GameState < Ohm::Model
 
     own_land_ids = Array.new
 
-    player.lands.each { |land| own_land_ids.push(land.map_land_id) }
+    player.lands.each { |land| own_land_ids.push(land.map_land_id.to_i) }
 
-    not_connected = own_land_ids.select { |id| (connects[id] & own_land_ids).size == 0 }
+    not_connected = own_land_ids.select { |id| (connects[id.to_s] & own_land_ids).size == 0 }
 
     connected = own_land_ids - not_connected
 
     islands = Array.new
 
     connected.each { |id|
-      segment = [ id ].concat(connects[id].uniq & connected)
+      segment = [ id ].concat(connects[id.to_s].uniq & connected)
 
       con_islands = islands.select { |island| (segment & island).size > 0 }
 
@@ -422,15 +447,18 @@ class GameState < Ohm::Model
 
     changed = Array.new
     num_armies.times do |x|
-      candidates = lands.select{|x| x.deployment < 8}
+      candidates = lands.select{|x| x.deployment.to_i < 8}
 
       if (!candidates.empty?)
         land = rand_with_range(candidates)
-        land.deployment += 1
+        land.deployment = land.deployment.to_i + 1
+        land.save
 
         changed.push(land)
       end
     end
+
+    changed.reverse!  #reverse so that the latest deployments are kept in case of duplicates
 
     broadcast(self.name, GameMsgType::DEPLOY, changed.uniq)
   end
@@ -441,6 +469,7 @@ class GameState < Ohm::Model
 
     new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 20.seconds.from_now)
     self.turn_timer_id = new_job.id
+    self.save
   end
 
   private
@@ -450,6 +479,7 @@ class GameState < Ohm::Model
       if old_job != nil
         old_job.destroy
         self.turn_timer_id = nil
+        self.save
       end
     end
   end
@@ -462,7 +492,7 @@ class GameState < Ohm::Model
   # Get random roll results
   private
   def roll(num_dice)
-    num_dice.times.map{ rand_with_range(1..6) }
+    num_dice.to_i.times.map{ rand_with_range(1..6) }
   end
 
   private

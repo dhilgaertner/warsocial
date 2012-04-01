@@ -2,16 +2,18 @@ class LandState < Ohm::Model
   attribute :deployment
   attribute :map_land_id
 
-  reference :player, PlayerState
+  reference :player_state, PlayerState
   reference :game_state, GameState
+
+  index :map_land_id
 
   def validate
 
   end
 
   def as_json(options={})
-    { :deployment => self.deployment,
-      :land_id => self.map_land_id,
-      :player_id => self.player.user_id }
+    { :deployment => self.deployment.to_i,
+      :land_id => self.map_land_id.to_i,
+      :player_id => self.player_state != nil ? self.player_state.user_id.to_i : nil }
   end
 end
