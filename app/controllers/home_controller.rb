@@ -105,9 +105,11 @@ class HomeController < ApplicationController
   def kill_table
     game_name = params[:game_name]
 
-    game = GameState.get_game_state(game_name)
-
     if (current_user.admin?)
+      game = GameState.get_game_state(game_name)
+      gr = GameRule.find_all_by_game_name(game_name).first
+
+      gr.destroy
       game.delete_all
 
       redirect_to :root

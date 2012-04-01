@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-c70fbd9d2d77a7c3b3b811da62444400.css.gz" afterPath="$PROJECT_DIR$/public/assets/application-c70fbd9d2d77a7c3b3b811da62444400.css.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application-eb7461c2e4ce4a73761f667101bf41d6.js.gz" afterPath="$PROJECT_DIR$/public/assets/application-eb7461c2e4ce4a73761f667101bf41d6.js.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.css.gz" afterPath="$PROJECT_DIR$/public/assets/application.css.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/application.js.gz" afterPath="$PROJECT_DIR$/public/assets/application.js.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-6f3c5b2eea64ab94185283c624c283d4.js.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.css.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" afterPath="$PROJECT_DIR$/public/assets/rails_admin/rails_admin.js.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/gamestate/game_state.rb" afterPath="$PROJECT_DIR$/app/models/gamestate/game_state.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/gamestate/land_state.rb" afterPath="$PROJECT_DIR$/app/models/gamestate/land_state.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/index.html.erb" afterPath="$PROJECT_DIR$/app/views/home/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,7 +35,16 @@
       <file leaf-file-name="home_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0703125">
+            <state line="110" column="16" selection-start="3149" selection-end="3149" vertical-scroll-proportion="0.234375">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pusher_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="30" selection-start="718" selection-end="718" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -74,7 +71,7 @@
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="208" column="132" selection-start="9660" selection-end="9660" vertical-scroll-proportion="-130.0">
+            <state line="208" column="132" selection-start="9660" selection-end="9660" vertical-scroll-proportion="-55.0">
               <folding />
             </state>
           </provider>
@@ -100,18 +97,18 @@
         <option value="$PROJECT_DIR$/config/environments/development.rb" />
         <option value="$PROJECT_DIR$/app/models/gamestate/player_state.rb" />
         <option value="$PROJECT_DIR$/app/models/gamestate/map_state.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/turn_job.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/mapcanvas.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/warsocial.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/soundmanager.js" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
         <option value="$PROJECT_DIR$/app/models/gamestate/game_state.rb" />
         <option value="$PROJECT_DIR$/app/models/gamestate/land_state.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
       </list>
     </option>
   </component>
@@ -936,13 +933,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="27" selection-start="453" selection-end="453" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/turn_job.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="30" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0">
@@ -1013,9 +1003,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="208" column="132" selection-start="9660" selection-end="9660" vertical-scroll-proportion="-130.0">
+        <state line="18" column="30" selection-start="718" selection-end="718" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1027,9 +1017,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="208" column="132" selection-start="9660" selection-end="9660" vertical-scroll-proportion="-55.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0703125">
+        <state line="110" column="16" selection-start="3149" selection-end="3149" vertical-scroll-proportion="0.234375">
           <folding />
         </state>
       </provider>
