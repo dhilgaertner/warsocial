@@ -36,6 +36,7 @@ function SoundManager()
                 snd = new Audio("/sounds/win" + this.ext);
                 break;
             case "roll":
+                return;
                 snd = new Audio("/sounds/roll" + this.ext);
                 break;
             default:
