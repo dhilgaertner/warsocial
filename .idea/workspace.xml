@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03f26800-aaf0-4361-ac7d-23dad505ad99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/turn_job.rb" afterPath="$PROJECT_DIR$/app/models/turn_job.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/gameboard/mapcanvas.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/gameboard/mapcanvas.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/gameboard/soundmanager.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/gameboard/soundmanager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/gameboard/warsocial.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/gameboard/warsocial.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/index.html.erb" afterPath="$PROJECT_DIR$/app/views/home/index.html.erb" />
     </list>
     <ignored path="warsocial.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,82 +34,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="game_state.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/gamestate/game_state.rb">
+      <file leaf-file-name="soundmanager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/soundmanager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="261" column="23" selection-start="6903" selection-end="6903" vertical-scroll-proportion="0.0">
+            <state line="36" column="16" selection-start="999" selection-end="999" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="turn_job.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/models/turn_job.rb">
+      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="30" selection-start="175" selection-end="175" vertical-scroll-proportion="0.1171875">
+            <state line="160" column="16" selection-start="7219" selection-end="7219" vertical-scroll-proportion="-15.625">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="development.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
+      <file leaf-file-name="warsocial.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/warsocial.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="56" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.0">
+            <state line="205" column="36" selection-start="9177" selection-end="9177" vertical-scroll-proportion="0.85318106">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="production.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+      <file leaf-file-name="mapcanvas.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/mapcanvas.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="21" selection-start="1701" selection-end="1701" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pusher_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/pusher_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="27" selection-start="453" selection-end="453" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="map_state.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/gamestate/map_state.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="95" column="7" selection-start="3362" selection-end="3362" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="player_state.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/gamestate/player_state.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="2" selection-start="256" selection-end="256" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="land_state.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/gamestate/land_state.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="15" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="165" column="17" selection-start="4552" selection-end="4552" vertical-scroll-proportion="0.0">
+            <state line="556" column="4" selection-start="21526" selection-end="21526" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -128,10 +86,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/javascripts/lib/jquery.dataTables.min.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/lobby.js" />
-        <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/config/environments/production.rb" />
         <option value="$PROJECT_DIR$/app/models/game_state.rb" />
         <option value="$PROJECT_DIR$/app/models/map.rb" />
         <option value="$PROJECT_DIR$/app/models/land.rb" />
@@ -144,6 +98,10 @@
         <option value="$PROJECT_DIR$/app/models/gamestate/game_state.rb" />
         <option value="$PROJECT_DIR$/app/controllers/pusher_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/turn_job.rb" />
+        <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/mapcanvas.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/soundmanager.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/gameboard/warsocial.js" />
       </list>
     </option>
   </component>
@@ -346,46 +304,6 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="warsocial" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="warsocial" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gamestate" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="warsocial" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="warsocial" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -442,6 +360,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="warsocial" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="warsocial" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gameboard" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -899,18 +843,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1920" height="1054" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.0" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46506777" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1474359" sideWeight="0.33055267" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16880342" sideWeight="0.69551617" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33263817" sideWeight="0.9994658" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16880342" sideWeight="0.66736186" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33263817" sideWeight="0.9994658" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1474359" sideWeight="0.2189781" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30448383" sideWeight="0.97596157" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30448383" sideWeight="0.97596157" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295099" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -976,34 +920,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="58" selection-start="3148" selection-end="3148" vertical-scroll-proportion="-1.92">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Ruby/Gems/1.8/gems/actionpack-3.1.2/lib/action_controller/metal/rescue.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="494" selection-end="494" vertical-scroll-proportion="0.675">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Ruby/Gems/1.8/gems/ohm-0.1.5/lib/ohm.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="472" column="0" selection-start="13611" selection-end="13611" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/test.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/initializers/redis.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1083,7 +999,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/turn_job.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="30" selection-start="175" selection-end="175" vertical-scroll-proportion="0.1171875">
+        <state line="5" column="30" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="160" column="16" selection-start="7219" selection-end="7219" vertical-scroll-proportion="-15.625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/mapcanvas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="556" column="4" selection-start="21526" selection-end="21526" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/soundmanager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="16" selection-start="999" selection-end="999" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gameboard/warsocial.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="205" column="36" selection-start="9177" selection-end="9177" vertical-scroll-proportion="0.85318106">
           <folding />
         </state>
       </provider>

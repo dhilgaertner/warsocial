@@ -21,11 +21,22 @@ function SoundManager()
 
         switch(effectname) {
             case "game_start":
-                snd = new Audio("/sounds/start" + this.ext);
+                snd = new Audio("/sounds/start2" + this.ext);
                 break;
             case "sound_click":
-                return;
-                //snd = new Audio("/sounds/click" + this.ext);
+                snd = new Audio("/sounds/click" + this.ext);
+                break;
+            case "my_turn":
+                snd = new Audio("/sounds/turn" + this.ext);
+                break;
+            case "loss_roll":
+                snd = new Audio("/sounds/loss" + this.ext);
+                break;
+            case "win_roll":
+                snd = new Audio("/sounds/win" + this.ext);
+                break;
+            case "roll":
+                snd = new Audio("/sounds/roll" + this.ext);
                 break;
             default:
                 return;

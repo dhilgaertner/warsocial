@@ -165,6 +165,7 @@ WarSocial.prototype.userClicksOnLand = function( x, y ) {
 
 WarSocial.prototype.request_attack = function() {
     attack_out(this.getAttackFrom(),this.getAttackTo());
+    SoundManager.play("roll");
 };
 
 WarSocial.prototype.attack = function( info ) {
@@ -188,6 +189,22 @@ WarSocial.prototype.attack = function( info ) {
     if (dicebox != null && defender != null) dicebox.show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker.getSeatId(), defender.getSeatId());
     //this.getMap().getMapCanvas().show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker_id, defender_id);
     setTimeout(function() {this_scope.deploy(info.deployment_changes, false);}, 400);   // delay before calling deployment
+
+    var att_total = 0;
+    $.each(info.attack_info.attacker_roll,function() {
+        att_total += this;
+    });
+
+    var def_total = 0;
+    $.each(info.attack_info.defender_roll,function() {
+        def_total += this;
+    });
+
+    if (att_total > def_total) {
+        SoundManager.play("win_roll");
+    } else {
+        SoundManager.play("loss_roll");
+    }
 };
 
 /**

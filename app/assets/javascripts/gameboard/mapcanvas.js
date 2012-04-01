@@ -554,7 +554,6 @@ MapCanvas.prototype.show_new_die = function() {
      }
 
 	// play sound
-	//SoundPlayer.play("sound_click");
 	SoundManager.play("sound_click");
 };
 

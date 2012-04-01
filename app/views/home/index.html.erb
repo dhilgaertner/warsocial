@@ -166,9 +166,11 @@
         channel.bind('new_turn', function(player) {
             if (player.player_id == who_am_i) {
                 $('#end_turn').show();
+                SoundManager.play("my_turn");
             } else {
                 $('#end_turn').hide();
             }
+
             next_turn(player.player_id);
             seats.turn_start({ player_id: player.player_id});
 
