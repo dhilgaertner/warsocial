@@ -21,6 +21,7 @@ Dice::Application.routes.draw do
       post :add_line, :as => :add_line
       post :create_game, :as => :create_game
       get :end_turn, :as => :end_turn
+      get :kill_table, :as => :kill_table
       get :sit, :as => :sit
       get :stand, :as => :stand
       get :flag, :as => :flag

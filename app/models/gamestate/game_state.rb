@@ -270,12 +270,18 @@ class GameState < Ohm::Model
     end
 
     if self.players.size != 0
-      self.players.delete
+      self.players.each do |player|
+        player.delete
+      end
     end
 
     if self.lands.size != 0
-      self.lands.delete
+      self.lands.each do |land|
+        land.delete
+      end
     end
+
+    kill_turn_timer
 
     self.delete
   end

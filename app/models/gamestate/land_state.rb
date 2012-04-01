@@ -16,4 +16,5 @@ class LandState < Ohm::Model
       :land_id => self.map_land_id.to_i,
       :player_id => self.player_state != nil ? self.player_state.user_id.to_i : nil }
   end
+
 end

@@ -205,6 +205,9 @@
 			<%= link_to image_tag("buttons/stand_button.png", :border => 0), stand_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/flag_button.png", :border => 0), flag_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
 			<%= link_to image_tag("buttons/end_turn_button.png", :border => 0), end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :style => "margin-left: 10px; margin-top: 10px;" %>
+            <% if current_user.admin? %>
+                <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px; margin-top: 10px;" %>
+            <% end %>
 			<div>
 				<div id="top_players">
 					<div class="player">

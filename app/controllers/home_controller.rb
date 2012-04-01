@@ -101,7 +101,21 @@ class HomeController < ApplicationController
       render :text=>"Not your turn", :status=>500
     end
   end
-  
+
+  def kill_table
+    game_name = params[:game_name]
+
+    game = GameState.get_game_state(game_name)
+
+    if (current_user.admin?)
+      game.delete_all
+
+      redirect_to :root
+    else
+      render :text => "Not authorized", :status => '403'
+    end
+  end
+
   def sit
     game_name = params[:game_name]
     
