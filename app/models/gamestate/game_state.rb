@@ -199,7 +199,7 @@ class GameState < Ohm::Model
 
       broadcast(self.name, GameMsgType::SIT, new_player.as_json)
 
-      user.current_points = user.current_points - self.wager_level.to_i
+      user.current_points = user.current_points.to_i - self.wager_level.to_i
       user.save
 
       if self.players.size == self.max_player_count.to_i
@@ -316,7 +316,7 @@ class GameState < Ohm::Model
   private
   def cash_player_out(position, player)
     user = User.find(player.user_id.to_i)
-    user.current_points = user.current_points + GameRule.calc_delta_points(position, self.wager_level.to_i, self.max_player_count.to_i)
+    user.current_points = user.current_points.to_i + GameRule.calc_delta_points(position, self.wager_level.to_i, self.max_player_count.to_i)
     user.save
     player.current_points = user.current_points
     player.save
