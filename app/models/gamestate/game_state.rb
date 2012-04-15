@@ -115,49 +115,104 @@ class GameState < Ohm::Model
 
   # Attack
   def attack(attacking_land_id, defending_land_id)
+    logger = User.logger
+
+    start_time = Time.now
+
+    elapsed = Time.now - start_time
+
+    logger.info "[#{elapsed * 1000}] start"
+
     lands = self.map.get_lands
 
+    elapsed = (Time.now - start_time) - elapsed
+    logger.info "[#{elapsed * 1000}] 1"
     if (lands[attacking_land_id.to_s].include?(defending_land_id))
+
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 2"
 
       atk_land = LandState.find(:game_state_id => self.id, :map_land_id => attacking_land_id).first
       def_land = LandState.find(:game_state_id => self.id, :map_land_id => defending_land_id).first
 
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 3"
+
       attack_user_id = atk_land.player_state != nil ? atk_land.player_state.id : nil
       defend_user_id = def_land.player_state != nil ? def_land.player_state.id : nil
 
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 4"
+
       if (attack_user_id == defend_user_id || atk_land.deployment.to_i == 1)
+        elapsed = (Time.now - start_time) - elapsed
+        logger.info "[#{elapsed * 1000}] end"
         return
       end
+
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 5"
 
       attack_results = roll(atk_land.deployment)
       defend_results = roll(def_land.deployment)
 
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 6"
+
       attack_sum = attack_results.inject{|sum,x| sum + x }
       defend_sum = defend_results.inject{|sum,x| sum + x }
+
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 7"
 
       winner = attack_sum > defend_sum ? atk_land : def_land
       loser = attack_sum > defend_sum ? def_land : atk_land
 
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 8"
+
       if (atk_land == winner)
         loser_player = loser.player_state
+
+        elapsed = (Time.now - start_time) - elapsed
+        logger.info "[#{elapsed * 1000}] 9"
 
         loser.deployment = winner.deployment.to_i - 1
         loser.player_state = winner.player_state
         loser.save
 
+        elapsed = (Time.now - start_time) - elapsed
+        logger.info "[#{elapsed * 1000}] 10"
+
         winner.deployment = 1
         winner.save
+
+        elapsed = (Time.now - start_time) - elapsed
+        logger.info "[#{elapsed * 1000}] 11"
 
         if (loser_player != nil)
           if (loser_player.lands.size == 0)
             loser_player.state = Player::DEAD_PLAYER_STATE
             loser_player.save
 
+            elapsed = (Time.now - start_time) - elapsed
+            logger.info "[#{elapsed * 1000}] 12"
+
             players_left = PlayerState.find(:game_state_id => self.id).except(:state => Player::DEAD_PLAYER_STATE)
+
+            elapsed = (Time.now - start_time) - elapsed
+            logger.info "[#{elapsed * 1000}] 13"
 
             cash_player_out(players_left.size + 1, loser_player)
 
+            elapsed = (Time.now - start_time) - elapsed
+            logger.info "[#{elapsed * 1000}] 14"
+
             check_for_winner
+
+            elapsed = (Time.now - start_time) - elapsed
+            logger.info "[#{elapsed * 1000}] 15"
+
           end
         end
       else
@@ -165,9 +220,18 @@ class GameState < Ohm::Model
         loser.save
       end
 
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 16"
+
       restart_turn_timer
 
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 17"
+
       update_delta_points
+
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 18"
 
       data = { :players => self.players,
                :attack_info => { :attacker_land_id => attacking_land_id,
@@ -180,7 +244,13 @@ class GameState < Ohm::Model
                :deployment_changes => [atk_land, def_land]
              }
 
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 19"
+
       broadcast(self.name, GameMsgType::ATTACK, data)
+
+      elapsed = (Time.now - start_time) - elapsed
+      logger.info "[#{elapsed * 1000}] 20"
 
     end
   end
