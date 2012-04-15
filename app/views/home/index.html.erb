@@ -91,7 +91,9 @@
 
         $('#end_turn').hide();
 
-        var seats = new Seats(8, global_init_data.players);
+        var seats = new Seats(7, global_init_data.players);
+        seats.update_player_data(global_init_data.players);
+
         var lobby = new Lobby("game_lobby_wrapper", lobby_maps);
 
         var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
@@ -133,6 +135,8 @@
             init(data);
 
             SoundManager.play("game_start");
+
+            seats.update_player_data(data.players);
         });
 
         channel.bind('player_sit', function(player) {
@@ -143,12 +147,14 @@
             seats.stand(player);
         });
 
-        channel.bind('player_quit', function(player) {
-            player_quit(player.player_id);
+        channel.bind('player_quit', function(data) {
+            seats.update_player_data(data.players);
+            player_quit(data.player.player_id);
         });
 
         channel.bind('attack', function(data) {
             seats.turn_timer_restart({player_id: data.attack_info.attacker_player_id});
+            seats.update_player_data(data.players);
             attack(data);
         });
 
@@ -217,7 +223,12 @@
 								<div class="name"></div>
 								<div class="turn_progress" style="display:none"></div>
 							</div>
-							<div class="player_stat2"></div>
+							<div class="player_stat2">
+                              <div class="place"></div>
+                              <div class="points"></div>
+                              <div class="delta_points"></div>
+                              <div class="lands"></div>
+							</div>
 						</div>
 					</div>
 					<div class="player">
@@ -227,7 +238,12 @@
 								<div class="name"></div>
 								<div class="turn_progress" style="display:none"></div>
 							</div>
-							<div class="player_stat2"></div>
+							<div class="player_stat2">
+                              <div class="place"></div>
+                              <div class="points"></div>
+                              <div class="delta_points"></div>
+                              <div class="lands"></div>
+							</div>
 						</div>
 					</div>
 					<div class="player">
@@ -237,7 +253,12 @@
 								<div class="name"></div>
 								<div class="turn_progress" style="display:none"></div>
 							</div>
-							<div class="player_stat2"></div>
+							<div class="player_stat2">
+                              <div class="place"></div>
+                              <div class="points"></div>
+                              <div class="delta_points"></div>
+                              <div class="lands"></div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -251,7 +272,12 @@
 									<div class="name"></div>
 									<div class="turn_progress" style="display:none"></div>
 								</div>
-								<div class="player_stat2"></div>
+								<div class="player_stat2">
+                                  <div class="place"></div>
+                                  <div class="points"></div>
+                                  <div class="delta_points"></div>
+                                  <div class="lands"></div>
+								</div>
 							</div>
 						</div>
 						<div class="player">
@@ -262,7 +288,12 @@
 									<div class="name"></div>
 									<div class="turn_progress" style="display:none"></div>
 								</div>
-								<div class="player_stat2"></div>
+								<div class="player_stat2">
+                                  <div class="place"></div>
+                                  <div class="points"></div>
+                                  <div class="delta_points"></div>
+                                  <div class="lands"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -295,7 +326,12 @@
 									<div class="name"></div>
 									<div class="turn_progress" style="display:none"></div>
 								</div>
-								<div class="player_stat2"></div>
+								<div class="player_stat2">
+                                  <div class="place"></div>
+                                  <div class="points"></div>
+                                  <div class="delta_points"></div>
+                                  <div class="lands"></div>
+								</div>
 							</div>
 						</div>
 						<div class="player">
@@ -306,7 +342,12 @@
 									<div class="name"></div>
 									<div class="turn_progress" style="display:none"></div>
 								</div>
-								<div class="player_stat2"></div>
+								<div class="player_stat2">
+                                  <div class="place"></div>
+                                  <div class="points"></div>
+                                  <div class="delta_points"></div>
+                                  <div class="lands"></div>
+								</div>
 							</div>
 						</div>
 					</div>

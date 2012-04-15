@@ -7,6 +7,9 @@ class PlayerState < Ohm::Model
   attribute :username
   attribute :user_id
   attribute :state
+  attribute :current_points
+  attribute :current_delta_points
+  attribute :current_place
 
   index :user_id
   index :is_turn
@@ -21,6 +24,10 @@ class PlayerState < Ohm::Model
       :seat_id => self.seat_number.to_i,
       :is_turn => self.is_turn == "true" ? true : false,
       :name => self.username,
-      :state => self.state }
+      :state => self.state,
+      :current_points => self.current_points.to_i,
+      :place => self.current_place.to_i,
+      :land_count => self.lands.size,
+      :delta_points => self.current_delta_points.to_i }
   end
 end

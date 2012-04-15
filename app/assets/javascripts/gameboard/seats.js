@@ -1,48 +1,54 @@
 
 function Seats(numberOfSeats, players) {
-  var ctx = this;
-	this._seats = new Object();
-	
-	for (i = 0;i < numberOfSeats;i++) {
-        var s = $('#game_seat_' + i.toString());
-		this._seats[i.toString()] = { player: null, seat: s, timer: new TurnTimer(s, 20) };
-	}
+    var ctx = this;
+    this._seats = new Object();
 
-	this.occupySeat = function(key, player) {
-		var item = ctx._seats[key];
-		
-		item.player = player;
-		$(item.seat).find('.name').html(player.name);
-		
-		$(item.seat).show();
-	};
-	
-	this.emptySeat = function(key) {
-		var item = ctx._seats[key];
-		
-		item.player = null;
-		$(item.seat).find('.name').html("");
+    for (i = 0;i < numberOfSeats;i++) {
+        var s = $('#game_seat_' + i.toString());
+        this._seats[i.toString()] = { player: null, seat: s, timer: new TurnTimer(s, 20) };
+    }
+
+    this.occupySeat = function(key, player) {
+        var item = ctx._seats[key];
+
+        item.player = player;
+        $(item.seat).find('.name').html(player.name);
+
+        $(item.seat).show();
+    };
+
+    this.emptySeat = function(key) {
+        var item = ctx._seats[key];
+
+        item.player = null;
+        $(item.seat).find('.name').html("");
         $(item.seat).find('.turn_progress').hide();
-		$(item.seat).hide();
-	};
-	
-	if (players != null) {
-		for (i = 0;i < players.length;i++) {
-			player = players[i];
-			if (player.state != "dead") {
-				this.occupySeat((player.seat_id - 1).toString(), player);
-			}
-		}
-	}
+        $(item.seat).hide();
+    };
+
+    if (players != null) {
+        for (i = 0;i < players.length;i++) {
+            player = players[i];
+            if (player.state != "dead") {
+                this.occupySeat((player.seat_id - 1).toString(), player);
+            }
+        }
+    }
+
 }
 
 Seats.prototype.clear = function() {
 	var ctx = this;
-  $.each(this._seats, function(key, occupant) { 
-		if (occupant.player != null) {
-			ctx.emptySeat(key);
-		}
-	});
+    $.each(this._seats, function(key, occupant) {
+        if (occupant.player != null) {
+            ctx.emptySeat(key);
+        }
+    });
+
+    $("div#game_main div.place").html("");
+    $("div#game_main div.points").html("");
+    $("div#game_main div.delta_points").html("");
+    $("div#game_main div.lands").html("");
 };
 
 Seats.prototype.sit = function(player) {
@@ -53,6 +59,48 @@ Seats.prototype.sit = function(player) {
 			return false; // Returning false get's you out of the $.each()
 		}
 	});
+};
+
+Seats.prototype.update_player_data = function(players) {
+    var ctx = this;
+    $.each(players, function(index, player) {
+        var i = player.seat_id - 1;
+        var s = ctx._seats[i.toString()];
+        var el = s.seat;
+
+        var points_string = player.delta_points.toString();
+
+        if (player.delta_points != 0) {
+            points_string = player.delta_points > 0 ? "+" + points_string : "-" + points_string;
+        }
+
+        convert_place_to_string = function(place) {
+            switch(place)
+            {
+                case 1:
+                    return "1st";
+                case 2:
+                    return "2nd";
+                case 3:
+                    return "3rd";
+                case 4:
+                    return "4th";
+                case 5:
+                    return "5th";
+                case 6:
+                    return "6th";
+                case 7:
+                    return "7th";
+                default:
+                    return "NaN";
+            }
+        };
+
+        $(el).find(".place").html(convert_place_to_string(player.place));
+        $(el).find(".points").html(player.current_points.toString());
+        $(el).find(".delta_points").html(points_string);
+        $(el).find(".lands").html(player.land_count.toString());
+    });
 };
 
 Seats.prototype.turn_start = function(player_thin) {

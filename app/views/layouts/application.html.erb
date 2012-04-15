@@ -232,7 +232,8 @@
 			border-radius: 5px 5px;
 		}
 
-		div#game_main #top_players .player_stat2{
+		div#game_main #top_players .player_stat2 {
+            padding-top:2px;
 			width: 150px;
 			height: 25px;
 			margin-top: -3px;
@@ -244,6 +245,31 @@
 			-moz-border-radius-bottomleft: 5px 5px;
 			border-bottom-left-radius: 5px 5px;
 		}
+
+        div#game_main .player_stat2{
+            text-align: center;
+        }
+
+        div#game_main .player_stat2 div {
+            font-family: Arial;
+            font-size: 9px;
+            color: black;
+            width: 73px;
+            height: 17px;
+            float: left;
+        }
+
+        div#game_main #top_players .player_stat2 div {
+            width: 30px;
+            height: 17px;
+            margin-top: 7px;
+        }
+
+        div#game_main div.lands {
+            background: url(<%=image_path "tag.png"%>);
+            background-position: 45px 0px;
+            background-repeat: no-repeat;
+        }
 
 		div#game_main #left_players{
 			position: absolute;

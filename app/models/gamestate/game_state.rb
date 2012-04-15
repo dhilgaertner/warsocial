@@ -3,12 +3,14 @@ require 'map'
 require 'game'
 require 'turn_job'
 require 'player'
+require 'user'
 
 class GameState < Ohm::Model
   attribute :name
   attribute :state
   attribute :turn_timer_id
   attribute :max_player_count
+  attribute :wager_level
 
   reference :map, MapState
   collection :players, PlayerState
@@ -40,13 +42,15 @@ class GameState < Ohm::Model
 
       map_name = (settings == nil) ? "default" : settings.map_name
       num_players = (settings == nil) ? 2 : settings.player_count
+      wager = (settings == nil) ? 0 : settings.wager_level
 
       map = Map.where("name = ?", map_name).first
 
       game_state = GameState.create(:name => name,
                                     :map => MapState.create(:name => map.name, :json => map.json),
                                     :state => Game::WAITING_STATE,
-                                    :max_player_count => num_players)
+                                    :max_player_count => num_players,
+                                    :wager_level => wager)
 
       return game_state
     else
@@ -58,6 +62,7 @@ class GameState < Ohm::Model
     if (current_user != nil)
       map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
       number_of_players = [2,3,4,5,6,7].include?(params[:select_players].to_i) ? params[:select_players].to_i : 2
+      wager = params[:select_wager].to_i >= 0 ? params[:select_wager].to_i : 0
       game_name = nil
 
       try_name = current_user.username
@@ -68,7 +73,7 @@ class GameState < Ohm::Model
 
         if (gr == nil)
           game_name = try_name
-          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players)
+          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players, :wager_level => wager)
         else
           try = try + 1
           try_name = current_user.username + try.to_s
@@ -148,6 +153,10 @@ class GameState < Ohm::Model
             loser_player.state = Player::DEAD_PLAYER_STATE
             loser_player.save
 
+            players_left = PlayerState.find(:game_state_id => self.id).except(:state => Player::DEAD_PLAYER_STATE)
+
+            cash_player_out(players_left.size + 1, loser_player)
+
             check_for_winner
           end
         end
@@ -158,15 +167,18 @@ class GameState < Ohm::Model
 
       restart_turn_timer
 
-      data = { :attack_info => { :attacker_land_id => attacking_land_id,
+      update_delta_points
+
+      data = { :players => self.players,
+               :attack_info => { :attacker_land_id => attacking_land_id,
                                  :attacker_roll => attack_results,
                                  :attacker_player_id => atk_land.player_state.user_id,
                                  :defender_land_id => defending_land_id,
                                  :defender_roll => defend_results,
                                  :defender_player_id => def_land.player_state.user_id
-      },
+                                },
                :deployment_changes => [atk_land, def_land]
-      }
+             }
 
       broadcast(self.name, GameMsgType::ATTACK, data)
 
@@ -178,9 +190,17 @@ class GameState < Ohm::Model
     if self.state == Game::WAITING_STATE
       seat = self.players.size + 1
 
-      new_player = PlayerState.create(:game_state_id => self.id, :username => user.username, :user_id => user.id, :seat_number => seat, :is_turn => false)
+      new_player = PlayerState.create(:game_state_id => self.id,
+                                      :username => user.username,
+                                      :user_id => user.id,
+                                      :seat_number => seat,
+                                      :is_turn => false,
+                                      :current_points => user.current_points)
 
       broadcast(self.name, GameMsgType::SIT, new_player.as_json)
+
+      user.current_points = user.current_points - self.wager_level.to_i
+      user.save
 
       if self.players.size == self.max_player_count.to_i
         start_game
@@ -205,6 +225,9 @@ class GameState < Ohm::Model
       if (player_to_delete != nil)
         player_to_delete.delete
         broadcast(self.name, GameMsgType::STAND, player_to_delete.as_json)
+
+        user.current_points = user.current_points.to_i + self.wager_level
+        user.save
       end
     end
   end
@@ -230,6 +253,10 @@ class GameState < Ohm::Model
         end
 
         broadcast(self.name, GameMsgType::QUIT, player)
+
+        players_left = PlayerState.find(:game_state_id => self.id).except(:state => Player::DEAD_PLAYER_STATE)
+
+        cash_player_out(players_left.size + 1, player)
 
         check_for_winner
       end
@@ -284,6 +311,15 @@ class GameState < Ohm::Model
     kill_turn_timer
 
     self.delete
+  end
+
+  private
+  def cash_player_out(position, player)
+    user = User.find(player.user_id.to_i)
+    user.current_points = user.current_points + GameRule.calc_delta_points(position, self.wager_level.to_i, self.max_player_count.to_i)
+    user.save
+    player.current_points = user.current_points
+    player.save
   end
 
   # Start Game
@@ -341,6 +377,8 @@ class GameState < Ohm::Model
     next_player.is_turn = true
     next_player.save
 
+    update_delta_points
+
     data = { :who_am_i => 0,
              :map_layout => ActiveSupport::JSON.decode(self.map.json),
              :players => self.players,
@@ -348,6 +386,19 @@ class GameState < Ohm::Model
 
     broadcast(self.name, GameMsgType::START, data)
 
+  end
+
+  private
+  def update_delta_points
+    players = self.players.to_a
+
+    players.sort! { |a,b| b.lands.size <=> a.lands.size }
+
+    players.each_index { |index|
+      players[index].current_place = index + 1
+      players[index].current_delta_points = GameRule.calc_delta_points(index + 1, self.wager_level.to_i, self.max_player_count.to_i)
+      players[index].save
+    }
   end
 
   # Find which player is currently having a turn
@@ -385,6 +436,8 @@ class GameState < Ohm::Model
       kill_turn_timer
 
       broadcast(self.name, GameMsgType::WINNER, winner.as_json)
+
+      cash_player_out(1, winner)
 
       return winner
     end

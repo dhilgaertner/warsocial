@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120322004609) do
+ActiveRecord::Schema.define(:version => 20120409182000) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20120322004609) do
     t.integer  "player_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "wager_level",  :default => 0
   end
 
   create_table "games", :force => true do |t|
@@ -163,6 +164,8 @@ ActiveRecord::Schema.define(:version => 20120322004609) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.integer  "current_points",                        :default => 0
+    t.integer  "total_points",                          :default => 0
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
