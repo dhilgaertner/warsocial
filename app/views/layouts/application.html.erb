@@ -535,7 +535,7 @@
 					<div class="avatar"></div>
 					<p id="username"><%= current_user.username %></p><br>
 					<%= link_to "Settings", "#", :class => "top_links" %>
-					<%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => "top_links" %>
+					<%= link_to "Logout", "/users/sign_out", :method => :delete, :class => "top_links" %>
 				</div>
 			<% end %>
 			<br>
