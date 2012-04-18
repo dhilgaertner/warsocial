@@ -192,6 +192,16 @@
         $('#lobby_button').click(function() {
             lobby.open();
         });
+
+        $('#stats').change(function() {
+            var checked = $('#stats').prop('checked');
+            if (checked) {
+                $('.stats_enabled').show();
+            } else {
+                $('.stats_enabled').hide();
+            }
+        });
+        $('#stats').change();
     });
 
     $(window).load(function() {
@@ -226,8 +236,8 @@
 							<div class="player_stat2">
                               <div class="place"></div>
                               <div class="points"></div>
-                              <div class="delta_points"></div>
-                              <div class="lands"></div>
+                              <div class="delta_points stats_enabled"></div>
+                              <div class="lands stats_enabled"></div>
 							</div>
 						</div>
 					</div>
@@ -241,8 +251,8 @@
 							<div class="player_stat2">
                               <div class="place"></div>
                               <div class="points"></div>
-                              <div class="delta_points"></div>
-                              <div class="lands"></div>
+                              <div class="delta_points stats_enabled"></div>
+                              <div class="lands stats_enabled"></div>
 							</div>
 						</div>
 					</div>
@@ -256,8 +266,8 @@
 							<div class="player_stat2">
                               <div class="place"></div>
                               <div class="points"></div>
-                              <div class="delta_points"></div>
-                              <div class="lands"></div>
+                              <div class="delta_points stats_enabled"></div>
+                              <div class="lands stats_enabled"></div>
 							</div>
 						</div>
 					</div>
@@ -275,8 +285,8 @@
 								<div class="player_stat2">
                                   <div class="place"></div>
                                   <div class="points"></div>
-                                  <div class="delta_points"></div>
-                                  <div class="lands"></div>
+                                  <div class="delta_points stats_enabled"></div>
+                                  <div class="lands stats_enabled"></div>
 								</div>
 							</div>
 						</div>
@@ -291,8 +301,8 @@
 								<div class="player_stat2">
                                   <div class="place"></div>
                                   <div class="points"></div>
-                                  <div class="delta_points"></div>
-                                  <div class="lands"></div>
+                                  <div class="delta_points stats_enabled"></div>
+                                  <div class="lands stats_enabled"></div>
 								</div>
 							</div>
 						</div>
@@ -329,8 +339,8 @@
 								<div class="player_stat2">
                                   <div class="place"></div>
                                   <div class="points"></div>
-                                  <div class="delta_points"></div>
-                                  <div class="lands"></div>
+                                  <div class="delta_points stats_enabled"></div>
+                                  <div class="lands stats_enabled"></div>
 								</div>
 							</div>
 						</div>
@@ -345,16 +355,19 @@
 								<div class="player_stat2">
                                   <div class="place"></div>
                                   <div class="points"></div>
-                                  <div class="delta_points"></div>
-                                  <div class="lands"></div>
+                                  <div class="delta_points stats_enabled"></div>
+                                  <div class="lands stats_enabled"></div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+          <div style="margin-bottom:5px;">
+            <input id="stats" type="checkbox" /> <span>stats</span>
+          </div>
 		</div>
-		
+
 		<div id="chat_window">
 			<table id="main_discussion">
 				<tbody>

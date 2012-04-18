@@ -461,14 +461,15 @@ class GameState < Ohm::Model
   private
   def update_delta_points
     players = self.players.to_a
-
     players.sort! { |a,b| b.lands.size <=> a.lands.size }
 
-    players.each_index { |index|
-      players[index].current_place = index + 1
-      players[index].current_delta_points = GameRule.calc_delta_points(index + 1, self.wager_level.to_i, self.max_player_count.to_i)
-      players[index].save
-    }
+    #Ohm.redis.multi do
+      players.each_index { |index|
+        players[index].current_place = index + 1
+        players[index].current_delta_points = GameRule.calc_delta_points(index + 1, self.wager_level.to_i, self.max_player_count.to_i)
+        players[index].save
+      }
+    #end
   end
 
   # Find which player is currently having a turn
