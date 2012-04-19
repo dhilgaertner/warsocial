@@ -16,7 +16,8 @@ gem 'fastercsv' # Only required on Ruby 1.8 and below
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancan'
 gem 'forem', :git => "git://github.com/radar/forem.git"
-gem 'forem-theme-base', :git => "git://github.com/radar/forem-theme-base.git"
+gem 'forem-theme-twist', :path => "vendor/forem-theme-twist"
+gem 'forem-textile_formatter' # rich-text formatter for forem
 gem 'redis'
 gem 'ohm'
 gem 'delayed_job_admin'
@@ -35,6 +36,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

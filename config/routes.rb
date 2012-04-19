@@ -1,4 +1,6 @@
 Dice::Application.routes.draw do
+  match "mark_it_up/preview" => "mark_it_up#preview"
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   mount Forem::Engine, :at => "/forums"
 

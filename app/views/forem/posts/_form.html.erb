@@ -1,4 +1,21 @@
-<%= f.input :text %>
+<%= f.text_area :text, :id => "textile" %>
+
 <% if params[:reply_to_id] %>
   <%= f.hidden_field :reply_to_id, :value => params[:reply_to_id] %>
+<% end %>
+
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'jquery' %>
+  <%= stylesheet_link_tag "/mark_it_up/skins/markitup/style.css" %>
+  <%= stylesheet_link_tag "/mark_it_up/skins/textile/style.css" %>
+
+  <%= javascript_include_tag  "/mark_it_up/jquery.markitup.js" %>
+  <%= javascript_include_tag  "/mark_it_up/set.js" %>
+
+  <script language="javascript">
+    $(document).ready(function()	{
+      $('#textile').markItUp(mySettings);
+    });
+  </script>
+
 <% end %>
