@@ -96,10 +96,10 @@ Seats.prototype.update_player_data = function(players) {
             }
         };
 
-        $(el).find(".place").html(convert_place_to_string(player.place));
-        $(el).find(".points").html(player.current_points.toString());
-        $(el).find(".delta_points").html(points_string);
-        $(el).find(".lands").html(player.land_count.toString());
+        $(el).find(".place").html("Game: " + convert_place_to_string(player.place));
+        $(el).find(".points").html("Pts: " + player.current_points.toString() + " (" + points_string + ")");
+        $(el).find(".dice").html("Dice: " + player.dice_count.toString() + " (+0)");
+        $(el).find(".lands").html("Lands: " + player.land_count.toString());
     });
 };
 
