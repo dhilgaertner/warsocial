@@ -303,7 +303,6 @@ class GameState < Ohm::Model
   end
 
   # Player flags
-  # @param user [User]
   def flag_player(user)
     if self.state == Game::STARTED_STATE
       player = PlayerState.find(:game_state_id => self.id, :user_id => user.id).first
