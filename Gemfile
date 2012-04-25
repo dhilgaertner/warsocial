@@ -24,7 +24,7 @@ gem 'delayed_job_admin'
 
 group :production do
   # gems specifically for Heroku go here
-  gem "pg"
+  #gem "pg"
 end
 
 # Gems used only for assets and not required

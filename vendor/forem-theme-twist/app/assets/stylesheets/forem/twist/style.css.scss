@@ -16,20 +16,26 @@ $visited-text: black;
   src: url("/fonts/Atrament-5-Medium.otf");
 }
 
+/* Override war social styling so it doesn't affect forem style. That's why there is many !important */
+
 #content {
   position: relative;
   padding: 0px 30px 0 15px;
 }
 
+#main-wrapper {
+  width: 830px !important;
+  height: auto !important;
+}
+
+
+
+/* Override end */
+
 header {
   margin: 0; padding: 0;
   width: 100%;
   background-color : #333;
-}
-
-
-a {
-  color: #0074FF;
 }
 
 .category #2 {
@@ -196,20 +202,48 @@ form {
         font-size: 80%;
       }
 
-      p, ul, pre, blockquote, span.in_reply_to {
+      h1,h2,h3,h4, h5,h6 {
+        clear: both;
+        margin-left: 0;
+        font-family: Arial;
+        color: #000;
+        text-shadow: none;
+
+      }
+
+      a {
+        color: #0074FF;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      p, ul, ol, pre, blockquote, span.in_reply_to {
         clear: both;
         float: left;
         padding: 5px;
       }
+
+      ol { margin-left: 35px; }
 
       p {
         margin: .5em 0em 0em 0em;
       }
 
       blockquote {
-        -webkit-border-radius: 5px;
-        padding: 0;
+        border: 1px dashed #ddd;
+        background: #f5f5f5;
+        padding: 5px;
         width: 83%;
+      }
+
+      code {
+        border: 1px dashed #ddd;
+        background: #f5f5f5;
+        padding: 5px;
+        width: 83%;
+        font-family: Pragmata, Menlo, 'DejaVu LGC Sans Mono', 'DejaVu Sans Mono', Consolas, 'Everson Mono', 'Lucida Console', 'Andale Mono', 'Nimbus Mono L', 'Liberation Mono', FreeMono, 'Osaka Monospaced', Courier, 'New Courier', monospace;
       }
 
       ul {
