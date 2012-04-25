@@ -2,6 +2,8 @@ require 'gamestate/game_state'
 require 'gamestate/map_state'
 require 'gamestate/player_state'
 require 'gamestate/land_state'
+require 'active/active_game'
+require 'active/active_player'
 
 class HomeController < ApplicationController
   
@@ -199,7 +201,15 @@ class HomeController < ApplicationController
 
       render :json => response
     else
-      render :text => "Not authorized", :status => '403'
+      render :text => "Not authorized", :status => 403
     end
+  end
+
+  def testing_stub
+    ag = ActiveGame.new("test_game", Game::WAITING_STATE, 7, 100, "default", "{ null }")
+    ap = ActivePlayer.new(ag.name, 1, Player::DEFAULT_PLAYER_STATE, 1, "dc", 500)
+    ap2 = ActivePlayer.new(ag.name, 2, Player::DEFAULT_PLAYER_STATE, 2, "dc2", 250)
+
+    render :text => "Success", :status => 200
   end
 end

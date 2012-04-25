@@ -1,11 +1,4 @@
 class ActivePlayer
-  attribute :is_turn
-  attribute :username
-  attribute :user_id
-  attribute :state
-  attribute :current_points
-  attribute :current_delta_points
-  attribute :current_place
 
   def initialize(game_id, seat_number, state, user_id, username, current_points, is_turn=false)
     REDIS.multi do
