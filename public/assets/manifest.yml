@@ -15,8 +15,8 @@ forem/pin_icon.png: forem/pin_icon-9c685081fe7382618e997dc1035906d0.png
 buttons/end_turn_button_hover.png: buttons/end_turn_button_hover-54054801c7c60e7f891cee4e3333e3eb.png
 rails_admin/colorpicker/custom_rgb_g.png: rails_admin/colorpicker/custom_rgb_g-3882d7938b858e12625436d1935a2ccc.png
 rails_admin/rails_admin.css: rails_admin/rails_admin-f12dd7518e38f8fe7a5e913ebbcb1071.css
-lobby/create_game_bottom.png: lobby/create_game_bottom-6ab5128e0a2e169473d0c4d0d7eb4575.png
 forem/background.png: forem/background-03a8390468d6adedca16338efcb0143b.png
+lobby/create_game_bottom.png: lobby/create_game_bottom-6ab5128e0a2e169473d0c4d0d7eb4575.png
 WarSocial Alpha_files/end_turn_button.png: WarSocial Alpha_files/end_turn_button-e4d732bdc8e88c9af91d28a9f7cad618.png
 buttons/register_button.png: buttons/register_button-b25072461c986d8272278f07363d4799.png
 gameboard/dice5.png: gameboard/dice5-d0248fe58d360a48d21b848afb5f4533.png
@@ -86,7 +86,7 @@ buttons/end_turn_button.png: buttons/end_turn_button-e4d732bdc8e88c9af91d28a9f7c
 game_header.png: game_header-046975ada87404b8503844d554a09ee7.png
 rails_admin/colorpicker/colorpicker_hsb_b.png: rails_admin/colorpicker/colorpicker_hsb_b-f13cbd5aa34d6699f12795932f2d81a5.png
 rails_admin/multiselect/ui-icon-circle-triangle-n-light.png: rails_admin/multiselect/ui-icon-circle-triangle-n-light-bdc930b22bde855bf0445bd87f959a9c.png
-application.js: application-bf1e889473f52bda5896d49f8bb78abf.js
+application.js: application-408387beba990c575da0ec6133f71657.js
 rails_admin/colorpicker/slider.png: rails_admin/colorpicker/slider-6bc93fedf8bf0156959e814dac47577d.png
 WarSocial Alpha_files/texture.png: WarSocial Alpha_files/texture-e58c5e6b0506e92e6144e97d46010488.png
 buttons/flag_button_hover.png: buttons/flag_button_hover-7d5f8a84017577829a42c10a218957d5.png
@@ -101,7 +101,7 @@ buttons/send_button.png: buttons/send_button-326346da35e55299e918a8bdd089926e.pn
 rails_admin/colorpicker/custom_submit.png: rails_admin/colorpicker/custom_submit-18a08a70a1647819243466710d8bfa91.png
 rails_admin/colorpicker/colorpicker_hsb_h.png: rails_admin/colorpicker/colorpicker_hsb_h-9ea01a4d98629408a54a2dbbca408577.png
 buttons/sit_button.png: buttons/sit_button-5860e3a4aef69ce52e723f588d37618d.png
-application.css: application-e3e695c2a26c42042e493fabe20e09b0.css
+application.css: application-b99b326a20627908108aea720b0932f8.css
 lobby/lobby_online_header.png: lobby/lobby_online_header-286e59447c19b16343d7452402dc5614.png
 rails_admin/aristo/images/bg_fallback.png: rails_admin/aristo/images/bg_fallback-48d06888881d148b8b5b341024ff87ce.png
 rails_admin/colorpicker/colorpicker_rgb_b.png: rails_admin/colorpicker/colorpicker_rgb_b-f13cbd5aa34d6699f12795932f2d81a5.png
