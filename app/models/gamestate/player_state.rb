@@ -20,6 +20,11 @@ class PlayerState < Ohm::Model
   end
 
   def as_json(options={})
+    ls = self.lands
+    dice_count = 0
+
+    ls.each {|land| dice_count = dice_count + land.deployment.to_i }
+
     { :player_id => self.user_id.to_i,
       :seat_id => self.seat_number.to_i,
       :is_turn => self.is_turn == "true" ? true : false,
@@ -27,7 +32,8 @@ class PlayerState < Ohm::Model
       :state => self.state,
       :current_points => self.current_points.to_i,
       :place => self.current_place.to_i,
-      :land_count => self.lands.size,
+      :land_count => ls.size,
+      :dice_count => dice_count,
       :delta_points => self.current_delta_points.to_i }
   end
 end

@@ -13,4 +13,4 @@
 # Ignore all logfiles and tempfiles and workspace settings.
 /log/*.log
 /tmp
-/.idea
+/.idea/workspace.xml
