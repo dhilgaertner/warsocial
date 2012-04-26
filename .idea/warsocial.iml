@@ -66,6 +66,7 @@
     <orderEntry type="library" scope="PROVIDED" name="omniauth-oauth2 (v1.0.0, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="omniauth-twitter (v0.0.7, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="orm_adapter (v0.0.5, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="pg (v0.13.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="polyglot (v0.3.3, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pusher (v0.9.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v1.3.5, ruby-1.8.7-p249) [gem]" level="application" />
