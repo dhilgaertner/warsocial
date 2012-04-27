@@ -5,14 +5,16 @@
 <% end %>
 
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag 'jquery' %>
-  <%= stylesheet_link_tag "/mark_it_up/skins/markitup/style.css" %>
-  <%= stylesheet_link_tag "/mark_it_up/skins/textile/style.css" %>
+    <% if Rails.env.development? %>
+        <%= stylesheet_link_tag "/mark_it_up/skins/markitup/style.css" %>
+        <%= stylesheet_link_tag "/mark_it_up/skins/textile/style.css" %>
 
-  <%= javascript_include_tag  "/mark_it_up/jquery.markitup.js" %>
-  <%= javascript_include_tag  "/mark_it_up/set.js" %>
+        <%= javascript_include_tag  "/mark_it_up/jquery.markitup.js" %>
+        <%= javascript_include_tag  "/mark_it_up/set.js" %>
+    <% end %>
 
-  <script language="javascript">
+
+    <script language="javascript">
     $(document).ready(function()	{
       $('#textile').markItUp(mySettings);
     });
