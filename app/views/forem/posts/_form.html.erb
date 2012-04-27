@@ -5,14 +5,11 @@
 <% end %>
 
 <% content_for :javascript_includes do %>
-    <% if Rails.env.development? %>
-        <%= stylesheet_link_tag "/mark_it_up/skins/markitup/style.css" %>
-        <%= stylesheet_link_tag "/mark_it_up/skins/textile/style.css" %>
+    <link rel="stylesheet" type="text/css" href="/mark_it_up/skins/markitup/style.css">
+    <link rel="stylesheet" type="text/css" href="/mark_it_up/skins/textile/style.css">
 
-        <%= javascript_include_tag  "/mark_it_up/jquery.markitup.js" %>
-        <%= javascript_include_tag  "/mark_it_up/set.js" %>
-    <% end %>
-
+    <script src="/mark_it_up/jquery.markitup.js" type="text/javascript"></script>
+    <script src="/mark_it_up/set.js" type="text/javascript"></script>
 
     <script language="javascript">
     $(document).ready(function()	{
