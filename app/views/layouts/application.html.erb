@@ -6,15 +6,14 @@
   <META NAME="Description" CONTENT="Your descriptive sentence or two goes here.">
   <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
 
-  <%= stylesheet_link_tag "forem/twist/style.css.scss" %>
-
   <% if !Rails.env.development? %>
     <%= javascript_include_tag "application" %>
   <% else %>
     <!-- DEV: The following lines are needed so any "data-method" instruction would work in forem. For instance : the pin / lock / hide / delete method for topic, -->
     <script src="/jquery/jquery-1.7.min.js?v=2" type="text/javascript"></script>
     <script src="/jquery/jquery_ujs.js?v=2" type="text/javascript"></script>
-  <% end %>
+    <%= stylesheet_link_tag "forem/twist/style" %>
+<% end %>
 
   <%= yield :javascript_includes %>
 
