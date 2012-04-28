@@ -1,4 +1,6 @@
 Dice::Application.routes.draw do
+  match "mark_it_up/preview" => "mark_it_up#preview"
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   mount Forem::Engine, :at => "/forums"
 
@@ -7,16 +9,16 @@ Dice::Application.routes.draw do
   devise_scope :user do
     get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
   end
-  
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
-  
+
   match 'game/:game_name/' => 'home#index'
   match 'game/:game_name/fet/:auth' => 'home#force_end_turn'
   match 'game/:game_name/attack' => 'home#attack'
-  
+
   resources :home do
     collection do
       post :add_line, :as => :add_line
@@ -29,9 +31,9 @@ Dice::Application.routes.draw do
       get :get_lobby_games, :as => :get_lobby_games
       get :testing_stub, :as => :testing_stub
   #    get :force_end_turn, :as => :force_end_turn
-    end   
+    end
   end
-  
+
   resources :pusher do
     collection do
       post :auth, :as => :auth

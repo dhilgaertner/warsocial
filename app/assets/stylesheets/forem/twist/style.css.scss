@@ -1,0 +1,379 @@
+$default-text: #444;
+$lighter-text: #888;
+$bar1-midbg: #222;
+$bar1-bottombg: #222;
+$light-bg1: #111;
+$mid-bg1: #ababab;
+$mid-bg1-highlight: #a9a9a9;
+$visited-text: black;
+
+@font-face {
+  font-family: "Atrament-BoldSC";
+  src: url("/fonts/Atrament-7-BoldSC.otf");
+}
+@font-face {
+  font-family: "Atrament-Medium";
+  src: url("/fonts/Atrament-5-Medium.otf");
+}
+
+/* Override war social styling so it doesn't affect forem style. That's why there is many !important */
+
+#content {
+  position: relative;
+  padding: 0px 30px 0 15px;
+}
+
+#main-wrapper {
+  width: 830px !important;
+  height: auto !important;
+}
+
+
+
+/* Override end */
+
+header {
+  margin: 0; padding: 0;
+  width: 100%;
+  background-color : #333;
+}
+
+.category #2 {
+  color: #3B3B3B;
+  font-family: "Atrament-Medium";
+  font-size: 1.7em;
+  line-height: 30px;
+  text-shadow: 0.07em 0.07em #DBDBDB;
+  font-decoration: none;
+}
+
+#forums, .topics {
+  .title {
+    font-size: 175%;
+    font-family: "Atrament-Medium";
+  }
+
+  thead tr th {
+    color: #FFF;
+    font-variant:small-caps;
+    font-family: "Atrament-BoldSC";
+    text-shadow: 0.07em 0.07em #777;
+    font-size: 100%;
+    background-image: linear-gradient(bottom, rgb(158,158,158) 36%, rgb(214,214,214) 100%, rgb(255,255,255) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(158,158,158) 36%, rgb(214,214,214) 100%, rgb(255,255,255) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(158,158,158) 36%, rgb(214,214,214) 100%, rgb(255,255,255) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(158,158,158) 36%, rgb(214,214,214) 100%, rgb(255,255,255) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(158,158,158) 36%, rgb(214,214,214) 100%, rgb(255,255,255) 100%);
+
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0.36, rgb(158,158,158)),
+      color-stop(1, rgb(214,214,214)),
+      color-stop(1, rgb(255,255,255))
+    );
+  }
+
+  tbody td {
+    background: white;
+  }
+}
+
+#forum, #topic {
+  position: relative;
+  .secondary-nav{
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .description{
+    color: $lighter-text;
+    font-style: oblique;
+  }
+  menu{
+    padding-left: 0;
+    a{
+      background: #333;
+      padding: .35em;
+      display: inline-block;
+      -webkit-border-radius: 5px;
+      color: $default-text;
+      text-decoration: none;
+      font-size: 90%;
+      border: 1px solid #222;
+      color: #FFF;
+      &:hover{
+        background-color: #EEE;
+        color: #333;
+      }
+      margin: 0;
+    }
+  }
+}
+
+#topic, #forum {
+  h2{
+    color: #3B3B3B;
+    font-family: "Atrament-Medium";
+    font-size: 1.7em;
+    line-height: 30px;
+    text-shadow: 0.07em 0.07em #DBDBDB;
+    a{
+      text-decoration: none;
+      color: #232323;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+    a.reply{
+      margin-right: 1em;
+      font-weight: normal;
+      position: absolute;
+      right: 0;
+      padding: .5em;
+      background-color: #fff;
+      font-size: .5em;
+      text-decoration: none;
+      &:hover{
+        background-color: $light-bg1;
+      }
+    }
+  }
+}
+
+form {
+  label {
+    display: block;
+    font-size: 80%;
+    padding: 5px;
+    abbr {
+      display: none;
+    }
+  }
+  input, textarea {
+    padding: .5em;
+    font-size: 110%;
+  }
+}
+
+#posts{
+
+  .odd .contents {
+    background-color: #ffffff;
+  }
+  .even .contents{
+    background-color: #efefef;
+  }
+  .post{
+    position: relative;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    min-width: 35em;
+    min-height: 75px;
+    clear: both;
+    .user{
+      float: left;
+      width: 14.7%;
+      font-size: .8em;
+      min-width: 75px;
+      min-height: 100px;
+      padding: .5em 1em;
+      background: #232323;
+      color: white;
+      .username{
+        font-size: 1.7em;
+        font-family: Atrament-BoldSC;
+        padding-bottom: .3em;
+      }
+      .icon{
+        -moz-border-radius: 5px 5px;
+        border-radius: 5px 5px;
+        -moz-border-radius: 5px 5px;
+        border-radius: 5px 5px;
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+      }
+    }
+    .contents{
+      min-height: 100px;
+      width: 75%;
+      border-left: 1px solid $mid-bg1;
+      padding: 1em 1em;
+      float: right;
+
+      span.in_reply_to {
+        font-size: 80%;
+      }
+
+      h1,h2,h3,h4, h5,h6 {
+        clear: both;
+        margin-left: 0;
+        font-family: Arial;
+        color: #000;
+        text-shadow: none;
+
+      }
+
+      a {
+        color: #0074FF;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      p, ul, ol, pre, blockquote, span.in_reply_to {
+        clear: both;
+        float: left;
+        padding: 5px;
+      }
+
+      ol { margin-left: 35px; }
+
+      p {
+        margin: .5em 0em 0em 0em;
+      }
+
+      blockquote {
+        border: 1px dashed #ddd;
+        background: #f5f5f5;
+        padding: 5px;
+        width: 83%;
+      }
+
+      code {
+        border: 1px dashed #ddd;
+        background: #f5f5f5;
+        padding: 5px;
+        width: 83%;
+        font-family: Pragmata, Menlo, 'DejaVu LGC Sans Mono', 'DejaVu Sans Mono', Consolas, 'Everson Mono', 'Lucida Console', 'Andale Mono', 'Nimbus Mono L', 'Liberation Mono', FreeMono, 'Osaka Monospaced', Courier, 'New Courier', monospace;
+      }
+
+      ul {
+        margin-left: 2em;
+        p {
+          padding: 0;
+          margin: 0;
+          float: none;
+        }
+      }
+
+      pre {
+        width: 90%;
+        background: #dfdfdf;
+      }
+
+      time{
+        float: left;
+        clear: both;
+        padding: 5px;
+        color: $lighter-text;
+        font-size: .7em;
+        display: inline-block;
+      }
+      &:hover .actions{
+      }
+      .actions{
+        position: absolute;
+        top: -10px;
+        right: 0px;
+        float: right;
+        -webkit-border-radius: 5px;
+        list-style-type: none;
+        li{
+          a{
+            padding: .5em;
+            margin-bottom: .1em;
+            font-size: .7em;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            color: $default-text;
+            background-color: #ddd;
+            &:hover{
+              background-color: #ccc;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+table.subdued{
+  width: 100%;
+  a{
+    text-decoration: none;
+    &:visited{
+      color: $visited-text;
+    }
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  td, th{
+    padding: .5em;
+  }
+  thead{
+    th{
+      background-color: $bar1-midbg;
+      font-weight: normal;
+      text-align: left;
+    }
+  }
+  tbody{
+    color: $lighter-text;
+    .subject{
+    }
+    .started-by{
+      font-size: .7em;
+      color: $lighter-text;
+    }
+    .latest-post{
+      font-size: .7em;
+      width: 80px;
+      a{
+        text-decoration: none;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+    }
+    .posts-count, .views-count{
+      font-size: .8em;
+      width: 80px;
+    }
+  }
+}
+
+.pages{
+  .page{
+    display: inline-block;
+    padding: .25em;
+    &.current{
+      background-color: $light-bg1;
+    }
+  }
+  a{
+    text-decoration: none;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
+
+.lock.icon{
+  width: 24px;
+  height: 24px;
+  background: transparent url(/assets/forem/lock_icon.png) 0 0;
+  display: inline-block;
+}
+
+.pin.icon{
+  width: 9px;
+  height: 15px;
+  background: transparent url(/assets/forem/pin_icon.png) 0 0;
+  display: inline-block;
+}

@@ -15,6 +15,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="RedCloth (v4.2.9, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionmailer (v3.1.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionpack (v3.1.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activemodel (v3.1.2, ruby-1.8.7-p249) [gem]" level="application" />
@@ -41,7 +42,8 @@
     <orderEntry type="library" scope="PROVIDED" name="faraday (v0.7.5, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="fastercsv (v1.5.4, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="forem (v629406, ruby-1.8.7-p249) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="forem-theme-base (v4de607, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="forem-textile_formatter (v0.1.0, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="forem-theme-twist (v[path], /Users/dhilgaertner/Documents/warsocial/vendor/forem-theme-twist) [path][gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="haml (v3.1.4, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hashie (v1.2.0, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hike (v1.2.1, ruby-1.8.7-p249) [gem]" level="application" />
@@ -64,7 +66,7 @@
     <orderEntry type="library" scope="PROVIDED" name="omniauth-oauth2 (v1.0.0, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="omniauth-twitter (v0.0.7, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="orm_adapter (v0.0.5, ruby-1.8.7-p249) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="pg (v0.11.0, ruby-1.8.7-p249) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="pg (v0.13.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="polyglot (v0.3.3, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pusher (v0.9.2, ruby-1.8.7-p249) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v1.3.5, ruby-1.8.7-p249) [gem]" level="application" />
