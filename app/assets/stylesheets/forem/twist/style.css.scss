@@ -182,10 +182,15 @@ form {
       background: #232323;
       color: white;
       .username{
-        padding-bottom: .7em;
+        font-size: 1.7em;
+        font-family: Atrament-BoldSC;
+        padding-bottom: .3em;
       }
       .icon{
-        background: transparent url(http://placekitten.com/50/50) no-repeat;
+        -moz-border-radius: 5px 5px;
+        border-radius: 5px 5px;
+        -moz-border-radius: 5px 5px;
+        border-radius: 5px 5px;
         width: 50px;
         height: 50px;
         display: inline-block;
