@@ -2,8 +2,7 @@ class ActiveGame
 
   def initialize(name, state, max_player_count, wager_level, map_name, map_json)
     REDIS.multi do
-      @name = name
-
+      self.name = name
       self.state = state
       self.max_player_count = max_player_count
       self.wager_level = wager_level
@@ -17,8 +16,20 @@ class ActiveGame
     "game:#{self.name}"
   end
 
+  def players
+    if @players == nil
+      @players = Hash.new
+    end
+    @players
+  end
+
   def name
     @name
+  end
+
+  def name=(name)
+    REDIS.hset(self.id, "name", name)
+    @name = name
   end
 
   def state
@@ -113,6 +124,25 @@ class ActiveGame
   def self.load_active_game(name)
     # TODO: LOAD ACTIVEGAME BY NAME FROM REDIS; NIL IF NONE
 
+  end
+
+  def add_player(user_id, username, points)
+    if (self.players.size < self.max_player_count)
+      if (!self.players.has_key?(user_id))
+        player = ActivePlayer.new(:game_id => self.name,
+                                  :seat_number => self.players.size + 1,
+                                  :state => Player::DEFAULT_PLAYER_STATE,
+                                  :user_id => user_id,
+                                  :username => username,
+                                  :current_points => points)
+
+        self.players[user_id] = player
+
+        return player
+      end
+    end
+
+    return false
   end
 
   private

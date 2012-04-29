@@ -3,10 +3,10 @@ class ActivePlayer
   def initialize(game_id, seat_number, state, user_id, username, current_points, is_turn=false)
     REDIS.multi do
       @game_id = game_id
+      @user_id = user_id
 
       self.seat_number = seat_number
       self.state = state
-      self.user_id = user_id
       self.username = username
       self.current_points = current_points
       self.is_turn = is_turn
@@ -19,7 +19,7 @@ class ActivePlayer
 
     #ls.each {|land| dice_count = dice_count + land.deployment.to_i }
 
-    { :player_id => self.user_id,
+    { :player_id => @user_id,
       :seat_id => self.seat_number,
       :is_turn => self.is_turn,
       :name => self.username,
@@ -33,11 +33,15 @@ class ActivePlayer
 
   # helper method to generate redis id
   def id
-    "#{self.game_id}:player:#{self.user_id}"
+    "#{self.game_id}:player:#{@user_id}"
   end
 
   def game_id
     @game_id
+  end
+
+  def user_id
+    @user_id
   end
 
   def seat_number
@@ -56,15 +60,6 @@ class ActivePlayer
   def state=(state)
     REDIS.hset(self.id, "state", state)
     @state = state
-  end
-
-  def user_id
-    @user_id
-  end
-
-  def user_id=(user_id)
-    REDIS.hset(self.id, "user_id", user_id)
-    @user_id = user_id
   end
 
   def username

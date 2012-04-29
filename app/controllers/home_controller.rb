@@ -207,8 +207,8 @@ class HomeController < ApplicationController
 
   def testing_stub
     ag = ActiveGame.new("test_game", Game::WAITING_STATE, 7, 100, "default", "{ null }")
-    ap = ActivePlayer.new(ag.name, 1, Player::DEFAULT_PLAYER_STATE, 1, "dc", 500)
-    ap2 = ActivePlayer.new(ag.name, 2, Player::DEFAULT_PLAYER_STATE, 2, "dc2", 250)
+    ag.add_player(ag.name, 1, Player::DEFAULT_PLAYER_STATE, 1, "dc", 500)
+    ag.add_player(ag.name, 2, Player::DEFAULT_PLAYER_STATE, 2, "dc2", 250)
 
     render :text => "Success", :status => 200
   end
