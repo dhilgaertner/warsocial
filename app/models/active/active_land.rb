@@ -1,11 +1,19 @@
 class ActiveLand
   def initialize(game_id, map_land_id, deployment)
-    REDIS.multi do
-      @game_id = game_id
-      @map_land_id = map_land_id
+    @game_id = game_id
+    @map_land_id = map_land_id
+    @deployment = deployment
+  end
 
-      self.deployment = deployment
+  def self.create(game_id, map_land_id, deployment)
+    new_land = ActiveLand.new(game_id, map_land_id, deployment)
+
+    REDIS.multi do
+      new_land.map_land_id = map_land_id
+      new_land.deployment = deployment
     end
+
+    return new_land
   end
 
   def as_json(options={})
@@ -17,7 +25,7 @@ class ActiveLand
 
   # helper method to generate redis id
   def id
-    "#{self.game_id}:land:#{self.map_land_id}"
+    "game:#{self.game_id}:land:#{self.map_land_id}"
   end
 
   def game_id
@@ -26,6 +34,11 @@ class ActiveLand
 
   def map_land_id
     @map_land_id
+  end
+
+  def map_land_id=(map_land_id)
+    @map_land_id = map_land_id
+    REDIS.hset(self.id, "map_land_id", map_land_id)
   end
 
   def deployment

@@ -206,10 +206,14 @@ class HomeController < ApplicationController
   end
 
   def testing_stub
-    ag = ActiveGame.new("test_game", Game::WAITING_STATE, 7, 100, "default", "{ null }")
-    ag.add_player(ag.name, 1, Player::DEFAULT_PLAYER_STATE, 1, "dc", 500)
-    ag.add_player(ag.name, 2, Player::DEFAULT_PLAYER_STATE, 2, "dc2", 250)
+    ag = ActiveGame.create("test_game", Game::WAITING_STATE, 7, 100, "default", "{ null }")
+    ag.add_player(1, "dc", 500)
+    ag.add_player(2, "dc2", 300)
+    ag.add_player(3, "dc3", 400)
+    ag.add_player(4, "dc4", 200)
 
-    render :text => "Success", :status => 200
+    ag_load = ActiveGame.get_active_game("test_game")
+
+    render :text => "#{ag_load.players[1].username}", :status => 200
   end
 end

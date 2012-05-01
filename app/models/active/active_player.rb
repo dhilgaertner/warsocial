@@ -1,15 +1,33 @@
 class ActivePlayer
 
   def initialize(game_id, seat_number, state, user_id, username, current_points, is_turn=false)
-    REDIS.multi do
-      @game_id = game_id
-      @user_id = user_id
+    @game_id = game_id
+    @user_id = user_id.to_i
+    @seat_number = seat_number.to_i
+    @state = state
+    @username = username
+    @current_points = current_points.to_i
+    @is_turn = is_turn
+  end
 
-      self.seat_number = seat_number
-      self.state = state
-      self.username = username
-      self.current_points = current_points
-      self.is_turn = is_turn
+  def self.create(game_id, seat_number, state, user_id, username, current_points, is_turn=false)
+    new_player = ActivePlayer.new(game_id, seat_number, state, user_id, username, current_points, is_turn)
+
+    REDIS.multi do
+      new_player.user_id = user_id.to_i
+      new_player.seat_number = seat_number.to_i
+      new_player.state = state
+      new_player.username = username
+      new_player.current_points = current_points.to_i
+      new_player.is_turn = is_turn
+    end
+
+    return new_player
+  end
+
+  def delete
+    REDIS.multi do
+      REDIS.hdel(self.id, [:user_id, :seat_number, :state, :username, :current_points, :is_turn])
     end
   end
 
@@ -33,7 +51,7 @@ class ActivePlayer
 
   # helper method to generate redis id
   def id
-    "#{self.game_id}:player:#{@user_id}"
+    "game:#{self.game_id}:player:#{@user_id}"
   end
 
   def game_id
@@ -42,6 +60,11 @@ class ActivePlayer
 
   def user_id
     @user_id
+  end
+
+  def user_id=(user_id)
+    @user_id = user_id
+    REDIS.hset(self.id, "user_id", user_id)
   end
 
   def seat_number
