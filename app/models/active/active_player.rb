@@ -7,7 +7,7 @@ class ActivePlayer
     @state = state
     @username = username
     @current_points = current_points.to_i
-    @is_turn = is_turn
+    @is_turn = is_turn.to_s == "true"
   end
 
   def self.create(game_id, seat_number, state, user_id, username, current_points, is_turn=false)
@@ -19,7 +19,7 @@ class ActivePlayer
       new_player.state = state
       new_player.username = username
       new_player.current_points = current_points.to_i
-      new_player.is_turn = is_turn
+      new_player.is_turn = is_turn.to_s == "true"
     end
 
     return new_player
