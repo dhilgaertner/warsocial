@@ -27,7 +27,12 @@ class ActivePlayer
 
   def delete
     REDIS.multi do
-      REDIS.hdel(self.id, [:user_id, :seat_number, :state, :username, :current_points, :is_turn])
+      REDIS.hdel(self.id, "user_id")
+      REDIS.hdel(self.id, "seat_number")
+      REDIS.hdel(self.id, "state")
+      REDIS.hdel(self.id,"username")
+      REDIS.hdel(self.id, "current_points")
+      REDIS.hdel(self.id, "is_turn")
     end
   end
 
