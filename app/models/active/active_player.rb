@@ -10,19 +10,15 @@ class ActivePlayer
     @is_turn = is_turn.to_s == "true"
   end
 
-  def self.create(game_id, seat_number, state, user_id, username, current_points, is_turn=false)
-    new_player = ActivePlayer.new(game_id, seat_number, state, user_id, username, current_points, is_turn)
-
+  def save
     REDIS.multi do
-      new_player.user_id = user_id.to_i
-      new_player.seat_number = seat_number.to_i
-      new_player.state = state
-      new_player.username = username
-      new_player.current_points = current_points.to_i
-      new_player.is_turn = is_turn.to_s == "true"
+      self.user_id = self.user_id.to_i
+      self.seat_number = self.seat_number.to_i
+      self.state = self.state
+      self.username = self.username
+      self.current_points = self.current_points.to_i
+      self.is_turn = self.is_turn.to_s == "true"
     end
-
-    return new_player
   end
 
   def delete
@@ -65,6 +61,13 @@ class ActivePlayer
 
   def user_id
     @user_id
+  end
+
+  def lands
+    if @lands == nil
+      @lands = Hash.new
+    end
+    @lands
   end
 
   def user_id=(user_id)

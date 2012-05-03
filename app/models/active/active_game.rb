@@ -9,19 +9,15 @@ class ActiveGame
     @map_json = map_json
   end
 
-  def self.create(name, state, max_player_count, wager_level, map_name, map_json, connections=nil)
-    new_game = ActiveGame.new(name, state, max_player_count, wager_level, map_name, map_json)
-
+  def save
     REDIS.multi do
-      new_game.name = name
-      new_game.state = state
-      new_game.max_player_count = max_player_count.to_i
-      new_game.wager_level = wager_level.to_i
-      new_game.map_name = map_name
-      new_game.map_json = map_json
+      self.name = self.name
+      self.state = self.state
+      self.max_player_count = self.max_player_count.to_i
+      self.wager_level = self.wager_level.to_i
+      self.map_name = self.map_name
+      self.map_json = self.map_json
     end
-
-    return new_game
   end
 
   # helper method to generate redis id
@@ -138,7 +134,8 @@ class ActiveGame
 
       map = Map.where("name = ?", map_name).first
 
-      game = ActiveGame.create(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
+      game = ActiveGame.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
+      game.save
     end
 
     return game
@@ -219,12 +216,13 @@ class ActiveGame
     if self.state == Game::WAITING_STATE
       seat = self.players.size + 1
 
-      new_player = ActivePlayer.create(self.name,
+      new_player = ActivePlayer.new(self.name,
                                        seat,
                                        Player::DEFAULT_PLAYER_STATE,
                                        user.id,
                                        user.username,
                                        user.current_points)
+      new_player.save   #TODO: would be nice to REDIS.multi this with start_game changes
 
       self.players[user.id] = new_player
 
@@ -279,17 +277,20 @@ class ActiveGame
     random_picks = random_picks.shuffle
     land_ids = land_ids.shuffle
 
-    land_ids.each do |id|
-      player = random_picks.pop
+    REDIS.multi do
+      land_ids.each do |id|
+        player = random_picks.pop
 
-      land = ActiveLand.create(:game_id => self.id,
-                               :map_land_id => id,
-                               :deployment => 1,
-                               :player_id => player.user_id)
+        land = ActiveLand.new(:game_id => self.id,
+                              :map_land_id => id,
+                              :deployment => 1,
+                              :player_id => player.user_id)
 
-      self.lands[id] = land
-      #TODO: player.lands and land.player
-      #player.lands[id] = land
+        land.save #TODO: Property changes shouldn't save
+
+        self.lands[id] = land
+        player.lands[id] = land
+      end
     end
 
     #Randomly distribute the armies amongst the player's lands
@@ -304,29 +305,26 @@ class ActiveGame
       end
 
       results.each_with_index do |result, index|
-        land_id = player.lands.to_a[index].id
+        land_id = player.lands.values[index].id
         land = LandState[land_id]
 
-        total = land.deployment.to_i + result
+        total = land.deployment + result
         land.deployment = total
-        land.save
       end
     end
 
     self.state = Game::STARTED_STATE # We don't save this because 'restart_turn_timer' will save for us'
     restart_turn_timer  # self.save happens here
 
-    player = self.players.to_a.sample
-    next_player = PlayerState[player.id]
+    next_player = self.players.values.sample
     next_player.is_turn = true
-    next_player.save
 
     update_delta_points
 
     data = { :who_am_i => 0,
-             :map_layout => ActiveSupport::JSON.decode(self.map.json),
-             :players => self.players,
-             :deployment => self.lands }
+             :map_layout => ActiveSupport::JSON.decode(self.map_json),
+             :players => self.players.values,
+             :deployment => self.lands.values }
 
     broadcast(self.name, GameMsgType::START, data)
 

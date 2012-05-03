@@ -6,16 +6,12 @@ class ActiveLand
     @player_id = player_id == nil ? nil : player_id.to_i
   end
 
-  def self.create(game_id, map_land_id, deployment, player_id=nil)
-    new_land = ActiveLand.new(game_id, map_land_id, deployment, player_id)
-
+  def save
     REDIS.multi do
-      new_land.map_land_id = map_land_id
-      new_land.deployment = deployment
-      new_land.player_id = player_id == nil ? nil : player_id.to_i
+      self.map_land_id = self.map_land_id
+      self.deployment = self.deployment
+      self.player_id = self.player_id == nil ? nil : player_id.to_i
     end
-
-    return new_land
   end
 
   def as_json(options={})
