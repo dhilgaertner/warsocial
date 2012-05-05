@@ -1,5 +1,7 @@
 class ActiveGame
 
+  attr_accessor name, state, turn_timer_id, max_player_count, wager_level, map_name, map_json, connections
+
   def initialize(name, state, max_player_count, wager_level, map_name, map_json, connections=nil)
     @name = name
     @state = state
@@ -11,12 +13,14 @@ class ActiveGame
 
   def save
     REDIS.multi do
-      self.name = self.name
-      self.state = self.state
-      self.max_player_count = self.max_player_count.to_i
-      self.wager_level = self.wager_level.to_i
-      self.map_name = self.map_name
-      self.map_json = self.map_json
+      REDIS.hset(self.id, "name", self.name)
+      REDIS.hset(self.id, "state", self.state)
+      REDIS.hset(self.id, "turn_timer_id", self.turn_timer_id)
+      REDIS.hset(self.id, "max_player_count", self.max_player_count)
+      REDIS.hset(self.id, "wager_level", self.wager_level)
+      REDIS.hset(self.id, "map_name", self.map_name)
+      REDIS.hset(self.id, "map_json", self.map_json)
+      REDIS.hset(self.id, "connections", self.connections)
     end
   end
 
@@ -37,78 +41,6 @@ class ActiveGame
       @lands = Hash.new
     end
     @lands
-  end
-
-  def name
-    @name
-  end
-
-  def name=(name)
-    @name = name
-    REDIS.hset(self.id, "name", name)
-  end
-
-  def state
-    @state
-  end
-
-  def state=(state)
-    REDIS.hset(self.id, "state", state)
-    @state = state
-  end
-
-  def turn_timer_id
-    @turn_timer_id
-  end
-
-  def turn_timer_id=(turn_timer_id)
-    REDIS.hset(self.id, "turn_timer_id", turn_timer_id)
-    @turn_timer_id = turn_timer_id
-  end
-
-  def max_player_count
-    @max_player_count
-  end
-
-  def max_player_count=(max_player_count)
-    REDIS.hset(self.id, "max_player_count", max_player_count)
-    @max_player_count = max_player_count
-  end
-
-  def wager_level
-    @wager_level
-  end
-
-  def wager_level=(wager_level)
-    REDIS.hset(self.id, "wager_level", wager_level)
-    @wager_level = wager_level
-  end
-
-  def map_name
-    @map_name
-  end
-
-  def map_name=(map_name)
-    REDIS.hset(self.id, "map_name", map_name)
-    @map_name = map_name
-  end
-
-  def map_json
-    @map_json
-  end
-
-  def map_json=(map_json)
-    REDIS.hset(self.id, "map_json", map_json)
-    @map_json = map_json
-  end
-
-  def connections
-    @connections
-  end
-
-  def connections=(connections)
-    REDIS.hset(self.id, "connections", connections)
-    @connections = connections
   end
 
   def as_json(options={})
@@ -189,8 +121,9 @@ class ActiveGame
     land_data.each do |ld|
       lh = ActiveGame.array_to_hash(ld)
       land = ActiveLand.new(name,
-                            ph["map_land_id"],
-                            ph["deployment"])
+                            lh["map_land_id"],
+                            lh["deployment"],
+                            lh["player_id"])
       game.lands[land.map_land_id] = land
     end
 
@@ -211,6 +144,39 @@ class ActiveGame
     end
   end
 
+  def create_game
+    if (current_user != nil)
+      map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
+      number_of_players = [2,3,4,5,6,7].include?(params[:select_players].to_i) ? params[:select_players].to_i : 2
+      wager = params[:select_wager].to_i >= 0 ? params[:select_wager].to_i : 0
+      game_name = nil
+
+      try_name = current_user.username
+      try = 1
+
+      while game_name == nil
+        gr = GameRule.find_by_game_name(try_name)
+
+        if (gr == nil)
+          game_name = try_name
+          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players, :wager_level => wager)
+        else
+          try = try + 1
+          try_name = current_user.username + try.to_s
+        end
+      end
+
+      render :text=>game_name, :status=>200
+    else
+      render :text=>"Forbidden", :status=>403
+    end
+  end
+
+  # Find games to be shown in the lobby
+  def self.get_lobby_games
+    #GameState.all.except(:state => Game::FINISHED_STATE).as_json
+  end
+
   # Sit player at game table.
   def add_player(user)
     if self.state == Game::WAITING_STATE
@@ -222,7 +188,6 @@ class ActiveGame
                                        user.id,
                                        user.username,
                                        user.current_points)
-      new_player.save   #TODO: would be nice to REDIS.multi this with start_game changes
 
       self.players[user.id] = new_player
 
@@ -233,6 +198,8 @@ class ActiveGame
 
       if self.players.size == self.max_player_count
         start_game
+      else
+        new_player.save # Only need to save here because "start_game" saves all the players and lands
       end
 
       return new_player
@@ -277,20 +244,16 @@ class ActiveGame
     random_picks = random_picks.shuffle
     land_ids = land_ids.shuffle
 
-    REDIS.multi do
-      land_ids.each do |id|
-        player = random_picks.pop
+    land_ids.each do |id|
+      player = random_picks.pop
 
-        land = ActiveLand.new(:game_id => self.id,
-                              :map_land_id => id,
-                              :deployment => 1,
-                              :player_id => player.user_id)
+      land = ActiveLand.new(:game_id => self.id,
+                            :map_land_id => id,
+                            :deployment => 1,
+                            :player_id => player.user_id)
 
-        land.save #TODO: Property changes shouldn't save
-
-        self.lands[id] = land
-        player.lands[id] = land
-      end
+      self.lands[id] = land
+      player.lands[id] = land
     end
 
     #Randomly distribute the armies amongst the player's lands
@@ -306,7 +269,7 @@ class ActiveGame
 
       results.each_with_index do |result, index|
         land_id = player.lands.values[index].id
-        land = LandState[land_id]
+        land = self.lands[land_id]
 
         total = land.deployment + result
         land.deployment = total
@@ -328,6 +291,50 @@ class ActiveGame
 
     broadcast(self.name, GameMsgType::START, data)
 
+    REDIS.multi do
+      self.players.each do |player|
+        player.save
+      end
+      self.lands.each do |land|
+        land.save
+      end
+    end
+  end
+
+  # Player flags
+  def flag_player(user)
+    if self.state == Game::STARTED_STATE
+      player = self.players[user.id]
+
+      if (player != nil)
+
+        if (player.is_turn)
+          end_turn
+        end
+
+        player.state = Player::DEAD_PLAYER_STATE
+
+        broadcast(self.name, GameMsgType::QUIT, player)
+
+        players_left = self.players. #TODO: find players that are left
+
+        cash_player_out(players_left.size + 1, player)
+
+        check_for_winner
+
+        REDIS.multi do
+          player.save
+          player.lands.each do |land|
+            land.player_id = nil
+            land.save
+          end
+        end
+      end
+
+      return player
+    else
+      return nil
+    end
   end
 
   private
@@ -427,6 +434,7 @@ class ActiveGame
       end
 
       self.connections = ActiveSupport::JSON.encode(lands)
+      self.save
     end
 
     lands_decoded = ActiveSupport::JSON.decode(self.connections)
