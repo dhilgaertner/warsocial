@@ -1,14 +1,14 @@
 class ActiveGame
 
-  attr_accessor name, state, turn_timer_id, max_player_count, wager_level, map_name, map_json, connections
+  attr_accessor :name, :state, :turn_timer_id, :max_player_count, :wager_level, :map_name, :map_json, :connections
 
   def initialize(name, state, max_player_count, wager_level, map_name, map_json, connections=nil)
-    @name = name
-    @state = state
-    @max_player_count = max_player_count.to_i
-    @wager_level = wager_level.to_i
-    @map_name = map_name
-    @map_json = map_json
+    self.name = name
+    self.state = state
+    self.max_player_count = max_player_count.to_i
+    self.wager_level = wager_level.to_i
+    self.map_name = map_name
+    self.map_json = map_json
   end
 
   def save
@@ -46,7 +46,7 @@ class ActiveGame
   def as_json(options={})
     { :name => self.name,
       :state => self.state,
-      :players => [], # self.players.as_json,
+      :players => self.players.as_json,
       :max_players => self.max_player_count,
       :map => self.map_name
     }
@@ -229,7 +229,7 @@ class ActiveGame
   private
   def start_game
 
-    lands = self.get_lands
+    lands = get_lands
     land_ids = lands.keys
     lands_each = (lands.length / self.players.values.size).to_i
     random_picks = Array.new
@@ -247,13 +247,13 @@ class ActiveGame
     land_ids.each do |id|
       player = random_picks.pop
 
-      land = ActiveLand.new(:game_id => self.id,
-                            :map_land_id => id,
-                            :deployment => 1,
-                            :player_id => player.user_id)
+      land = ActiveLand.new(self.name, id.to_i, 1, player != nil ? player.user_id : nil)
 
-      self.lands[id] = land
-      player.lands[id] = land
+      self.lands[id.to_i] = land
+
+      if player != nil
+        player.lands[id.to_i] = land
+      end
     end
 
     #Randomly distribute the armies amongst the player's lands
@@ -268,7 +268,7 @@ class ActiveGame
       end
 
       results.each_with_index do |result, index|
-        land_id = player.lands.values[index].id
+        land_id = player.lands.values[index].map_land_id
         land = self.lands[land_id]
 
         total = land.deployment + result
@@ -291,14 +291,7 @@ class ActiveGame
 
     broadcast(self.name, GameMsgType::START, data)
 
-    REDIS.multi do
-      self.players.each do |player|
-        player.save
-      end
-      self.lands.each do |land|
-        land.save
-      end
-    end
+    save_all
   end
 
   # Player flags
@@ -316,24 +309,169 @@ class ActiveGame
 
         broadcast(self.name, GameMsgType::QUIT, player)
 
-        players_left = self.players. #TODO: find players that are left
+        players_left = self.players.values.select {|player| player.state != Player::DEAD_PLAYER_STATE }
 
         cash_player_out(players_left.size + 1, player)
 
         check_for_winner
 
-        REDIS.multi do
-          player.save
-          player.lands.each do |land|
-            land.player_id = nil
-            land.save
-          end
-        end
+        save_all
       end
 
       return player
     else
       return nil
+    end
+  end
+
+  # Check whether or not the game is over
+  private
+  def check_for_winner
+    players_left = self.players.values.select {|player| player.state != Player::DEAD_PLAYER_STATE }
+
+    if (players_left.size == 1)
+      winner = players_left.first
+
+      self.state = Game::FINISHED_STATE
+
+      kill_turn_timer
+
+      broadcast(self.name, GameMsgType::WINNER, winner.as_json)
+
+      cash_player_out(1, winner)
+
+      return winner
+    end
+  end
+
+  # Check whether or not the land is owned by the player
+  private
+  def how_many_reenforcements(player)
+    connects = get_lands
+
+    own_land_ids = Array.new
+
+    player.lands.each { |land| own_land_ids.push(land.map_land_id) }
+
+    not_connected = own_land_ids.select { |id| (connects[id.to_s] & own_land_ids).size == 0 }
+
+    connected = own_land_ids - not_connected
+
+    islands = Array.new
+
+    connected.each { |id|
+      segment = [ id ].concat(connects[id.to_s].uniq & connected)
+
+      con_islands = islands.select { |island| (segment & island).size > 0 }
+
+      if (con_islands.size == 0)
+        islands.push(segment.uniq)
+      else
+        con_islands.each { |ci|
+          index = islands.index(ci)
+          islands[index] = ci.concat(segment).uniq
+        }
+      end
+    }
+
+    final_islands = Array.new
+
+    islands.each { |island|
+      con_islands = final_islands.select { |fi| (island & fi).size > 0 }
+
+      if (con_islands.size == 0)
+        final_islands.push(island.uniq)
+      else
+        con_islands.each { |ci|
+          index = final_islands.index(ci)
+          final_islands[index] = ci.concat(island).uniq
+        }
+      end
+    }
+
+    result = 0
+
+    final_islands.each { |island|
+      if (result < island.size)
+        result = island.size
+      end
+    }
+
+    result == 0 ? 1 : result
+  end
+
+  # Re-enforce player's lands randomly
+  private
+  def reenforce(player, num_armies)
+    lands = player.lands
+
+    changed = Array.new
+    num_armies.times do |x|
+      candidates = lands.select{|x| x.deployment.to_i < 8}
+
+      if (!candidates.empty?)
+        land = rand_with_range(candidates)
+        land.deployment = land.deployment + 1
+
+        changed.push(land)
+      end
+    end
+
+    changed.reverse!  #reverse so that the latest deployments are kept in case of duplicates
+
+    broadcast(self.name, GameMsgType::DEPLOY, changed.uniq)
+  end
+
+  # Find which player is currently having a turn
+  private
+  def current_player
+    cp = self.players.values.select {|player| player.is_turn == true }
+    return cp.first
+  end
+
+  # Find which player is next in line turn-wise
+  private
+  def next_player
+    non_dead_players = self.players.values.select {|player| player.state != Player::DEAD_PLAYER_STATE }
+    sorted_players = non_dead_players.sort { |a,b| a.seat_number <=> b.seat_number }
+
+    i = sorted_players.index(current_player)
+
+    index = 0
+    if (i != (sorted_players.size - 1))
+      index = i+1
+    end
+
+    return sorted_players[index]
+  end
+
+  private
+  def update_delta_points
+    players = self.players.values
+    players.sort! { |a,b| b.lands.size <=> a.lands.size }
+
+    players.each_index { |index|
+      players[index].current_place = index + 1
+      players[index].current_delta_points = GameRule.calc_delta_points(index + 1, self.wager_level, self.max_player_count)
+    }
+  end
+
+  private
+  def restart_turn_timer
+    kill_turn_timer
+
+    new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 20.seconds.from_now)
+    self.turn_timer_id = new_job.id
+  end
+
+  private
+  def kill_turn_timer
+    if (self.turn_timer_id != nil)
+      old_job = Delayed::Job.find(self.turn_timer_id)
+      if old_job != nil
+        old_job.destroy
+        self.turn_timer_id = nil
+      end
     end
   end
 
@@ -457,5 +595,18 @@ class ActiveGame
     end
 
     return hash
+  end
+
+  private
+  def save_all
+    REDIS.multi do
+      self.save
+      self.players.each do |player|
+        player.save
+      end
+      self.lands.each do |land|
+        land.save
+      end
+    end
   end
 end
