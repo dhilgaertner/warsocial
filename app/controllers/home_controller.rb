@@ -72,7 +72,7 @@ class HomeController < ApplicationController
     attacking_land_id = params[:atk_land_id]
     defending_land_id = params[:def_land_id]
     
-    game = GameState.get_game_state(game_name)
+    game = ActiveGame.get_active_game(game_name)
     
     if (game.is_users_turn?(current_user))
       if game.state == Game::STARTED_STATE
@@ -90,7 +90,7 @@ class HomeController < ApplicationController
   def end_turn
     game_name = params[:game_name]
     
-    game = GameState.get_game_state(game_name)
+    game = ActiveGame.get_active_game(game_name)
     
     if (game.is_users_turn?(current_user))
       if game.state == Game::STARTED_STATE
@@ -109,7 +109,7 @@ class HomeController < ApplicationController
     game_name = params[:game_name]
 
     if (current_user.admin?)
-      game = GameState.get_game_state(game_name)
+      game = ActiveGame.get_active_game(game_name)
 
       if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
         gr = GameRule.find_all_by_game_name(game_name).first
@@ -167,7 +167,7 @@ class HomeController < ApplicationController
   def flag
     game_name = params[:game_name]
     
-    game = GameState.get_game_state(game_name)
+    game = ActiveGame.get_active_game(game_name)
     
     if (game.is_user_in_game?(current_user))
       if game.state == Game::STARTED_STATE
@@ -187,7 +187,7 @@ class HomeController < ApplicationController
     game_name = params[:game_name]
     
     if auth == "whisper" #TODO: Better auth (Dustin)
-      game = GameState.get_game_state(game_name)
+      game = ActiveGame.get_active_game(game_name)
       game.force_end_turn
     end
     
@@ -196,7 +196,7 @@ class HomeController < ApplicationController
 
   def get_lobby_games
     if current_user
-      games = GameState.get_lobby_games
+      games = ActiveGame.get_lobby_games
 
       response = { :games => games, :online => User.online_user_ids }
 
@@ -204,17 +204,5 @@ class HomeController < ApplicationController
     else
       render :text => "Not authorized", :status => 403
     end
-  end
-
-  def testing_stub
-    ag = ActiveGame.create("test_game", Game::WAITING_STATE, 7, 100, "default", "{ null }")
-    ag.add_player(1, "dc", 500)
-    ag.add_player(2, "dc2", 300)
-    ag.add_player(3, "dc3", 400)
-    ag.add_player(4, "dc4", 200)
-
-    ag_load = ActiveGame.get_active_game("test_game")
-
-    render :text => "#{ag_load.players[1].username}", :status => 200
   end
 end

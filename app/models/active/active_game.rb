@@ -12,16 +12,14 @@ class ActiveGame
   end
 
   def save
-    REDIS.multi do
-      REDIS.hset(self.id, "name", self.name)
-      REDIS.hset(self.id, "state", self.state)
-      REDIS.hset(self.id, "turn_timer_id", self.turn_timer_id)
-      REDIS.hset(self.id, "max_player_count", self.max_player_count)
-      REDIS.hset(self.id, "wager_level", self.wager_level)
-      REDIS.hset(self.id, "map_name", self.map_name)
-      REDIS.hset(self.id, "map_json", self.map_json)
-      REDIS.hset(self.id, "connections", self.connections)
-    end
+    REDIS.hset(self.id, "name", self.name)
+    REDIS.hset(self.id, "state", self.state)
+    REDIS.hset(self.id, "turn_timer_id", self.turn_timer_id)
+    REDIS.hset(self.id, "max_player_count", self.max_player_count)
+    REDIS.hset(self.id, "wager_level", self.wager_level)
+    REDIS.hset(self.id, "map_name", self.map_name)
+    REDIS.hset(self.id, "map_json", self.map_json)
+    REDIS.hset(self.id, "connections", self.connections)
   end
 
   # helper method to generate redis id
@@ -67,7 +65,10 @@ class ActiveGame
       map = Map.where("name = ?", map_name).first
 
       game = ActiveGame.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
-      game.save
+
+      REDIS.multi do
+        game.save
+      end
     end
 
     return game
@@ -124,6 +125,9 @@ class ActiveGame
                             lh["map_land_id"],
                             lh["deployment"],
                             lh["player_id"])
+      if land.player_id != nil
+        game.players[land.player_id].lands[land.map_land_id] = land
+      end
       game.lands[land.map_land_id] = land
     end
 
@@ -199,7 +203,9 @@ class ActiveGame
       if self.players.size == self.max_player_count
         start_game
       else
-        new_player.save # Only need to save here because "start_game" saves all the players and lands
+        REDIS.multi do
+          new_player.save # Only need to save here because "start_game" saves all the players and lands
+        end
       end
 
       return new_player
@@ -214,7 +220,9 @@ class ActiveGame
       player_to_delete = self.players[user.id]
 
       if (player_to_delete != nil)
-        player_to_delete.delete
+        REDIS.multi do
+          player_to_delete.delete
+        end
         self.players.delete(user.id)
 
         broadcast(self.name, GameMsgType::STAND, player_to_delete.as_json)
@@ -222,6 +230,198 @@ class ActiveGame
         user.current_points = user.current_points + self.wager_level
         user.save
       end
+    end
+  end
+
+  # Attack
+  def attack(attacking_land_id, defending_land_id)
+    logger = User.logger
+
+    start_time = Time.now
+
+    elapsed = Time.now - start_time
+
+    puts "[#{elapsed * 1000}] start"
+
+    lands = get_lands
+
+    elapsed = (Time.now - start_time) - elapsed
+    puts "[#{elapsed * 1000}] 1"
+    if (lands[attacking_land_id.to_s].include?(defending_land_id))
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 2"
+
+      atk_land = self.lands[attacking_land_id]
+      def_land = self.lands[defending_land_id]
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 3"
+
+      attack_user_id = atk_land.player_id
+      defend_user_id = def_land.player_id
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 4"
+
+      if (attack_user_id == defend_user_id || atk_land.deployment == 1)
+        elapsed = (Time.now - start_time) - elapsed
+        puts "[#{elapsed * 1000}] end"
+        return
+      end
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 5"
+
+      attack_results = roll(atk_land.deployment)
+      defend_results = roll(def_land.deployment)
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 6"
+
+      attack_sum = attack_results.inject{|sum,x| sum + x }
+      defend_sum = defend_results.inject{|sum,x| sum + x }
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 7"
+
+      winner = attack_sum > defend_sum ? atk_land : def_land
+      loser = attack_sum > defend_sum ? def_land : atk_land
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 8"
+
+      if (atk_land == winner)
+        loser_player = loser.player_id != nil ? self.players[loser.player_id] : nil
+        winner_player = self.players[winner.player_id]
+
+        elapsed = (Time.now - start_time) - elapsed
+        puts "[#{elapsed * 1000}] 9"
+
+        loser.deployment = winner.deployment.to_i - 1
+        loser.player_id = winner.player_id
+
+        winner_player.lands[loser.map_land_id] = loser
+        if loser_player != nil
+          loser_player.lands.delete(loser.map_land_id)
+        end
+
+        elapsed = (Time.now - start_time) - elapsed
+        puts "[#{elapsed * 1000}] 10"
+
+        winner.deployment = 1
+
+        elapsed = (Time.now - start_time) - elapsed
+        puts "[#{elapsed * 1000}] 11"
+
+        if (loser_player != nil)
+          if (loser_player.lands.size == 0)
+            loser_player.state = Player::DEAD_PLAYER_STATE
+
+            elapsed = (Time.now - start_time) - elapsed
+            puts "[#{elapsed * 1000}] 12"
+
+            players_left = self.players.values.select {|player| player.state != Player::DEAD_PLAYER_STATE }
+
+            elapsed = (Time.now - start_time) - elapsed
+            puts "[#{elapsed * 1000}] 13"
+
+            cash_player_out(players_left.size + 1, loser_player)
+
+            elapsed = (Time.now - start_time) - elapsed
+            puts "[#{elapsed * 1000}] 14"
+
+            check_for_winner
+
+            elapsed = (Time.now - start_time) - elapsed
+            puts "[#{elapsed * 1000}] 15"
+
+          end
+        end
+      else
+        loser.deployment = 1
+      end
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 16"
+
+      restart_turn_timer
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 17"
+
+      update_delta_points
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 18"
+
+      data = { :players => self.players.values,
+               :attack_info => { :attacker_land_id => attacking_land_id,
+                                 :attacker_roll => attack_results,
+                                 :attacker_player_id => atk_land.player_id,
+                                 :defender_land_id => defending_land_id,
+                                 :defender_roll => defend_results,
+                                 :defender_player_id => def_land.player_id
+               },
+               :deployment_changes => [atk_land, def_land]
+      }
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 19"
+
+      broadcast(self.name, GameMsgType::ATTACK, data)
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 20"
+
+      save_all
+
+      elapsed = (Time.now - start_time) - elapsed
+      puts "[#{elapsed * 1000}] 21"
+
+    end
+  end
+
+  # End the current players turn
+  def end_turn
+    cp = current_player
+    np = next_player
+
+    reenforce(cp, how_many_reenforcements(cp))
+
+    cp.is_turn = false
+    np.is_turn = true
+
+    restart_turn_timer
+
+    broadcast(self.name, GameMsgType::TURN, {:player_id => np.user_id, :name => np.username})
+
+    REDIS.multi do
+      self.save
+      np.save
+      cp.save
+    end
+  end
+
+  # Force the end of the current players turn
+  def force_end_turn
+    end_turn
+  end
+
+  # Delete All
+  def delete_all
+    REDIS.multi do
+      self.players.each do |player|
+        player.delete
+      end
+
+      self.lands.each do |land|
+        land.delete
+      end
+
+      kill_turn_timer
+
+      self.delete
     end
   end
 
@@ -351,7 +551,7 @@ class ActiveGame
 
     own_land_ids = Array.new
 
-    player.lands.each { |land| own_land_ids.push(land.map_land_id) }
+    player.lands.values.each { |land| own_land_ids.push(land.map_land_id) }
 
     not_connected = own_land_ids.select { |id| (connects[id.to_s] & own_land_ids).size == 0 }
 
@@ -407,7 +607,7 @@ class ActiveGame
 
     changed = Array.new
     num_armies.times do |x|
-      candidates = lands.select{|x| x.deployment.to_i < 8}
+      candidates = lands.values.select{|l| l.deployment < 8}
 
       if (!candidates.empty?)
         land = rand_with_range(candidates)
@@ -601,10 +801,10 @@ class ActiveGame
   def save_all
     REDIS.multi do
       self.save
-      self.players.each do |player|
+      self.players.values.each do |player|
         player.save
       end
-      self.lands.each do |land|
+      self.lands.values.each do |land|
         land.save
       end
     end

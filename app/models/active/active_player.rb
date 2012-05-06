@@ -13,31 +13,27 @@ class ActivePlayer
   end
 
   def save
-    REDIS.multi do
-      REDIS.hset(self.id, "user_id", self.user_id)
-      REDIS.hset(self.id, "seat_number", self.seat_number)
-      REDIS.hset(self.id, "state", self.state)
-      REDIS.hset(self.id, "username", self.username)
-      REDIS.hset(self.id, "current_points", self.current_points)
-      REDIS.hset(self.id, "is_turn", self.is_turn)
-      REDIS.hset(self.id, "current_delta_points", self.current_delta_points)
-      REDIS.hset(self.id, "current_place", self.current_place)
-    end
+    REDIS.hset(self.id, "user_id", self.user_id)
+    REDIS.hset(self.id, "seat_number", self.seat_number)
+    REDIS.hset(self.id, "state", self.state)
+    REDIS.hset(self.id, "username", self.username)
+    REDIS.hset(self.id, "current_points", self.current_points)
+    REDIS.hset(self.id, "is_turn", self.is_turn)
+    REDIS.hset(self.id, "current_delta_points", self.current_delta_points)
+    REDIS.hset(self.id, "current_place", self.current_place)
   end
 
   def delete
-    REDIS.multi do
-      REDIS.hdel(self.id, "user_id")
-      REDIS.hdel(self.id, "seat_number")
-      REDIS.hdel(self.id, "state")
-      REDIS.hdel(self.id,"username")
-      REDIS.hdel(self.id, "current_points")
-      REDIS.hdel(self.id, "is_turn")
-    end
+    REDIS.hdel(self.id, "user_id")
+    REDIS.hdel(self.id, "seat_number")
+    REDIS.hdel(self.id, "state")
+    REDIS.hdel(self.id,"username")
+    REDIS.hdel(self.id, "current_points")
+    REDIS.hdel(self.id, "is_turn")
   end
 
   def as_json(options={})
-    ls = self.lands
+    ls = self.lands.values
     dice_count = 0
 
     ls.each {|land| dice_count = dice_count + land.deployment }

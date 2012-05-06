@@ -6,15 +6,19 @@ class ActiveLand
     self.game_id = game_id
     self.map_land_id = map_land_id.to_i
     self.deployment = deployment.to_i
-    self.player_id = player_id == nil ? nil : player_id.to_i
+    self.player_id = player_id == nil || player_id == "" ? nil : player_id.to_i
   end
 
   def save
-    REDIS.multi do
-      REDIS.hset(self.id, "player_id", self.player_id)
-      REDIS.hset(self.id, "map_land_id", self.map_land_id)
-      REDIS.hset(self.id, "deployment", self.deployment)
-    end
+    REDIS.hset(self.id, "player_id", self.player_id)
+    REDIS.hset(self.id, "map_land_id", self.map_land_id)
+    REDIS.hset(self.id, "deployment", self.deployment)
+  end
+
+  def delete
+    REDIS.hdel(self.id, "player_id")
+    REDIS.hdel(self.id, "map_land_id")
+    REDIS.hdel(self.id, "deployment")
   end
 
   def as_json(options={})
