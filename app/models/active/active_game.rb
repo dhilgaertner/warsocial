@@ -204,15 +204,15 @@ class ActiveGame
 
     result = Array.new
 
-    game_data.each_index do |data, index|
+    game_data.each_with_index do |data, index|
       results_case = (index % 2)
 
       case results_case
         when 0
-          gh = ActiveGame.array_to_hash(game_data[index])
+          gh = ActiveGame.array_to_hash(data)
           player_count = game_data[index + 1].size
 
-          result << { :name => gh["name"],
+          result << {  :name => gh["name"],
                        :state => gh["state"],
                        :player_count => player_count,
                        :max_players => gh["max_player_count"].to_i,
