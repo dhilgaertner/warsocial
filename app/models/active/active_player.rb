@@ -30,6 +30,8 @@ class ActivePlayer
     REDIS.hdel(self.id,"username")
     REDIS.hdel(self.id, "current_points")
     REDIS.hdel(self.id, "is_turn")
+    REDIS.hdel(self.id, "current_delta_points")
+    REDIS.hdel(self.id, "current_place")
   end
 
   def as_json(options={})

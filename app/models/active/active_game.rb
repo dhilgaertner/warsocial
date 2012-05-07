@@ -22,6 +22,17 @@ class ActiveGame
     REDIS.hset(self.id, "connections", self.connections)
   end
 
+  def delete
+    REDIS.hdel(self.id, "name")
+    REDIS.hdel(self.id, "state")
+    REDIS.hdel(self.id, "turn_timer_id")
+    REDIS.hdel(self.id, "max_player_count")
+    REDIS.hdel(self.id, "wager_level")
+    REDIS.hdel(self.id, "map_name")
+    REDIS.hdel(self.id, "map_json")
+    REDIS.hdel(self.id, "connections")
+  end
+
   # helper method to generate redis id
   def id
     "game:#{self.name}"
@@ -331,11 +342,6 @@ class ActiveGame
             elapsed = (Time.now - start_time) - elapsed
             puts "[#{elapsed * 1000}] 14"
 
-            check_for_winner
-
-            elapsed = (Time.now - start_time) - elapsed
-            puts "[#{elapsed * 1000}] 15"
-
           end
         end
       else
@@ -374,6 +380,10 @@ class ActiveGame
       elapsed = (Time.now - start_time) - elapsed
       puts "[#{elapsed * 1000}] 20"
 
+      if check_for_winner
+        return  #no save
+      end
+
       save_all
 
       elapsed = (Time.now - start_time) - elapsed
@@ -396,11 +406,7 @@ class ActiveGame
 
     broadcast(self.name, GameMsgType::TURN, {:player_id => np.user_id, :name => np.username})
 
-    REDIS.multi do
-      self.save
-      np.save
-      cp.save
-    end
+    save_all
   end
 
   # Force the end of the current players turn
@@ -411,11 +417,11 @@ class ActiveGame
   # Delete All
   def delete_all
     REDIS.multi do
-      self.players.each do |player|
+      self.players.values.each do |player|
         player.delete
       end
 
-      self.lands.each do |land|
+      self.lands.values.each do |land|
         land.delete
       end
 
@@ -513,7 +519,9 @@ class ActiveGame
 
         cash_player_out(players_left.size + 1, player)
 
-        check_for_winner
+        if check_for_winner
+          return nil  #no save
+        end
 
         save_all
       end
@@ -540,8 +548,20 @@ class ActiveGame
 
       cash_player_out(1, winner)
 
-      return winner
+      self.delete_all
+
+      return true
+    else
+      return false
     end
+  end
+
+  private
+  def cash_player_out(position, player)
+    user = User.find(player.user_id)
+    user.current_points = user.current_points + GameRule.calc_delta_points(position, self.wager_level, self.max_player_count)
+    user.save
+    player.current_points = user.current_points
   end
 
   # Check whether or not the land is owned by the player
