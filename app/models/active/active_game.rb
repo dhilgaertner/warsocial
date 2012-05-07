@@ -2,13 +2,14 @@ class ActiveGame
 
   attr_accessor :name, :state, :turn_timer_id, :max_player_count, :wager_level, :map_name, :map_json, :connections
 
-  def initialize(name, state, max_player_count, wager_level, map_name, map_json, connections=nil)
+  def initialize(name, state, max_player_count, wager_level, map_name, map_json, connections=nil, turn_timer_id=nil)
     self.name = name
     self.state = state
     self.max_player_count = max_player_count.to_i
     self.wager_level = wager_level.to_i
     self.map_name = map_name
     self.map_json = map_json
+    self.turn_timer_id = turn_timer_id == "" ? nil : turn_timer_id
   end
 
   def save
@@ -104,7 +105,8 @@ class ActiveGame
                           gh["wager_level"],
                           gh["map_name"],
                           gh["map_json"],
-                          gh["connections"])
+                          gh["connections"],
+                          gh["turn_timer_id"])
 
     player_and_land_data = REDIS.multi do
       game_data[1].each do |key|
@@ -189,6 +191,7 @@ class ActiveGame
 
   # Find games to be shown in the lobby
   def self.get_lobby_games
+
     #GameState.all.except(:state => Game::FINISHED_STATE).as_json
   end
 
@@ -425,9 +428,39 @@ class ActiveGame
         land.delete
       end
 
-      kill_turn_timer
-
       self.delete
+    end
+  end
+
+  # Player flags
+  def flag_player(user)
+    if self.state == Game::STARTED_STATE
+      player = self.players[user.id]
+
+      if (player != nil)
+
+        if (player.is_turn)
+          end_turn
+        end
+
+        player.state = Player::DEAD_PLAYER_STATE
+
+        broadcast(self.name, GameMsgType::QUIT, player)
+
+        players_left = self.players.values.select {|player| player.state != Player::DEAD_PLAYER_STATE }
+
+        cash_player_out(players_left.size + 1, player)
+
+        if check_for_winner
+          return nil  #no save
+        end
+
+        save_all
+      end
+
+      return player
+    else
+      return nil
     end
   end
 
@@ -482,8 +515,8 @@ class ActiveGame
       end
     end
 
-    self.state = Game::STARTED_STATE # We don't save this because 'restart_turn_timer' will save for us'
-    restart_turn_timer  # self.save happens here
+    self.state = Game::STARTED_STATE
+    restart_turn_timer
 
     next_player = self.players.values.sample
     next_player.is_turn = true
@@ -498,38 +531,6 @@ class ActiveGame
     broadcast(self.name, GameMsgType::START, data)
 
     save_all
-  end
-
-  # Player flags
-  def flag_player(user)
-    if self.state == Game::STARTED_STATE
-      player = self.players[user.id]
-
-      if (player != nil)
-
-        if (player.is_turn)
-          end_turn
-        end
-
-        player.state = Player::DEAD_PLAYER_STATE
-
-        broadcast(self.name, GameMsgType::QUIT, player)
-
-        players_left = self.players.values.select {|player| player.state != Player::DEAD_PLAYER_STATE }
-
-        cash_player_out(players_left.size + 1, player)
-
-        if check_for_winner
-          return nil  #no save
-        end
-
-        save_all
-      end
-
-      return player
-    else
-      return nil
-    end
   end
 
   # Check whether or not the game is over
