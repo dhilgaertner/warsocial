@@ -13,6 +13,7 @@ class ActiveGame
   end
 
   def save
+    REDIS.sadd("lobby_games", self.name)
     REDIS.hset(self.id, "name", self.name)
     REDIS.hset(self.id, "state", self.state)
     REDIS.hset(self.id, "turn_timer_id", self.turn_timer_id)
@@ -24,6 +25,7 @@ class ActiveGame
   end
 
   def delete
+    REDIS.srem("lobby_games", self.name)
     REDIS.hdel(self.id, "name")
     REDIS.hdel(self.id, "state")
     REDIS.hdel(self.id, "turn_timer_id")
@@ -191,8 +193,35 @@ class ActiveGame
 
   # Find games to be shown in the lobby
   def self.get_lobby_games
+    lobby_games = REDIS.smembers("lobby_games")
 
-    #GameState.all.except(:state => Game::FINISHED_STATE).as_json
+    game_data = REDIS.multi do
+      lobby_games.each do |lg|
+        REDIS.hgetall("game:#{lg}")
+        REDIS.keys("game:#{lg}:player:*")
+      end
+    end
+
+    result = Array.new
+
+    game_data.each_index do |data, index|
+      results_case = (index % 2)
+
+      case results_case
+        when 0
+          gh = ActiveGame.array_to_hash(game_data[index])
+          player_count = game_data[index + 1].size
+
+          results << { :name => gh["name"],
+                       :state => gh["state"],
+                       :player_count => player_count,
+                       :max_players => gh["max_player_count"].to_i,
+                       :map => gh["map_name"]
+                     }
+      end
+    end
+
+    return results
   end
 
   # Sit player at game table.

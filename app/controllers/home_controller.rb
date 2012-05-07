@@ -1,7 +1,3 @@
-require 'gamestate/game_state'
-require 'gamestate/map_state'
-require 'gamestate/player_state'
-require 'gamestate/land_state'
 require 'active/active_game'
 require 'active/active_player'
 require 'active/active_land'
