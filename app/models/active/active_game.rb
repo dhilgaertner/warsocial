@@ -212,7 +212,7 @@ class ActiveGame
           gh = ActiveGame.array_to_hash(game_data[index])
           player_count = game_data[index + 1].size
 
-          results << { :name => gh["name"],
+          result << { :name => gh["name"],
                        :state => gh["state"],
                        :player_count => player_count,
                        :max_players => gh["max_player_count"].to_i,
@@ -221,7 +221,7 @@ class ActiveGame
       end
     end
 
-    return results
+    return result
   end
 
   # Sit player at game table.
