@@ -1,8 +1,8 @@
 class ActivePlayer
 
-  attr_accessor :game_id, :user_id, :seat_number, :state, :username, :current_points, :is_turn, :current_delta_points, :current_place
+  attr_accessor :game_id, :user_id, :seat_number, :state, :username, :reserves, :current_points, :is_turn, :current_delta_points, :current_place
 
-  def initialize(game_id, seat_number, state, user_id, username, current_points, is_turn=false)
+  def initialize(game_id, seat_number, state, user_id, username, current_points, is_turn=false, current_delta_points=0, current_place=0, reserves=0)
     self.game_id = game_id
     self.user_id = user_id.to_i
     self.seat_number = seat_number.to_i
@@ -10,6 +10,9 @@ class ActivePlayer
     self.username = username
     self.current_points = current_points.to_i
     self.is_turn = is_turn.to_s == "true"
+    self.current_delta_points = current_delta_points.to_i
+    self.current_place = current_place.to_i
+    self.reserves = reserves == "" ? 0 : reserves.to_i
   end
 
   def save
@@ -21,6 +24,7 @@ class ActivePlayer
     REDIS.hset(self.id, "is_turn", self.is_turn)
     REDIS.hset(self.id, "current_delta_points", self.current_delta_points)
     REDIS.hset(self.id, "current_place", self.current_place)
+    REDIS.hset(self.id, "reserves", self.reserves)
   end
 
   def delete
@@ -32,6 +36,7 @@ class ActivePlayer
     REDIS.hdel(self.id, "is_turn")
     REDIS.hdel(self.id, "current_delta_points")
     REDIS.hdel(self.id, "current_place")
+    REDIS.hdel(self.id, "reserves")
   end
 
   def as_json(options={})
@@ -49,7 +54,9 @@ class ActivePlayer
       :place => self.current_place,
       :land_count => self.lands.size,
       :dice_count => dice_count,
-      :delta_points => self.current_delta_points == nil ? 0 : self.current_delta_points }
+      :delta_points => self.current_delta_points == nil ? 0 : self.current_delta_points,
+      :reserves => self.reserves
+    }
   end
 
   # helper method to generate redis id

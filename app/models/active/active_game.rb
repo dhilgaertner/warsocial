@@ -9,6 +9,7 @@ class ActiveGame
     self.wager_level = wager_level.to_i
     self.map_name = map_name
     self.map_json = map_json
+    self.connections = connections
     self.turn_timer_id = turn_timer_id == "" ? nil : turn_timer_id
   end
 
@@ -130,7 +131,11 @@ class ActiveGame
                                 ph["user_id"],
                                 ph["username"],
                                 ph["current_points"],
-                                ph["is_turn"])
+                                ph["is_turn"],
+                                ph["current_delta_points"],
+                                ph["current_place"],
+                                ph["reserves"])
+
       game.players[player.user_id] = player
     end
 
@@ -140,6 +145,7 @@ class ActiveGame
                             lh["map_land_id"],
                             lh["deployment"],
                             lh["player_id"])
+
       if land.player_id != nil
         game.players[land.player_id].lands[land.map_land_id] = land
       end
@@ -668,6 +674,9 @@ class ActiveGame
   def reenforce(player, num_armies)
     lands = player.lands
 
+    num_armies = num_armies + player.reserves
+    player.reserves = 0
+
     changed = Array.new
     num_armies.times do |x|
       candidates = lands.values.select{|l| l.deployment < 8}
@@ -677,6 +686,10 @@ class ActiveGame
         land.deployment = land.deployment + 1
 
         changed.push(land)
+      else
+        if (player.reserves < 32)
+          player.reserves = player.reserves + 1
+        end
       end
     end
 
