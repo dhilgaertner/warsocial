@@ -227,7 +227,20 @@ class ActiveGame
   # Sit player at game table.
   def add_player(user)
     if self.state == Game::WAITING_STATE
-      seat = self.players.size + 1
+      sorted_players = self.players.values.sort { |a,b| a.seat_number <=> b.seat_number }
+
+      seat = nil
+
+      sorted_players.each_with_index do |p, i|
+        if p.seat_number != i+1
+          seat = i + 1
+          break
+        end
+      end
+
+      if seat == nil
+        seat = self.players.values.size + 1
+      end
 
       new_player = ActivePlayer.new(self.name,
                                        seat,
