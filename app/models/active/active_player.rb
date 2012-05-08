@@ -49,7 +49,7 @@ class ActivePlayer
       :place => self.current_place,
       :land_count => self.lands.size,
       :dice_count => dice_count,
-      :delta_points => self.current_delta_points == null ? 0 : self.current_delta_points }
+      :delta_points => self.current_delta_points == nil ? 0 : self.current_delta_points }
   end
 
   # helper method to generate redis id
