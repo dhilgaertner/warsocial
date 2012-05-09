@@ -22,7 +22,10 @@ class ActiveGame
     REDIS.hset(self.id, "wager_level", self.wager_level)
     REDIS.hset(self.id, "map_name", self.map_name)
     REDIS.hset(self.id, "map_json", self.map_json)
-    REDIS.hset(self.id, "connections", self.connections)
+
+    if (self.connections != nil)
+      REDIS.hset(self.id, "connections", self.connections)
+    end
   end
 
   def delete
