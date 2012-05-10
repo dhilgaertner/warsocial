@@ -24,7 +24,13 @@
 		var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-29117828-1']); _gaq.push(['_setDomainName', 'warsocial.com']); _gaq.push(['_trackPageview']);
 		(function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
 	</script>
-	
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#side-bar").height($("body").height());
+        });
+    </script>
+
 	<style type="text/css" media="screen">
 		@font-face {
 			font-family: Atrament-BoldSC;
@@ -101,7 +107,6 @@
 			background-repeat: repeat-y;
 			margin-left: 8px;
 			width: 185px;
-			height: 1100px;
 			float:left;
 			border-left: 3px solid black;
 			border-right: 3px solid black;
