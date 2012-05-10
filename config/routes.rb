@@ -1,6 +1,4 @@
 Dice::Application.routes.draw do
-  get "leader_board/index"
-
   match "mark_it_up/preview" => "mark_it_up#preview"
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
@@ -16,6 +14,7 @@ Dice::Application.routes.draw do
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
+  match 'leaderboard' => 'leader_board#index'
 
   match 'game/:game_name/' => 'home#index'
   match 'game/:game_name/fet/:auth' => 'home#force_end_turn'

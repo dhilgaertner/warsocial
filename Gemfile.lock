@@ -224,6 +224,7 @@ DEPENDENCIES
   forem-theme-twist!
   jquery-rails
   json
+  kaminari
   ohm
   omniauth-facebook
   omniauth-twitter

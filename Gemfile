@@ -21,6 +21,7 @@ gem 'forem-textile_formatter' # rich-text formatter for forem
 gem 'redis'
 gem 'ohm'
 gem 'delayed_job_admin'
+gem 'kaminari'
 
 group :production do
   # gems specifically for Heroku go here

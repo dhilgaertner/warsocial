@@ -520,6 +520,17 @@
             margin-right: -1px;
             background:url(<%=image_path "combo_arrow.png"%>) no-repeat center right;
         }
+
+        /* Leaderboard styling */
+        #leaderboard {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #leaderboard td {
+            width: 150px;
+            border-top: 1px solid black;
+        }
 	</style>
 </head>
 <body>
@@ -542,6 +553,7 @@
 			<div style="margin-left: 10px">
               <br>
               <h2><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :style => "color: green; text-decoration: underline;" %></h2>
+              <h2><%= link_to "Leaderboard", "/leaderboard", :target => "_blank", :style => "color: green; text-decoration: underline;" %></h2>
               <h2><%= link_to "Forum", "/forums/forums/1", :target => "_blank", :style => "color: green; text-decoration: underline;" %></h2>
               <h2><%= link_to "Blog", "http://blog.warsocial.com", :target => "_blank", :style => "color: green; text-decoration: underline;" %></h2>
             </div>

@@ -1,2 +1,26 @@
-<h1>LeaderBoard#index</h1>
-<p>Find me in app/views/leader_board/index.html.erb</p>
+<% content_for :javascript_includes do %>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+        });
+
+    </script>
+<% end %>
+
+<div style="text-align: center;">
+  <h1>Leaderboard</h1>
+
+  <%= paginate @player_list %>
+
+  <table id="leaderboard">
+      <% @player_list.each_with_index do |player, index| %>
+        <tr>
+          <td><%= (@rank_start + index).to_s %></td>
+          <td><%= player.username %></td>
+          <td><%= player.current_points %></td>
+        </tr>
+      <% end %>
+    </table>
+</div>
