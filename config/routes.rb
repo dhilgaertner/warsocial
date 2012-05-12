@@ -16,6 +16,9 @@ Dice::Application.routes.draw do
   # first created -> highest priority.
   match 'leaderboard' => 'leader_board#index'
 
+  match 'fb' => 'home#facebook_index'
+  match 'fb/game/:game_name/' => 'home#facebook_index'
+
   match 'game/:game_name/' => 'home#index'
   match 'game/:game_name/fet/:auth' => 'home#force_end_turn'
   match 'game/:game_name/attack' => 'home#attack'

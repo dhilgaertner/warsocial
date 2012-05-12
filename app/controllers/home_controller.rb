@@ -3,7 +3,8 @@ require 'active/active_player'
 require 'active/active_land'
 
 class HomeController < ApplicationController
-  
+  layout :resolve_layout
+
   def index
     @user = User.new(params[:user])
 
@@ -26,11 +27,34 @@ class HomeController < ApplicationController
 
   end
 
+  def facebook_index
+    @user = User.new(params[:user])
+
+    name = params[:game_name] == nil ? "home" : params[:game_name]
+
+    @dev = params[:dev] == nil ? false : true
+
+    @game = ActiveGame.get_active_game(name)
+
+    if(current_user != nil && current_user.admin?)
+      @maps = Map.where("is_public = ?", true).select("name, preview_url")
+    else
+      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false).select("name, preview_url")
+    end
+
+    @init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
+                   :map_layout => ActiveSupport::JSON.decode(@game.map_json),
+                   :players => @game.players.values,
+                   :deployment => @game.lands.values }
+
+  end
+
   def add_line
     game_name = params[:game_name]
 
     if (params[:entry].strip != "")
       Pusher["presence-" + game_name].trigger(GameMsgType::CHATLINE, {:entry => CGI.escapeHTML(params[:entry]), :name => current_user.username})
+      REDIS.sadd("chat_logs", "(#{game_name})#{current_user.username}:#{CGI.escapeHTML(params[:entry])}")
     end
 
     render :text=>"Success", :status=>200
@@ -199,6 +223,16 @@ class HomeController < ApplicationController
       render :json => response
     else
       render :text => "Not authorized", :status => 403
+    end
+  end
+
+  private
+  def resolve_layout
+    case action_name
+      when "facebook_index"
+        "facebook"
+      else
+        "application"
     end
   end
 end

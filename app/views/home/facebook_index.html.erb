@@ -1,0 +1,399 @@
+<% content_for :javascript_includes do %>
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.8.18.custom.css">
+
+    <script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+
+    <% if Rails.env.development? %>
+        <script src="/assets/lib/jquery.dataTables.min.js?v=2" type="text/javascript"></script>
+        <script src="/assets/lib/jquery.simplemodal.1.4.2.min.js" type="text/javascript"></script>
+        <script src="/assets/lib/customSelect.jquery.js" type="text/javascript"></script>
+
+        <% if !@dev %>
+            <script src="/assets/gameboard/communications.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/soundmanager.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/dicebox.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/land.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/map.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/mapcanvas.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/player.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/shared.js?v=2" type="text/javascript"></script>
+            <script src="/assets/gameboard/warsocial.js?v=2" type="text/javascript"></script>
+        <% else %>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/soundmanager.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/dicebox.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=4" type="text/javascript"></script>
+            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=4" type="text/javascript"></script>
+        <% end %>
+
+        <script src="/assets/gameboard/turn_timer.js?v=2" type="text/javascript"></script>
+        <script src="/assets/gameboard/seats.js?v=2" type="text/javascript"></script>
+        <script src="/assets/gameboard/lobby.js?v=2" type="text/javascript"></script>
+    <% end %>
+
+	<script type="text/javascript">
+	
+	var global_game_name;
+	var global_init_data;
+
+    $(document).ready(function() {
+        global_game_name = "<%= @game.name %>";
+        global_init_data = <%= @init_data.to_json.html_safe %>;
+        lobby_maps = <%= @maps.to_json.html_safe %>;
+        game = null;
+
+        var addToChat = function(name, chat) {
+            $('#main_discussion tbody').append($('<tr><td>' + name + ': ' + chat + '</td></tr>'));
+            $("#chat_window").animate({ scrollTop: $("#chat_window").prop("scrollHeight") }, 300);
+        };
+
+        <% if !Rails.env.production? %>
+        // Enable pusher logging - don't include this in production
+        Pusher.log = function(message) {
+            if (window.console && window.console.log) window.console.log(message);
+        };
+
+        // Flash fallback logging - don't include this in production
+        WEB_SOCKET_DEBUG = true;
+        <% end %>
+
+        var pusher = new Pusher('<%= Pusher.key %>');
+        var channel = pusher.subscribe("presence-<%= @game.name %>");
+        Pusher.channel_auth_endpoint = '<%= auth_pusher_index_path %>';
+
+        channel.bind('pusher:subscription_error', function(status) {
+            if(status == 408 || status == 503){
+                // retry?
+            }
+        });
+
+        channel.bind('pusher:subscription_succeeded', function(members) {
+            var memArray = [];
+            members.each(function(member) {
+                memArray.push(member.info.name);
+            });
+            addToChat("Room", "Welcome to " + global_game_name + ". Players here: " + memArray.join(", ") + ".");
+        });
+
+        channel.bind('pusher:member_added', function(member) {
+            addToChat("Room", member.info.name + " is here.");
+        });
+
+        channel.bind('pusher:member_removed', function(member) {
+            addToChat("Room", member.info.name + " has left.")
+        });
+
+        $('#end_turn').hide();
+
+        var seats = new Seats(7, global_init_data.players);
+        seats.update_player_data(global_init_data.players);
+
+        var lobby = new Lobby("game_lobby_wrapper", lobby_maps);
+
+        lobby.setContext("facebook");
+
+        var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
+        var who_am_i_name = "<%= current_user != nil ? current_user.username : "Guest" %>";
+
+        for(var i=0; i<global_init_data.players.length; i++) {
+            if (global_init_data.players[i].is_turn == true) {
+                seats.turn_start(global_init_data.players[i]);
+                if (global_init_data.players[i].player_id == who_am_i) {
+                    $('#end_turn').show();
+                }
+            }
+        }
+
+        channel.bind('new_chat_line', function(data) {
+            if (data.name != who_am_i_name) {
+                addToChat(data.name, data.entry);
+            }
+        });
+
+        channel.bind('game_start', function(data) {
+            data.who_am_i = who_am_i;
+
+            $('#end_turn').hide();
+            for(var i=0; i<data.players.length; i++) {
+                var p = data.players[i];
+
+                if (p.is_turn == true) {
+                    seats.turn_start(p);
+                    if (p.player_id == who_am_i) {
+                        $('#end_turn').show();
+                    }
+
+                    addToChat("Room", "Game has started.");
+                    addToChat("Room", p.name + "'s turn to move.");
+                }
+            }
+
+            init(data);
+
+            SoundManager.play("game_start");
+
+            seats.update_player_data(data.players);
+        });
+
+        channel.bind('player_sit', function(player) {
+            seats.sit(player);
+        });
+
+        channel.bind('player_stand', function(player) {
+            seats.stand(player);
+        });
+
+        channel.bind('player_quit', function(data) {
+            seats.update_player_data(data.players);
+            player_quit(data.player.player_id);
+        });
+
+        channel.bind('attack', function(data) {
+            seats.turn_timer_restart({player_id: data.attack_info.attacker_player_id});
+            seats.update_player_data(data.players);
+            attack(data);
+        });
+
+        channel.bind('deploy', function(data) {
+            deploy(data);
+        });
+
+        channel.bind('game_winner', function(player) {
+            seats.clear();
+            $('#end_turn').hide();
+
+            addToChat("Room", player.name + " wins!");
+        });
+
+        channel.bind('new_turn', function(player) {
+            if (player.player_id == who_am_i) {
+                $('#end_turn').show();
+                SoundManager.play("my_turn");
+            } else {
+                $('#end_turn').hide();
+            }
+
+            next_turn(player.player_id);
+            seats.turn_start({ player_id: player.player_id});
+
+            addToChat("Room", player.name + "'s turn to move.");
+        });
+
+        $("#form_chat")
+                .bind("ajax:beforeSend", function(xhr, settings) {
+                    addToChat(who_am_i_name, $('#entry').val());
+                    $('#entry').val("");
+                });
+
+        $('#lobby_button').click(function() {
+            lobby.open();
+        });
+
+        $('#stats').change(function() {
+            var checked = $('#stats').prop('checked');
+            if (checked) {
+                $('.stats_enabled').show();
+            } else {
+                $('.stats_enabled').hide();
+            }
+        });
+        $('#stats').change();
+    });
+
+    $(window).load(function() {
+        init(global_init_data);
+    });
+	
+  </script>
+<% end %>
+
+<% if user_signed_in? %>
+	<div id="game">
+		<div style="margin-bottom: 5px;">This is our alpha release, so expect some bugs. If you can't play, try refreshing your browser. If it still doesn't work, flag and try a new game. Please report any bugs to <%= link_to "bugs@warsocial.com", "mailto:bugs@warsocial.com", :style => "color: blue" %>. Thanks!</div>
+		<div id="game_header"></div>
+		<div id="game_main">
+            <%= link_to image_tag("buttons/lobby_button.png", :border => 0), "#", :id => "lobby_button", :style => "margin-left: 10px; margin-top: 10px;" %>
+            <%= link_to image_tag("buttons/sit_button.png", :border => 0), sit_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
+			<%= link_to image_tag("buttons/stand_button.png", :border => 0), stand_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
+			<%= link_to image_tag("buttons/flag_button.png", :border => 0), flag_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
+			<%= link_to image_tag("buttons/end_turn_button.png", :border => 0), end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :style => "margin-left: 10px; margin-top: 10px;" %>
+            <% if current_user.admin? %>
+                <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px; margin-top: 10px;" %>
+            <% end %>
+			<div>
+				<div id="top_players">
+					<div class="player">
+						<div id="game_seat_2" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar" style="background-color: #c22b2b"></div>
+								<div class="name"></div>
+								<div class="turn_progress" style="display:none"></div>
+							</div>
+							<div class="player_stat2">
+                              <div class="place"></div>
+                              <div class="points"></div>
+                              <div class="dice stats_enabled"></div>
+                              <div class="lands stats_enabled"></div>
+							</div>
+						</div>
+					</div>
+					<div class="player">
+						<div id="game_seat_3" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar" style="background-color: #5fb61f"></div>
+								<div class="name"></div>
+								<div class="turn_progress" style="display:none"></div>
+							</div>
+							<div class="player_stat2">
+                              <div class="place"></div>
+                              <div class="points"></div>
+                              <div class="dice stats_enabled"></div>
+                              <div class="lands stats_enabled"></div>
+							</div>
+						</div>
+					</div>
+					<div class="player">
+						<div id="game_seat_4" style="display: none;">
+							<div class="player_stat1">
+								<div class="avatar" style="background-color: #603bb3"></div>
+								<div class="name"></div>
+								<div class="turn_progress" style="display:none"></div>
+							</div>
+							<div class="player_stat2">
+                              <div class="place"></div>
+                              <div class="points"></div>
+                              <div class="dice stats_enabled"></div>
+                              <div class="lands stats_enabled"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="position: relative">
+					<div id="left_players">
+						<div class="player">
+							<div id="game_seat_1" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar" style="background-color: #3760ae"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+									<div class="turn_progress" style="display:none"></div>
+								</div>
+								<div class="player_stat2">
+                                  <div class="place"></div>
+                                  <div class="points"></div>
+                                  <div class="dice stats_enabled"></div>
+                                  <div class="lands stats_enabled"></div>
+								</div>
+							</div>
+						</div>
+						<div class="player">
+							<div id="game_seat_0" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar" style="background-color: #f8af01"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+									<div class="turn_progress" style="display:none"></div>
+								</div>
+								<div class="player_stat2">
+                                  <div class="place"></div>
+                                  <div class="points"></div>
+                                  <div class="dice stats_enabled"></div>
+                                  <div class="lands stats_enabled"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="stage" style="top: 0px; left: 0px; position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
+						<canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
+						<canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+						<canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+
+						<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+					    <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
+					    <div id="dice_container" style="z-index:3; position:absolute; left:0px; top:0px; width:600px; height:420px;"></div>
+					    <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
+					    <div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+					    <div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+					    <%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
+                        <%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
+                        <%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
+                        <%= image_tag("gameboard/dice3.png", :id => 'dice3', :style => 'display:none') %>
+                        <%= image_tag("gameboard/dice4.png", :id => 'dice4', :style => 'display:none') %>
+                        <%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
+                        <%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
+                        <%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
+					</div>
+					<div id="right_players">
+						<div class="player">
+							<div id="game_seat_5" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar" style="background-color: #27a7b2"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+									<div class="turn_progress" style="display:none"></div>
+								</div>
+								<div class="player_stat2">
+                                  <div class="place"></div>
+                                  <div class="points"></div>
+                                  <div class="dice stats_enabled"></div>
+                                  <div class="lands stats_enabled"></div>
+								</div>
+							</div>
+						</div>
+						<div class="player">
+							<div id="game_seat_6" class="ws_bordered" style="display: none;">
+								<div class="player_stat1">
+									<div class="avatar" style="background-color: #ad3bac"></div>
+									<div class="clear"></div>
+									<div class="name"></div>
+									<div class="turn_progress" style="display:none"></div>
+								</div>
+								<div class="player_stat2">
+                                  <div class="place"></div>
+                                  <div class="points"></div>
+                                  <div class="dice stats_enabled"></div>
+                                  <div class="lands stats_enabled"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+          <div style="margin-bottom:5px;">
+            <input id="stats" type="checkbox" /> <span>stats</span>
+          </div>
+		</div>
+
+		<div id="chat_window">
+			<table id="main_discussion">
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div style="text-align: center;">
+	<%= form_tag(add_line_home_index_path, :id => "form_chat", :remote=>true) do %>
+		<%= hidden_field_tag 'game_name', @game.name %>
+		<%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
+		<%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending..." } 
+		 %>
+	<% end %>
+	</div>
+
+    <%= render "shared/game_lobby" %>
+
+<% else %>
+  	<%= form_for @user, :url => user_session_path do |f| %>
+  		<div><%= f.label :email %><br />
+	  	<%= f.email_field :email %></div>
+	  	<div><%= f.label :password %><br />
+	  	<%= f.password_field :password %></div>
+	  	<div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+	  	<div><%= f.submit "Sign in" %></div>
+  	<% end %>
+<% end %>

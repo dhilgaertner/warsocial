@@ -2,6 +2,8 @@
 function Lobby(elementId, lobby_maps) {
     this.elementId = elementId;
     this.maps = lobby_maps;
+    this._url_prefix = "";
+
 }
 
 Lobby.prototype.setupLobby = function() {
@@ -22,8 +24,15 @@ Lobby.prototype.setupLobby = function() {
     });
 };
 
+Lobby.prototype.setContext = function(context) {
+    if (context == "facebook") {
+        this._url_prefix = "/fb";
+    }
+};
+
 Lobby.prototype.setupDataTables = function() {
     var ctx = this;
+    var url_prefix = this._url_prefix;
 
     this.otable = $('#open_tables').dataTable({
         bJQueryUI: true,
@@ -112,7 +121,7 @@ Lobby.prototype.setupDataTables = function() {
         })
         .bind('ajax:complete', function(xhr, status) {
             if (status.status == 200) {
-                window.location.href = "/game/" + status.responseText;
+                window.location.href = url_prefix + "/game/" + status.responseText;
             }
         })
         .bind('ajax:error', function(xhr, status, error) {
@@ -122,6 +131,9 @@ Lobby.prototype.setupDataTables = function() {
 };
 
 Lobby.prototype.injectDomData = function(data) {
+
+    var url_prefix = this._url_prefix;
+
     $.each(data.games, function(i, game) {
         var add_to_me = game.state == 'game started' ? $('#running_tables tbody') : $('#open_tables tbody');
 
@@ -130,7 +142,7 @@ Lobby.prototype.injectDomData = function(data) {
 
     this._lobby.find('tr').click(function() {
         if($(this).parent().parent().find('tr:first')[0] != $(this)[0]) {
-            window.location.href = "/game/" + $(this).find('td:first').text();
+            window.location.href = url_prefix + "/game/" + $(this).find('td:first').text();
         }
     });
 };
