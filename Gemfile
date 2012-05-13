@@ -22,6 +22,7 @@ gem 'redis'
 gem 'ohm'
 gem 'delayed_job_admin'
 gem 'kaminari'
+gem 'mark_it_up', :git => 'git://github.com/cingel/mark_it_up.git'
 
 group :production do
   # gems specifically for Heroku go here
