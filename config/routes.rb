@@ -3,7 +3,7 @@ Dice::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 
-  mount RailsAdmin::Engine => '/dustin', :as => 'rails_admin'
+  mount RailsAdmin::Engine => '/old_admin', :as => 'rails_admin'
 
   match "mark_it_up/preview" => "mark_it_up#preview"
 

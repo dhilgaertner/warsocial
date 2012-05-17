@@ -11,7 +11,7 @@ gem 'json'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'pusher'
-gem 'delayed_job'
+gem 'delayed_job_active_record'
 #gem 'fastercsv' # Only required on Ruby 1.8 and below
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancan'
