@@ -54,7 +54,7 @@ class HomeController < ApplicationController
 
     if (params[:entry].strip != "")
       Pusher["presence-" + game_name].trigger(GameMsgType::CHATLINE, {:entry => CGI.escapeHTML(params[:entry]), :name => current_user.username})
-      REDIS.sadd("chat_logs", "(#{game_name})#{current_user.username}:#{CGI.escapeHTML(params[:entry])}")
+      REDIS.rpush("chat_logs", "(#{game_name})#{current_user.username}:#{CGI.escapeHTML(params[:entry])}")
     end
 
     render :text=>"Success", :status=>200

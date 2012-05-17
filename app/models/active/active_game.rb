@@ -602,6 +602,8 @@ class ActiveGame
 
       self.delete_all
 
+      REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:#{DateTime.now.to_s}")
+
       return true
     else
       return false
