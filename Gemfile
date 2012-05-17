@@ -15,7 +15,7 @@ gem 'delayed_job'
 gem 'fastercsv' # Only required on Ruby 1.8 and below
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancan'
-gem 'forem', :git => "git://github.com/radar/forem.git"
+gem 'forem'
 gem 'forem-theme-twist', :path => "vendor/forem-theme-twist"
 gem 'forem-textile_formatter' # rich-text formatter for forem
 gem 'redis'
