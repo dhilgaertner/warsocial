@@ -1,7 +1,11 @@
 Dice::Application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+  devise_for :users
+
   match "mark_it_up/preview" => "mark_it_up#preview"
 
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  
   mount Forem::Engine, :at => "/forums"
 
   get "home/index"

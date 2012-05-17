@@ -1,4 +1,4 @@
-# RailsAdmin config file. Generated on December 06, 2011 17:53
+# RailsAdmin config file. Generated on May 17, 2012 02:40
 # See github.com/sferik/rails_admin for more informations
 
 RailsAdmin.config do |config|
@@ -9,43 +9,17 @@ RailsAdmin.config do |config|
 
   config.current_user_method { current_user } # auto-generated
 
+  # If you want to track changes on your models:
+  # config.audit_with :history, User
+
+  # Or with a PaperTrail: (you need to install it first)
+  # config.audit_with :paper_trail, User
+
   # Set the admin name here (optional second array element will appear in a beautiful RailsAdmin red ©)
   config.main_app_name = ['Dice', 'Admin']
   # or for a dynamic name:
   # config.main_app_name = Proc.new { |controller| [Rails.application.engine_name.titleize, controller.params['action'].titleize] }
 
-  #  ==> Authentication (before_filter)
-  # This is run inside the controller instance so you can setup any authentication you need to.
-  # By default, the authentication will run via warden if available.
-  # and will run on the default user scope.
-  # If you use devise, this will authenticate the same as authenticate_user!
-  # Example Devise admin
-  # RailsAdmin.config do |config|
-  #   config.authenticate_with do
-  #     authenticate_admin!
-  #   end
-  # end
-  # Example Custom Warden
-  # RailsAdmin.config do |config|
-  #   config.authenticate_with do
-  #     warden.authenticate! :scope => :paranoid
-  #   end
-  # end
-
-  #  ==> Authorization
-  # Use cancan https://github.com/ryanb/cancan for authorization:
-  # config.authorize_with :cancan
-
-  # Or use simple custom authorization rule:
-  # config.authorize_with do
-  #   redirect_to root_path unless warden.user.is_admin?
-  # end
-
-  # Use a specific role for ActiveModel's :attr_acessible :attr_protected
-  # Default is :default
-  # config.attr_accessible_role { :default }
-  # _current_user is accessible in the block if you need to make it user specific:
-  # config.attr_accessible_role { _current_user.role.to_sym }
 
   #  ==> Global show view settings
   # Display empty fields in show views
@@ -57,10 +31,10 @@ RailsAdmin.config do |config|
 
   #  ==> Included models
   # Add all excluded models here:
-  # config.excluded_models = [Forem::Category, Forem::Forum, Forem::Post, Forem::Topic, Forem::View, Game, GameLog, Player, User]
+  # config.excluded_models = [Forem::Category, Forem::Forum, Forem::Group, Forem::Membership, Forem::ModeratorGroup, Forem::Post, Forem::Subscription, Forem::Topic, Forem::View, Game, GameLog, GameRule, Land, Map, Player, User]
 
   # Add models here if you want to go 'whitelist mode':
-  # config.included_models = [Forem::Category, Forem::Forum, Forem::Post, Forem::Topic, Forem::View, Game, GameLog, Player, User]
+  # config.included_models = [Forem::Category, Forem::Forum, Forem::Group, Forem::Membership, Forem::ModeratorGroup, Forem::Post, Forem::Subscription, Forem::Topic, Forem::View, Game, GameLog, GameRule, Land, Map, Player, User]
 
   # Application wide tried label methods for models' instances
   # config.label_methods << :description # Default is [:name, :title]
@@ -80,11 +54,11 @@ RailsAdmin.config do |config|
   #
   #  ==> Model specific configuration
   # Keep in mind that *all* configuration blocks are optional.
-  # RailsAdmin will try his best to provide the best defaults for each section, for each field!
+  # RailsAdmin will try his best to provide the best defaults for each section, for each field.
   # Try to override as few things as possible, in the most generic way. Try to avoid setting labels for models and attributes, use ActiveRecord I18n API instead.
   # Less code is better code!
   # config.model MyModel do
-  #   # Here goes your cross-section field configuration for ModelName.
+  #   # Cross-section field configuration
   #   object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
   #   label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
   #   label_plural 'My models'      # Same, plural
@@ -99,34 +73,11 @@ RailsAdmin.config do |config|
   #     sort_reverse true     # Sort direction (default is true for primary key, last created first)
   #     # Here goes the fields configuration for the list view
   #   end
-  #   show do
-  #     # Here goes the fields configuration for the show view
-  #   end
-  #   export do
-  #     # Here goes the fields configuration for the export view (CSV, yaml, XML)
-  #   end
-  #   edit do
-  #     # Here goes the fields configuration for the edit view (for create and update view)
-  #   end
-  #   create do
-  #     # Here goes the fields configuration for the create view, overriding edit section settings
-  #   end
-  #   update do
-  #     # Here goes the fields configuration for the update view, overriding edit section settings
-  #   end
   # end
 
   # Your model's configuration, to help you get started:
 
-  # All fields marked as 'hidden' won't be shown anywhere in the rails_admin unless you mark them as visible.
-  # There can be different reasons for that:
-  #  - belongs_to _id and _type (polymorphic) columns are hidden in favor of their associations
-  #  - associations are hidden if they have no matchable model found (model not included or non-existant)
-  #  - they are part of a bigger plan in a plugin (Devise/Paperclip) and hidden by contract
-  # Some fields may be hidden depending on the section, if they aren't deemed suitable for display or edition on that section
-  #  - non-editable columns (:id, :created_at, ..) in edit sections
-  #  - has_many/has_one associations in list section (hidden by default for performance reasons)
-  # Fields may also be marked as read_only (and thus not editable) if they are not mass-assignable by current_user
+  # All fields marked as 'hidden' won't be shown anywhere in the rails_admin unless you mark them as visible. (visible(true))
 
   # config.model Forem::Category do
   #   # Found associations:
@@ -144,14 +95,58 @@ RailsAdmin.config do |config|
   # end
   # config.model Forem::Forum do
   #   # Found associations:
-  #     configure :posts, :has_many_association 
+  #     configure :category, :belongs_to_association 
   #     configure :views, :has_many_association 
   #     configure :topics, :has_many_association 
-  #     configure :category, :belongs_to_association   #   # Found columns:
+  #     configure :posts, :has_many_association 
+  #     configure :moderators, :has_many_association 
+  #     configure :moderator_groups, :has_many_association   #   # Found columns:
   #     configure :id, :integer 
   #     configure :title, :string 
   #     configure :description, :text 
-  #     configure :category_id, :integer         # Hidden   #   # Sections:
+  #     configure :category_id, :integer         # Hidden 
+  #     configure :views_count, :integer   #   # Sections:
+  #   list do; end
+  #   export do; end
+  #   show do; end
+  #   edit do; end
+  #   create do; end
+  #   update do; end
+  # end
+  # config.model Forem::Group do
+  #   # Found associations:
+  #     configure :memberships, :has_many_association 
+  #     configure :members, :has_many_association   #   # Found columns:
+  #     configure :id, :integer 
+  #     configure :name, :string   #   # Sections:
+  #   list do; end
+  #   export do; end
+  #   show do; end
+  #   edit do; end
+  #   create do; end
+  #   update do; end
+  # end
+  # config.model Forem::Membership do
+  #   # Found associations:
+  #     configure :group, :belongs_to_association 
+  #     configure :member, :belongs_to_association   #   # Found columns:
+  #     configure :id, :integer 
+  #     configure :group_id, :integer         # Hidden 
+  #     configure :member_id, :integer         # Hidden   #   # Sections:
+  #   list do; end
+  #   export do; end
+  #   show do; end
+  #   edit do; end
+  #   create do; end
+  #   update do; end
+  # end
+  # config.model Forem::ModeratorGroup do
+  #   # Found associations:
+  #     configure :forum, :belongs_to_association 
+  #     configure :group, :belongs_to_association   #   # Found columns:
+  #     configure :id, :integer 
+  #     configure :forum_id, :integer         # Hidden 
+  #     configure :group_id, :integer         # Hidden   #   # Sections:
   #   list do; end
   #   export do; end
   #   show do; end
@@ -161,17 +156,33 @@ RailsAdmin.config do |config|
   # end
   # config.model Forem::Post do
   #   # Found associations:
-  #     configure :user, :belongs_to_association 
   #     configure :topic, :belongs_to_association 
-  #     configure :replies, :has_many_association 
-  #     configure :reply_to, :belongs_to_association   #   # Found columns:
+  #     configure :user, :belongs_to_association 
+  #     configure :reply_to, :belongs_to_association 
+  #     configure :replies, :has_many_association   #   # Found columns:
   #     configure :id, :integer 
   #     configure :topic_id, :integer         # Hidden 
   #     configure :text, :text 
   #     configure :user_id, :integer         # Hidden 
   #     configure :created_at, :datetime 
   #     configure :updated_at, :datetime 
-  #     configure :reply_to_id, :integer         # Hidden   #   # Sections:
+  #     configure :reply_to_id, :integer         # Hidden 
+  #     configure :state, :string 
+  #     configure :notified, :boolean   #   # Sections:
+  #   list do; end
+  #   export do; end
+  #   show do; end
+  #   edit do; end
+  #   create do; end
+  #   update do; end
+  # end
+  # config.model Forem::Subscription do
+  #   # Found associations:
+  #     configure :subscriber, :belongs_to_association 
+  #     configure :topic, :belongs_to_association   #   # Found columns:
+  #     configure :id, :integer 
+  #     configure :subscriber_id, :integer         # Hidden 
+  #     configure :topic_id, :integer         # Hidden   #   # Sections:
   #   list do; end
   #   export do; end
   #   show do; end
@@ -181,10 +192,11 @@ RailsAdmin.config do |config|
   # end
   # config.model Forem::Topic do
   #   # Found associations:
-  #     configure :posts, :has_many_association 
+  #     configure :forum, :belongs_to_association 
   #     configure :user, :belongs_to_association 
   #     configure :views, :has_many_association 
-  #     configure :forum, :belongs_to_association   #   # Found columns:
+  #     configure :subscriptions, :has_many_association 
+  #     configure :posts, :has_many_association   #   # Found columns:
   #     configure :id, :integer 
   #     configure :forum_id, :integer         # Hidden 
   #     configure :user_id, :integer         # Hidden 
@@ -193,7 +205,10 @@ RailsAdmin.config do |config|
   #     configure :updated_at, :datetime 
   #     configure :locked, :boolean 
   #     configure :pinned, :boolean 
-  #     configure :hidden, :boolean   #   # Sections:
+  #     configure :hidden, :boolean 
+  #     configure :last_post_at, :datetime 
+  #     configure :state, :string 
+  #     configure :views_count, :integer   #   # Sections:
   #   list do; end
   #   export do; end
   #   show do; end
@@ -204,13 +219,16 @@ RailsAdmin.config do |config|
   # config.model Forem::View do
   #   # Found associations:
   #     configure :user, :belongs_to_association 
-  #     configure :topic, :belongs_to_association   #   # Found columns:
+  #     configure :viewable, :polymorphic_association   #   # Found columns:
   #     configure :id, :integer 
   #     configure :user_id, :integer         # Hidden 
-  #     configure :topic_id, :integer         # Hidden 
+  #     configure :viewable_id, :integer         # Hidden 
+  #     configure :viewable_type, :string         # Hidden 
   #     configure :created_at, :datetime 
   #     configure :updated_at, :datetime 
-  #     configure :count, :integer   #   # Sections:
+  #     configure :count, :integer 
+  #     configure :current_viewed_at, :datetime 
+  #     configure :past_viewed_at, :datetime   #   # Sections:
   #   list do; end
   #   export do; end
   #   show do; end
@@ -220,14 +238,18 @@ RailsAdmin.config do |config|
   # end
   # config.model Game do
   #   # Found associations:
+  #     configure :map, :belongs_to_association 
   #     configure :players, :has_many_association 
-  #     configure :game_logs, :has_many_association   #   # Found columns:
+  #     configure :game_logs, :has_many_association 
+  #     configure :lands, :has_many_association 
+  #     configure :users, :has_many_association   #   # Found columns:
   #     configure :id, :integer 
   #     configure :created_at, :datetime 
   #     configure :updated_at, :datetime 
   #     configure :name, :string 
   #     configure :state, :string 
-  #     configure :turn_timer_id, :integer   #   # Sections:
+  #     configure :turn_timer_id, :integer 
+  #     configure :map_id, :integer         # Hidden   #   # Sections:
   #   list do; end
   #   export do; end
   #   show do; end
@@ -251,17 +273,72 @@ RailsAdmin.config do |config|
   #   create do; end
   #   update do; end
   # end
+  # config.model GameRule do
+  #   # Found associations:
+  #   # Found columns:
+  #     configure :id, :integer 
+  #     configure :game_name, :string 
+  #     configure :map_name, :string 
+  #     configure :player_count, :integer 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+  #     configure :wager_level, :integer   #   # Sections:
+  #   list do; end
+  #   export do; end
+  #   show do; end
+  #   edit do; end
+  #   create do; end
+  #   update do; end
+  # end
+  # config.model Land do
+  #   # Found associations:
+  #     configure :game, :belongs_to_association 
+  #     configure :player, :belongs_to_association   #   # Found columns:
+  #     configure :id, :integer 
+  #     configure :game_id, :integer         # Hidden 
+  #     configure :player_id, :integer         # Hidden 
+  #     configure :deployment, :integer 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+  #     configure :map_land_id, :integer   #   # Sections:
+  #   list do; end
+  #   export do; end
+  #   show do; end
+  #   edit do; end
+  #   create do; end
+  #   update do; end
+  # end
+  # config.model Map do
+  #   # Found associations:
+  #     configure :games, :has_many_association   #   # Found columns:
+  #     configure :id, :integer 
+  #     configure :name, :string 
+  #     configure :json, :text 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+  #     configure :preview_url, :string 
+  #     configure :is_public, :boolean 
+  #     configure :is_admin_only, :boolean   #   # Sections:
+  #   list do; end
+  #   export do; end
+  #   show do; end
+  #   edit do; end
+  #   create do; end
+  #   update do; end
+  # end
   # config.model Player do
   #   # Found associations:
   #     configure :user, :belongs_to_association 
-  #     configure :game, :belongs_to_association   #   # Found columns:
+  #     configure :game, :belongs_to_association 
+  #     configure :lands, :has_many_association   #   # Found columns:
   #     configure :id, :integer 
   #     configure :user_id, :integer         # Hidden 
   #     configure :seat_number, :integer 
   #     configure :created_at, :datetime 
   #     configure :updated_at, :datetime 
   #     configure :is_turn, :boolean 
-  #     configure :game_id, :integer         # Hidden   #   # Sections:
+  #     configure :game_id, :integer         # Hidden 
+  #     configure :state, :string   #   # Sections:
   #   list do; end
   #   export do; end
   #   show do; end
@@ -271,11 +348,16 @@ RailsAdmin.config do |config|
   # end
   # config.model User do
   #   # Found associations:
-  #   # Found columns:
+  #     configure :players, :has_many_association 
+  #     configure :games, :has_many_association 
+  #     configure :forem_posts, :has_many_association 
+  #     configure :forem_topics, :has_many_association 
+  #     configure :forem_memberships, :has_many_association 
+  #     configure :forem_groups, :has_many_association   #   # Found columns:
   #     configure :id, :integer 
   #     configure :email, :string 
-  #     configure :password, :password 
-  #     configure :password_confirmation, :password 
+  #     configure :password, :password         # Hidden 
+  #     configure :password_confirmation, :password         # Hidden 
   #     configure :reset_password_token, :string         # Hidden 
   #     configure :reset_password_sent_at, :datetime 
   #     configure :remember_created_at, :datetime 
@@ -287,7 +369,18 @@ RailsAdmin.config do |config|
   #     configure :created_at, :datetime 
   #     configure :updated_at, :datetime 
   #     configure :username, :string 
-  #     configure :forem_admin, :boolean   #   # Sections:
+  #     configure :forem_admin, :boolean 
+  #     configure :confirmation_token, :string 
+  #     configure :confirmed_at, :datetime 
+  #     configure :confirmation_sent_at, :datetime 
+  #     configure :current_points, :integer 
+  #     configure :total_points, :integer 
+  #     configure :avatar_file_name, :string 
+  #     configure :avatar_content_type, :string 
+  #     configure :avatar_file_size, :integer 
+  #     configure :avatar_updated_at, :datetime 
+  #     configure :forem_state, :string 
+  #     configure :forem_auto_subscribe, :boolean   #   # Sections:
   #   list do; end
   #   export do; end
   #   show do; end
