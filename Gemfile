@@ -12,10 +12,10 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'pusher'
 gem 'delayed_job'
-gem 'fastercsv' # Only required on Ruby 1.8 and below
+#gem 'fastercsv' # Only required on Ruby 1.8 and below
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancan'
-gem 'forem', :git => "git://github.com/radar/forem.git"
+gem 'forem', :git => 'git://github.com/radar/forem.git'
 gem 'forem-theme-twist', :path => "vendor/forem-theme-twist"
 gem 'forem-textile_formatter' # rich-text formatter for forem
 gem 'redis'
@@ -23,6 +23,7 @@ gem 'ohm'
 gem 'delayed_job_admin'
 gem 'kaminari'
 gem 'mark_it_up', :git => 'git://github.com/cingel/mark_it_up.git'
+gem 'activeadmin'
 
 group :production do
   # gems specifically for Heroku go here
