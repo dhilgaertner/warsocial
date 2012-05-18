@@ -1,4 +1,4 @@
-<% content_for :javascript_includes do %>
+     <% content_for :javascript_includes do %>
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.8.18.custom.css">
 
     <script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
@@ -169,18 +169,20 @@
             addToChat("Room", player.name + " wins!");
         });
 
-        channel.bind('new_turn', function(player) {
-            if (player.player_id == who_am_i) {
+        channel.bind('new_turn', function(data) {
+
+            if (data.current_player.player_id == who_am_i) {
                 $('#end_turn').show();
                 SoundManager.play("my_turn");
             } else {
                 $('#end_turn').hide();
             }
 
-            next_turn(player.player_id);
-            seats.turn_start({ player_id: player.player_id});
+            next_turn(data.current_player.player_id);
+            seats.turn_start({ player_id: data.current_player.player_id});
+            seats.update_player_data([data.previous_player, data.current_player]);
 
-            addToChat("Room", player.name + "'s turn to move.");
+            addToChat("Room", data.current_player.name + "'s turn to move.");
         });
 
         $("#form_chat")

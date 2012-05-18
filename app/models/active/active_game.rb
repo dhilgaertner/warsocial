@@ -458,7 +458,7 @@ class ActiveGame
 
     restart_turn_timer
 
-    broadcast(self.name, GameMsgType::TURN, {:player_id => np.user_id, :name => np.username})
+    broadcast(self.name, GameMsgType::TURN, {:previous_player => cp, :current_player => np})
 
     save_all
   end

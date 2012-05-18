@@ -92,7 +92,7 @@ Seats.prototype.update_player_data = function(players) {
                 case 7:
                     return "7th";
                 default:
-                    return "NaN";
+                    return "";
             }
         };
 
