@@ -191,6 +191,7 @@ class ActiveGame
     return result
   end
 
+  # Parse REDIS hgetall Array and return Hash
   def self.array_to_hash(arr)
     current_key = nil
     hash = Hash.new
@@ -222,6 +223,7 @@ class ActiveGame
     end
   end
 
+  # Create a new game with custom rules (Handles Form Submit From View)
   def create_game
     if (current_user != nil)
       map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
