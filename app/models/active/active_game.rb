@@ -465,7 +465,15 @@ class ActiveGame
 
   # Force the end of the current players turn
   def force_end_turn
-    end_turn
+    cp = current_player
+
+    cp.missed_turns = cp.missed_turns + 1
+
+    if cp.missed_turns > 2
+      self.flag_player(cp)
+    else
+      end_turn
+    end
   end
 
   # Delete All
