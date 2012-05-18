@@ -5,6 +5,7 @@ class Player < ActiveRecord::Base
   
   DEFAULT_PLAYER_STATE = "waiting"
   PLAYING_PLAYER_STATE = "playing"
+  AWAY_PLAYER_STATE = "away"
   DEAD_PLAYER_STATE = "dead"
   
   attr_accessible :seat_number, :is_turn, :user, :state
