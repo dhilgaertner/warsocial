@@ -158,6 +158,56 @@ class ActiveGame
     return game
   end
 
+  # Find games to be shown in the lobby
+  def self.get_lobby_games
+    lobby_games = REDIS.smembers("lobby_games")
+
+    game_data = REDIS.multi do
+      lobby_games.each do |lg|
+        REDIS.hgetall("game:#{lg}")
+        REDIS.keys("game:#{lg}:player:*")
+      end
+    end
+
+    result = Array.new
+
+    game_data.each_with_index do |data, index|
+      results_case = (index % 2)
+
+      case results_case
+        when 0
+          gh = ActiveGame.array_to_hash(data)
+          player_count = game_data[index + 1].size
+
+          result << {  :name => gh["name"],
+                       :state => gh["state"],
+                       :player_count => player_count,
+                       :max_players => gh["max_player_count"].to_i,
+                       :map => gh["map_name"]
+          }
+      end
+    end
+
+    return result
+  end
+
+  def self.array_to_hash(arr)
+    current_key = nil
+    hash = Hash.new
+
+    arr.each_with_index do |item, index|
+      is_key = (index % 2) == 0
+
+      if is_key
+        current_key = item
+      else
+        hash[current_key] = item
+      end
+    end
+
+    return hash
+  end
+
   # Is the user in the game?
   def is_user_in_game?(user)
     self.players.has_key?(user.id)
@@ -198,39 +248,6 @@ class ActiveGame
     else
       render :text=>"Forbidden", :status=>403
     end
-  end
-
-  # Find games to be shown in the lobby
-  def self.get_lobby_games
-    lobby_games = REDIS.smembers("lobby_games")
-
-    game_data = REDIS.multi do
-      lobby_games.each do |lg|
-        REDIS.hgetall("game:#{lg}")
-        REDIS.keys("game:#{lg}:player:*")
-      end
-    end
-
-    result = Array.new
-
-    game_data.each_with_index do |data, index|
-      results_case = (index % 2)
-
-      case results_case
-        when 0
-          gh = ActiveGame.array_to_hash(data)
-          player_count = game_data[index + 1].size
-
-          result << {  :name => gh["name"],
-                       :state => gh["state"],
-                       :player_count => player_count,
-                       :max_players => gh["max_player_count"].to_i,
-                       :map => gh["map_name"]
-                     }
-      end
-    end
-
-    return result
   end
 
   # Sit player at game table.
@@ -300,68 +317,32 @@ class ActiveGame
 
   # Attack
   def attack(attacking_land_id, defending_land_id)
-    logger = User.logger
-
-    start_time = Time.now
-
-    elapsed = Time.now - start_time
-
-    puts "[#{elapsed * 1000}] start"
-
     lands = get_lands
 
-    elapsed = (Time.now - start_time) - elapsed
-    puts "[#{elapsed * 1000}] 1"
     if (lands[attacking_land_id.to_s].include?(defending_land_id))
-
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 2"
 
       atk_land = self.lands[attacking_land_id]
       def_land = self.lands[defending_land_id]
 
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 3"
-
       attack_user_id = atk_land.player_id
       defend_user_id = def_land.player_id
 
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 4"
-
       if (attack_user_id == defend_user_id || atk_land.deployment == 1)
-        elapsed = (Time.now - start_time) - elapsed
-        puts "[#{elapsed * 1000}] end"
         return
       end
-
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 5"
 
       attack_results = roll(atk_land.deployment)
       defend_results = roll(def_land.deployment)
 
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 6"
-
       attack_sum = attack_results.inject{|sum,x| sum + x }
       defend_sum = defend_results.inject{|sum,x| sum + x }
-
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 7"
 
       winner = attack_sum > defend_sum ? atk_land : def_land
       loser = attack_sum > defend_sum ? def_land : atk_land
 
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 8"
-
       if (atk_land == winner)
         loser_player = loser.player_id != nil ? self.players[loser.player_id] : nil
         winner_player = self.players[winner.player_id]
-
-        elapsed = (Time.now - start_time) - elapsed
-        puts "[#{elapsed * 1000}] 9"
 
         loser.deployment = winner.deployment.to_i - 1
         loser.player_id = winner.player_id
@@ -371,30 +352,15 @@ class ActiveGame
           loser_player.lands.delete(loser.map_land_id)
         end
 
-        elapsed = (Time.now - start_time) - elapsed
-        puts "[#{elapsed * 1000}] 10"
-
         winner.deployment = 1
-
-        elapsed = (Time.now - start_time) - elapsed
-        puts "[#{elapsed * 1000}] 11"
 
         if (loser_player != nil)
           if (loser_player.lands.size == 0)
             loser_player.state = Player::DEAD_PLAYER_STATE
 
-            elapsed = (Time.now - start_time) - elapsed
-            puts "[#{elapsed * 1000}] 12"
-
             players_left = self.players.values.select {|player| player.state != Player::DEAD_PLAYER_STATE }
 
-            elapsed = (Time.now - start_time) - elapsed
-            puts "[#{elapsed * 1000}] 13"
-
             cash_player_out(players_left.size + 1, loser_player)
-
-            elapsed = (Time.now - start_time) - elapsed
-            puts "[#{elapsed * 1000}] 14"
 
           end
         end
@@ -402,18 +368,9 @@ class ActiveGame
         loser.deployment = 1
       end
 
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 16"
-
       restart_turn_timer
 
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 17"
-
       update_delta_points
-
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 18"
 
       data = { :players => self.players.values,
                :attack_info => { :attacker_land_id => attacking_land_id,
@@ -426,22 +383,13 @@ class ActiveGame
                :deployment_changes => [atk_land, def_land]
       }
 
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 19"
-
       broadcast(self.name, GameMsgType::ATTACK, data)
-
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 20"
 
       if check_for_winner
         return  #no save
       end
 
       save_all
-
-      elapsed = (Time.now - start_time) - elapsed
-      puts "[#{elapsed * 1000}] 21"
 
     end
   end
@@ -764,6 +712,7 @@ class ActiveGame
     end
   end
 
+  # Send data to the clients in the room via web socket
   private
   def broadcast(room, type, message)
     Pusher["presence-" + room].trigger(type, message)
@@ -784,6 +733,7 @@ class ActiveGame
     end
   end
 
+  # Parse the hexagon grid to identify lands and their connections
   private
   def get_lands
     if (self.connections == nil)
@@ -867,23 +817,6 @@ class ActiveGame
     lands_decoded = ActiveSupport::JSON.decode(self.connections)
 
     return lands_decoded
-  end
-
-  def self.array_to_hash(arr)
-    current_key = nil
-    hash = Hash.new
-
-    arr.each_with_index do |item, index|
-      is_key = (index % 2) == 0
-
-      if is_key
-        current_key = item
-      else
-        hash[current_key] = item
-      end
-    end
-
-    return hash
   end
 
   private
