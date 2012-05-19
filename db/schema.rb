@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517141917) do
+ActiveRecord::Schema.define(:version => 20120519021218) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(:version => 20120517141917) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "reply_to_id"
-    t.string   "state",       :default => "pending_review"
+    t.string   "state",       :default => "approved"
     t.boolean  "notified",    :default => false
   end
 
@@ -121,11 +121,11 @@ ActiveRecord::Schema.define(:version => 20120517141917) do
     t.string   "subject"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "locked",       :default => false,            :null => false
+    t.boolean  "locked",       :default => false,      :null => false
     t.boolean  "pinned",       :default => false
     t.boolean  "hidden",       :default => false
     t.datetime "last_post_at"
-    t.string   "state",        :default => "pending_review"
+    t.string   "state",        :default => "approved"
     t.integer  "views_count",  :default => 0
   end
 
@@ -217,8 +217,8 @@ ActiveRecord::Schema.define(:version => 20120517141917) do
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "",               :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "",               :null => false
+    t.string   "email",                                 :default => "",         :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "",         :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -240,7 +240,7 @@ ActiveRecord::Schema.define(:version => 20120517141917) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "forem_state",                           :default => "pending_review"
+    t.string   "forem_state",                           :default => "approved"
     t.boolean  "forem_auto_subscribe",                  :default => false
   end
 
