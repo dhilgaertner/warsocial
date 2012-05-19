@@ -137,7 +137,8 @@ class ActiveGame
                                 ph["is_turn"],
                                 ph["current_delta_points"],
                                 ph["current_place"],
-                                ph["reserves"])
+                                ph["reserves"],
+                                ph["missed_turns"])
 
       game.players[player.user_id] = player
     end
@@ -397,11 +398,13 @@ class ActiveGame
   end
 
   # End the current players turn
-  def end_turn
+  def end_turn(will_reenforce=true)
     cp = current_player
     np = next_player
 
-    reenforce(cp, how_many_reenforcements(cp))
+    if (will_reenforce)
+      reenforce(cp, how_many_reenforcements(cp))
+    end
 
     cp.is_turn = false
     np.is_turn = true
@@ -411,6 +414,7 @@ class ActiveGame
     broadcast(self.name, GameMsgType::TURN, {:previous_player => cp, :current_player => np})
 
     save_all
+
   end
 
   # Force the end of the current players turn
@@ -420,7 +424,8 @@ class ActiveGame
     cp.missed_turns = cp.missed_turns + 1
 
     if cp.missed_turns > 2
-      self.flag_player(cp)
+
+      flag_player(User.find(cp.user_id))
     else
       end_turn
     end
@@ -449,7 +454,7 @@ class ActiveGame
       if (player != nil)
 
         if (player.is_turn)
-          end_turn
+          end_turn(false)
         end
 
         player.state = Player::DEAD_PLAYER_STATE
