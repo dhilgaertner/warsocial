@@ -32,8 +32,9 @@ class PusherController < ApplicationController
   end
     
   def auth
+    channel = params[:channel_name]
+
     if current_user
-      channel = params[:channel_name]
 
       #User.track_user_id({ :userId => current_user.id, :game => params[:channel_name] })
 
@@ -45,7 +46,12 @@ class PusherController < ApplicationController
       })
       render :json => response
     else
-      render :text => "Not authorized", :status => '403'
+
+      response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
+          :user_id => "anon", # => required
+          :user_info => { }
+      })
+      render :json => response
     end
   end
 end
