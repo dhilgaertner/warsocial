@@ -2,12 +2,15 @@
   <%= render :partial => 'forem/topics/head', :locals => { :topic => @topic } %>
 
   <menu>
-    <% if @topic.can_be_replied_to? && can?(:reply, @topic) %>
-      <%= link_to t(".reply"), new_topic_post_path(@topic) %>
+    <% if user_signed_in? %>
+        <% if @topic.can_be_replied_to? && can?(:reply, @topic) %>
+          <%= link_to t(".reply"), new_topic_post_path(@topic) %>
+        <% end %>
     <% end %>
     <% if @topic.user == forem_user || forem_admin? %>
       <%= link_to t(".delete"), forum_topic_path(@forum, @topic), :method => :delete, :confirm => t("are_you_sure") %>
     <% end %>
+
   </menu>
 
   <% if forem_admin? %>

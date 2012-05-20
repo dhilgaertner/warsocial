@@ -6,8 +6,10 @@
   <h2><%= link_to forum.title, forum %></h2>
   <menu>
     <% unless @topic.try(:new_record?) %>
-      <% if can? :create_topic, @forum %>
-        <%= link_to t('forem.topic.links.new'), new_forum_topic_path(forum) %>
+      <% if user_signed_in? %>
+          <% if can? :create_topic, @forum %>
+            <%= link_to t('forem.topic.links.new'), new_forum_topic_path(forum) %>
+          <% end %>
       <% end %>
     <% end %>
     <% if @topic %>
