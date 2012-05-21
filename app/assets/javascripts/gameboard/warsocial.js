@@ -219,7 +219,7 @@ WarSocial.prototype.deploy = function( deployment, animation) {
 
         if (deployment[d].deployment != undefined && deployment[d].deployment.constructor === Number && deployment[d].land_id != undefined && deployment[d].land_id.constructor === Number) {
             var p = this.find_by_player_by_id(deployment[d].player_id);
-            if (p != null) m.claim(deployment[d].land_id, p, deployment[d].deployment);
+            m.claim(deployment[d].land_id, p, deployment[d].deployment);
         }
     }
     this.clear_all();

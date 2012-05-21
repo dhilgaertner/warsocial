@@ -68,6 +68,12 @@ Seats.prototype.update_player_data = function(players) {
         var s = ctx._seats[i.toString()];
         var el = s.seat;
 
+        if (player.state == "dead") {
+            $(el).hide();
+        } else {
+            $(el).show();
+        }
+
         var points_string = player.delta_points.toString();
 
         if (player.delta_points != 0) {

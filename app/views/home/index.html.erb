@@ -157,9 +157,9 @@
             seats.stand(player);
         });
 
-        channel.bind('player_quit', function(data) {
-            seats.update_player_data(data.players);
-            player_quit(data.player.player_id);
+        channel.bind('player_quit', function(player) {
+            seats.update_player_data([player]);
+            player_quit(player.player_id);
         });
 
         channel.bind('attack', function(data) {

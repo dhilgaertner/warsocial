@@ -138,7 +138,7 @@ Map.prototype.find_lands_by_player_id = function ( player_id ) {
 Map.prototype.claim = function (land_id, player, troops) {
 
    var l = this.find_land_by_id(land_id);
-   if (l != null && player != null && player != undefined && player instanceof Player) {
+   if (l != null && (player instanceof Player || player == null)) {
        l.setOwner(player);
        if (troops != undefined && troops.constructor === Number) l.setTroops(troops);
    }

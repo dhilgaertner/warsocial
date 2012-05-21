@@ -459,6 +459,12 @@ class ActiveGame
 
         player.state = Player::DEAD_PLAYER_STATE
 
+        player.lands.values.each do |l|
+          l.player_id = nil
+        end
+
+        player.lands.clear
+
         broadcast(self.name, GameMsgType::QUIT, player)
 
         players_left = self.players.values.select {|player| player.state != Player::DEAD_PLAYER_STATE }
