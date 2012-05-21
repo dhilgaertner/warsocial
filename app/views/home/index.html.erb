@@ -53,18 +53,36 @@
         game = null;
 
         var addToChat = function(name, chat) {
-            $('#main_discussion tbody').append($('<tr><td>' + name + ': ' + chat + '</td></tr>'));
+            $('#chat_window tbody').append($('<tr><td>' + name + ': ' + chat + '</td></tr>'));
             $("#chat_window").animate({ scrollTop: $("#chat_window").prop("scrollHeight") }, 300);
         };
 
-        <% if !Rails.env.production? %>
-        // Enable pusher logging - don't include this in production
-        Pusher.log = function(message) {
-            if (window.console && window.console.log) window.console.log(message);
+        var addToLog = function(name, chat) {
+            $('#log_window tbody').append($('<tr><td>' + name + ': ' + chat + '</td></tr>'));
+            $("#log_window").animate({ scrollTop: $("#chat_window").prop("scrollHeight") }, 300);
         };
 
-        // Flash fallback logging - don't include this in production
-        WEB_SOCKET_DEBUG = true;
+        addToLog("Server", "testing123");
+        addToLog("Server", "testing123");
+        addToLog("Server", "testing123");
+        addToLog("Server", "testing123");
+        addToLog("Server", "testing123");
+        addToLog("Server", "testing123");
+        addToChat("Server", "testing123");
+        addToChat("Server", "testing123");
+        addToChat("Server", "testing123");
+        addToChat("Server", "testing123");
+        addToChat("Server", "testing123");
+        addToChat("Server", "testing123");
+
+        <% if !Rails.env.production? %>
+            // Enable pusher logging - don't include this in production
+            Pusher.log = function(message) {
+                if (window.console && window.console.log) window.console.log(message);
+            };
+
+            // Flash fallback logging - don't include this in production
+            WEB_SOCKET_DEBUG = true;
         <% end %>
 
         var pusher = new Pusher('<%= Pusher.key %>');
@@ -73,7 +91,7 @@
 
         channel.bind('pusher:subscription_error', function(status) {
             if(status == 408 || status == 503){
-                // retry?
+                if (window.console && window.console.log) window.console.log("Error establishing connection: " + status.toString());
             }
         });
 
@@ -137,8 +155,8 @@
                         $('#end_turn').show();
                     }
 
-                    addToChat("Room", "Game has started.");
-                    addToChat("Room", p.name + "'s turn to move.");
+                    addToLog("Room", "Game has started.");
+                    addToLog("Room", p.name + "'s turn to move.");
                 }
             }
 
@@ -176,7 +194,7 @@
             seats.clear();
             $('#end_turn').hide();
 
-            addToChat("Room", player.name + " wins!");
+            addToLog("Room", player.name + " wins!");
         });
 
         channel.bind('new_turn', function(data) {
@@ -191,7 +209,7 @@
             seats.turn_start({ player_id: data.current_player.player_id});
             seats.update_player_data([data.previous_player, data.current_player]);
 
-            addToChat("Room", data.current_player.name + "'s turn to move.");
+            addToLog("Room", data.current_player.name + "'s turn to move.");
         });
 
         $("#form_chat")
@@ -382,8 +400,14 @@
       </div>
     </div>
 
+    <div id="log_window">
+        <table>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
     <div id="chat_window">
-        <table id="main_discussion">
+        <table>
             <tbody>
             </tbody>
         </table>
