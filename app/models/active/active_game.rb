@@ -256,6 +256,11 @@ class ActiveGame
   # Sit player at game table.
   def add_player(user)
     if self.state == Game::WAITING_STATE
+
+      if (user.current_points < self.wager_level)
+        return
+      end
+
       sorted_players = self.players.values.sort { |a,b| a.seat_number <=> b.seat_number }
 
       seat = nil
@@ -281,9 +286,6 @@ class ActiveGame
       self.players[user.id] = new_player
 
       broadcast(self.name, GameMsgType::SIT, new_player.as_json)
-
-      user.current_points = user.current_points - self.wager_level
-      user.save
 
       if self.players.size == self.max_player_count
         start_game
@@ -582,9 +584,14 @@ class ActiveGame
   private
   def cash_player_out(position, player)
     user = User.find(player.user_id)
-    user.current_points = user.current_points + GameRule.calc_delta_points(position, self.wager_level, self.max_player_count)
+
+    new_point_total = user.current_points + GameRule.calc_delta_points(position, self.wager_level, self.max_player_count)
+    new_point_total = new_point_total < 0 ? 0 : new_point_total
+
+    user.current_points = new_point_total
     user.save
-    player.current_points = user.current_points
+
+    player.current_points = new_point_total
   end
 
   # Check whether or not the land is owned by the player
