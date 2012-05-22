@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_presence_of :username
   validates_uniqueness_of :username
-  
+  validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
+
   def admin?
     self.forem_admin
   end
