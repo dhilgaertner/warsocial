@@ -6,6 +6,8 @@ class HomeController < ApplicationController
   layout :resolve_layout
 
   def index
+    @isGame = true
+
     @user = User.new(params[:user])
 
     name = params[:game_name] == nil ? "home" : params[:game_name]
