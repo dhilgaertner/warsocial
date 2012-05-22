@@ -217,15 +217,11 @@ class HomeController < ApplicationController
   end
 
   def get_lobby_games
-    if current_user
-      games = ActiveGame.get_lobby_games
+    games = ActiveGame.get_lobby_games
 
-      response = { :games => games, :online => User.online_user_ids }
+    response = { :games => games, :online => User.online_user_ids }
 
-      render :json => response
-    else
-      render :text => "Not authorized", :status => 403
-    end
+    render :json => response
   end
 
   private
