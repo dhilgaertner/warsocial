@@ -273,7 +273,8 @@
         div#game_main #top_players .player_stat2 div {
             width: 30px;
             height: 17px;
-            margin-top: 7px;
+            margin-top: 2px;
+            margin-left: 6px;
         }
 
 		div#game_main #left_players{
@@ -550,7 +551,7 @@
 				<div style="margin-top: 30px;">
 					<div class="avatar"></div>
 					<p id="username"><%= current_user.username %></p><br>
-					<%= link_to "Settings", "#", :class => "top_links" %>
+					<%= link_to "Settings", "#", :class => "top_links", :style => "display:none;" %>
 					<%= link_to "Logout", "/users/sign_out", :method => :delete, :class => "top_links" %>
 				</div>
 			<% end %>
