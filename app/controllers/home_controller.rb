@@ -10,7 +10,13 @@ class HomeController < ApplicationController
 
     @user = User.new(params[:user])
 
-    name = params[:game_name] == nil ? "home" : params[:game_name]
+    if (params[:game_name] == nil)
+      lobby_games = ActiveGame.get_lobby_games
+      running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
+      name = running_games.empty? ? "home" : running_games.first[:name]
+    else
+      name = params[:game_name]
+    end
 
     @dev = params[:dev] == nil ? false : true
     
