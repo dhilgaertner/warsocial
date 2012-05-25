@@ -62,8 +62,11 @@ class User < ActiveRecord::Base
 # Tracking an Active User
   def self.track_user_id(data)
     key = current_key
-    REDIS.sadd(key, data.userId)
-    REDIS.expire(key, 60 * 20)
+
+    REDIS.multi do
+      REDIS.sadd(key, data[:user].id)
+      REDIS.expire(key, 60 * 20)
+    end
   end
 
 # Who's online
@@ -71,9 +74,20 @@ class User < ActiveRecord::Base
     REDIS.sunion(*keys_in_last_5_minutes)
   end
 
+  # Who's online
+  def self.online_users
+    ids = self.online_user_ids
+
+    if (!ids.empty?)
+      User.find(*ids)
+    end
+  end
+
   private
   def self.online_friend_ids(interested_user_id)
-    REDIS.sunionstore("online_users", *keys_in_last_5_minutes)
-    REDIS.sinter("online_users", "user:#{interested_user_id}:friend_ids")
+    REDIS.multi do
+      REDIS.sunionstore("online_users", *keys_in_last_5_minutes)
+      REDIS.sinter("online_users", "user:#{interested_user_id}:friend_ids")
+    end
   end
 end
