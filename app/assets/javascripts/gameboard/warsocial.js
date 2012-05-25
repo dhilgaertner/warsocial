@@ -186,7 +186,12 @@ WarSocial.prototype.attack = function( info ) {
     }
 
     var dicebox = this.getDiceBox();
-    if (dicebox != null && defender != null) dicebox.show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker.getSeatId(), defender.getSeatId());
+    if (dicebox != null && defender != null) {
+		dicebox.show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker.getSeatId(), defender.getSeatId());
+	}
+	else if (dicebox != null) {
+		dicebox.show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker.getSeatId(), 0);	// defender is neutral (id 0)
+	}
     //this.getMap().getMapCanvas().show_dice_box(info.attack_info.attacker_roll, info.attack_info.defender_roll, attacker_id, defender_id);
     setTimeout(function() {this_scope.deploy(info.deployment_changes, false);}, 400);   // delay before calling deployment
 
