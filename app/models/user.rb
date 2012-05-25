@@ -8,13 +8,21 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable#, :confirmable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :forem_admin, :current_points, :total_points
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :forem_admin,
+                  :current_points, :total_points
   
   validates_presence_of :email
   validates_uniqueness_of :email
   validates_presence_of :username
   validates_uniqueness_of :username
   validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
+
+  def as_json(options={})
+    { :user_id => self.id,
+      :username => self.username,
+      :current_points => self.current_points
+    }
+  end
 
   def admin?
     self.forem_admin
