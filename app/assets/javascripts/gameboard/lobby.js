@@ -11,6 +11,12 @@ Lobby.prototype.setupLobby = function() {
 
     this._lobby = $('#' + this.elementId);
     this._tabs = this._lobby.find('.tab');
+
+    this._lobby('nav-tabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+
     this._pages = this._lobby.find('.content_page');
 
     this._pages.hide();

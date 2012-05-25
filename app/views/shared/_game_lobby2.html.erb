@@ -1,22 +1,21 @@
-<div class="modal" id="myModal" style="display: none;">
+<div class="modal" id="game_lobby" style="display: none;">
   <div class="modal-header">
     <button class="close" data-dismiss="modal">×</button>
     <h3>Lobby</h3>
   </div>
   <div class="modal-body">
-    <ul class="nav nav-tabs nav-stacked">
-      <li>
-        <a href="#">Create</a>
-      </li>
-      <li class="active">
-        <a href="#">Who's Online</a>
-      </li>
-      <li>
-        <a href="#">Tables</a>
-      </li>
+    <ul class="nav nav-tabs nav-stacked" style="height: 1000px; width:1000px;">
+      <li><a href="#create" data-toggle="tab">Create</a></li>
+      <li><a href="#online" data-toggle="tab">Who's Online</a></li>
+      <li class="active"><a href="#tables" data-toggle="tab">Tables</a></li>
     </ul>
+    <div class="tab-content">
+      <div class="tab-pane" id="create">create</div>
+      <div class="tab-pane" id="online">online</div>
+      <div class="tab-pane active" id="tables">tables</div>
+    </div>
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn">Close</a>
+    <a href="#" data-dismiss="modal" class="btn">Close</a>
   </div>
 </div>
