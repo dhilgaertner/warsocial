@@ -49,9 +49,9 @@ class User < ActiveRecord::Base
   end
 
   private
-  def self.keys_in_last_5_minutes
+  def self.keys_in_last_n_minutes(n)
     now = Time.now
-    times = (0..5).collect {|n| now - n.minutes }
+    times = (0..n).collect {|num| now - num.minutes }
     times.collect{ |t| key(t.strftime("%M")) }
   end
 
@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
 
 # Who's online
   def self.online_user_ids
-    REDIS.sunion(*keys_in_last_5_minutes)
+    REDIS.sunion(*keys_in_last_n_minutes(10))
   end
 
   # Who's online
@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
   private
   def self.online_friend_ids(interested_user_id)
     REDIS.multi do
-      REDIS.sunionstore("online_users", *keys_in_last_5_minutes)
+      REDIS.sunionstore("online_users", *keys_in_last_n_minutes(10))
       REDIS.sinter("online_users", "user:#{interested_user_id}:friend_ids")
     end
   end
