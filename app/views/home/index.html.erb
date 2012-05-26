@@ -38,6 +38,7 @@
         <script src="/assets/gameboard/turn_timer.js?v=2" type="text/javascript"></script>
         <script src="/assets/gameboard/seats.js?v=2" type="text/javascript"></script>
         <script src="/assets/gameboard/lobby.js?v=2" type="text/javascript"></script>
+        <script src="/assets/gameboard/create_game.js?v=2" type="text/javascript"></script>
     <% end %>
 
 	<script type="text/javascript">
@@ -109,7 +110,8 @@
         var seats = new Seats(7, global_init_data.players);
         seats.update_player_data(global_init_data.players);
 
-        var lobby = new Lobby("game_lobby", lobby_maps);
+        var lobby_modal = new Lobby("game_lobby");
+        var create_game_modal = new CreateGame("create_game", lobby_maps);
 
         var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
         var who_am_i_name = "<%= current_user != nil ? current_user.username : "anon" %>";
@@ -227,19 +229,21 @@
     <div style="margin-bottom: 5px;">This is our alpha release, so expect some bugs. If you can't play, try refreshing your browser. If it still doesn't work, flag and try a new game. Please report any bugs to <%= link_to "bugs@warsocial.com", "mailto:bugs@warsocial.com", :style => "color: blue" %>. Thanks!</div>
     <div id="game_header"></div>
     <div id="game_main">
-        <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :style => "margin-left: 10px;" %>
+      <% if user_signed_in? %>
+          <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;" %>
+          <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn" %>
+          <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
+          <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
+          <%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?" %>
+          <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :id => "end_turn", :class => "btn btn-success", :style => "display: none;" %>
+          <% if current_user.admin? %>
+              <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px;", :class => "btn" %>
+          <% end %>
+      <% else %>
+          <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :style => "margin-left: 10px;" %>
+      <% end %>
 
-        <% if user_signed_in? %>
-            <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn"%>
-            <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn" %>
-            <%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?"%>
-            <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :class => "btn btn-success" %>
-            <% if current_user.admin? %>
-                <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px;", :class => "btn" %>
-            <% end %>
-        <% end %>
-
-        <div style="margin-top: 10px;">
+      <div style="margin-top: 10px;">
             <div id="top_players">
                 <div class="player">
                     <div id="game_seat_2" style="display: none;">
@@ -379,7 +383,7 @@
             </div>
         </div>
       <div style="margin-bottom:5px;">
-        <input id="stats" type="checkbox" checked="checked" /> <span>stats</span>
+        <input id="stats" type="checkbox" checked="checked" style="margin-left: 10px;" /> <span>stats</span>
       </div>
     </div>
 
@@ -402,4 +406,5 @@
     </div>
 <% end %>
 
-<%= render "shared/game_lobby2" %>
+<%= render "shared/game_lobby" %>
+<%= render "shared/create_game" %>

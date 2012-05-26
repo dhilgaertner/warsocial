@@ -17,13 +17,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
   validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
 
-  def as_json(options={})
-    { :user_id => self.id,
-      :username => self.username,
-      :current_points => self.current_points
-    }
-  end
-
   def admin?
     self.forem_admin
   end
@@ -67,14 +60,21 @@ class User < ActiveRecord::Base
     "online_users_minute_#{minute}"
   end
 
+  private
+  def self.user_key(id, key)
+    "user:#{id.to_s}:#{key.to_s}"
+  end
+
 # Tracking an Active User
   def self.track_user_id(data)
     key = current_key
 
-    REDIS.multi do
-      REDIS.sadd(key, data[:user].id)
-      REDIS.expire(key, 60 * 20)
-    end
+    REDIS.sadd(key, data[:user].id)
+    REDIS.expire(key, 60 * 20)
+
+    loc_key = user_key(data[:user].id, "last_loc")
+    REDIS.set(loc_key, data[:game])
+    REDIS.expire(loc_key, 60 * 20)
   end
 
 # Who's online
@@ -87,7 +87,23 @@ class User < ActiveRecord::Base
     ids = self.online_user_ids
 
     if (!ids.empty?)
-      User.find(*ids)
+      users = [*User.find(*ids)]
+
+      loc_keys = ids.collect {|id| user_key(id, "last_loc") }
+      locs = REDIS.mget(*loc_keys)
+
+      result = Array.new
+      users.each_with_index do |u, index|
+        result << { :user_id => u.id,
+                    :username => u.username,
+                    :current_points => u.current_points,
+                    :location => locs[index]
+                  }
+      end
+
+      return result
+    else
+      return []
     end
   end
 

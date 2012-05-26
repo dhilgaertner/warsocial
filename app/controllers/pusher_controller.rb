@@ -36,7 +36,11 @@ class PusherController < ApplicationController
 
     if current_user
 
-      User.track_user_id({ :user => current_user, :game => params[:channel_name] })
+      game_name = params[:channel_name].split("-", 2)[1]
+
+      REDIS.multi do
+        User.track_user_id({ :user => current_user, :game => game_name })
+      end
 
       response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
         :user_id => current_user.id, # => required

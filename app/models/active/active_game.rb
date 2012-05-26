@@ -396,7 +396,10 @@ class ActiveGame
         return  #no save
       end
 
-      save_all
+      REDIS.multi do
+        User.track_user_id({ :user => current_user, :game => self.name })
+        save_all_no_multi
+      end
 
     end
   end
@@ -844,13 +847,19 @@ class ActiveGame
   private
   def save_all
     REDIS.multi do
-      self.save
-      self.players.values.each do |player|
-        player.save
-      end
-      self.lands.values.each do |land|
-        land.save
-      end
+      save_all_no_multi
     end
   end
+
+  private
+  def save_all_no_multi
+    self.save
+    self.players.values.each do |player|
+      player.save
+    end
+    self.lands.values.each do |land|
+      land.save
+    end
+  end
+
 end

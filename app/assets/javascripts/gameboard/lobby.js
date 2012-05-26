@@ -1,9 +1,8 @@
 
-function Lobby(elementId, lobby_maps) {
+function Lobby(elementId) {
     var ctx = this;
 
     this.elementId = elementId;
-    this.maps = lobby_maps;
     this._url_prefix = "";
 
     this._lobby = $('#' + this.elementId);
@@ -18,11 +17,6 @@ function Lobby(elementId, lobby_maps) {
 
 Lobby.prototype.setupLobby = function() {
     var ctx = this;
-
-//    this._tabs.click(function (e) {
-//        e.preventDefault();
-//        $(this).tab('show');
-//    })
 };
 
 Lobby.prototype.setContext = function(context) {
@@ -35,7 +29,7 @@ Lobby.prototype.setupDataTables = function() {
     var ctx = this;
     var url_prefix = this._url_prefix;
 
-    this.otable = $('#game_lobby #tables table').dataTable({
+    this.ttable = $('#game_lobby #tables table').dataTable({
         bFilter: false,
         bInfo: false,
         bLengthChange: false,
@@ -45,73 +39,62 @@ Lobby.prototype.setupDataTables = function() {
         }
     });
 
-    this.otable.fnSort( [ [3,'desc'], [2,'asc'], [1,'asc'] ] );
-    this.otable.find('tr:contains("game started")').css("color", "grey")
+    this.ttable.fnSort( [ [3,'desc'], [2,'asc'], [1,'asc'] ] );
+    this.ttable.find('tr:contains("game started")').css("color", "grey")
 
-    $('select.styled').customStyle();
-
-    $('select.styled:first').change(function() {
-        $.each(ctx.maps, function(index, map){
-            var map_name = $('select.styled:first option:selected').val();
-            var clear_bg = function() {
-                $('#map_preview').attr("style", "");
-            };
-
-            if (map_name == $('select.styled:first option:first').val()) {
-                clear_bg();
-                return false;
-            }
-
-            if (map.name == map_name) {
-                if (map.preview_url != null) {
-                    $('#map_preview').attr("style", "background: url('" + map.preview_url + "') no-repeat scroll center transparent");
-                } else {
-                    clear_bg();
-                }
-            }
-        });
+    this.otable = $('#game_lobby #online table').dataTable({
+        bFilter: false,
+        bInfo: false,
+        bLengthChange: false,
+        bDestroy: true,
+        oLanguage: {
+            sEmptyTable: "None"
+        }
     });
 
-
-    $('#create_game_form')
-        .bind('ajax:beforeSend', function(xhr, settings) {
-
-        })
-        .bind('ajax:success',    function(data, status, xhr) {
-
-        })
-        .bind('ajax:complete', function(xhr, status) {
-            if (status.status == 200) {
-                window.location.href = url_prefix + "/game/" + status.responseText;
-            }
-        })
-        .bind('ajax:error', function(xhr, status, error) {
-
-        });
+    this.otable.fnSort( [ [0,'asc'] ] );
+    this.otable.css("width", "");
 
 };
 
 Lobby.prototype.injectDomData = function(data) {
     var url_prefix = this._url_prefix;
 
-    var add_to_me = $('#tables .table tbody');
+    if (this.ttable != null) {
+        this.ttable.fnClearTable();
+    }
 
     if (this.otable != null) {
         this.otable.fnClearTable();
     }
 
     $("#tables_badge").text(data.games.length.toString());
-    $("#tables_badge").text(data.online.length.toString());
+    $("#online_badge").text(data.online.length.toString());
+
+    var add_to_me = $('#tables .table tbody');
 
     $.each(data.games, function(i, game) {
         add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
     });
 
-    var header = this._lobby.find("#tables tr:first")[0];
+    var add_to_me = $('#online .table tbody');
 
-    this._lobby.find('tr').click(function() {
-        if (this != header) {
+    $.each(data.online, function(i, user) {
+        add_to_me.append("<tr><td>" + user.username + "</td><td>" + user.current_points.toString() + "</td><td>" + user.location + "</td></tr>");
+    });
+
+    var header_tables = this._lobby.find("#tables tr:first")[0];
+    var header_online = this._lobby.find("#online tr:first")[0];
+
+    this._lobby.find('#tables tr').click(function() {
+        if (this != header_tables) {
             window.location.href = url_prefix + "/game/" + $(this).find('td:first').text();
+        }
+    });
+
+    this._lobby.find('#online tr').click(function() {
+        if (this != header_online) {
+            window.location.href = url_prefix + "/game/" + $(this).find('td:last').text();
         }
     });
 };
