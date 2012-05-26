@@ -88,12 +88,13 @@ class User < ActiveRecord::Base
 
     if (!ids.empty?)
       users = [*User.find(*ids)]
+      sorted_users = ids.collect {|id| users.detect {|x| x.id == id.to_i}}
 
       loc_keys = ids.collect {|id| user_key(id, "last_loc") }
       locs = REDIS.mget(*loc_keys)
 
       result = Array.new
-      users.each_with_index do |u, index|
+      sorted_users.each_with_index do |u, index|
         result << { :user_id => u.id,
                     :username => u.username,
                     :current_points => u.current_points,
