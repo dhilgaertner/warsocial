@@ -7,9 +7,9 @@
 
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.8.18.custom.css">
 
-    <script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+    <script src="http://js.pusher.com/1.12/pusher.min.js" type="text/javascript"></script>
 
-    <% if Rails.env.development? %>
+    <% if Rails.env.development? || @dev %>
         <script src="/assets/lib/jquery.dataTables.min.js?v=2" type="text/javascript"></script>
         <script src="/assets/lib/jquery.simplemodal.1.4.2.min.js" type="text/javascript"></script>
         <script src="/assets/lib/customSelect.jquery.js" type="text/javascript"></script>
@@ -47,6 +47,12 @@
 	var global_init_data;
 
     $(document).ready(function() {
+//        $('#myModal').modal({
+//            backdrop: true,
+//            keyboard: true,
+//            show: false
+//        });
+
         global_game_name = "<%= @game.name %>";
         global_init_data = <%= @init_data.to_json.html_safe %>;
         lobby_maps = <%= @maps.to_json.html_safe %>;
@@ -244,19 +250,20 @@
     <div style="margin-bottom: 5px;">This is our alpha release, so expect some bugs. If you can't play, try refreshing your browser. If it still doesn't work, flag and try a new game. Please report any bugs to <%= link_to "bugs@warsocial.com", "mailto:bugs@warsocial.com", :style => "color: blue" %>. Thanks!</div>
     <div id="game_header"></div>
     <div id="game_main">
-        <%= link_to image_tag("buttons/lobby_button.png", :border => 0), "#", :id => "lobby_button", :style => "margin-left: 10px; margin-top: 10px;" %>
+        <%# link_to "Lobby", "#", "data-toggle" => "modal", :href => "#myModal", :class => "btn", :style => "margin-left: 10px;" %>
+        <%= link_to "Lobby", "#", :id => "lobby_button", :style => "margin-left: 10px", :class => "btn" %>
 
         <% if user_signed_in? %>
-            <%= link_to image_tag("buttons/sit_button.png", :border => 0), sit_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
-            <%= link_to image_tag("buttons/stand_button.png", :border => 0), stand_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
-            <%= link_to image_tag("buttons/flag_button.png", :border => 0), flag_home_index_path(:game_name => @game.name), :remote=>true, :style => "margin-left: 10px; margin-top: 10px;" %>
-            <%= link_to image_tag("buttons/end_turn_button.png", :border => 0), end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :style => "margin-left: 10px; margin-top: 10px;" %>
+            <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn"%>
+            <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn" %>
+            <%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?"%>
+            <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :class => "btn btn-success" %>
             <% if current_user.admin? %>
-                <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px; margin-top: 10px;" %>
+                <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px;", :class => "btn" %>
             <% end %>
         <% end %>
 
-        <div>
+        <div style="margin-top: 10px;">
             <div id="top_players">
                 <div class="player">
                     <div id="game_seat_2" style="display: none;">
@@ -396,7 +403,7 @@
             </div>
         </div>
       <div style="margin-bottom:5px;">
-        <input id="stats" type="checkbox" /> <span>stats</span>
+        <input id="stats" type="checkbox" checked="checked" /> <span>stats</span>
       </div>
     </div>
 
@@ -407,7 +414,7 @@
         </table>
     </div>
     <div id="chat_window">
-        <table>
+        <table id="main_discussion" style="margin-left: 5px;">
             <tbody>
             </tbody>
         </table>

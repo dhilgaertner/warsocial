@@ -6,9 +6,17 @@ class HomeController < ApplicationController
   layout :resolve_layout
 
   def index
+    @isGame = true
+
     @user = User.new(params[:user])
 
-    name = params[:game_name] == nil ? "home" : params[:game_name]
+    if (params[:game_name] == nil)
+      lobby_games = ActiveGame.get_lobby_games
+      running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
+      name = running_games.empty? ? "home" : running_games.first[:name]
+    else
+      name = params[:game_name]
+    end
 
     @dev = params[:dev] == nil ? false : true
     
@@ -215,15 +223,11 @@ class HomeController < ApplicationController
   end
 
   def get_lobby_games
-    if current_user
-      games = ActiveGame.get_lobby_games
+    games = ActiveGame.get_lobby_games
 
-      response = { :games => games, :online => User.online_user_ids }
+    response = { :games => games, :online => User.online_users }
 
-      render :json => response
-    else
-      render :text => "Not authorized", :status => 403
-    end
+    render :json => response
   end
 
   private

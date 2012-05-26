@@ -36,7 +36,7 @@ class PusherController < ApplicationController
 
     if current_user
 
-      #User.track_user_id({ :userId => current_user.id, :game => params[:channel_name] })
+      User.track_user_id({ :user => current_user, :game => params[:channel_name] })
 
       response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
         :user_id => current_user.id, # => required

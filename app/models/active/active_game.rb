@@ -724,7 +724,7 @@ class ActiveGame
   private
   def kill_turn_timer
     if (self.turn_timer_id != nil)
-      old_job = Delayed::Job.find(self.turn_timer_id)
+      old_job = Delayed::Job.find_by_id(self.turn_timer_id)
       if old_job != nil
         old_job.destroy
         self.turn_timer_id = nil

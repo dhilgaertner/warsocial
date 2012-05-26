@@ -8,13 +8,22 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable#, :confirmable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :forem_admin, :current_points, :total_points
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :forem_admin,
+                  :current_points, :total_points
   
   validates_presence_of :email
   validates_uniqueness_of :email
   validates_presence_of :username
   validates_uniqueness_of :username
-  
+  validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
+
+  def as_json(options={})
+    { :user_id => self.id,
+      :username => self.username,
+      :current_points => self.current_points
+    }
+  end
+
   def admin?
     self.forem_admin
   end
@@ -61,8 +70,11 @@ class User < ActiveRecord::Base
 # Tracking an Active User
   def self.track_user_id(data)
     key = current_key
-    REDIS.sadd(key, data.userId)
-    REDIS.expire(key, 60 * 20)
+
+    REDIS.multi do
+      REDIS.sadd(key, data[:user].id)
+      REDIS.expire(key, 60 * 20)
+    end
   end
 
 # Who's online
@@ -70,9 +82,20 @@ class User < ActiveRecord::Base
     REDIS.sunion(*keys_in_last_5_minutes)
   end
 
+  # Who's online
+  def self.online_users
+    ids = self.online_user_ids
+
+    if (!ids.empty?)
+      User.find(*ids)
+    end
+  end
+
   private
   def self.online_friend_ids(interested_user_id)
-    REDIS.sunionstore("online_users", *keys_in_last_5_minutes)
-    REDIS.sinter("online_users", "user:#{interested_user_id}:friend_ids")
+    REDIS.multi do
+      REDIS.sunionstore("online_users", *keys_in_last_5_minutes)
+      REDIS.sinter("online_users", "user:#{interested_user_id}:friend_ids")
+    end
   end
 end
