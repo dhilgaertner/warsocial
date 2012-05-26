@@ -4,15 +4,33 @@
     <h3>Lobby</h3>
   </div>
   <div class="modal-body">
-    <ul class="nav nav-tabs nav-stacked" style="height: 1000px; width:1000px;">
+    <ul class="nav nav-pills">
       <li><a href="#create" data-toggle="tab">Create</a></li>
-      <li><a href="#online" data-toggle="tab">Who's Online</a></li>
-      <li class="active"><a href="#tables" data-toggle="tab">Tables</a></li>
+      <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">1</span></a></li>
+      <li class="active"><a href="#tables" data-toggle="tab">Tables<span id="tables_badge" class="badge">1</span></a></li>
     </ul>
-    <div class="tab-content">
-      <div class="tab-pane" id="create">create</div>
-      <div class="tab-pane" id="online">online</div>
-      <div class="tab-pane active" id="tables">tables</div>
+    <div class="well">
+        <div class="tab-content">
+          <div class="tab-pane" id="create">create</div>
+          <div class="tab-pane" id="online">
+            online
+          </div>
+          <div class="tab-pane active" id="tables">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Players</th>
+                <th>Wager</th>
+                <th>State</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
     </div>
   </div>
   <div class="modal-footer">

@@ -1,33 +1,28 @@
 
 function Lobby(elementId, lobby_maps) {
+    var ctx = this;
+
     this.elementId = elementId;
     this.maps = lobby_maps;
     this._url_prefix = "";
 
+    this._lobby = $('#' + this.elementId);
+    this._tabs = this._lobby.find('nav-tabs a');
+
+    this._lobby.on('show', function () {
+        if (!$(ctx._lobby[0]).is(":visible")) {
+            ctx.open();
+        }
+    })
 }
 
 Lobby.prototype.setupLobby = function() {
     var ctx = this;
 
-    this._lobby = $('#' + this.elementId);
-    this._tabs = this._lobby.find('.tab');
-
-    this._lobby('nav-tabs a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    })
-
-    this._pages = this._lobby.find('.content_page');
-
-    this._pages.hide();
-
-    this._tabs.click(function() {
-        $('#lobby_header').removeClass();
-        $('#lobby_header').addClass($(this).attr('name'));
-
-        ctx._pages.hide();
-        ctx._lobby.find('div.content_page[name="' + $(this).attr('name') + '"]').show();
-    });
+//    this._tabs.click(function (e) {
+//        e.preventDefault();
+//        $(this).tab('show');
+//    })
 };
 
 Lobby.prototype.setContext = function(context) {
@@ -40,8 +35,7 @@ Lobby.prototype.setupDataTables = function() {
     var ctx = this;
     var url_prefix = this._url_prefix;
 
-    this.otable = $('#open_tables').dataTable({
-        bJQueryUI: true,
+    this.otable = $('#game_lobby #tables table').dataTable({
         bFilter: false,
         bInfo: false,
         bLengthChange: false,
@@ -51,47 +45,8 @@ Lobby.prototype.setupDataTables = function() {
         }
     });
 
-    this.rtable = $('#running_tables').dataTable({
-        bJQueryUI: true,
-        bFilter: false,
-        bInfo: false,
-        bLengthChange: false,
-        bDestroy: true,
-        oLanguage: {
-            sEmptyTable: "None"
-        }
-    });
-
-    /* Add a click handler to the rows - this could be used as a callback */
-    $('#open_tables').find("tbody tr").click( function( e ) {
-        if (!$(this).hasClass('row_selected') ) {
-            ctx.otable.$('tr.row_selected').removeClass('row_selected');
-            $(this).addClass('row_selected');
-        }
-    });
-
-    /* Add a click handler to the rows - this could be used as a callback */
-    $('#running_tables').find("tbody tr").click( function( e ) {
-        if (!$(this).hasClass('row_selected') ) {
-            ctx.rtable.$('tr.row_selected').removeClass('row_selected');
-            $(this).addClass('row_selected');
-        }
-    });
-
-    /* Get the rows which are currently selected */
-    var fnGetSelected = function( oTableLocal )
-    {
-        return oTableLocal.$('tr.row_selected');
-    };
-
-    /* Add a click handler for the delete row */
-    $('#delete').click( function() {
-        var anSelected = fnGetSelected( oTable );
-        //oTable.fnDeleteRow( anSelected[0] );
-    } );
-
-    $('#open_tables_wrapper div:first').hide();
-    $('#running_tables_wrapper div:first').hide();
+    this.otable.fnSort( [ [3,'desc'], [2,'asc'], [1,'asc'] ] );
+    this.otable.find('tr:contains("game started")').css("color", "grey")
 
     $('select.styled').customStyle();
 
@@ -137,17 +92,25 @@ Lobby.prototype.setupDataTables = function() {
 };
 
 Lobby.prototype.injectDomData = function(data) {
-
     var url_prefix = this._url_prefix;
 
-    $.each(data.games, function(i, game) {
-        var add_to_me = game.state == 'game started' ? $('#running_tables tbody') : $('#open_tables tbody');
+    var add_to_me = $('#tables .table tbody');
 
-        add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.map + "</td></tr>");
+    if (this.otable != null) {
+        this.otable.fnClearTable();
+    }
+
+    $("#tables_badge").text(data.games.length.toString());
+    $("#tables_badge").text(data.online.length.toString());
+
+    $.each(data.games, function(i, game) {
+        add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
     });
 
+    var header = this._lobby.find("#tables tr:first")[0];
+
     this._lobby.find('tr').click(function() {
-        if($(this).parent().parent().find('tr:first')[0] != $(this)[0]) {
+        if (this != header) {
             window.location.href = url_prefix + "/game/" + $(this).find('td:first').text();
         }
     });
@@ -161,17 +124,4 @@ Lobby.prototype.open = function() {
         ctx.injectDomData(data);
         ctx.setupDataTables();
     });
-
-    this._lobby.modal({
-        opacity:60,
-        overlayCss: {
-            backgroundColor:"black"
-        }
-    });
-
-    $(this._tabs[1]).click();
-};
-
-Lobby.prototype.close = function() {
-
 };

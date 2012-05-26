@@ -184,7 +184,9 @@ class ActiveGame
                        :state => gh["state"],
                        :player_count => player_count,
                        :max_players => gh["max_player_count"].to_i,
-                       :map => gh["map_name"]
+                       :map => gh["map_name"],
+                       :wager => gh["wager_level"].to_i,
+                       :state => gh["state"]
           }
       end
     end
