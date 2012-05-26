@@ -64,7 +64,7 @@ class HomeController < ApplicationController
       Pusher["presence-" + game_name].trigger(GameMsgType::CHATLINE, {:entry => CGI.escapeHTML(params[:entry]), :name => current_user.username})
 
       REDIS.multi do
-        User.track_user_id({ :user => current_user, :game => game_name })
+        User.track_user_id({ :user_id => current_user.id, :game => game_name })
         REDIS.rpush("chat_logs", "(#{game_name})#{current_user.username}:#{CGI.escapeHTML(params[:entry])}")
       end
     end

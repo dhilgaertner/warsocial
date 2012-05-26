@@ -69,10 +69,10 @@ class User < ActiveRecord::Base
   def self.track_user_id(data)
     key = current_key
 
-    REDIS.sadd(key, data[:user].id)
+    REDIS.sadd(key, data[:user_id])
     REDIS.expire(key, 60 * 20)
 
-    loc_key = user_key(data[:user].id, "last_loc")
+    loc_key = user_key(data[:user_id], "last_loc")
     REDIS.set(loc_key, data[:game])
     REDIS.expire(loc_key, 60 * 20)
   end

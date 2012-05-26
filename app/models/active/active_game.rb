@@ -397,8 +397,8 @@ class ActiveGame
       end
 
       REDIS.multi do
-        User.track_user_id({ :user => current_user, :game => self.name })
         save_all_no_multi
+        User.track_user_id({ :user_id => attack_user_id, :game => self.name })
       end
 
     end
