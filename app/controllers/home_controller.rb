@@ -234,6 +234,10 @@ class HomeController < ApplicationController
     render :json => response
   end
 
+  def sign_up_confirmation
+
+  end
+
   private
   def resolve_layout
     case action_name
