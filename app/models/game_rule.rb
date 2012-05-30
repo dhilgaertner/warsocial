@@ -10,7 +10,7 @@ class GameRule < ActiveRecord::Base
   def self.calc_delta_points(position, wager, entries)
     real_wager = wager == 0 ? 25 : wager
     prize_pot = (entries * real_wager)
-    first_bonus = (entries - 1) * real_wager
+    first_bonus = (entries - 1) * 25
 
     if (entries > 3)
       case position
