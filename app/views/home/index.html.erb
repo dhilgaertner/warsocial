@@ -210,6 +210,20 @@
             }
         });
         $('#stats').change();
+
+        $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
+            switch(xhr.responseText) {
+                case "not_logged_in":
+                    addToChat("Room", "You are not currently logged in.  Please re-login.");
+                    break;
+                case "not_enough_points":
+                    addToChat("Room", "You do not have enough points to sit at this table.");
+                    break;
+                case "already_in_game":
+                    addToChat("Room", "You are already seated in this game.");
+                    break;
+            }
+        });
     });
 
     $(window).load(function() {
@@ -226,7 +240,7 @@
       <% if user_signed_in? %>
           <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;" %>
           <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn" %>
-          <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
+          <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote => true, :id => "sit_button", :class => "btn" %>
           <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
           <%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?" %>
           <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :id => "end_turn", :class => "btn btn-success", :style => "display: none;" %>

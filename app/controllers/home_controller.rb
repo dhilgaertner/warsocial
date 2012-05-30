@@ -76,6 +76,7 @@ class HomeController < ApplicationController
     if (current_user != nil)
       map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
       number_of_players = [2,3,4,5,6,7].include?(params[:select_players].to_i) ? params[:select_players].to_i : 2
+      wager = [0,50,100,200,500,1000,2000,5000,10000].include?(params[:select_wager].to_i) ? params[:select_wager].to_i : 0
       game_name = nil
 
       try_name = current_user.username
@@ -86,7 +87,7 @@ class HomeController < ApplicationController
 
         if (gr == nil)
           game_name = try_name
-          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players)
+          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players, :wager_level => wager)
         else
           try = try + 1
           try_name = current_user.username + try.to_s
@@ -164,16 +165,24 @@ class HomeController < ApplicationController
     
     game = ActiveGame.get_active_game(game_name)
 
-    if (current_user != nil && !game.is_user_in_game?(current_user))
-      if game.state == Game::WAITING_STATE
-        game.add_player(current_user)
-        
-        render :text=>"Success", :status=>200
+    if (current_user != nil)
+      if(!game.is_user_in_game?(current_user))
+        if game.state == Game::WAITING_STATE
+          if game.can_i_afford_it?(current_user)
+            game.add_player(current_user)
+
+            render :text=>"success", :status=>200
+          else
+            render :text=>"not_enough_points", :status=>500
+          end
+        else
+          render :text=>"game_started", :status=>500
+        end
       else
-        render :text=>"Game has already started.", :status=>500
+        render :text=>"already_in_game", :status=>500
       end
     else
-      render :text=>"Already in game or not logged in.", :status=>500
+      render :text=>"not_logged_in", :status=>500
     end
   end
   

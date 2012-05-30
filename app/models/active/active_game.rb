@@ -491,6 +491,14 @@ class ActiveGame
     end
   end
 
+  def can_i_afford_it?(user)
+    if user.current_points >= self.wager_level
+      return true
+    else
+      return false
+    end
+  end
+
   # Start Game
   private
   def start_game
