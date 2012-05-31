@@ -9,22 +9,23 @@ class GameRule < ActiveRecord::Base
   # @return [int] - This function returns the resulting points change given the position, ante, and number of players
   def self.calc_delta_points(position, wager, entries)
     real_wager = wager == 0 ? 25 : wager
-    prize_pot = (entries * real_wager)
     first_bonus = (entries - 1) * 25
 
     if (entries > 3)
+      prize_pot = ((entries - 2) * real_wager)
+
       case position
         when 1
-          return ((prize_pot - real_wager) * 0.6) + first_bonus
+          return (prize_pot * (3/4)) + first_bonus
         when 2
-          return ((prize_pot - real_wager) * 0.4)
+          return (prize_pot * (1/4))
         else
           return 0 - real_wager
       end
     else
       case position
         when 1
-          return prize_pot + first_bonus - real_wager
+          return ((entries - 1) * real_wager) + first_bonus
         else
           return 0 - real_wager
       end
