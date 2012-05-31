@@ -16,9 +16,9 @@ class GameRule < ActiveRecord::Base
 
       case position
         when 1
-          return (prize_pot * (3/4)) + first_bonus
+          return (prize_pot * (3.0/4.0)).to_i + first_bonus
         when 2
-          return (prize_pot * (1/4))
+          return (prize_pot * (1.0/4.0)).to_i
         else
           return 0 - real_wager
       end
