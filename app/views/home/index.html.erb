@@ -211,6 +211,12 @@
         });
         $('#stats').change();
 
+        $('#dice_visible').change(function() {
+            var checked = $('#dice_visible').prop('checked');
+            dice_visible(checked)
+        });
+        $('#dice_visible').change();
+
         $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
             switch(xhr.responseText) {
                 case "not_logged_in":
@@ -405,6 +411,7 @@
         </div>
       <div style="margin-bottom:5px;">
         <input id="stats" type="checkbox" checked="checked" style="margin-left: 10px;" /> <span>stats</span>
+        <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" /> <span>dice</span>
       </div>
     </div>
 
