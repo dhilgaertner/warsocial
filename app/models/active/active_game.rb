@@ -315,9 +315,6 @@ class ActiveGame
         self.players.delete(user.id)
 
         broadcast(self.name, GameMsgType::STAND, player_to_delete.as_json)
-
-        user.current_points = user.current_points + self.wager_level
-        user.save
       end
     end
   end
