@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-responsive.min.css">
+  <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+
+  <script src="/jquery/jquery-1.7.min.js?v=2" type="text/javascript"></script>
+  <script src="/bootstrap/js/bootstrap.min.js?v=2" type="text/javascript"></script>
+
+  <style type="text/css" media="screen">
+      .green {
+        border: 1px solid green;
+      }
+
+      .red {
+          border: 1px solid red;
+      }
+
+      .blue {
+          border: 1px solid blue;
+      }
+
+      .violet {
+          border: 1px solid violet;
+      }
+  </style>
+
+  <script type="text/javascript">
+
+      $(document).ready(function() {
+          $('.dropdown-toggle').dropdown();
+      });
+
+  </script>
+</head>
+<body>
+<div class="container-fluid violet">
+  <div class="navbar navbar-static" id="navbar-example">
+    <div class="navbar-inner">
+      <div style="width: auto;" class="container">
+        <a href="#" class="brand">WarSocial</a>
+        <ul class="nav">
+          <li><a href="#">How to Play</a></li>
+          <li><a href="#">Leaderboard</a></li>
+          <li><a href="#">Forum</a></li>
+          <li><a href="#">Map Creator</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+        <ul class="nav pull-right">
+          <li class="dropdown" id="fat-menu">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">deadcode <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Settings</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row green">
+    <div class="span8 red" style="height: 420px;">
+      <%= image_tag("/test/game_placeholder.png") %>
+    </div>
+    <div class="span4 blue" style="height: 200px;">
+      CHAT
+    </div>
+  </div>
+</div>
+</body>
+</html>

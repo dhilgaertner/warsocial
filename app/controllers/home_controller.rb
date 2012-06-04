@@ -5,6 +5,10 @@ require 'active/active_land'
 class HomeController < ApplicationController
   layout :resolve_layout
 
+  def index2
+
+  end
+
   def index
     @isGame = true
 
@@ -252,6 +256,8 @@ class HomeController < ApplicationController
     case action_name
       when "facebook_index"
         "facebook"
+      when "index2"
+        nil
       else
         "application"
     end
