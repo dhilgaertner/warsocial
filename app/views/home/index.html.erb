@@ -39,6 +39,7 @@
         <script src="/assets/gameboard/turn_timer.js?v=2" type="text/javascript"></script>
         <script src="/assets/gameboard/seats.js?v=2" type="text/javascript"></script>
         <script src="/assets/gameboard/lobby.js?v=2" type="text/javascript"></script>
+        <script src="/assets/gameboard/chatbox.js?v=2" type="text/javascript"></script>
     <% end %>
 
 	<script type="text/javascript">
@@ -67,19 +68,6 @@
             $('#log_window tbody').append($('<tr><td>' + name + ': ' + chat + '</td></tr>'));
             $("#log_window").animate({ scrollTop: $("#chat_window").prop("scrollHeight") }, 300);
         };
-
-        addToLog("Server", "testing123");
-        addToLog("Server", "testing123");
-        addToLog("Server", "testing123");
-        addToLog("Server", "testing123");
-        addToLog("Server", "testing123");
-        addToLog("Server", "testing123");
-        addToChat("Server", "testing123");
-        addToChat("Server", "testing123");
-        addToChat("Server", "testing123");
-        addToChat("Server", "testing123");
-        addToChat("Server", "testing123");
-        addToChat("Server", "testing123");
 
         <% if !Rails.env.production? %>
             // Enable pusher logging - don't include this in production
@@ -237,6 +225,10 @@
             }
         });
         $('#stats').change();
+
+        var chatbox = new ChatBox("chat_window");
+
+        chatbox.addChatLine("deadcode", "hello", "blue");
     });
 
     $(window).load(function() {

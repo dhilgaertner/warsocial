@@ -1,17 +1,16 @@
 
 function ChatBox(elementId) {
-    this.elementId = elementId;
+    this._chatwindow = $('#' + elementId);
+    this._tbody = this._chatwindow.find('table tbody');
 
+    this.setupChatBox();
 }
 
-Lobby.prototype.setupChatBox = function() {
+ChatBox.prototype.setupChatBox = function() {
 
 };
 
-Lobby.prototype.addChatLine = function(username, message, color) {
-
-};
-
-Lobby.prototype.addRoom = function(username, message, color) {
-
+ChatBox.prototype.addChatLine = function(username, message, color) {
+    this._tbody.append($('<tr><td><span style="color: ' + color + ';"><b>' + username + '</b></span>: ' + message + '</td></tr>'));
+    this._chatwindow.animate({ scrollTop: this._chatwindow.prop("scrollHeight") }, 300);
 };
