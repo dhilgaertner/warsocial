@@ -140,3 +140,15 @@ Seats.prototype.stand = function(player) {
 		}
 	});
 };
+
+Seats.prototype.getColorOrNil = function(player_id) {
+    var ctx = this;
+    var colors = ["#f8af01", "#3760ae", "#c22b2b", "#5fb61f", "#603bb3", "#27a7b2", "#ad3bac"]
+    $.each(this._seats, function(key, occupant) {
+        if (occupant.player != null) {
+            if (occupant.player.player_id == player.player_id) {
+                return colors[ParseIn]
+            }
+        }
+    });
+};
