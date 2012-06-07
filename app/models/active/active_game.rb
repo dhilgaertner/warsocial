@@ -184,7 +184,9 @@ class ActiveGame
                        :state => gh["state"],
                        :player_count => player_count,
                        :max_players => gh["max_player_count"].to_i,
-                       :map => gh["map_name"]
+                       :map => gh["map_name"],
+                       :wager => gh["wager_level"].to_i,
+                       :state => gh["state"]
           }
       end
     end
@@ -313,9 +315,6 @@ class ActiveGame
         self.players.delete(user.id)
 
         broadcast(self.name, GameMsgType::STAND, player_to_delete.as_json)
-
-        user.current_points = user.current_points + self.wager_level
-        user.save
       end
     end
   end
@@ -394,7 +393,10 @@ class ActiveGame
         return  #no save
       end
 
-      save_all
+      REDIS.multi do
+        save_all_no_multi
+        User.track_user_id({ :user_id => attack_user_id, :game => self.name })
+      end
 
     end
   end
@@ -483,6 +485,14 @@ class ActiveGame
       return player
     else
       return nil
+    end
+  end
+
+  def can_i_afford_it?(user)
+    if user.current_points >= self.wager_level
+      return true
+    else
+      return false
     end
   end
 
@@ -842,13 +852,19 @@ class ActiveGame
   private
   def save_all
     REDIS.multi do
-      self.save
-      self.players.values.each do |player|
-        player.save
-      end
-      self.lands.values.each do |land|
-        land.save
-      end
+      save_all_no_multi
     end
   end
+
+  private
+  def save_all_no_multi
+    self.save
+    self.players.values.each do |player|
+      player.save
+    end
+    self.lands.values.each do |land|
+      land.save
+    end
+  end
+
 end

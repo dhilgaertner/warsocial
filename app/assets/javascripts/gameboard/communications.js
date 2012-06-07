@@ -32,6 +32,10 @@ function player_quit( id ) {
     if (game != undefined && game != null) game.playerQuit(id);
 }
 
+function dice_visible( is_visible ) {
+    if (game != undefined && game != null) game.toggle_dice(is_visible);
+}
+
 /**
  * Calls TO the server
  */

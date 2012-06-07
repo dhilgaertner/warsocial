@@ -1,21 +1,22 @@
-<div id="game_lobby_wrapper">
-    <div id="lobby_header" class="online">
-        <%= link_to "Who's Online", "#", :name => "online", :class => "tab", :style => "left: 11px;" %>
-        <%= link_to "Open Tables", "#", :name => "open_tables", :class => "tab", :style => "left: 28px;" %>
-        <%= link_to "Running", "#", :name => "running_tables", :class => "tab", :style => "left: 46px;" %>
-        <%= link_to "Create", "#", :name => "create_table", :class => "tab", :style => "left: 63px;" %>
-    </div>
-    <div id="lobby_content_wrapper">
-        <div class="content_page" name="online">
-            Coming Soon.
-        </div>
-        <div class="content_page" name="open_tables">
-          <table id="open_tables" cellpadding="5px;">
+<div class="modal" id="game_lobby" style="display: none;">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Lobby</h3>
+  </div>
+  <div class="modal-body">
+    <ul class="nav nav-pills">
+      <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">1</span></a></li>
+      <li class="active"><a href="#tables" data-toggle="tab">Tables<span id="tables_badge" class="badge">1</span></a></li>
+    </ul>
+    <div class="well">
+      <div class="tab-content">
+        <div class="tab-pane" id="online">
+          <table class="table table-striped">
             <thead>
             <tr>
               <th>Name</th>
-              <th>Players</th>
-              <th>Map</th>
+              <th>Points</th>
+              <th>Last Location</th>
             </tr>
             </thead>
             <tbody>
@@ -23,13 +24,14 @@
             </tbody>
           </table>
         </div>
-        <div class="content_page" name="running_tables">
-          <table id="running_tables" cellpadding="5px;">
+        <div class="tab-pane active" id="tables">
+          <table class="table table-striped">
             <thead>
             <tr>
               <th>Name</th>
               <th>Players</th>
-              <th>Map</th>
+              <th>Wager</th>
+              <th>State</th>
             </tr>
             </thead>
             <tbody>
@@ -37,31 +39,10 @@
             </tbody>
           </table>
         </div>
-        <div class="content_page" style="width: 741px" name="create_table">
-          <%= form_tag(create_game_home_index_path, :id => "create_game_form", :remote=>true) do %>
-              <div id="create-header-top">
-                  <select class="styled" id="select_map" name="select_map" style="margin-top: 8px; margin-left: 10px; width:210px;">
-                    <option>Choose Map</option>
-                    <% @maps.each do |map| %>
-                        <option value="<%= map.name %>"><%= map.name %></option>
-                    <% end %>
-                  </select>
-
-                  <select class="styled" name="select_players" style="margin-top: 8px; margin-left: 10px; width:210px;">
-                    <option>Players</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-              </div>
-              <div id="map_preview"></div>
-              <div id="create-header-bottom">
-                  <%= image_submit_tag "buttons/create_new.png", { :style => "margin-left: 10px; margin-top: 8px;", :disable => true } %>
-              </div>
-          <% end %>
-        </div>
+      </div>
     </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn">Close</a>
+  </div>
 </div>

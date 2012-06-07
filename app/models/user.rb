@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable#, :confirmable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :forem_admin,
+  attr_accessible :email, :password, :remember_me, :username, :forem_admin,
                   :current_points, :total_points
   
   validates_presence_of :email
@@ -16,13 +16,6 @@ class User < ActiveRecord::Base
   validates_presence_of :username
   validates_uniqueness_of :username
   validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
-
-  def as_json(options={})
-    { :user_id => self.id,
-      :username => self.username,
-      :current_points => self.current_points
-    }
-  end
 
   def admin?
     self.forem_admin
@@ -56,9 +49,9 @@ class User < ActiveRecord::Base
   end
 
   private
-  def self.keys_in_last_5_minutes
+  def self.keys_in_last_n_minutes(n)
     now = Time.now
-    times = (0..5).collect {|n| now - n.minutes }
+    times = (0..n).collect {|num| now - num.minutes }
     times.collect{ |t| key(t.strftime("%M")) }
   end
 
@@ -67,19 +60,26 @@ class User < ActiveRecord::Base
     "online_users_minute_#{minute}"
   end
 
+  private
+  def self.user_key(id, key)
+    "user:#{id.to_s}:#{key.to_s}"
+  end
+
 # Tracking an Active User
   def self.track_user_id(data)
     key = current_key
 
-    REDIS.multi do
-      REDIS.sadd(key, data[:user].id)
-      REDIS.expire(key, 60 * 20)
-    end
+    REDIS.sadd(key, data[:user_id])
+    REDIS.expire(key, 60 * 20)
+
+    loc_key = user_key(data[:user_id], "last_loc")
+    REDIS.set(loc_key, data[:game])
+    REDIS.expire(loc_key, 60 * 20)
   end
 
 # Who's online
   def self.online_user_ids
-    REDIS.sunion(*keys_in_last_5_minutes)
+    REDIS.sunion(*keys_in_last_n_minutes(10))
   end
 
   # Who's online
@@ -87,14 +87,31 @@ class User < ActiveRecord::Base
     ids = self.online_user_ids
 
     if (!ids.empty?)
-      User.find(*ids)
+      users = [*User.find(*ids)]
+      sorted_users = ids.collect {|id| users.detect {|x| x.id == id.to_i}}
+
+      loc_keys = ids.collect {|id| user_key(id, "last_loc") }
+      locs = REDIS.mget(*loc_keys)
+
+      result = Array.new
+      sorted_users.each_with_index do |u, index|
+        result << { :user_id => u.id,
+                    :username => u.username,
+                    :current_points => u.current_points,
+                    :location => locs[index]
+                  }
+      end
+
+      return result
+    else
+      return []
     end
   end
 
   private
   def self.online_friend_ids(interested_user_id)
     REDIS.multi do
-      REDIS.sunionstore("online_users", *keys_in_last_5_minutes)
+      REDIS.sunionstore("online_users", *keys_in_last_n_minutes(10))
       REDIS.sinter("online_users", "user:#{interested_user_id}:friend_ids")
     end
   end

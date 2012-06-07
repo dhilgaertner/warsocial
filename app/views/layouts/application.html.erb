@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>WarSocial Alpha</title>
+  <title>Play Risk Online - WarSocial</title>
 
-  <META NAME="Description" CONTENT="Your descriptive sentence or two goes here.">
+  <meta name="Description" content="WarSocial is a free dice-based online multiplayer social strategy game similar to Risk, Conquerclub, Dicewars, Kdice and Lux Delux.">
+  <meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
+
   <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
   <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -84,7 +86,7 @@
 		div#footer .fourth {
 			float: left;
 			width: 210px;
-			margin-top: -5px;
+			margin-top: 28px;
 			margin-left: 40px;
 		}
 
@@ -207,7 +209,13 @@
 			height: 42px;
 		}
 
-		div#game_main {
+        div#game_header .header_item {
+            float:left;
+            height: 36px;
+            padding-top: 2px;
+        }
+
+        div#game_main {
 			width: 773px;
 			border-left: 1px solid #C0C0C0;
 			border-right: 1px solid #C0C0C0;
@@ -419,6 +427,22 @@
             float: right;
         }
 
+        div#game_lobby .nav .badge {
+            float: right;
+            margin-left: 10px;
+            margin-top: -2px;
+        }
+
+        div#game_lobby .nav li a {
+            background-color: grey;
+            color: white;
+        }
+
+        div#game_lobby .nav li.active a {
+            background-color: #3a87ad;
+            color: white;
+        }
+
         div#lobby_header {
             height: 47px;
         }
@@ -461,6 +485,7 @@
         }
 
         div#map_preview {
+            margin-top: 20px;
             height: 250px;
         }
 
@@ -571,17 +596,14 @@
             background-color: #3a87ad;
         }
 
-        #simplemodal-container a.modalCloseImg {
-            background:url(<%=image_path "lobby/x.png"%>) no-repeat; /* adjust url as required */
-            background-position: center;
-            width:30px;
-            height:34px;
-            display:inline;
-            z-index:3200;
-            position:absolute;
-            top: 3px;
-            right: 4px;
-            cursor:pointer;
+        #game_lobby tbody tr:hover td {
+            background-color: #3a87ad;
+            color: white;
+            cursor: pointer;
+        }
+
+        #DataTables_Table_0_next {
+            margin-left: 10px;
         }
 
         #log_window div {
@@ -592,6 +614,11 @@
             margin-top:5px;
             border-bottom: 1px solid grey;
         }
+
+        #DataTables_Table_1_next {
+            margin-left: 10px;
+        }
+
 	</style>
 </head>
 <body>
@@ -628,9 +655,9 @@
           <li>
             <%= link_to "Forum", "/forums/forums/1", :target => @isGame ? "_blank" : "_self" %>
           </li>
-          <li>
-            <%= link_to "Map Creator", "http://blog.warsocial.com/post/18214496263/ma1achais-map-creator", :target => @isGame ? "_blank" : "_self" %>
-          </li>
+          <!--<li>-->
+            <!--<%= link_to "Map Creator", "http://blog.warsocial.com/post/18214496263/ma1achais-map-creator", :target => @isGame ? "_blank" : "_self" %>-->
+          <!--</li>-->
           <li>
             <%= link_to "Blog", "http://blog.warsocial.com", :target => @isGame ? "_blank" : "_self" %>
           </li>
@@ -658,7 +685,7 @@
 <div id="footer">
   <div class="fourth">
     <p class="title">Alpha Version</p>
-    <div style="height: 175px">
+    <div style="height: 205px">
 
     </div>
   </div>

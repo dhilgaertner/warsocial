@@ -1,21 +1,30 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<div class="well" style="width: 470px; margin-top: 50px; margin-left: 120px; margin-right: auto;">
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
   <%= devise_error_messages! %>
 
-  <p><%= f.label :username %><br />
-  <%= f.text_field :username %></p>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Sign up" %></div>
+    <fieldset>
+      <legend>Sign Up</legend>
+      <div class="control-group">
+        <%= f.label :username, :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :username, :class => "input-xlarge" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :email, :class => "control-label" %>
+        <div class="controls">
+          <%= f.email_field :email, :class => "input-xlarge" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :password, :class => "control-label" %>
+        <div class="controls">
+          <%= f.password_field :password, :class => "input-xlarge" %>
+        </div>
+      </div>
+      <%= f.submit "Create Account", :class => "btn btn-large btn-success", :style => "margin-left: 160px;" %>
+    </fieldset>
 <% end %>
+</div>
 
-<%= render :partial => "devise/shared/links" %>
+

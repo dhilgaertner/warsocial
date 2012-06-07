@@ -11,7 +11,6 @@
 
     <% if Rails.env.development? || @dev %>
         <script src="/assets/lib/jquery.dataTables.min.js?v=2" type="text/javascript"></script>
-        <script src="/assets/lib/jquery.simplemodal.1.4.2.min.js" type="text/javascript"></script>
         <script src="/assets/lib/customSelect.jquery.js" type="text/javascript"></script>
 
         <% if !@dev %>
@@ -41,7 +40,7 @@
         <script src="/assets/gameboard/lobby.js?v=2" type="text/javascript"></script>
         <script src="/assets/gameboard/chatbox.js?v=2" type="text/javascript"></script>
         <script src="/assets/gameboard/gamelog.js?v=2" type="text/javascript"></script>
-
+        <script src="/assets/gameboard/create_game.js?v=2" type="text/javascript"></script>
     <% end %>
 
 	<script type="text/javascript">
@@ -105,7 +104,8 @@
 
         $('#end_turn').hide();
 
-        var lobby = new Lobby("game_lobby_wrapper", lobby_maps);
+        var lobby_modal = new Lobby("game_lobby");
+        var create_game_modal = new CreateGame("create_game", lobby_maps);
 
         var who_am_i = <%= current_user != nil ? current_user.id : 0 %>;
         var who_am_i_name = "<%= current_user != nil ? current_user.username : "anon" %>";
@@ -202,10 +202,6 @@
                     $('#entry').val("");
                 });
 
-        $('#lobby_button').click(function() {
-            lobby.open();
-        });
-
         $('#stats').change(function() {
             var checked = $('#stats').prop('checked');
             if (checked) {
@@ -215,6 +211,26 @@
             }
         });
         $('#stats').change();
+
+        $('#dice_visible').change(function() {
+            var checked = $('#dice_visible').prop('checked');
+            dice_visible(checked)
+        });
+        $('#dice_visible').change();
+
+        $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
+            switch(xhr.responseText) {
+                case "not_logged_in":
+                    addToChat("Room", "You are not currently logged in.  Please re-login.");
+                    break;
+                case "not_enough_points":
+                    addToChat("Room", "You do not have enough points to sit at this table.");
+                    break;
+                case "already_in_game":
+                    addToChat("Room", "You are already seated in this game.");
+                    break;
+            }
+        });
     });
 
     $(window).load(function() {
@@ -225,23 +241,37 @@
 <% end %>
 
 <div id="game">
-    <div style="margin-bottom: 5px;">This is our alpha release, so expect some bugs. If you can't play, try refreshing your browser. If it still doesn't work, flag and try a new game. Please report any bugs to <%= link_to "bugs@warsocial.com", "mailto:bugs@warsocial.com", :style => "color: blue" %>. Thanks!</div>
-    <div id="game_header"></div>
+    <div style="margin-bottom: 5px; font-size:.98em;">This is our alpha release, so expect some bugs. If you can't play, try refreshing. Please report bugs in the <%= link_to "forum", "/forums/forums/1", :target => "_blank", :style => "color: blue" %>.</div>
+    <div id="game_header">
+      <div class="header_item" style="width:132px;">
+        <h3 style="text-align: center; margin-top: 4px;"><%= @game.name %></h3>
+      </div>
+      <div class="header_item" style="width: 97px;">
+        <h4 style="text-align: center; margin-top: 8px;"><%= "#{@game.wager_level} wager" %></h4>
+      </div>
+      <div class="header_item" style="width: 64px;">
+        <h4 style="text-align: center; margin-top: 8px;"><%= "#{@game.max_player_count} seats" %></h4>
+      </div>
+      <div class="header_item" style="width:482px;">
+
+      </div>
+    </div>
     <div id="game_main">
-        <%# link_to "Lobby", "#", "data-toggle" => "modal", :href => "#myModal", :class => "btn", :style => "margin-left: 10px;" %>
-        <%= link_to "Lobby", "#", :id => "lobby_button", :style => "margin-left: 10px", :class => "btn" %>
+      <% if user_signed_in? %>
+          <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;" %>
+          <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn" %>
+          <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote => true, :id => "sit_button", :class => "btn" %>
+          <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
+          <%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?" %>
+          <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :id => "end_turn", :class => "btn btn-success", :style => "display: none;" %>
+          <% if current_user.admin? %>
+              <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px;", :class => "btn" %>
+          <% end %>
+      <% else %>
+          <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :style => "margin-left: 10px;" %>
+      <% end %>
 
-        <% if user_signed_in? %>
-            <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn"%>
-            <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn" %>
-            <%= link_to "Flag", flag_home_index_path(:game_name => @game.name), :remote=>true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?"%>
-            <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote=>true, :id => "end_turn", :class => "btn btn-success" %>
-            <% if current_user.admin? %>
-                <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px;", :class => "btn" %>
-            <% end %>
-        <% end %>
-
-        <div style="margin-top: 10px;">
+      <div style="margin-top: 10px;">
             <div id="top_players">
                 <div class="player">
                     <div id="game_seat_2" style="display: none;">
@@ -327,6 +357,7 @@
                 <div id="stage" style="top: 0px; left: 0px; position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
                     <canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
                     <canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+                    <canvas id="canvas_hilight_player" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
                     <canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
 
                     <canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
@@ -381,7 +412,9 @@
             </div>
         </div>
       <div style="margin-bottom:5px;">
-        <input id="stats" type="checkbox" checked="checked" /> <span>stats</span>
+        <input id="stats" type="checkbox" checked="checked" style="margin-left: 10px;" /> <span>stats</span>
+        <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" /> <span>dice</span>
+        <%= link_to "Refer a friend: 1,000 points for them, points and cash for you.", "http://raf.warsocial.com", :target => "_blank", :style => "margin-right: 10px; float: right; color: purple" %>
       </div>
     </div>
 
@@ -410,3 +443,4 @@
 <% end %>
 
 <%= render "shared/game_lobby" %>
+<%= render "shared/create_game" %>

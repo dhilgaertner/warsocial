@@ -2,6 +2,7 @@ Dice::Application.routes.draw do
   ActiveAdmin.routes(self)
 
   devise_for :admin_users, ActiveAdmin::Devise.config
+  devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   mount RailsAdmin::Engine => '/old_admin', :as => 'rails_admin'
 
@@ -22,6 +23,8 @@ Dice::Application.routes.draw do
   match 'leaderboard' => 'leader_board#index'
 
   match 'fb' => 'home#facebook_index'
+  match 'test' => 'home#index2'
+  match 'sign_up_confirmed' => 'home#sign_up_confirmation'
   match 'fb/game/:game_name/' => 'home#facebook_index'
 
   match 'game/:game_name/' => 'home#index'

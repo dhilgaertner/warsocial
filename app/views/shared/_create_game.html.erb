@@ -1,0 +1,47 @@
+<div class="modal" id="create_game" style="display: none;">
+  <%= form_tag(create_game_home_index_path, :id => "create_game_form", :remote=>true) do %>
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Create Game</h3>
+  </div>
+  <div class="modal-body">
+    <div class="well">
+      <select class="styled" id="select_map" name="select_map" style="margin-top: 8px; margin-left: 10px; width:210px;">
+        <option>Choose Map</option>
+        <% @maps.each do |map| %>
+            <option value="<%= map.name %>"><%= map.name %></option>
+        <% end %>
+      </select>
+
+      <select class="styled" name="select_players" style="margin-top: 8px; margin-left: 10px; width:120px;">
+        <option>Players</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+      </select>
+
+      <select class="styled" name="select_wager" style="margin-top: 8px; margin-left: 10px; width:120px;">
+        <option>Wager</option>
+        <option value="0">0</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+        <option value="1000">1,000</option>
+        <option value="2000">2,000</option>
+        <option value="5000">5,000</option>
+        <option value="10000">10,000</option>
+      </select>
+
+      <div id="map_preview"></div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn">Cancel</a> <input type="submit" class="btn btn-success" value="Create">
+  </div>
+  <% end %>
+</div>

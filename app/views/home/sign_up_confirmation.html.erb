@@ -1,0 +1,37 @@
+<% content_for :javascript_includes do %>
+
+<% end %>
+
+<div id="game">
+  <div style="margin-bottom: 5px;">This is our alpha release, so expect some bugs. If you can't play, try refreshing. Please report any bugs in the <%= link_to "forum", "/forums/forums/1", :target => "_blank", :style => "color: blue" %>.</div>
+
+  <div class="hero-unit" style="margin-top: 40px;">
+      <h1>Welcome <%= current_user.username %>!</h1>
+      <p>Thank you for signing up!</p>
+      <p>
+        <a href="/" class="btn btn-primary btn-large">
+          Play now!
+        </a>
+      </p>
+    </div>
+</div>
+<% if user_signed_in? %>
+    <!-- Google Code for WS Signups 1 Conversion Page -->
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var google_conversion_id = 963081295;
+        var google_conversion_language = "en";
+        var google_conversion_format = "3";
+        var google_conversion_color = "ffffff";
+        var google_conversion_label = "UfyQCLH3jgQQz-idywM";
+        var google_conversion_value = 0;
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+      <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/963081295/?value=0&amp;label=UfyQCLH3jgQQz-idywM&amp;guid=ON&amp;script=0"/>
+      </div>
+    </noscript>
+<% end %>

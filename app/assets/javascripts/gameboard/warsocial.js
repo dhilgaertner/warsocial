@@ -320,6 +320,6 @@ WarSocial.prototype.clear_all = function() {
 
 };
 
-WarSocial.prototype.toggle_dice = function() {
-   $('#dice_container').toggle();
+WarSocial.prototype.toggle_dice = function(isVisible) {
+   $('#dice_container').toggle(isVisible);
 };
