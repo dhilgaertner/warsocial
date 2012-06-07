@@ -144,12 +144,15 @@ Seats.prototype.stand = function(player) {
 Seats.prototype.getColorOrNil = function(username) {
     var ctx = this;
     var colors = ["#f8af01", "#3760ae", "#c22b2b", "#5fb61f", "#603bb3", "#27a7b2", "#ad3bac"];
+    var color = null;
     $.each(this._seats, function(key, occupant) {
         if (occupant.player != null) {
             if (occupant.player.name == username) {
-                return colors[ParseInt(key)];
+                color = colors[parseInt(key)];
+                return false;
             }
         }
     });
-    return nil;
+
+    return color;
 };

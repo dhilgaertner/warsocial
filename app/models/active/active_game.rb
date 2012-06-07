@@ -380,10 +380,10 @@ class ActiveGame
       data = { :players => self.players.values,
                :attack_info => { :attacker_land_id => attacking_land_id,
                                  :attacker_roll => attack_results,
-                                 :attacker_player_id => atk_land.player_id,
+                                 :attacker_player_id => attack_user_id,
                                  :defender_land_id => defending_land_id,
                                  :defender_roll => defend_results,
-                                 :defender_player_id => def_land.player_id
+                                 :defender_player_id => defend_user_id
                },
                :deployment_changes => [atk_land, def_land]
       }
