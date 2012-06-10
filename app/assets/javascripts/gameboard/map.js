@@ -212,6 +212,26 @@ Map.prototype.drawcanvas = function(dicedelay) {
 };
 
 /**
+ *  Hilight all the lands of a single player to show that it is his turn
+ */
+Map.prototype.hilight_player_lands = function( player_id ) {
+  // get the list of lands
+  var lands = [];
+  if (player_id != undefined && player_id.constructor === Number) {
+    lands = this.find_lands_by_player_id(player_id);
+
+    var index = 0;
+    	this.getMapCanvas().unhilight_player_lands();	// clear previous hilight
+
+		// loop through all of the player's land to hilight them
+    while (index < lands.length) {
+				this.getMapCanvas().hilight_player_land(this.getTiles(), this.getWidth(), this.getHeight(), lands[index].getId());
+        index++;
+    }
+  }
+};
+
+/**
  * Interaction
  */
 
@@ -230,5 +250,4 @@ Map.prototype.unselect = function( is_origin ) {
         this.getMapCanvas().unhilight_destination_land();
     }
 };
-
 

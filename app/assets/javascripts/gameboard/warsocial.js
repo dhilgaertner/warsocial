@@ -241,6 +241,9 @@ WarSocial.prototype.nextTurn = function( player_id ) {
         this.removeMouseListener();
         this.setCurrentPlayerId(player_id);
 
+	var m = this.getMap();
+	m.hilight_player_lands(player_id);
+
         // DEMO : TO BE REMOVED !!
         //this.setUserId( player_id );
 

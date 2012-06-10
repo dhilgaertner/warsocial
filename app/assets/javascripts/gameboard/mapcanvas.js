@@ -623,8 +623,8 @@ MapCanvas.prototype.draw_dice = function(x, y, value, has_shadow, context, playe
 /**
  * HILIGHT
  */
-MapCanvas.prototype.hilight_land = function(map_data, map_width, map_height, id, canvas){
-    var ctx = canvas.getContext("2d");
+MapCanvas.prototype.hilight_land = function(map_data, map_width, map_height, id, canvas, hilight_strength){
+  var ctx = canvas.getContext("2d");
 	var canvas_mask = document.createElement('canvas');	// create a temp canvas for the mask
 	var ctx_mask = canvas_mask.getContext('2d');
 	var r, c;
@@ -680,8 +680,8 @@ MapCanvas.prototype.hilight_land = function(map_data, map_width, map_height, id,
 
 	// draw gradient hilight
 	var gradient = ctx.createRadialGradient(x_centre, y_centre, 0, x_centre, y_centre, radius);
-	gradient.addColorStop(0.0,"rgba(255, 255, 255, 0.9)");
-	gradient.addColorStop(1.0,"rgba(255, 255, 255, 0.5)");
+	gradient.addColorStop(0.0,"rgba(255, 255, 255," + hilight_strength + ")");   // 0.9
+	gradient.addColorStop(1.0,"rgba(255, 255, 255," + hilight_strength/2 + ")");   // 0.5
 	ctx.globalCompositeOperation="source-out";
 	ctx.drawImage(canvas_mask, 0, 0);
 	ctx.globalCompositeOperation="source-in";	// use source-in for the mask effect
@@ -691,12 +691,49 @@ MapCanvas.prototype.hilight_land = function(map_data, map_width, map_height, id,
 
 
 /**
+* Hilight the player's land to show is his turn, given its id
+**/
+MapCanvas.prototype.hilight_player_land = function(map_data, map_width, map_height, id){
+		var canvas_hilight = document.getElementById("canvas_hilight_player");
+
+		if (canvas_hilight != null){
+		
+			var canvas_hilight_ctx = canvas_hilight.getContext("2d");
+			var canvas_temp = document.createElement('canvas');	// create a temp canvas for the mask
+
+			canvas_temp.width = canvas_hilight.width;
+			canvas_temp.height = canvas_hilight.height;
+
+		  // hilight only if not an empty space (id = 0)
+		  if (id != 0){
+				// hilight a land in a temp canvas
+			  this.hilight_land(map_data, map_width, map_height, id, canvas_temp, 0.5);
+
+				// copy the hilighted land to another canvas			
+				canvas_hilight_ctx.drawImage(canvas_temp, 0, 0);
+		  }
+			this.unhilight_origin_land();
+		}
+};
+
+/**
+* Unhilight the player's land
+**/
+MapCanvas.prototype.unhilight_player_lands = function(){
+	var canvas = document.getElementById("canvas_hilight_player");
+	if (canvas != null){
+		var ctx = canvas.getContext('2d');
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	}
+};
+
+/**
 * Hilight the origin land, given its id
 **/
 MapCanvas.prototype.hilight_origin_land = function(map_data, map_width, map_height, id){
     // hilight only if not an empty space (id = 0)
     if (id != 0){
-	    this.hilight_land(map_data, map_width, map_height, id, document.getElementById("canvas_hilight_origin"));
+	    this.hilight_land(map_data, map_width, map_height, id, document.getElementById("canvas_hilight_origin"), 0.9);
     }
 };
 
@@ -705,7 +742,7 @@ MapCanvas.prototype.hilight_origin_land = function(map_data, map_width, map_heig
 **/
 MapCanvas.prototype.hilight_destination_land = function(map_data, map_width, map_height, id){
     if (id != 0){
-	    this.hilight_land(map_data, map_width, map_height, id, document.getElementById("canvas_hilight_destination"));
+	    this.hilight_land(map_data, map_width, map_height, id, document.getElementById("canvas_hilight_destination"), 0.9);
     }
 };
 
@@ -726,7 +763,6 @@ MapCanvas.prototype.unhilight_destination_land = function(){
 	var ctx = canvas.getContext('2d');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
-
 
 
 
