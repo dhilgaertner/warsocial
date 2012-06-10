@@ -1,14 +1,14 @@
 <tr class="topic <%= cycle('odd', 'even') %> <%= topic.locked? ? 'locked' : 'unlocked' %>">
   <td class='icon'>
     <% if topic.locked? %>
-      <span class='lock icon'></span>
+        <span class="label"><i style="margin-top: 1px;" class="icon-lock icon-white"></i> locked</span>
     <% end %>
     <% if topic.pinned? %>
-      <span class='pin icon'></span>
+        <span class="label label-info"><i style="margin-top: 2px;" class="icon-bookmark icon-white"></i> pinned</span>
     <% end %>
     <% if forem_user && view = topic.view_for(forem_user) %>
       <% if topic.posts.where("created_at > ?", view.updated_at).any? %>
-        <span class='new_posts icon'>new</span>
+        <span class="label label-important">new</span>
       <% end %>
     <% end %>
   </td>
