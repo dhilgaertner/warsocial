@@ -583,7 +583,7 @@ class ActiveGame
 
       self.delete_all
 
-      REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:#{DateTime.now.to_s}")
+      REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:players:#{self.players.values.collect { |x| x.username }.join(",")}:#{DateTime.now.to_s}")
 
       return true
     else
