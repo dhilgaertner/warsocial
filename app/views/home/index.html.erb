@@ -258,8 +258,8 @@
     </div>
     <div id="game_main">
       <% if user_signed_in? %>
-          <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;" %>
-          <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn" %>
+          <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);" %>
+          <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);" %>
           <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote => true, :id => "sit_button", :class => "btn" %>
           <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
           <%= link_to '<i style="margin-top: 2px;" class="icon-flag icon-white"></i> Forfeit'.html_safe, flag_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?" %>
@@ -440,9 +440,9 @@
             </div>
         </div>
       <div style="margin-bottom:5px;">
-        <input id="stats" type="checkbox" checked="checked" style="margin-left: 10px;" /> <span>stats</span>
-        <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" /> <span>dice</span>
-        <%= link_to "Refer a friend: 1,000 points for them, points and cash for you.", "http://raf.warsocial.com", :target => "_blank", :style => "margin-right: 10px; float: right; color: purple" %>
+        <input id="stats" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Stats']);" /> <span>stats</span>
+        <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Dice Toggle']);" /> <span>dice</span>
+        <%= link_to "Refer a friend: 1,000 points for them, points and cash for you.", "http://raf.warsocial.com", :target => "_blank", :style => "margin-right: 10px; float: right; color: purple", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Refer-a-friend']);" %>
       </div>
     </div>
 
@@ -465,7 +465,7 @@
     <%= form_tag(add_line_home_index_path, :id => "form_chat", :remote => true, :autocomplete => "off") do %>
         <%= hidden_field_tag 'game_name', @game.name %>
         <%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
-        <%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending..." } %>
+        <%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending...", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Chat Submit']);" } %>
     <% end %>
     </div>
 <% end %>
