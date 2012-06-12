@@ -1,8 +1,10 @@
 class ActiveGame
 
-  attr_accessor :name, :state, :turn_timer_id, :max_player_count, :wager_level, :map_name, :map_json, :connections
+  attr_accessor :name, :state, :turn_timer_id, :max_player_count, :wager_level, :map_name, :map_json, :connections,
+                :seated_players_counter, :turn_count
 
-  def initialize(name, state, max_player_count, wager_level, map_name, map_json, connections=nil, turn_timer_id=nil)
+  def initialize(name, state, max_player_count, wager_level, map_name, map_json,
+      connections=nil, turn_timer_id=nil, turn_count=0, seated_players_count=0)
     self.name = name
     self.state = state
     self.max_player_count = max_player_count.to_i
@@ -11,6 +13,8 @@ class ActiveGame
     self.map_json = map_json
     self.connections = connections
     self.turn_timer_id = turn_timer_id == "" ? nil : turn_timer_id
+    self.seated_players_counter = seated_players_count
+    self.turn_count = turn_count.to_i
   end
 
   def save
@@ -22,6 +26,7 @@ class ActiveGame
     REDIS.hset(self.id, "wager_level", self.wager_level)
     REDIS.hset(self.id, "map_name", self.map_name)
     REDIS.hset(self.id, "map_json", self.map_json)
+    REDIS.hset(self.id, "turn_count", self.turn_count)
 
     if (self.connections != nil)
       REDIS.hset(self.id, "connections", self.connections)
@@ -38,11 +43,19 @@ class ActiveGame
     REDIS.hdel(self.id, "map_name")
     REDIS.hdel(self.id, "map_json")
     REDIS.hdel(self.id, "connections")
+    REDIS.hdel(self.id, "turn_count")
+
+    REDIS.del(self.redis_seat_counter_id)
   end
 
   # helper method to generate redis id
   def id
     "game:#{self.name}"
+  end
+
+  # helper method to generate redis id
+  def redis_seat_counter_id
+    "game:#{self.name}:seat_counter"
   end
 
   def players
@@ -96,6 +109,7 @@ class ActiveGame
   def self.load_active_game(name)
     game_data = REDIS.multi do
       REDIS.hgetall("game:#{name}")
+      REDIS.get("game:#{name}:seat_counter")
       REDIS.keys("game:#{name}:player:*")
       REDIS.keys("game:#{name}:land:*")
     end
@@ -112,19 +126,20 @@ class ActiveGame
                           gh["map_name"],
                           gh["map_json"],
                           gh["connections"],
-                          gh["turn_timer_id"])
+                          gh["turn_timer_id"],
+                          gh["turn_count"])
 
     player_and_land_data = REDIS.multi do
-      game_data[1].each do |key|
+      game_data[2].each do |key|
         REDIS.hgetall(key)
       end
-      game_data[2].each do |key|
+      game_data[3].each do |key|
         REDIS.hgetall(key)
       end
     end
 
-    player_data = player_and_land_data[0, game_data[1].size]
-    land_data = player_and_land_data[-1 * game_data[2].size, game_data[2].size]
+    player_data = player_and_land_data[0, game_data[2].size]
+    land_data = player_and_land_data[-1 * game_data[3].size, game_data[3].size]
 
     player_data.each do |pd|
       ph = ActiveGame.array_to_hash(pd)
@@ -263,6 +278,13 @@ class ActiveGame
         return
       end
 
+      num_seated = REDIS.incr(self.redis_seat_counter_id)
+
+      if (num_seated > self.max_player_count)
+        REDIS.decr(self.redis_seat_counter_id)
+        return
+      end
+
       sorted_players = self.players.values.sort { |a,b| a.seat_number <=> b.seat_number }
 
       seat = nil
@@ -310,6 +332,7 @@ class ActiveGame
 
       if (player_to_delete != nil)
         REDIS.multi do
+          REDIS.decr(self.redis_seat_counter_id)
           player_to_delete.delete
         end
         self.players.delete(user.id)
@@ -583,7 +606,7 @@ class ActiveGame
 
       self.delete_all
 
-      REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:players:#{self.players.values.collect { |x| x.username }.join(",")}:#{DateTime.now.to_s}")
+      REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:players:#{self.players.values.collect { |x| x.username }.join(",")}:wager:#{self.wager_level.to_s}:#{DateTime.now.to_s}")
 
       return true
     else
