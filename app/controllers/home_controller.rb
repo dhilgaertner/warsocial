@@ -256,8 +256,12 @@ class HomeController < ApplicationController
     case action_name
       when "facebook_index"
         "facebook"
-      when "index2"
-        nil
+      when "index"
+        if (params[:test] == "yes")
+          "application"
+        else
+          "application2"
+        end
       else
         "application"
     end
