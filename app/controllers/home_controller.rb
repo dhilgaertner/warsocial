@@ -37,6 +37,11 @@ class HomeController < ApplicationController
                    :players => @game.players.values,
                    :deployment => @game.lands.values }
 
+    #if (params[:test] == "yes")
+    #  :render => :index2
+    #else
+    #
+    #end
   end
 
   def facebook_index

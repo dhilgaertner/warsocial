@@ -7,7 +7,6 @@
 <meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
 
 <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
-<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-responsive.min.css">
 <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <% if !Rails.env.development? %>
@@ -49,7 +48,7 @@
     }
 
     body {
-        background-color: white;
+        background-color: #dbdbdb;
         margin: 0px;
     }
     * {
@@ -515,12 +514,14 @@
     }
 
     div#chat_window {
+        float: right;
+        width: 400px;
         border: 1px solid #C0C0C0;
         -moz-border-radius: 5px 5px;
         border-radius: 5px 5px;
         -moz-border-radius: 5px 5px;
         border-radius: 5px 5px;
-        height: 215px;
+        height: 175px;
         overflow: auto;
     }
 
@@ -531,6 +532,8 @@
     }
 
     div#log_window {
+        float: left;
+        width: 360px;
         border: 1px solid #C0C0C0;
         -moz-border-radius: 5px 5px;
         border-radius: 5px 5px;
@@ -621,32 +624,98 @@
 </head>
 <body>
 
-<div class="container-fluid violet">
-  <div class="navbar navbar-static" id="navbar-example">
-    <div class="navbar-inner">
-      <div style="width: auto;" class="container">
-        <a href="#" class="brand">WarSocial</a>
-        <ul class="nav">
-          <li><a href="#">How to Play</a></li>
-          <li><a href="#">Leaderboard</a></li>
-          <li><a href="#">Forum</a></li>
-          <li><a href="#">Map Creator</a></li>
-          <li><a href="#">Blog</a></li>
-        </ul>
-        <ul class="nav pull-right">
-          <li class="dropdown" id="fat-menu">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">deadcode <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Settings</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Logout</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+<div id="wrapper">
+  <div id="side-bar">
+    <div style="text-align: center;">
+      <%= link_to image_tag("logo.png", :border => 0), "/", :class => 'logo' %>
+    </div>
+
+    <% if user_signed_in? %>
+        <div style="margin-top: 30px;">
+          <div class="avatar"></div>
+          <p id="username"><%= current_user.username %></p><br>
+          <%= link_to "Settings", "#", :class => "top_links", :style => "display:none;" %>
+          <%= link_to "Logout", "/users/sign_out", :method => :delete, :class => "top_links" %>
+        </div>
+    <% end %>
+
+    <div style="margin-top: 50px;">
+      <ul id="main_nav" class="nav nav-list">
+        <li class="nav-header">
+          Navigation
+        </li>
+        <li>
+          <%= link_to "Game", "/"%>
+        </li>
+        <li>
+          <%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :target => @isGame ? "_blank" : "_self" %>
+        </li>
+        <li>
+          <%= link_to "Leaderboard", "/leaderboard", :target => @isGame ? "_blank" : "_self" %>
+        </li>
+        <li>
+          <%= link_to "Forum", "/forums/forums/1", :target => @isGame ? "_blank" : "_self" %>
+        </li>
+        <!--<li>-->
+        <!--<%= link_to "Map Creator", "http://blog.warsocial.com/post/18214496263/ma1achais-map-creator", :target => @isGame ? "_blank" : "_self" %>-->
+        <!--</li>-->
+        <li>
+          <%= link_to "Blog", "http://blog.warsocial.com", :target => @isGame ? "_blank" : "_self" %>
+        </li>
+      </ul>
     </div>
   </div>
-  <%= yield %>
+  <div id="main-wrapper">
+    <% if !user_signed_in? %>
+        <div id="header">
+          <p>WarSocial is a free online social strategy game similar to risk and dicewars. Try it now!</p>
+
+          <%= link_to image_tag("buttons/login_button.png", :border => 0), "/users/sign_in",:class => 'button', :style => "margin-right: 50px;" %>
+          <%= link_to image_tag("buttons/register_button.png", :border => 0), "/users/sign_up", :class => 'button' %>
+        </div>
+        <div style="text-decoration: underline; color: #008080; margin-left: 55px; font-size: 1.2em; margin-top: -30px; margin-bottom: 15px;"><a style="color: #008080" target="_blank" href="http://blog.warsocial.com/post/23256145206/500-leaderboard-contest">We are having a $500 leaderboard contest thru June 15th. Click here for details.</a></div>
+
+    <% else %>
+        <br>
+    <% end %>
+    <div id="content">
+      <%= yield %>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <div class="fourth">
+    <p class="title">Alpha Version</p>
+    <div style="height: 205px">
+
+    </div>
+  </div>
+  <% if false %>
+      <div class="fourth">
+        <p class="title">Connect With Us</p>
+        <p class="item"><%= link_to "Follow us on Facebook", "http://apps.facebook.com/warsocial" %></p>
+        <p class="item"><%= link_to "Press Resources", "#" %></p>
+        <p class="item"><%= link_to "Press Releases", "#" %></p>
+      </div>
+      <div class="fourth">
+        <p class="title">About Us</p>
+        <p class="item"><%= link_to "About WarSocial", "#" %></p>
+        <p class="item"><%= link_to "Jobs", "#" %></p>
+        <p class="item"><%= link_to "Customer Stories", "#" %></p>
+        <p class="item"><%= link_to "Press Resources", "#" %></p>
+        <p class="item"><%= link_to "Press Releases", "#" %></p>
+      </div>
+      <div class="fourth">
+        <p class="title">Contact Us</p>
+        <p class="item"><%= link_to "Contact WarSocial", "#" %></p>
+        <p class="item"><%= link_to "Partner With Us", "#" %></p>
+        <p class="item"><%= link_to "Abuse Desk", "#" %></p>
+        <p class="item"><%= link_to "WarSocial Status", "#" %></p>
+      </div>
+  <% end %>
+  <div style="width:100%; float:left; margin-left:30px; font-size:.8em; color:gray;">
+    <p>&copy; 2011-2012 WarSocial. All Rights Reserved.</p>
+  </div>
 </div>
 </body>
 </html>
