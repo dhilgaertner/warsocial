@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
   has_many :players
   has_many :games, :through => :players
-  
+  has_many :season_scores
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
