@@ -808,7 +808,7 @@ class ActiveGame
 
       for row in 0..(height-1)
         for col in 0..(width-1)
-          t_index = row * width + col   # the current tile index; very important
+          t_index = row * width + col   # the current tile index2; very important
           if (tiles[t_index] == 0)
             next
           end   # continue if this tile is an empty land

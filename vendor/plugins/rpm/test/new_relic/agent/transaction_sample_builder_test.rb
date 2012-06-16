@@ -60,7 +60,7 @@ class NewRelic::Agent::TransationSampleBuilderTest < Test::Unit::TestCase
 
   # this is really a test for transaction sample
   def test_omit_segments_with
-    build_segment "Controller/my_controller/index" do
+    build_segment "Controller/my_controller/index2" do
       sleep 0.010
 
       build_segment "Rails/Application Code Loading" do

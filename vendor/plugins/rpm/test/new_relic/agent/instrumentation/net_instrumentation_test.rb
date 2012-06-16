@@ -16,9 +16,9 @@ unless ENV['FAST_TESTS']
     private :metrics_without_gc
 
     def test_get
-      url = URI.parse('http://www.google.com/index.html')
+      url = URI.parse('http://www.google.com/index2.html')
       res = Net::HTTP.start(url.host, url.port) {|http|
-        http.get('/index.html')
+        http.get('/index2.html')
       }
       assert_match /<head>/i, res.body
       assert_equal %w[External/all External/www.google.com/Net::HTTP/GET External/allOther External/www.google.com/all].sort,
@@ -27,9 +27,9 @@ unless ENV['FAST_TESTS']
 
     def test_background
       perform_action_with_newrelic_trace("task", :category => :task) do
-        url = URI.parse('http://www.google.com/index.html')
+        url = URI.parse('http://www.google.com/index2.html')
         res = Net::HTTP.start(url.host, url.port) {|http|
-          http.get('/index.html')
+          http.get('/index2.html')
         }
         assert_match /<head>/i, res.body
       end
@@ -39,9 +39,9 @@ unless ENV['FAST_TESTS']
 
     def test_transactional
       perform_action_with_newrelic_trace("task") do
-        url = URI.parse('http://www.google.com/index.html')
+        url = URI.parse('http://www.google.com/index2.html')
         res = Net::HTTP.start(url.host, url.port) {|http|
-          http.get('/index.html')
+          http.get('/index2.html')
         }
         assert_match /<head>/i, res.body
       end
@@ -49,32 +49,32 @@ unless ENV['FAST_TESTS']
        External/www.google.com/Net::HTTP/GET:Controller/NewRelic::Agent::Instrumentation::NetInstrumentationTest/task].sort, metrics_without_gc.select{|m| m =~ /^External/}.sort
     end
     def test_get__simple
-      Net::HTTP.get URI.parse('http://www.google.com/index.html')
+      Net::HTTP.get URI.parse('http://www.google.com/index2.html')
       assert_equal metrics_without_gc.sort,
       %w[External/all External/www.google.com/Net::HTTP/GET External/allOther External/www.google.com/all].sort
     end
     def test_ignore
       NewRelic::Agent.disable_all_tracing do
-        url = URI.parse('http://www.google.com/index.html')
+        url = URI.parse('http://www.google.com/index2.html')
         res = Net::HTTP.start(url.host, url.port) {|http|
-          http.post('/index.html','data')
+          http.post('/index2.html','data')
         }
       end
       assert_equal 0, metrics_without_gc.size
     end
     def test_head
-      url = URI.parse('http://www.google.com/index.html')
+      url = URI.parse('http://www.google.com/index2.html')
       res = Net::HTTP.start(url.host, url.port) {|http|
-        http.head('/index.html')
+        http.head('/index2.html')
       }
       assert_equal %w[External/all External/www.google.com/Net::HTTP/HEAD External/allOther External/www.google.com/all].sort,
       metrics_without_gc.sort
     end
 
     def test_post
-      url = URI.parse('http://www.google.com/index.html')
+      url = URI.parse('http://www.google.com/index2.html')
       res = Net::HTTP.start(url.host, url.port) {|http|
-        http.post('/index.html','data')
+        http.post('/index2.html','data')
       }
       assert_equal %w[External/all External/www.google.com/Net::HTTP/POST External/allOther External/www.google.com/all].sort,
       metrics_without_gc.sort

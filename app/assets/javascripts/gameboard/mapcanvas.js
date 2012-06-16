@@ -394,7 +394,7 @@ MapCanvas.prototype.calculate_dice_positions = function(map_data, map_width, map
 }
 
 /**
-* Create a canvas layer for the dice of each land and assign the correct z-index
+* Create a canvas layer for the dice of each land and assign the correct z-index2
 **/
 MapCanvas.prototype.create_dice_layers = function(){
     // go through the stored dice positions and create canvas layers

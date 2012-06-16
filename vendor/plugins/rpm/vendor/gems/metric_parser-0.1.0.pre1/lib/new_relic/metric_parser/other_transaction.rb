@@ -21,7 +21,7 @@ module NewRelic
       end
 
       def drilldown_url(metric_id)
-        {:controller => '/v2/background_tasks', :action => 'index', :task => task, :anchor => "id=#{metric_id}"}
+        {:controller => '/v2/background_tasks', :action => 'index2', :task => task, :anchor => "id=#{metric_id}"}
       end
 
       def path

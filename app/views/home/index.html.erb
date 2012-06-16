@@ -240,8 +240,8 @@
     </script>
 <% end %>
 
-<div class="row">
-<div class="span8" style="height: 620px; min-width: 780px;">
+<div id="game">
+<div style="margin-bottom: 5px; font-size:.98em;">This is our alpha release, so expect some bugs. If you can't play, try refreshing. Please report bugs in the <%= link_to "forum", "/forums/forums/1", :target => "_blank", :style => "color: blue" %>.</div>
 <div id="game_header">
   <div class="header_item" style="width:132px;">
     <h3 style="text-align: center; margin-top: 4px;"><%= @game.name %></h3>
@@ -256,7 +256,6 @@
 
   </div>
 </div>
-
 <div id="game_main">
   <% if user_signed_in? %>
       <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);" %>
@@ -446,33 +445,30 @@
     <%= link_to "Refer a friend: 1,000 points for them, points and cash for you.", "http://raf.warsocial.com", :target => "_blank", :style => "margin-right: 10px; float: right; color: purple", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Refer-a-friend']);" %>
   </div>
 </div>
+
+<div id="log_window">
+  <table style="width: 100%">
+    <tbody>
+    </tbody>
+  </table>
 </div>
-<div class="span4" style="margin-left: 0px; height: 270px; min-width: 200px;">
-  <div id="chat_window">
-    <table style="margin-left: 5px; margin-right: 5px;">
-      <tbody>
-      </tbody>
-    </table>
-  </div>
-  <% if user_signed_in? %>
-      <div style="text-align: center; margin-top: 7px;">
-        <%= form_tag(add_line_home_index_path, :id => "form_chat", :remote => true, :autocomplete => "off") do %>
-            <%= hidden_field_tag 'game_name', @game.name %>
-            <%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
-            <%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending...", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Chat Submit']);" } %>
-        <% end %>
-      </div>
-  <% end %>
-</div>
-<div class="span4" style="margin-left: 0px; height: 270px; min-width: 200px;">
-  <div id="log_window">
-    <table style="width: 100%">
-      <tbody>
-      </tbody>
-    </table>
-  </div>
+<div id="chat_window">
+  <table style="margin-left: 5px; margin-right: 5px;">
+    <tbody>
+    </tbody>
+  </table>
 </div>
 </div>
+
+<% if user_signed_in? %>
+    <div style="text-align: center;">
+      <%= form_tag(add_line_home_index_path, :id => "form_chat", :remote => true, :autocomplete => "off") do %>
+          <%= hidden_field_tag 'game_name', @game.name %>
+          <%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
+          <%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending...", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Chat Submit']);" } %>
+      <% end %>
+    </div>
+<% end %>
 
 <%= render "shared/game_lobby" %>
 <%= render "shared/create_game" %>

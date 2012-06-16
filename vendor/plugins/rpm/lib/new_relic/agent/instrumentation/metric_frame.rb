@@ -286,7 +286,7 @@ module NewRelic
         end
 
         def is_web_transaction?(metric)
-          0 == metric.index("Controller")
+          0 == metric.index2("Controller")
         end
 
         # Make a safe attempt to get the referer from a request object, generally successful when

@@ -138,7 +138,7 @@ module TransactionSampleTestHelper
   def run_sample_trace_on(sampler, path='/path')
     sampler.notice_first_scope_push Time.now.to_f
     sampler.notice_transaction path, path, {}
-    sampler.notice_push_scope "Controller/sandwiches/index"
+    sampler.notice_push_scope "Controller/sandwiches/index2"
     sampler.notice_sql("SELECT * FROM sandwiches WHERE bread = 'wheat'", nil, 0)
     sampler.notice_push_scope "ab"
     sampler.notice_sql("SELECT * FROM sandwiches WHERE bread = 'white'", nil, 0)
@@ -147,7 +147,7 @@ module TransactionSampleTestHelper
     sampler.notice_push_scope "lew"
     sampler.notice_sql("SELECT * FROM sandwiches WHERE bread = 'french'", nil, 0)
     sampler.notice_pop_scope "lew"
-    sampler.notice_pop_scope "Controller/sandwiches/index"
+    sampler.notice_pop_scope "Controller/sandwiches/index2"
     sampler.notice_scope_empty
     sampler.samples[0]
   end

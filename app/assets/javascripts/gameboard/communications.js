@@ -43,7 +43,7 @@ function dice_visible( is_visible ) {
 function attack_out( attack_from, attack_to) {
     $.ajax({
       type: 'POST',
-      url: '/game/' + global_game_name + '/attack',  //global_game_name is defined in index.html.erb
+      url: '/game/' + global_game_name + '/attack',  //global_game_name is defined in index33.html.erb
       data: { atk_land_id: attack_from, def_land_id: attack_to },
       success: function(data) {
 

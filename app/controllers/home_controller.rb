@@ -5,11 +5,11 @@ require 'active/active_land'
 class HomeController < ApplicationController
   layout :resolve_layout
 
-  def index2
+  def index
 
   end
 
-  def index
+  def index2
     @isGame = true
 
     @user = User.new(params[:user])
@@ -38,9 +38,9 @@ class HomeController < ApplicationController
                    :deployment => @game.lands.values }
 
     if (params[:test] == "yes")
-      render :index
-    else
       render :index2
+    else
+      render :index
     end
   end
 
@@ -261,14 +261,14 @@ class HomeController < ApplicationController
     case action_name
       when "facebook_index"
         "facebook"
-      when "index"
+      when "index2"
         if (params[:test] == "yes")
-          "application"
-        else
           "application2"
+        else
+          "application"
         end
       else
-        "application2"
+        "application"
     end
   end
 end
