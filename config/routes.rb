@@ -23,7 +23,6 @@ Dice::Application.routes.draw do
   match 'leaderboard' => 'leader_board#index'
 
   match 'fb' => 'home#facebook_index'
-  match 'test' => 'home#index2'
   match 'sign_up_confirmed' => 'home#sign_up_confirmation'
   match 'fb/game/:game_name/' => 'home#facebook_index'
 
