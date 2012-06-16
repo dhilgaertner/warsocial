@@ -268,7 +268,7 @@ class HomeController < ApplicationController
           "application2"
         end
       else
-        "application"
+        "application2"
     end
   end
 end
