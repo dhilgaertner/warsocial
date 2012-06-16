@@ -38,9 +38,9 @@ class HomeController < ApplicationController
                    :deployment => @game.lands.values }
 
     if (params[:test] == "yes")
-      render :index2
-    else
       render :index
+    else
+      render :index2
     end
   end
 
