@@ -9,7 +9,7 @@ class NewRelic::MetricParser::Client < NewRelic::MetricParser::MetricParser
   def totaltime?; measure == 'totaltime'; end
 
   def all?
-    segments[1].index2('all') == 0
+    segments[1].index('all') == 0
   end
 
   def operation

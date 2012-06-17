@@ -55,7 +55,7 @@ Map.prototype.find_adjacent_lands_from_tiles = function ( tiles, width_line, hei
     // main loop
     for (var row = 0; row < height_col; row++ ) {
          for (var col = 0; col < width_line; col++ ) {
-             // get all needed tiles index2
+             // get all needed tiles index
              var t_index = row*width_line + col;
              if (tiles[t_index] == 0) continue; // Continue if this tile is an empty land
              if ((col%2 == 1) && (row == height_col-1)) continue; // no search in the last row for even number id tile
@@ -74,7 +74,7 @@ Map.prototype.find_adjacent_lands_from_tiles = function ( tiles, width_line, hei
              if ( row != height_col-1 ) {  // If this tile is in the last row of the map, no comparison with bottom line
                 bottom_tile_index = t_index + width_line;
              }
-             //alert("index2 = " + t_index + " right " + right_tile_index + " left " + left_tile_index);
+             //alert("index = " + t_index + " right " + right_tile_index + " left " + left_tile_index);
              // now compare
              // with left tile if exists
              if (left_tile_index != undefined && tiles[t_index] != tiles[left_tile_index] && tiles[left_tile_index] != 0) {
@@ -121,7 +121,7 @@ Map.prototype.find_lands_by_player_id = function ( player_id ) {
   if (player_id != undefined && player_id.constructor === Number) {
     var index = 0;
     while (index < this.getLandList().length) {
-        //alert("search : " + index2 + " " + this.getLandList())
+        //alert("search : " + index + " " + this.getLandList())
         if (this.getLandList()[index] != undefined && this.getLandList()[index].getOwner() != null && this.getLandList()[index].getOwner().getId() == player_id) list.push(this.getLandList()[index]);
         index++;
     }
@@ -178,7 +178,7 @@ Map.prototype.getLandPlayerList = function() {
  */
 Map.prototype.getLandByCoords = function(col, row) {
     if (col == undefined || row == undefined || col.constructor != Number || row.constructor != Number ) { return null;  } // invalid values
-    if (col < 0 || row < 0 || col > this.getWidth()-1 || row > this.getHeight() ) { return null; } // outside grid index2
+    if (col < 0 || row < 0 || col > this.getWidth()-1 || row > this.getHeight() ) { return null; } // outside grid index
 
     var index = row * this.getWidth() + col;
     return this.getTiles()[index];

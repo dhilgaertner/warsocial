@@ -53,7 +53,7 @@ DependencyDetection.defer do
       %w[find_by_solr find_id_by_solr multi_solr_search count_by_solr].each do |method|
         add_method_tracer method, 'SolrClient/ActsAsSolr/query'
       end
-      add_method_tracer :rebuild_solr_index, 'SolrClient/ActsAsSolr/index2'
+      add_method_tracer :rebuild_solr_index, 'SolrClient/ActsAsSolr/index'
     end
   end
 

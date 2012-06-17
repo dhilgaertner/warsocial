@@ -10,7 +10,7 @@ Dice::Application.routes.draw do
 
   mount Forem::Engine, :at => "/forums"
 
-  get "home/index2"
+  get "home/index"
 
   devise_scope :user do
     get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
@@ -20,13 +20,13 @@ Dice::Application.routes.draw do
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
-  match 'leaderboard' => 'leader_board#index2'
+  match 'leaderboard' => 'leader_board#index'
 
   match 'fb' => 'home#facebook_index'
   match 'sign_up_confirmed' => 'home#sign_up_confirmation'
   match 'fb/game/:game_name/' => 'home#facebook_index'
 
-  match 'game/:game_name/' => 'home#index2'
+  match 'game/:game_name/' => 'home#index'
   match 'game/:game_name/fet/:auth' => 'home#force_end_turn'
   match 'game/:game_name/attack' => 'home#attack'
 
@@ -96,8 +96,8 @@ Dice::Application.routes.draw do
   #   end
 
   # You can have the root of your site routed with "root"
-  # just remember to delete public/index2.html.
-  root :to => 'home#index2'
+  # just remember to delete public/index.html.
+  root :to => 'home#index'
   
   # See how all your routes lay out with "rake routes"
 

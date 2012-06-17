@@ -31,9 +31,9 @@ class NewRelic::Agent::BrowserMonitoringTest < Test::Unit::TestCase
     controller.extend ::NewRelic::Agent::BrowserMonitoring
     NewRelic::Control.instance['browser_monitoring'] = { 'auto_instrument' => false }
 
-    controller.perform_action_with_newrelic_trace(:index2)
+    controller.perform_action_with_newrelic_trace(:index)
     first_request_start_time = controller.send(:browser_monitoring_start_time)
-    controller.perform_action_with_newrelic_trace(:index2)
+    controller.perform_action_with_newrelic_trace(:index)
     second_request_start_time = controller.send(:browser_monitoring_start_time)
 
     # assert that these aren't the same time object

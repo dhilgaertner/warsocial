@@ -191,7 +191,7 @@ module NewRelic::DeveloperModeHelper
 
     classes << "segment#{segment.parent_segment.segment_id}" if depth > 1
 
-    classes << "view_segment" if segment.metric_name.index2('View') == 0
+    classes << "view_segment" if segment.metric_name.index('View') == 0
     classes << "summary_segment" if segment.is_a?(NewRelic::TransactionSample::CompositeSegment)
 
     classes.join(' ')

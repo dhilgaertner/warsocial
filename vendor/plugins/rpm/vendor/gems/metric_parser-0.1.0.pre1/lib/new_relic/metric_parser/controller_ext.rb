@@ -12,6 +12,6 @@ NewRelic::MetricParser::Controller.class_eval do
 
   # default to v2 Web Transactions tab
   def drilldown_url(metric_id)
-    {:controller => '/v2/transactions', :action => 'index2', :anchor => "id=#{metric_id}"}
+    {:controller => '/v2/transactions', :action => 'index', :anchor => "id=#{metric_id}"}
   end
 end

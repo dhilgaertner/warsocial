@@ -234,7 +234,7 @@ http://github.com/newrelic/rpm/
     "ui/views/newrelic/file/javascript/jquery-1.4.2.js",
     "ui/views/newrelic/file/javascript/transaction_sample.js",
     "ui/views/newrelic/file/stylesheets/style.css",
-    "ui/views/newrelic/index2.rhtml",
+    "ui/views/newrelic/index.rhtml",
     "ui/views/newrelic/sample_not_found.rhtml",
     "ui/views/newrelic/show_sample.rhtml",
     "ui/views/newrelic/show_source.rhtml",

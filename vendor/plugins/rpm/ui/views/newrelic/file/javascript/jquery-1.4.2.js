@@ -1186,7 +1186,7 @@ jQuery.fn.extend({
 	},
 
 	// Based off of the plugin by Clint Helfers, with permission.
-	// http://blindsignals.com/index2.php/2009/07/jquery-delay/
+	// http://blindsignals.com/index.php/2009/07/jquery-delay/
 	delay: function( time, type ) {
 		time = jQuery.fx ? jQuery.fx.speeds[time] || time : time;
 		type = type || "fx";
@@ -1493,7 +1493,7 @@ jQuery.extend({
 					elem[ name ] = value;
 				}
 
-				// browsers index2 elements by id/name on forms, give priority to attributes.
+				// browsers index elements by id/name on forms, give priority to attributes.
 				if ( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {
 					return elem.getAttributeNode( name ).nodeValue;
 				}
@@ -5410,7 +5410,7 @@ jQuery.extend({
 						add( prefix, v );
 					} else {
 						// If array item is non-scalar (array or object), encode its
-						// numeric index2 to resolve deserialization ambiguity issues.
+						// numeric index to resolve deserialization ambiguity issues.
 						// Note that rack (as of 1.0.0) can't currently deserialize
 						// nested arrays properly, and attempting to do so may cause
 						// a server error. Possible fixes are to modify rack's

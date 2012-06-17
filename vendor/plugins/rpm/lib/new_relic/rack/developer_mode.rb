@@ -35,7 +35,7 @@ module NewRelic
           profile
         when /file/
           ::Rack::File.new(VIEW_PATH).call(env)
-        when /index2/
+        when /index/
           index
         when /threads/
           threads
@@ -62,7 +62,7 @@ module NewRelic
 
       def index
         get_samples
-        render(:index2)
+        render(:index)
       end
 
       def reset

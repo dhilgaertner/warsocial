@@ -38,7 +38,7 @@ class DeveloperModeTest < Test::Unit::TestCase
     assert last_response.ok?
     assert last_response.body.include?('/here')
     assert last_response.body.include?('SandwichesController')
-    assert last_response.body.include?('index2')
+    assert last_response.body.include?('index')
   end  
 
   def test_explain_sql_displays_query_plan
@@ -52,7 +52,7 @@ class DeveloperModeTest < Test::Unit::TestCase
     assert last_response.ok?
     assert last_response.body.include?('PRIMARY')
     assert last_response.body.include?('Key Length')
-    assert last_response.body.include?('Using index2')
+    assert last_response.body.include?('Using index')
   end
 
   private
@@ -68,7 +68,7 @@ class DeveloperModeTest < Test::Unit::TestCase
       'Key Length' => '4',
       'Ref' => '',
       'Rows' => '1',
-      'Extra' => 'Using index2'
+      'Extra' => 'Using index'
     }]
   end
 end
