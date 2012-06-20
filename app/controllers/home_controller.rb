@@ -23,7 +23,8 @@ class HomeController < ApplicationController
     end
 
     @dev = params[:dev] == nil ? false : true
-    
+    @dev_image = params[:dev_image] == nil ? false : true
+
     @game = ActiveGame.get_active_game(name)
 
     if(current_user != nil && current_user.admin?)
