@@ -218,7 +218,13 @@
 
             $('#dice_visible').change(function() {
                 var checked = $('#dice_visible').prop('checked');
-                dice_visible(checked)
+                dice_visible(checked);
+            });
+            $('#dice_visible').change();
+
+            $('#sounds').change(function() {
+                var checked = $('#sounds').prop('checked');
+                sounds_toggle(checked);
             });
             $('#dice_visible').change();
 
@@ -446,6 +452,7 @@
   <div style="margin-bottom:5px;">
     <input id="stats" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Stats']);" /> <span>stats</span>
     <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Dice Toggle']);" /> <span>dice</span>
+    <input id="sounds" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Sounds Toggle']);" /> <span>sounds</span>
     <%= link_to "Refer a friend: 1,000 points for them, points and cash for you.", "http://raf.warsocial.com", :target => "_blank", :style => "margin-right: 10px; float: right; color: purple", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Refer-a-friend']);" %>
   </div>
 </div>

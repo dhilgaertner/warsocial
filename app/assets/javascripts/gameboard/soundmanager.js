@@ -1,9 +1,10 @@
 var maxchannels = 10;
 var SoundManager = new SoundManager();
 
-
 function SoundManager()
 {
+    var are_sounds_on = true;
+
     this.sounds = new Array();
 
     this.init = function ()
@@ -16,7 +17,14 @@ function SoundManager()
         if (audio.canPlayType('audio/ogg')) this.ext = ".ogg";
     }
 
+    this.soundsToggle = function(isOn) {
+        are_sounds_on = isOn;
+    }
+
     this.play = function(effectname){
+
+        if (!are_sounds_on) return;
+
         var snd = null;
 
         switch(effectname) {

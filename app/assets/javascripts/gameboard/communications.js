@@ -36,6 +36,10 @@ function dice_visible( is_visible ) {
     if (game != undefined && game != null) game.toggle_dice(is_visible);
 }
 
+function sounds_toggle( is_on ) {
+    if (game != undefined && game != null) game.toggle_sounds(is_on);
+}
+
 /**
  * Calls TO the server
  */

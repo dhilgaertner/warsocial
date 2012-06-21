@@ -326,3 +326,7 @@ WarSocial.prototype.clear_all = function() {
 WarSocial.prototype.toggle_dice = function(isVisible) {
    $('#dice_container').toggle(isVisible);
 };
+
+WarSocial.prototype.toggle_sounds = function(isOn) {
+    SoundManager.soundsToggle(isOn);
+};
