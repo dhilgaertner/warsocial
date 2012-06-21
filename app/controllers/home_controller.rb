@@ -236,10 +236,13 @@ class HomeController < ApplicationController
   def force_end_turn
     auth = params[:auth]
     game_name = params[:game_name]
-    
+    turn_count = params[:turn_count].to_i
+
     if auth == "whisper" #TODO: Better auth (Dustin)
       game = ActiveGame.get_active_game(game_name)
-      game.force_end_turn
+      if (game.turn_count == turn_count)
+        game.force_end_turn
+      end
     end
     
     render :text=>"Success", :status=>200

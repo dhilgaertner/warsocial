@@ -109,7 +109,6 @@ class ActiveGame
   def self.load_active_game(name)
     game_data = REDIS.multi do
       REDIS.hgetall("game:#{name}")
-      REDIS.get("game:#{name}:seat_counter")
       REDIS.keys("game:#{name}:player:*")
       REDIS.keys("game:#{name}:land:*")
     end
@@ -130,16 +129,16 @@ class ActiveGame
                           gh["turn_count"])
 
     player_and_land_data = REDIS.multi do
-      game_data[2].each do |key|
+      game_data[1].each do |key|
         REDIS.hgetall(key)
       end
-      game_data[3].each do |key|
+      game_data[2].each do |key|
         REDIS.hgetall(key)
       end
     end
 
-    player_data = player_and_land_data[0, game_data[2].size]
-    land_data = player_and_land_data[-1 * game_data[3].size, game_data[3].size]
+    player_data = player_and_land_data[0, game_data[1].size]
+    land_data = player_and_land_data[-1 * game_data[2].size, game_data[2].size]
 
     player_data.each do |pd|
       ph = ActiveGame.array_to_hash(pd)
@@ -435,6 +434,8 @@ class ActiveGame
 
     cp.is_turn = false
     np.is_turn = true
+
+    self.turn_count = self.turn_count + 1
 
     restart_turn_timer
 
@@ -750,14 +751,14 @@ class ActiveGame
   def restart_turn_timer
     kill_turn_timer
 
-    new_job = Delayed::Job.enqueue(TurnJob.new(self.name), :run_at => 20.seconds.from_now)
+    new_job = Delayed::Job.enqueue(TurnJob.new(self.name, self.turn_count), :run_at => 20.seconds.from_now)
     self.turn_timer_id = new_job.id
   end
 
   private
   def kill_turn_timer
     if (self.turn_timer_id != nil)
-      old_job = Delayed::Job.find_by_id(self.turn_timer_id)
+      old_job = Delayed::Job.find_by_id(self.turn_timer_id, self.turn_count)
       if old_job != nil
         old_job.destroy
         self.turn_timer_id = nil

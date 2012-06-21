@@ -59,7 +59,7 @@ Dice::Application.configure do
   config.active_support.deprecation = :notify
   
   # Requirement of Devise Gem Installation (Dustin)
-  config.action_mailer.default_url_options = { :host => 'domain here' }
+  config.action_mailer.default_url_options = { :host => 'warsocial.com' }
   
   require 'pusher'
   
