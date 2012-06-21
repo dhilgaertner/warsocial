@@ -404,6 +404,24 @@
         <%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
         <%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
         <%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
+
+        <% if @dev_image %>
+            <%= image_tag("gameboard/tile_grey.png", :id => 'tile0', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_orange.png", :id => 'tile1', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_blue.png", :id => 'tile2', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border0.png", :id => 'tile_border0', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border1.png", :id => 'tile_border1', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border2.png", :id => 'tile_border2', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border3.png", :id => 'tile_border3', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border4.png", :id => 'tile_border4', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border5.png", :id => 'tile_border5', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border_in0.png", :id => 'tile_border_in0', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border_in1.png", :id => 'tile_border_in1', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border_in2.png", :id => 'tile_border_in2', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border_in3.png", :id => 'tile_border_in3', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border_in4.png", :id => 'tile_border_in4', :style => 'display:none') %>
+            <%= image_tag("gameboard/tile_border_in5.png", :id => 'tile_border_in5', :style => 'display:none') %>
+        <% end %>
       </div>
       <div id="right_players">
         <div class="player">
