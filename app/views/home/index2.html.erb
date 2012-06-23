@@ -218,7 +218,13 @@
 
             $('#dice_visible').change(function() {
                 var checked = $('#dice_visible').prop('checked');
-                dice_visible(checked)
+                dice_visible(checked);
+            });
+            $('#dice_visible').change();
+
+            $('#sounds').change(function() {
+                var checked = $('#sounds').prop('checked');
+                sounds_toggle(checked);
             });
             $('#dice_visible').change();
 
@@ -261,195 +267,7 @@
   </div>
 </div>
 
-<div id="game_main">
-  <% if user_signed_in? %>
-      <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);" %>
-      <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);" %>
-      <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote => true, :id => "sit_button", :class => "btn" %>
-      <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
-      <%= link_to '<i style="margin-top: 2px;" class="icon-flag icon-white"></i> Forfeit'.html_safe, flag_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?" %>
-      <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :id => "end_turn", :class => "btn btn-success", :style => "display: none;" %>
-      <% if current_user.admin? %>
-          <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "float: right; margin-right: 10px;", :class => "btn" %>
-      <% end %>
-  <% else %>
-      <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :style => "margin-left: 10px;" %>
-  <% end %>
-
-  <div style="margin-top: 10px;">
-    <div id="top_players">
-      <div class="player">
-        <div id="game_seat_2" style="display: none;">
-          <div class="player_stat1">
-            <div class="avatar" style="background-color: #c22b2b"></div>
-            <div class="name"></div>
-            <div class="turn_progress" style="display:none">
-              <div class="progress progress-success progress-striped active" style="height: 10px;">
-                <div class="bar" style="width: 100%; height: 10px;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="player_stat2">
-            <div class="place"></div>
-            <div class="points"></div>
-            <div class="dice stats_enabled"></div>
-            <div class="lands stats_enabled"></div>
-          </div>
-        </div>
-      </div>
-      <div class="player">
-        <div id="game_seat_3" style="display: none;">
-          <div class="player_stat1">
-            <div class="avatar" style="background-color: #5fb61f"></div>
-            <div class="name"></div>
-            <div class="turn_progress" style="display:none">
-              <div class="progress progress-success progress-striped active" style="height: 10px;">
-                <div class="bar" style="width: 100%; height: 10px;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="player_stat2">
-            <div class="place"></div>
-            <div class="points"></div>
-            <div class="dice stats_enabled"></div>
-            <div class="lands stats_enabled"></div>
-          </div>
-        </div>
-      </div>
-      <div class="player">
-        <div id="game_seat_4" style="display: none;">
-          <div class="player_stat1">
-            <div class="avatar" style="background-color: #603bb3"></div>
-            <div class="name"></div>
-            <div class="turn_progress" style="display:none">
-              <div class="progress progress-success progress-striped active" style="height: 10px;">
-                <div class="bar" style="width: 100%; height: 10px;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="player_stat2">
-            <div class="place"></div>
-            <div class="points"></div>
-            <div class="dice stats_enabled"></div>
-            <div class="lands stats_enabled"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="position: relative">
-      <div id="left_players">
-        <div class="player">
-          <div id="game_seat_1" class="ws_bordered" style="display: none;">
-            <div class="player_stat1">
-              <div class="avatar" style="background-color: #3760ae"></div>
-              <div class="clear"></div>
-              <div class="name"></div>
-              <div class="turn_progress" style="display:none">
-                <div class="progress progress-success progress-striped active" style="height: 10px;">
-                  <div class="bar" style="width: 100%; height: 10px;"></div>
-                </div>
-              </div>
-            </div>
-            <div class="player_stat2">
-              <div class="place"></div>
-              <div class="points"></div>
-              <div class="dice stats_enabled"></div>
-              <div class="lands stats_enabled"></div>
-            </div>
-          </div>
-        </div>
-        <div class="player">
-          <div id="game_seat_0" class="ws_bordered" style="display: none;">
-            <div class="player_stat1">
-              <div class="avatar" style="background-color: #f8af01"></div>
-              <div class="clear"></div>
-              <div class="name"></div>
-              <div class="turn_progress" style="display:none">
-                <div class="progress progress-success progress-striped active" style="height: 10px;">
-                  <div class="bar" style="width: 100%; height: 10px;"></div>
-                </div>
-              </div>
-            </div>
-            <div class="player_stat2">
-              <div class="place"></div>
-              <div class="points"></div>
-              <div class="dice stats_enabled"></div>
-              <div class="lands stats_enabled"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="stage" style="top: 0px; left: 0px; position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
-        <canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
-        <canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
-        <canvas id="canvas_hilight_player" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-        <canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-
-        <canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-        <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
-        <div id="dice_container" style="z-index:3; position:absolute; left:0px; top:0px; width:600px; height:420px;"></div>
-        <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
-        <div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
-        <div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
-        <%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
-        <%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
-        <%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
-        <%= image_tag("gameboard/dice3.png", :id => 'dice3', :style => 'display:none') %>
-        <%= image_tag("gameboard/dice4.png", :id => 'dice4', :style => 'display:none') %>
-        <%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
-        <%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
-        <%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
-      </div>
-      <div id="right_players">
-        <div class="player">
-          <div id="game_seat_5" class="ws_bordered" style="display: none;">
-            <div class="player_stat1">
-              <div class="avatar" style="background-color: #27a7b2"></div>
-              <div class="clear"></div>
-              <div class="name"></div>
-              <div class="turn_progress" style="display:none">
-                <div class="progress progress-success progress-striped active" style="height: 10px;">
-                  <div class="bar" style="width: 100%; height: 10px;"></div>
-                </div>
-              </div>
-            </div>
-            <div class="player_stat2">
-              <div class="place"></div>
-              <div class="points"></div>
-              <div class="dice stats_enabled"></div>
-              <div class="lands stats_enabled"></div>
-            </div>
-          </div>
-        </div>
-        <div class="player">
-          <div id="game_seat_6" class="ws_bordered" style="display: none;">
-            <div class="player_stat1">
-              <div class="avatar" style="background-color: #ad3bac"></div>
-              <div class="clear"></div>
-              <div class="name"></div>
-              <div class="turn_progress" style="display:none">
-                <div class="progress progress-success progress-striped active" style="height: 10px;">
-                  <div class="bar" style="width: 100%; height: 10px;"></div>
-                </div>
-              </div>
-            </div>
-            <div class="player_stat2">
-              <div class="place"></div>
-              <div class="points"></div>
-              <div class="dice stats_enabled"></div>
-              <div class="lands stats_enabled"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div style="margin-bottom:5px;">
-    <input id="stats" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Stats']);" /> <span>stats</span>
-    <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Dice Toggle']);" /> <span>dice</span>
-    <%= link_to "Refer a friend: 1,000 points for them, points and cash for you.", "http://raf.warsocial.com", :target => "_blank", :style => "margin-right: 10px; float: right; color: purple", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Refer-a-friend']);" %>
-  </div>
-</div>
+  <%= render "shared/game_board" %>
 </div>
 <div class="span4" style="margin-left: 0px; height: 270px; min-width: 200px;">
   <div id="chat_window">
