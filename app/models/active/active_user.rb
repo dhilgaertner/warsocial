@@ -35,7 +35,7 @@ class ActiveUser
 
   def self.get_active_user(user_id)
 
-    au = ActiveUser.load_active_user(user_id)
+    user = ActiveUser.load_active_user(user_id)
 
     if user == nil
 
@@ -46,7 +46,7 @@ class ActiveUser
       end
     end
 
-    return game
+    return user
   end
 
   # Loads user from REDIS; return NIL if none found
