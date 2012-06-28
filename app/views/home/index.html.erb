@@ -213,6 +213,8 @@
                 } else {
                     $('.stats_enabled').hide();
                 }
+
+                $.post()
             });
             $('#stats').change();
 
@@ -225,6 +227,8 @@
             $('#sounds').change(function() {
                 var checked = $('#sounds').prop('checked');
                 sounds_toggle(checked);
+
+                $.post()
             });
             $('#dice_visible').change();
 

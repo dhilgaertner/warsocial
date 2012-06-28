@@ -1,11 +1,12 @@
 class ActiveUser
 
-  attr_accessor :user_id, :stats_toggle, :sounds_toggle
+  attr_accessor :user_id, :stats_toggle, :sounds_toggle, :layout_id
 
-  def initialize(user_id, stats_toggle, sounds_toggle)
+  def initialize(user_id, stats_toggle=true, sounds_toggle=true, layout_id=1)
     self.user_id = user_id.to_i
     self.stats_toggle = stats_toggle.to_s == "true"
     self.sounds_toggle = sounds_toggle.to_s == "true"
+    self.layout_id = layout_id.to_i
   end
 
   def save
@@ -39,7 +40,7 @@ class ActiveUser
 
     if user == nil
 
-      user = ActiveUser.new(user_id, true, true)
+      user = ActiveUser.new(user_id)
 
       REDIS.multi do
         user.save
@@ -62,7 +63,9 @@ class ActiveUser
     uh = ActiveGame.array_to_hash(user_data[0])
     user = ActiveUser.new(uh["user_id"],
                           uh["stats_toggle"],
-                          uh["sounds_toggle"])
+                          uh["sounds_toggle"],
+                          uh["layout_id"])
+
     return user
   end
 
