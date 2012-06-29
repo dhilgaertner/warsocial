@@ -42,13 +42,9 @@ Dice::Application.routes.draw do
     end
   end
 
-  resources :user_settings do
-    collection do
-      post :toggle_stats, :as => :toggle_stats
-      post :toggle_sounds, :as => :toggle_sounds
-      post :toggle_layout, :as => :toggle_layout
-    end
-  end
+  match 'settings/toggle_stats' => 'user_settings#toggle_stats', :via => :post
+  match 'settings/toggle_sounds' => 'user_settings#toggle_sounds', :via => :post
+  match 'settings/toggle_layout' => 'user_settings#toggle_layout', :via => :post
 
   resources :pusher do
     collection do

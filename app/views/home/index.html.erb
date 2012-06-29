@@ -214,7 +214,7 @@
                     $('.stats_enabled').hide();
                 }
 
-                $.post()
+                $.post("<%= settings_toggle_stats_url %>", { on: checked });
             });
             $('#stats').change();
 
@@ -228,7 +228,7 @@
                 var checked = $('#sounds').prop('checked');
                 sounds_toggle(checked);
 
-                $.post()
+                $.post("<%= settings_toggle_sounds_url %>", { on: checked });
             });
             $('#dice_visible').change();
 
