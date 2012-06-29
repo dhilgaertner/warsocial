@@ -1,6 +1,7 @@
 require 'active/active_game'
 require 'active/active_player'
 require 'active/active_land'
+require 'active/active_user'
 
 class HomeController < ApplicationController
   layout :resolve_layout
@@ -37,34 +38,21 @@ class HomeController < ApplicationController
                    :map_layout => ActiveSupport::JSON.decode(@game.map_json),
                    :players => @game.players.values,
                    :deployment => @game.lands.values }
+    @active_user = nil
+
+    if (current_user != nil)
+      @active_user = ActiveUser.get_active_user(current_user.id)
+
+      if (@active_user.layout_id == 2)
+        render :action => "index2", :layout => "application2"
+      end
+    end
 
     if (params[:test] == "yes")
       render :index2
     else
       render :index
     end
-  end
-
-  def facebook_index
-    @user = User.new(params[:user])
-
-    name = params[:game_name] == nil ? "home" : params[:game_name]
-
-    @dev = params[:dev] == nil ? false : true
-
-    @game = ActiveGame.get_active_game(name)
-
-    if(current_user != nil && current_user.admin?)
-      @maps = Map.where("is_public = ?", true).select("name, preview_url")
-    else
-      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false).select("name, preview_url")
-    end
-
-    @init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
-                   :map_layout => ActiveSupport::JSON.decode(@game.map_json),
-                   :players => @game.players.values,
-                   :deployment => @game.lands.values }
-
   end
 
   def add_line
@@ -263,8 +251,6 @@ class HomeController < ApplicationController
   private
   def resolve_layout
     case action_name
-      when "facebook_index"
-        "facebook"
       when "index"
         if (params[:test] == "yes")
           "application2"

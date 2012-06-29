@@ -200,8 +200,8 @@
   </div>
 </div>
 <div style="margin-bottom:5px;">
-  <input id="stats" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Stats']);" /> <span>stats</span>
+  <input id="stats" type="checkbox" checked="<% @active_user == nil ? 'checked' : @active_user.stats_toggle %>" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Stats']);" /> <span>stats</span>
   <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Dice Toggle']);" /> <span>dice</span>
-  <input id="sounds" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Sounds Toggle']);" /> <span>sounds</span>
+  <input id="sounds" type="checkbox" checked="<% @active_user == nil ? 'checked' : @active_user.sounds_toggle %>" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Sounds Toggle']);" /> <span>sounds</span>
 </div>
 </div>
