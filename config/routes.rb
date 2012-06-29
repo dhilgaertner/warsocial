@@ -42,6 +42,14 @@ Dice::Application.routes.draw do
     end
   end
 
+  resources :user_settings do
+    collection do
+      post :toggle_stats, :as => :toggle_stats
+      post :toggle_sounds, :as => :toggle_sounds
+      post :toggle_layout, :as => :toggle_layout
+    end
+  end
+
   resources :pusher do
     collection do
       post :auth, :as => :auth
