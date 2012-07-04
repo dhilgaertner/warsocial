@@ -13,12 +13,14 @@ class ActiveUser
     REDIS.hset(self.id, "user_id", self.user_id)
     REDIS.hset(self.id, "stats_toggle", self.stats_toggle)
     REDIS.hset(self.id, "sounds_toggle", self.sounds_toggle)
+    REDIS.hset(self.id, "layout_id", self.layout_id)
   end
 
   def delete
     REDIS.hdel(self.id, "user_id")
     REDIS.hdel(self.id, "stats_toggle")
     REDIS.hdel(self.id, "sounds_toggle")
+    REDIS.hdel(self.id, "layout_id")
   end
 
   def as_json(options={})

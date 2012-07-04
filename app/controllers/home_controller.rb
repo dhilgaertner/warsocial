@@ -43,15 +43,13 @@ class HomeController < ApplicationController
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
 
-      if (@active_user.layout_id == 2)
+      if (@active_user.layout_id == 2 || params[:test] == "yes")
         render :action => "index2", :layout => "application2"
+      else
+        render :action => "index", :layout => "application"
       end
-    end
-
-    if (params[:test] == "yes")
-      render :index2
     else
-      render :index
+      render :action => "index", :layout => "application"
     end
   end
 
