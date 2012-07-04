@@ -38,6 +38,7 @@ class HomeController < ApplicationController
                    :map_layout => ActiveSupport::JSON.decode(@game.map_json),
                    :players => @game.players.values,
                    :deployment => @game.lands.values }
+
     @active_user = nil
 
     if (current_user != nil)

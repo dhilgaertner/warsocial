@@ -626,11 +626,11 @@
       <div style="width: auto;" class="container">
         <a href="#" class="brand">WarSocial</a>
         <ul class="nav">
-          <li><a href="#">How to Play</a></li>
-          <li><a href="#">Leaderboard</a></li>
-          <li><a href="#">Forum</a></li>
-          <li><a href="#">Map Creator</a></li>
-          <li><a href="#">Blog</a></li>
+          <li><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :target => @isGame ? "_blank" : "_self" %></li>
+          <li><%= link_to "Leaderboard", "/leaderboard", :target => @isGame ? "_blank" : "_self" %></li>
+          <li><%= link_to "Forum", "/forums/forums/1", :target => @isGame ? "_blank" : "_self" %></li>
+          <!--<li><%= link_to "Map Creator", "http://blog.warsocial.com/post/18214496263/ma1achais-map-creator", :target => @isGame ? "_blank" : "_self" %></li>-->
+          <li><%= link_to "Blog", "http://blog.warsocial.com", :target => @isGame ? "_blank" : "_self" %></li>
         </ul>
         <ul class="nav pull-right">
           <li class="dropdown" id="fat-menu">
