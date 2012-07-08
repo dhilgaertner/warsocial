@@ -156,31 +156,40 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
             $('#entry').val("");
         });
 
-    $('#stats').change(function() {
-        var checked = $('#stats').prop('checked');
-        if (checked) {
-            $('.stats_enabled').show();
-        } else {
-            $('.stats_enabled').hide();
-        }
-
-        $.post(urls.settings_toggle_stats_url, { on: checked });
-    });
-    $('#stats').change();
-
     $('#dice_visible').change(function() {
         var checked = $('#dice_visible').prop('checked');
         dice_visible(checked);
     });
     $('#dice_visible').change();
 
-    $('#sounds').change(function() {
+    var update_stats_checkbox = function() {
+        var checked = $('#stats').prop('checked');
+        if (checked) {
+            $('.stats_enabled').show();
+        } else {
+            $('.stats_enabled').hide();
+        }
+    };
+    update_stats_checkbox();
+    $('#stats').change(function() {
+        update_stats_checkbox();
+
+        if (user_id != 0) {
+            $.post(urls.settings_toggle_stats_url, { on: checked });
+        }
+    });
+
+    var update_sounds_checkbox = function() {
         var checked = $('#sounds').prop('checked');
         sounds_toggle(checked);
-
-        $.post(urls.settings_toggle_sounds_url, { on: checked });
+    };
+    update_sounds_checkbox();
+    $('#sounds').change(function() {
+        update_sounds_checkbox();
+        if (user_id != 0) {
+            $.post(urls.settings_toggle_sounds_url, { on: checked });
+        }
     });
-    $('#dice_visible').change();
 
     $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
         switch(xhr.responseText) {
