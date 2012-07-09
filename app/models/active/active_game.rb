@@ -555,19 +555,12 @@ class ActiveGame
     self.players.values.each do |player|
       dice = player.lands.size * 2
 
-      results = Array.new(player.lands.size, 0)
-
       dice.times do |i|
-        index = rand_with_range(0..(player.lands.size-1))
-        results[index] = results[index] + 1
-      end
+        non_full_lands = player.lands.values.select {|l| l.deployment < max_starting_stack_by_lands(self.lands.size)}
 
-      results.each_with_index do |result, index|
-        land_id = player.lands.values[index].map_land_id
-        land = self.lands[land_id]
+        l = non_full_lands.sample
 
-        total = land.deployment + result
-        land.deployment = total
+        l.deployment = l.deployment + 1
       end
     end
 
@@ -871,6 +864,19 @@ class ActiveGame
     lands_decoded = ActiveSupport::JSON.decode(self.connections)
 
     return lands_decoded
+  end
+
+  private
+  def max_starting_stack_by_lands(lands_size)
+
+    if (lands_size < 16)
+      return 4
+    elsif (lands_size < 31)
+      return 5
+    else
+      return 6
+    end
+
   end
 
   private
