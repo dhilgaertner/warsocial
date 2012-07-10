@@ -21,6 +21,7 @@ Dice::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
   match 'leaderboard' => 'leader_board#index'
+  match 'leaderboard/games' => 'leader_board#games_played'
 
   match 'sign_up_confirmed' => 'home#sign_up_confirmation'
 

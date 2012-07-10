@@ -1,0 +1,24 @@
+<% content_for :javascript_includes do %>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+        });
+
+    </script>
+<% end %>
+
+<div style="text-align: center;">
+  <h1>Game Logs</h1>
+
+  <%= paginate @game_list %>
+  <br>
+  <table id="gamelist">
+      <% @game_list.each_with_index do |game, index| %>
+        <tr>
+          <td><%= game %></td>
+        </tr>
+      <% end %>
+    </table>
+</div>
