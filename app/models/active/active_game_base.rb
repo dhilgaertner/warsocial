@@ -1,4 +1,4 @@
-class ActiveGame
+class ActiveGameBase
 
   attr_accessor :name, :state, :turn_timer_id, :max_player_count, :wager_level, :map_name, :map_json, :connections,
                 :seated_players_counter, :turn_count

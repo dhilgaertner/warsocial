@@ -16,7 +16,7 @@ class HomeController < ApplicationController
     @user = User.new(params[:user])
 
     if (params[:game_name] == nil)
-      lobby_games = ActiveGame.get_lobby_games
+      lobby_games = ActiveGameNormal.get_lobby_games
       running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
       name = running_games.empty? ? "home" : running_games.first[:name]
     else
@@ -26,7 +26,7 @@ class HomeController < ApplicationController
     @dev = params[:dev] == nil ? false : true
     @dev_image = params[:dev_image] == nil ? false : true
 
-    @game = ActiveGame.get_active_game(name)
+    @game = ActiveGameNormal.get_active_game(name)
 
     if(current_user != nil && current_user.admin?)
       @maps = Map.where("is_public = ?", true).select("name, preview_url")
@@ -102,7 +102,7 @@ class HomeController < ApplicationController
     attacking_land_id = params[:atk_land_id]
     defending_land_id = params[:def_land_id]
     
-    game = ActiveGame.get_active_game(game_name)
+    game = ActiveGameNormal.get_active_game(game_name)
     
     if (game.is_users_turn?(current_user))
       if game.state == Game::STARTED_STATE
@@ -120,7 +120,7 @@ class HomeController < ApplicationController
   def end_turn
     game_name = params[:game_name]
     
-    game = ActiveGame.get_active_game(game_name)
+    game = ActiveGameNormal.get_active_game(game_name)
     
     if (game.is_users_turn?(current_user))
       if game.state == Game::STARTED_STATE
@@ -139,7 +139,7 @@ class HomeController < ApplicationController
     game_name = params[:game_name]
 
     if (current_user.admin?)
-      game = ActiveGame.get_active_game(game_name)
+      game = ActiveGameNormal.get_active_game(game_name)
 
       if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
         gr = GameRule.find_all_by_game_name(game_name).first
@@ -160,7 +160,7 @@ class HomeController < ApplicationController
   def sit
     game_name = params[:game_name]
     
-    game = ActiveGame.get_active_game(game_name)
+    game = ActiveGameNormal.get_active_game(game_name)
 
     if (current_user != nil)
       if(!game.is_user_in_game?(current_user))
@@ -186,7 +186,7 @@ class HomeController < ApplicationController
   def stand
     game_name = params[:game_name]
     
-    game = ActiveGame.get_active_game(game_name)
+    game = ActiveGameNormal.get_active_game(game_name)
     
     if (game.is_user_in_game?(current_user))
       if game.state == Game::WAITING_STATE
@@ -205,7 +205,7 @@ class HomeController < ApplicationController
   def flag
     game_name = params[:game_name]
     
-    game = ActiveGame.get_active_game(game_name)
+    game = ActiveGameNormal.get_active_game(game_name)
     
     if (game.is_user_in_game?(current_user))
       if game.state == Game::STARTED_STATE
@@ -226,7 +226,7 @@ class HomeController < ApplicationController
     turn_count = params[:turn_count].to_i
 
     if auth == "whisper" #TODO: Better auth (Dustin)
-      game = ActiveGame.get_active_game(game_name)
+      game = ActiveGameNormal.get_active_game(game_name)
       if (game.turn_count == turn_count)
         game.force_end_turn
       end
@@ -236,7 +236,7 @@ class HomeController < ApplicationController
   end
 
   def get_lobby_games
-    games = ActiveGame.get_lobby_games
+    games = ActiveGameNormal.get_lobby_games
 
     response = { :games => games, :online => User.online_users }
 

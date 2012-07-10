@@ -12,7 +12,7 @@ class PusherController < ApplicationController
             game_name = event["channel"].split("-", 2)[1]
 
             if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
-              game = ActiveGame.get_active_game(game_name)
+              game = ActiveGameNormal.get_active_game(game_name)
 
               if (game.players.size == 0 && game.state == Game::WAITING_STATE)
                 gr = GameRule.find_all_by_game_name(game_name).first
