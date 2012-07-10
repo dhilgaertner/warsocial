@@ -1,0 +1,3 @@
+class ActiveGameNormal < ActiveGameBase
+
+end
