@@ -173,6 +173,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     update_stats_checkbox();
     $('#stats').change(function() {
         update_stats_checkbox();
+        var checked = $('#stats').prop('checked');
 
         if (user_id != 0) {
             $.post(urls.settings_toggle_stats_url, { on: checked });
@@ -186,6 +187,8 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     update_sounds_checkbox();
     $('#sounds').change(function() {
         update_sounds_checkbox();
+        var checked = $('#sounds').prop('checked');
+
         if (user_id != 0) {
             $.post(urls.settings_toggle_sounds_url, { on: checked });
         }
