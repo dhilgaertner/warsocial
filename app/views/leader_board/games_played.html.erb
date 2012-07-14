@@ -14,11 +14,35 @@
 
   <%= paginate @game_list %>
   <br>
-  <table id="gamelist">
+  <table id="gamelist" style="width: 100%">
+    <thead>
+    <tr>
+      <th>Room</th>
+      <th>Winner</th>
+      <th>Players</th>
+      <th>Wager</th>
+      <th>Date/Time</th>
+    </tr>
+    </thead>
+    </tbody>
       <% @game_list.each_with_index do |game, index| %>
-        <tr>
-          <td><%= game %></td>
-        </tr>
+        <% if (game.split(":").length == 6) %>
+          <tr>
+            <td><%= game.split(":", 3)[0].split("winner")[0] %></td>
+            <td><%= game.split(":", 3)[1] %></td>
+            <td></td>
+            <td></td>
+            <td><%= game.split(":", 3)[2] %></td>
+          </tr>
+        <% else %>
+          <tr>
+            <td><%= game.split(":", 7)[0].split("winner")[0] %></td>
+            <td><%= game.split(":", 7)[1] %></td>
+            <td><%= game.split(":", 7)[3] %></td>
+            <td><%= game.split(":", 7)[5] %></td>
+            <td><%= game.split(":", 7)[6] %></td>
+          </tr>
+        <% end %>
       <% end %>
     </table>
 </div>
