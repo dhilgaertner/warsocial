@@ -11,8 +11,8 @@ class PusherController < ApplicationController
           when "channel_vacated"
             game_name = event["channel"].split("-", 2)[1]
 
-            permenant_games = ["home", "theonering", "texas", "k8dice", "alex",
-                               "home100", "theonering100", "texas100", "k8dice100", "alex100",
+            permenant_games = ["home", "theonering", "texas", "k8dice", "skullhead",
+                               "home100", "theonering100", "texas100", "k8dice100", "skullhead100",
                                "seeb500", "texas500",
                                "seeb2k", "texas2k",
                                "seeb10k", "texas10k"]
