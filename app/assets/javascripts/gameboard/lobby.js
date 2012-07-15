@@ -30,6 +30,7 @@ Lobby.prototype.setupDataTables = function() {
     var url_prefix = this._url_prefix;
 
     this.ttable = $('#game_lobby #tables table').dataTable({
+        iDisplayLength: 100,
         bFilter: false,
         bInfo: false,
         bLengthChange: false,
@@ -39,10 +40,11 @@ Lobby.prototype.setupDataTables = function() {
         }
     });
 
-    this.ttable.fnSort( [ [3,'desc'], [2,'asc'], [1,'asc'] ] );
+    this.ttable.fnSort( [ [3,'desc'], [2,'asc'], [1,'desc'] ] );
     this.ttable.find('tr:contains("game started")').css("color", "grey")
 
     this.otable = $('#game_lobby #online table').dataTable({
+        iDisplayLength: 100,
         bFilter: false,
         bInfo: false,
         bLengthChange: false,
