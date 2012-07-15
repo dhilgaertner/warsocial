@@ -108,5 +108,6 @@ Lobby.prototype.open = function() {
     $.getJSON('/home/get_lobby_games', function(data) {
         ctx.injectDomData(data);
         ctx.setupDataTables();
+        ctx._lobby.find('.dataTables_paginate').hide();
     });
 };
