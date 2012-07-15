@@ -11,7 +11,13 @@ class PusherController < ApplicationController
           when "channel_vacated"
             game_name = event["channel"].split("-", 2)[1]
 
-            if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
+            permenant_games = ["home", "theonering", "texas", "k8dice", "alex",
+                               "home100", "theonering100", "texas100", "k8dice100", "alex100",
+                               "seeb500", "texas500",
+                               "seeb2k", "texas2k",
+                               "seeb10k", "texas10k"]
+
+            if (!permenant_games.include?(game_name))
               game = ActiveGame.get_active_game(game_name)
 
               if (game.players.size == 0 && game.state == Game::WAITING_STATE)
