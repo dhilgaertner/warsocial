@@ -158,7 +158,10 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
 
     $('#dice_visible').change(function() {
         var checked = $('#dice_visible').prop('checked');
-        dice_visible(checked);
+
+        if (!typeof dice_visible === 'undefined') {
+            dice_visible(checked);
+        }
     });
     $('#dice_visible').change();
 
@@ -182,7 +185,10 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
 
     var update_sounds_checkbox = function() {
         var checked = $('#sounds').prop('checked');
-        sounds_toggle(checked);
+
+        if (!typeof sounds_toggle === 'undefined') {
+            sounds_toggle(checked);
+        }
     };
     update_sounds_checkbox();
     $('#sounds').change(function() {
