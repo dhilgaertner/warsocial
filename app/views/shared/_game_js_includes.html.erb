@@ -21,22 +21,22 @@
   <% if Rails.env.development? && !@dev && !@dev_image %>
 
     head.js(
-      '/assets/gameboard/game_page.js',
-      '/assets/gameboard/communications.js?v=2',
-      '/assets/gameboard/soundmanager.js?v=2',
-      '/assets/gameboard/dicebox.js?v=2',
-      '/assets/gameboard/land.js?v=2',
-      '/assets/gameboard/map.js?v=2',
-      '/assets/gameboard/mapcanvas.js?v=2',
-      '/assets/gameboard/player.js?v=2',
-      '/assets/gameboard/shared.js?v=2',
-      '/assets/gameboard/warsocial.js?v=2'
+      '/gameboard/game_page.js',
+      '/gameboard/communications.js?v=2',
+      '/gameboard/soundmanager.js?v=2',
+      '/gameboard/dicebox.js?v=2',
+      '/gameboard/land.js?v=2',
+      '/gameboard/map.js?v=2',
+      '/gameboard/mapcanvas.js?v=2',
+      '/gameboard/player.js?v=2',
+      '/gameboard/shared.js?v=2',
+      '/gameboard/warsocial.js?v=2'
     );
 
   <% elsif @dev || @dev_image %>
 
     head.js(
-      '/assets/gameboard/game_page.js',
+      '/gameboard/game_page.js',
       'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4',
       'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/soundmanager.js?v=4',
       'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/dicebox.js?v=4',
@@ -66,15 +66,15 @@
 
   <% end %>
 
-  <% if Rails.env.development? %>
+  <% if Rails.env.development? || @dev || @dev_image %>
 
     head.js(
-      '/assets/gameboard/turn_timer.js?v=2',
-      '/assets/gameboard/seats.js?v=2',
-      '/assets/gameboard/lobby.js?v=2',
-      '/assets/gameboard/chatbox.js?v=2',
-      '/assets/gameboard/gamelog.js?v=2',
-      '/assets/gameboard/create_game.js?v=2'
+      '/gameboard/turn_timer.js?v=2',
+      '/gameboard/seats.js?v=2',
+      '/gameboard/lobby.js?v=2',
+      '/gameboard/chatbox.js?v=2',
+      '/gameboard/gamelog.js?v=2',
+      '/gameboard/create_game.js?v=2'
     );
 
   <% end %>
