@@ -22,5 +22,7 @@ class Season < ActiveRecord::Base
         user.save
       end
     end
+
+    return all_users.size
   end
 end

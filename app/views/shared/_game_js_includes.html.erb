@@ -11,68 +11,74 @@
     'http://js.pusher.com/1.12/pusher.min.js'
   );
 
-  <% if Rails.env.development? || @dev || @dev_image %>
-  head.js(
-    '/assets/lib/jquery.dataTables.min.js?v=2',
-    '/assets/lib/customSelect.jquery.js',
-    '/assets/game_page.js'
-  );
+  <% if Rails.env.development? %>
+    head.js(
+      '/assets/lib/jquery.dataTables.min.js?v=2',
+      '/assets/lib/customSelect.jquery.js'
+    );
+  <% end %>
 
-  <% if !@dev && !@dev_image %>
+  <% if Rails.env.development? && !@dev && !@dev_image %>
 
-  head.js(
-    '/assets/gameboard/communications.js?v=2',
-    '/assets/gameboard/soundmanager.js?v=2',
-    '/assets/gameboard/dicebox.js?v=2',
-    '/assets/gameboard/land.js?v=2',
-    '/assets/gameboard/map.js?v=2',
-    '/assets/gameboard/mapcanvas.js?v=2',
-    '/assets/gameboard/player.js?v=2',
-    '/assets/gameboard/shared.js?v=2',
-    '/assets/gameboard/warsocial.js?v=2'
-  );
+    head.js(
+      '/assets/gameboard/game_page.js',
+      '/assets/gameboard/communications.js?v=2',
+      '/assets/gameboard/soundmanager.js?v=2',
+      '/assets/gameboard/dicebox.js?v=2',
+      '/assets/gameboard/land.js?v=2',
+      '/assets/gameboard/map.js?v=2',
+      '/assets/gameboard/mapcanvas.js?v=2',
+      '/assets/gameboard/player.js?v=2',
+      '/assets/gameboard/shared.js?v=2',
+      '/assets/gameboard/warsocial.js?v=2'
+    );
 
-  <% else %>
-  head.js(
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4',
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/soundmanager.js?v=4',
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/dicebox.js?v=4',
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=4',
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=4'
-  );
+  <% elsif @dev || @dev_image %>
 
-  <% if @dev %>
+    head.js(
+      '/assets/gameboard/game_page.js',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/soundmanager.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/dicebox.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=4'
+    );
 
-  head.js(
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=4'
-  );
+    <% if @dev %>
 
-  <% else %>
+      head.js(
+        'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=4'
+      );
 
-  head.js(
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas_sprite.js?v=4'
-  );
+    <% else %>
+
+      head.js(
+        'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas_sprite.js?v=4'
+      );
+
+    <% end %>
+
+    head.js(
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=4'
+    );
 
   <% end %>
 
-  head.js(
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=4',
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=4',
-    'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=4'
-  );
+  <% if Rails.env.development? %>
+
+    head.js(
+      '/assets/gameboard/turn_timer.js?v=2',
+      '/assets/gameboard/seats.js?v=2',
+      '/assets/gameboard/lobby.js?v=2',
+      '/assets/gameboard/chatbox.js?v=2',
+      '/assets/gameboard/gamelog.js?v=2',
+      '/assets/gameboard/create_game.js?v=2'
+    );
 
   <% end %>
 
-  head.js(
-    '/assets/gameboard/turn_timer.js?v=2',
-    '/assets/gameboard/seats.js?v=2',
-    '/assets/gameboard/lobby.js?v=2',
-    '/assets/gameboard/chatbox.js?v=2',
-    '/assets/gameboard/gamelog.js?v=2',
-    '/assets/gameboard/create_game.js?v=2'
-  );
-
-  <% end %>
 </script>
 
 <script type="text/javascript">
