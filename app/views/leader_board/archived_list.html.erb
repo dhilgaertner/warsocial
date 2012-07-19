@@ -1,0 +1,17 @@
+<% content_for :javascript_includes do %>
+
+<% end %>
+
+<div style="text-align: center;">
+  <h1>Archived Seasons</h1>
+
+  <%= paginate @season_list %>
+  <br>
+  <table id="leaderboard">
+    <% @season_list.each_with_index do |season, index| %>
+      <tr>
+        <td style="border: none;"><%= link_to season.name, leaderboard_archived_season_path(season.id), :style => "color: blue" %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
