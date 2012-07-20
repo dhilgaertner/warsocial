@@ -56,6 +56,9 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
         }
     });
 
+    // GAMEBOARD INIT!
+    init(global_init_data);
+
     $('#end_turn').hide();
 
     var lobby_modal = new Lobby("game_lobby");
@@ -159,7 +162,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     $('#dice_visible').change(function() {
         var checked = $('#dice_visible').prop('checked');
 
-        if (!typeof dice_visible === 'undefined') {
+        if (typeof dice_visible !== 'undefined') {
             dice_visible(checked);
         }
     });
@@ -186,7 +189,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     var update_sounds_checkbox = function() {
         var checked = $('#sounds').prop('checked');
 
-        if (!typeof sounds_toggle === 'undefined') {
+        if (typeof sounds_toggle !== 'undefined') {
             sounds_toggle(checked);
         }
     };

@@ -90,8 +90,6 @@
       settings_toggle_sounds_url: "<%= settings_toggle_sounds_url %>"
     };
     game_page_init("<%= @game.name %>", <%= @init_data.to_json.html_safe %>, <%= @maps.to_json.html_safe %>, <%= Rails.env.production? %>, "<%= Pusher.key %>", <%= current_user != nil ? current_user.id : 0 %>, "<%= current_user != nil ? current_user.username : "anon" %>", urls);
-
-    init(global_init_data);
   });
 
 </script>
