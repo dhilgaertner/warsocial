@@ -1,7 +1,7 @@
 class Season < ActiveRecord::Base
   has_many :season_scores, :dependent => :destroy
 
-  attr_accessible :name
+  attr_accessible :name, :created_at
 
   def self.record_new_season
     all_users = User.all
@@ -22,5 +22,7 @@ class Season < ActiveRecord::Base
         user.save
       end
     end
+
+    return all_users.size
   end
 end

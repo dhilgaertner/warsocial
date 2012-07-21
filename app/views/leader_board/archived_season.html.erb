@@ -1,0 +1,19 @@
+<% content_for :javascript_includes do %>
+
+<% end %>
+
+<div style="text-align: center;">
+  <h1><%= @season.name %></h1>
+
+  <%= paginate @scores %>
+  <br>
+  <table id="leaderboard">
+    <% @scores.each_with_index do |score, index| %>
+      <tr>
+        <td><%= (@rank_start + index).to_s %></td>
+        <td><%= score.user.username %></td>
+        <td><%= score.points %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

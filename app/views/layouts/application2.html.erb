@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Play Risk Online - WarSocial</title>
+<title>Play Risk Online - WarSocial</title>
 
-  <meta name="Description" content="WarSocial is a free dice-based online multiplayer social strategy game similar to Risk, Conquerclub, Dicewars, Kdice and Lux Delux.">
-  <meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
+<meta name="Description" content="WarSocial is a free dice-based online multiplayer social strategy game similar to Risk, Conquerclub, Dicewars, Kdice and Lux Delux.">
+<meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
 
-  <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
-  <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-responsive.min.css">
-  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<meta property="og:image" content="<%= image_path "logo.png" %>"/>
 
-  <% if !Rails.env.development? %>
-    <%= javascript_include_tag "application" %>
-    <%= stylesheet_link_tag "application" %>
-  <% else %>
-    <!-- DEV: The following lines are needed so any "data-method" instruction would work in forem. For instance : the pin / lock / hide / delete method for topic, -->
-    <script src="/jquery/jquery-1.7.min.js?v=2" type="text/javascript"></script>
-    <script src="/jquery/jquery_ujs.js?v=2" type="text/javascript"></script>
-    <%= stylesheet_link_tag "forem/twist/style" %>
-  <% end %>
+<link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/headjs/head.min.js"></script>
 
-  <%= yield :javascript_includes %>
+<% if !Rails.env.development? %>
+  <script>
+    head.js('<%= asset_path("application.js") %>');
 
-  <%= csrf_meta_tags %>
+    <% if !@dev && !@dev_image %>
+    head.js('<%= asset_path("game.js") %>');
+    <% end %>
 
-	<script type="text/javascript">
-		var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-29117828-1']); _gaq.push(['_setDomainName', 'warsocial.com']); _gaq.push(['_trackPageview']);
-		(function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
-	</script>
+  </script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#side-bar").height($("body").height() - 150);
-        });
-    </script>
+  <%= stylesheet_link_tag "application" %>
+<% else %>
+  <!-- DEV: The following lines are needed so any "data-method" instruction would work in forem. For instance : the pin / lock / hide / delete method for topic, -->
+  <script>
+    head.js(
+      '/jquery/jquery-1.7.min.js?v=2',
+      '/jquery/jquery_ujs.js?v=2'
+    );
+  </script>
+  <%= stylesheet_link_tag "forem/twist/style" %>
+<% end %>
+
+<script>
+  head.js(
+    '/bootstrap/js/bootstrap.min.js'
+  );
+</script>
+
+<%= yield :javascript_includes %>
+
+<%= csrf_meta_tags %>
+
+<script type="text/javascript">
+  var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-29117828-1']); _gaq.push(['_setDomainName', 'warsocial.com']); _gaq.push(['_trackPageview']);
+  (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+</script>
 
 	<style type="text/css" media="screen">
 		@font-face {

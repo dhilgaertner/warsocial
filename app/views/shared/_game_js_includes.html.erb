@@ -6,60 +6,90 @@
 
 <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.8.18.custom.css">
 
-<script src="http://js.pusher.com/1.12/pusher.min.js" type="text/javascript"></script>
+<script>
+  head.js(
+    'http://js.pusher.com/1.12/pusher.min.js'
+  );
 
-<% if Rails.env.development? || @dev || @dev_image %>
-    <script src="/assets/lib/jquery.dataTables.min.js?v=2" type="text/javascript"></script>
-    <script src="/assets/lib/customSelect.jquery.js" type="text/javascript"></script>
-    <script src="/assets/game_page.js" type="text/javascript"></script>
+  <% if Rails.env.development? %>
+    head.js(
+      '/assets/lib/jquery.dataTables.min.js?v=2',
+      '/assets/lib/customSelect.jquery.js'
+    );
+  <% end %>
 
-    <% if !@dev && !@dev_image %>
-        <script src="/assets/gameboard/communications.js?v=2" type="text/javascript"></script>
-        <script src="/assets/gameboard/soundmanager.js?v=2" type="text/javascript"></script>
-        <script src="/assets/gameboard/dicebox.js?v=2" type="text/javascript"></script>
-        <script src="/assets/gameboard/land.js?v=2" type="text/javascript"></script>
-        <script src="/assets/gameboard/map.js?v=2" type="text/javascript"></script>
-        <script src="/assets/gameboard/mapcanvas.js?v=2" type="text/javascript"></script>
-        <script src="/assets/gameboard/player.js?v=2" type="text/javascript"></script>
-        <script src="/assets/gameboard/shared.js?v=2" type="text/javascript"></script>
-        <script src="/assets/gameboard/warsocial.js?v=2" type="text/javascript"></script>
+  <% if Rails.env.development? && !@dev && !@dev_image %>
+
+    head.js(
+      '/gameboard/game_page.js',
+      '/gameboard/communications.js?v=2',
+      '/gameboard/soundmanager.js?v=2',
+      '/gameboard/dicebox.js?v=2',
+      '/gameboard/land.js?v=2',
+      '/gameboard/map.js?v=2',
+      '/gameboard/mapcanvas.js?v=2',
+      '/gameboard/player.js?v=2',
+      '/gameboard/shared.js?v=2',
+      '/gameboard/warsocial.js?v=2'
+    );
+
+  <% elsif @dev || @dev_image %>
+
+    head.js(
+      '/gameboard/game_page.js',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/soundmanager.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/dicebox.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=4'
+    );
+
+    <% if @dev %>
+
+      head.js(
+        'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=4'
+      );
+
     <% else %>
-        <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4" type="text/javascript"></script>
-        <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/soundmanager.js?v=4" type="text/javascript"></script>
-        <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/dicebox.js?v=4" type="text/javascript"></script>
-        <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/land.js?v=4" type="text/javascript"></script>
-        <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/map.js?v=4" type="text/javascript"></script>
-        <% if @dev %>
-            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas.js?v=4" type="text/javascript"></script>
-        <% else %>
-            <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas_sprite.js?v=4" type="text/javascript"></script>
-        <% end %>
-        <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=4" type="text/javascript"></script>
-        <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=4" type="text/javascript"></script>
-        <script src="http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=4" type="text/javascript"></script>
+
+      head.js(
+        'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/mapcanvas_sprite.js?v=4'
+      );
+
     <% end %>
 
-    <script src="/assets/gameboard/turn_timer.js?v=2" type="text/javascript"></script>
-    <script src="/assets/gameboard/seats.js?v=2" type="text/javascript"></script>
-    <script src="/assets/gameboard/lobby.js?v=2" type="text/javascript"></script>
-    <script src="/assets/gameboard/chatbox.js?v=2" type="text/javascript"></script>
-    <script src="/assets/gameboard/gamelog.js?v=2" type="text/javascript"></script>
-    <script src="/assets/gameboard/create_game.js?v=2" type="text/javascript"></script>
-<% end %>
+    head.js(
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=4',
+      'http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=4'
+    );
+
+  <% end %>
+
+  <% if Rails.env.development? || @dev || @dev_image %>
+
+    head.js(
+      '/gameboard/turn_timer.js?v=2',
+      '/gameboard/seats.js?v=2',
+      '/gameboard/lobby.js?v=2',
+      '/gameboard/chatbox.js?v=2',
+      '/gameboard/gamelog.js?v=2',
+      '/gameboard/create_game.js?v=2'
+    );
+
+  <% end %>
+
+</script>
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
-        var urls = {
-            paurl: "<%= auth_pusher_index_path %>",
-            settings_toggle_stats_url: "<%= settings_toggle_stats_url %>",
-            settings_toggle_sounds_url: "<%= settings_toggle_sounds_url %>"
-        };
-        game_page_init("<%= @game.name %>", <%= @init_data.to_json.html_safe %>, <%= @maps.to_json.html_safe %>, <%= Rails.env.production? %>, "<%= Pusher.key %>", <%= current_user != nil ? current_user.id : 0 %>, "<%= current_user != nil ? current_user.username : "anon" %>", urls);
-    });
-
-    $(window).load(function() {
-        init(global_init_data);
-    });
+  head.ready(function() {
+    var urls = {
+      paurl: "<%= auth_pusher_index_path %>",
+      settings_toggle_stats_url: "<%= settings_toggle_stats_url %>",
+      settings_toggle_sounds_url: "<%= settings_toggle_sounds_url %>"
+    };
+    game_page_init("<%= @game.name %>", <%= @init_data.to_json.html_safe %>, <%= @maps.to_json.html_safe %>, <%= Rails.env.production? %>, "<%= Pusher.key %>", <%= current_user != nil ? current_user.id : 0 %>, "<%= current_user != nil ? current_user.username : "anon" %>", urls);
+  });
 
 </script>

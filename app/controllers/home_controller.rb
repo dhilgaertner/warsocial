@@ -98,40 +98,49 @@ class HomeController < ApplicationController
   end
 
   def attack
-    game_name = params[:game_name]
-    attacking_land_id = params[:atk_land_id]
-    defending_land_id = params[:def_land_id]
-    
-    game = ActiveGameNormal.get_active_game(game_name)
-    
-    if (game.is_users_turn?(current_user))
-      if game.state == Game::STARTED_STATE
-        game.attack(attacking_land_id.to_i, defending_land_id.to_i)
+    if (current_user != nil)
+      game_name = params[:game_name]
+      attacking_land_id = params[:atk_land_id]
+      defending_land_id = params[:def_land_id]
 
-        render :text=>"Success", :status=>200
+      game = ActiveGameNormal.get_active_game(game_name)
+
+      if (game.is_users_turn?(current_user))
+        if game.state == Game::STARTED_STATE
+          game.attack(attacking_land_id.to_i, defending_land_id.to_i)
+
+          render :text=>"Success", :status=>200
+        else
+          render :text=>"Game has not started.", :status=>403
+        end
       else
-        render :text=>"Game has not started.", :status=>500
+        render :text=>"Not your turn", :status=>403
       end
     else
-      render :text=>"Not your turn", :status=>500
+      render :text=>"Not logged in", :status=>403
     end
+
   end
   
   def end_turn
-    game_name = params[:game_name]
-    
-    game = ActiveGameNormal.get_active_game(game_name)
-    
-    if (game.is_users_turn?(current_user))
-      if game.state == Game::STARTED_STATE
-        game.end_turn
+    if (current_user != nil)
+      game_name = params[:game_name]
 
-        render :text=>"Success", :status=>200
+      game = ActiveGameNormal.get_active_game(game_name)
+
+      if (game.is_users_turn?(current_user))
+        if game.state == Game::STARTED_STATE
+          game.end_turn
+
+          render :text=>"Success", :status=>200
+        else
+          render :text=>"Game has not started.", :status=>403
+        end
       else
-        render :text=>"Game has not started.", :status=>500
+        render :text=>"Not your turn", :status=>403
       end
     else
-      render :text=>"Not your turn", :status=>500
+      render :text=>"Not logged in", :status=>403
     end
   end
 
@@ -184,22 +193,27 @@ class HomeController < ApplicationController
   end
   
   def stand
-    game_name = params[:game_name]
-    
-    game = ActiveGameNormal.get_active_game(game_name)
-    
-    if (game.is_user_in_game?(current_user))
-      if game.state == Game::WAITING_STATE
-        game.remove_player(current_user)
-        
-        render :text=>"Success", :status=>200
+
+    if (current_user != nil)
+      game_name = params[:game_name]
+
+      game = ActiveGameNormal.get_active_game(game_name)
+
+      if (game.is_user_in_game?(current_user))
+        if game.state == Game::WAITING_STATE
+          game.remove_player(current_user)
+
+          render :text=>"Success", :status=>200
+        else
+          render :text=>"Game has already started.", :status=>403
+        end
       else
-        render :text=>"Game has already started.", :status=>500
+        render :text=>"User not in game", :status=>403
       end
     else
-      render :text=>"User not in game", :status=>500
+      render :text=>"Not logged in", :status=>403
     end
-    
+
   end
   
   def flag

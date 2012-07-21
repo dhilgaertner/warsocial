@@ -43,7 +43,7 @@ module Dice
     config.assets.enabled = true
 
     # Part of rails_admin install (heroku fix) (Dustin)
-    config.assets.precompile += %w(... rails_admin/rails_admin.js rails_admin/rails_admin.css forem/twist/style.css.scss active_admin.css active_admin.js)
+    config.assets.precompile += %w(... rails_admin/rails_admin.js rails_admin/rails_admin.css forem/twist/style.css.scss active_admin.css active_admin.js game.js)
     
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

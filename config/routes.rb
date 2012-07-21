@@ -22,6 +22,8 @@ Dice::Application.routes.draw do
   # first created -> highest priority.
   match 'leaderboard' => 'leader_board#index'
   match 'leaderboard/games' => 'leader_board#games_played'
+  match 'leaderboard/archived' => 'leader_board#archived_list'
+  match 'leaderboard/archived/:season_id' => 'leader_board#archived_season', :as => :leaderboard_archived_season
 
   match 'sign_up_confirmed' => 'home#sign_up_confirmation'
 
