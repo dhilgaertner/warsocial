@@ -1,10 +1,10 @@
 class ActiveGameBase
 
   attr_accessor :name, :state, :turn_timer_id, :max_player_count, :wager_level, :map_name, :map_json, :connections,
-                :seated_players_counter, :turn_count
+                :seated_players_counter, :turn_count, :game_type
 
   def initialize(name, state, max_player_count, wager_level, map_name, map_json,
-      connections=nil, turn_timer_id=nil, turn_count=0, seated_players_count=0)
+      connections=nil, turn_timer_id=nil, turn_count=0, seated_players_count=0, game_type="normal")
     self.name = name
     self.state = state
     self.max_player_count = max_player_count.to_i
@@ -15,6 +15,7 @@ class ActiveGameBase
     self.turn_timer_id = turn_timer_id == "" ? nil : turn_timer_id
     self.seated_players_counter = seated_players_count
     self.turn_count = turn_count.to_i
+    self.game_type = game_type
   end
 
   def save
@@ -27,6 +28,7 @@ class ActiveGameBase
     REDIS.hset(self.id, "map_name", self.map_name)
     REDIS.hset(self.id, "map_json", self.map_json)
     REDIS.hset(self.id, "turn_count", self.turn_count)
+    REDIS.hset(self.id, "game_type", self.game_type)
 
     if (self.connections != nil)
       REDIS.hset(self.id, "connections", self.connections)
@@ -44,6 +46,7 @@ class ActiveGameBase
     REDIS.hdel(self.id, "map_json")
     REDIS.hdel(self.id, "connections")
     REDIS.hdel(self.id, "turn_count")
+    REDIS.hdel(self.id, "game_type")
 
     REDIS.del(self.redis_seat_counter_id)
   end

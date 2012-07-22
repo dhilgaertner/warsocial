@@ -8,7 +8,7 @@ class ActiveGameFactory
     if game == nil
       settings = GameRule.where("game_name = ?", name).first
 
-      ActiveGameFactory.create_new_game(settings)
+      game = ActiveGameFactory.create_new_game(name, settings)
 
       REDIS.multi do
         game.save
@@ -18,11 +18,11 @@ class ActiveGameFactory
     return game
   end
 
-  def self.create_new_game(settings)
+  def self.create_new_game(name, settings)
     map_name = (settings == nil) ? "default" : settings.map_name
     num_players = (settings == nil) ? 2 : settings.player_count
     wager = (settings == nil) ? 0 : settings.wager_level
-    type = (settings == nil) ? "normal" : settings.type
+    type = (settings == nil) ? "normal" : settings.game_type
 
     map = Map.where("name = ?", map_name).first
 
@@ -32,6 +32,8 @@ class ActiveGameFactory
       when "multi_day"
         game = ActiveGameMultiDay.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
     end
+
+    return game
   end
 
   # Loads game from REDIS; return NIL if none found
@@ -47,7 +49,7 @@ class ActiveGameFactory
     end
 
     gh = ActiveGameFactory.array_to_hash(game_data[0])
-    game_type = gh["type"].to_s
+    game_type = gh["game_type"].to_s
 
     case(game_type)
       when "normal"
@@ -70,6 +72,16 @@ class ActiveGameFactory
                                       gh["connections"],
                                       gh["turn_timer_id"],
                                       gh["turn_count"])
+      else
+        game = ActiveGameNormal.new(gh["name"],
+                                    gh["state"],
+                                    gh["max_player_count"],
+                                    gh["wager_level"],
+                                    gh["map_name"],
+                                    gh["map_json"],
+                                    gh["connections"],
+                                    gh["turn_timer_id"],
+                                    gh["turn_count"])
     end
 
     player_and_land_data = REDIS.multi do
