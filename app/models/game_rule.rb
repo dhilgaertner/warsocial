@@ -1,7 +1,7 @@
 class GameRule < ActiveRecord::Base
   
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :game_name, :map_name, :player_count, :wager_level, :type
+  attr_accessible :game_name, :map_name, :player_count, :wager_level, :game_type
 
   # @param [int] position - This is the position you finished in. (ex. 1, 2, 3, 4, 5, 6, 7)
   # @param [int] wager    - This is the ante for the table. (ex. 0, 100, 500, 2000, etc)
