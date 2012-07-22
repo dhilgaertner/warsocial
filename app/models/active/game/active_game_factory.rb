@@ -1,4 +1,5 @@
-class ActiveGameFactory < ActiveGameBase
+class ActiveGameFactory
+
   # Find running game by name or create a new one
   def self.get_active_game(name)
 
@@ -21,10 +22,16 @@ class ActiveGameFactory < ActiveGameBase
     map_name = (settings == nil) ? "default" : settings.map_name
     num_players = (settings == nil) ? 2 : settings.player_count
     wager = (settings == nil) ? 0 : settings.wager_level
+    type = (settings == nil) ? "normal" : settings.type
 
     map = Map.where("name = ?", map_name).first
 
-    game = ActiveGame.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
+    case(type)
+      when "normal"
+        game = ActiveGameNormal.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
+      when "multi_day"
+        game = ActiveGameMultiDay.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
+    end
   end
 
   # Loads game from REDIS; return NIL if none found
@@ -39,16 +46,31 @@ class ActiveGameFactory < ActiveGameBase
       return nil
     end
 
-    gh = ActiveGame.array_to_hash(game_data[0])
-    game = ActiveGame.new(gh["name"],
-                          gh["state"],
-                          gh["max_player_count"],
-                          gh["wager_level"],
-                          gh["map_name"],
-                          gh["map_json"],
-                          gh["connections"],
-                          gh["turn_timer_id"],
-                          gh["turn_count"])
+    gh = ActiveGameFactory.array_to_hash(game_data[0])
+    game_type = gh["type"].to_s
+
+    case(game_type)
+      when "normal"
+        game = ActiveGameNormal.new(gh["name"],
+                                    gh["state"],
+                                    gh["max_player_count"],
+                                    gh["wager_level"],
+                                    gh["map_name"],
+                                    gh["map_json"],
+                                    gh["connections"],
+                                    gh["turn_timer_id"],
+                                    gh["turn_count"])
+      when "multi_day"
+        game = ActiveGameMultiDay.new(gh["name"],
+                                      gh["state"],
+                                      gh["max_player_count"],
+                                      gh["wager_level"],
+                                      gh["map_name"],
+                                      gh["map_json"],
+                                      gh["connections"],
+                                      gh["turn_timer_id"],
+                                      gh["turn_count"])
+    end
 
     player_and_land_data = REDIS.multi do
       game_data[1].each do |key|
@@ -63,7 +85,7 @@ class ActiveGameFactory < ActiveGameBase
     land_data = player_and_land_data[-1 * game_data[2].size, game_data[2].size]
 
     player_data.each do |pd|
-      ph = ActiveGame.array_to_hash(pd)
+      ph = ActiveGameFactory.array_to_hash(pd)
       player = ActivePlayer.new(name,
                                 ph["seat_number"],
                                 ph["state"],
@@ -80,7 +102,7 @@ class ActiveGameFactory < ActiveGameBase
     end
 
     land_data.each do |ld|
-      lh = ActiveGame.array_to_hash(ld)
+      lh = ActiveGameFactory.array_to_hash(ld)
       land = ActiveLand.new(name,
                             lh["map_land_id"],
                             lh["deployment"],
@@ -93,5 +115,23 @@ class ActiveGameFactory < ActiveGameBase
     end
 
     return game
+  end
+
+  # Parse REDIS hgetall Array and return Hash
+  def self.array_to_hash(arr)
+    current_key = nil
+    hash = Hash.new
+
+    arr.each_with_index do |item, index|
+      is_key = (index % 2) == 0
+
+      if is_key
+        current_key = item
+      else
+        hash[current_key] = item
+      end
+    end
+
+    return hash
   end
 end

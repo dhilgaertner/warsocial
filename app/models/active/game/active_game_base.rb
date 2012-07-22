@@ -99,7 +99,7 @@ class ActiveGameBase
 
       case results_case
         when 0
-          gh = ActiveGame.array_to_hash(data)
+          gh = ActiveGameFactory.array_to_hash(data)
           player_count = game_data[index + 1].size
 
           result << {  :name => gh["name"],
@@ -114,24 +114,6 @@ class ActiveGameBase
     end
 
     return result
-  end
-
-  # Parse REDIS hgetall Array and return Hash
-  def self.array_to_hash(arr)
-    current_key = nil
-    hash = Hash.new
-
-    arr.each_with_index do |item, index|
-      is_key = (index % 2) == 0
-
-      if is_key
-        current_key = item
-      else
-        hash[current_key] = item
-      end
-    end
-
-    return hash
   end
 
   # Is the user in the game?
@@ -508,7 +490,7 @@ class ActiveGameBase
 
       self.delete_all  #TODO: store the game for archive
 
-      ActiveGame.get_active_game(self.name)
+      ActiveGameFactory.get_active_game(self.name)
 
       REDIS.multi do
         ActiveStats.game_finished(self)

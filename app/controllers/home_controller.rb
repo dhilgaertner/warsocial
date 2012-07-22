@@ -1,4 +1,6 @@
-require 'active/active_game'
+require 'active/game/active_game_factory'
+require 'active/game/active_game_normal'
+require 'active/game/active_game_multi_day'
 require 'active/active_player'
 require 'active/active_land'
 require 'active/active_user'
@@ -26,7 +28,7 @@ class HomeController < ApplicationController
     @dev = params[:dev] == nil ? false : true
     @dev_image = params[:dev_image] == nil ? false : true
 
-    @game = ActiveGameNormal.get_active_game(name)
+    @game = ActiveGameFactory.get_active_game(name)
 
     if(current_user != nil && current_user.admin?)
       @maps = Map.where("is_public = ?", true).select("name, preview_url")
@@ -103,7 +105,7 @@ class HomeController < ApplicationController
       attacking_land_id = params[:atk_land_id]
       defending_land_id = params[:def_land_id]
 
-      game = ActiveGameNormal.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
 
       if (game.is_users_turn?(current_user))
         if game.state == Game::STARTED_STATE
@@ -126,7 +128,7 @@ class HomeController < ApplicationController
     if (current_user != nil)
       game_name = params[:game_name]
 
-      game = ActiveGameNormal.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
 
       if (game.is_users_turn?(current_user))
         if game.state == Game::STARTED_STATE
@@ -148,7 +150,7 @@ class HomeController < ApplicationController
     game_name = params[:game_name]
 
     if (current_user.admin?)
-      game = ActiveGameNormal.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
 
       if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
         gr = GameRule.find_all_by_game_name(game_name).first
@@ -169,7 +171,7 @@ class HomeController < ApplicationController
   def sit
     game_name = params[:game_name]
     
-    game = ActiveGameNormal.get_active_game(game_name)
+    game = ActiveGameFactory.get_active_game(game_name)
 
     if (current_user != nil)
       if(!game.is_user_in_game?(current_user))
@@ -197,7 +199,7 @@ class HomeController < ApplicationController
     if (current_user != nil)
       game_name = params[:game_name]
 
-      game = ActiveGameNormal.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
 
       if (game.is_user_in_game?(current_user))
         if game.state == Game::WAITING_STATE
@@ -219,7 +221,7 @@ class HomeController < ApplicationController
   def flag
     game_name = params[:game_name]
     
-    game = ActiveGameNormal.get_active_game(game_name)
+    game = ActiveGameFactory.get_active_game(game_name)
     
     if (game.is_user_in_game?(current_user))
       if game.state == Game::STARTED_STATE
@@ -240,7 +242,7 @@ class HomeController < ApplicationController
     turn_count = params[:turn_count].to_i
 
     if auth == "whisper" #TODO: Better auth (Dustin)
-      game = ActiveGameNormal.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
       if (game.turn_count == turn_count)
         game.force_end_turn
       end
