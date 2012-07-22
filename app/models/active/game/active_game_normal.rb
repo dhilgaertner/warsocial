@@ -1,3 +1,3 @@
-class ActiveGameLongTurn < ActiveGameBase
+class ActiveGameNormal < ActiveGameBase
 
 end

@@ -1,3 +1,3 @@
-class ActiveGameNormal < ActiveGameBase
+class ActiveGameMultiDay < ActiveGameBase
 
 end
