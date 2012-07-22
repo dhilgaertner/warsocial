@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120615214711) do
+ActiveRecord::Schema.define(:version => 20120722063709) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(:version => 20120615214711) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "wager_level",  :default => 0
+    t.string   "type",         :default => "normal"
   end
 
   create_table "games", :force => true do |t|
