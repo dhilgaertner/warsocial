@@ -1,4 +1,6 @@
-class ActiveGameBase
+require 'active/game/active_game_base_settings'
+
+class ActiveGameBase < ActiveGameBaseSettings
 
   attr_accessor :name, :state, :turn_timer_id, :max_player_count, :wager_level, :map_name, :map_json, :connections,
                 :seated_players_counter, :turn_count, :game_type
@@ -336,6 +338,8 @@ class ActiveGameBase
 
     save_all
 
+    #Fire event for a new players turns
+    self.on_players_turn(np)
   end
 
   # Force the end of the current players turn
@@ -642,7 +646,7 @@ class ActiveGameBase
   def restart_turn_timer
     kill_turn_timer
 
-    new_job = Delayed::Job.enqueue(TurnJob.new(self.name, self.turn_count), :run_at => 20.seconds.from_now)
+    new_job = Delayed::Job.enqueue(TurnJob.new(self.name, self.turn_count), :run_at => self.turn_timer_run_at)
     self.turn_timer_id = new_job.id
   end
 
