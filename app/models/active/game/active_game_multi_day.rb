@@ -6,7 +6,7 @@ class ActiveGameMultiDay < ActiveGameBase
       connections=nil, turn_timer_id=nil, turn_count=0, seated_players_count=0)
 
     super(name, state, max_player_count, wager_level, map_name, map_json,
-          connections,turn_timer_id, turn_count, seated_players_count, "multi_day")
+          connections, turn_timer_id, turn_count, seated_players_count, "multi_day")
   end
 
   def turn_timer_run_at
