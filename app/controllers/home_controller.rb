@@ -253,8 +253,9 @@ class HomeController < ApplicationController
 
   def get_lobby_games
     games = ActiveGameNormal.get_lobby_games
+    multiday_games = ActiveGameMultiDay.get_lobby_games
 
-    response = { :games => games, :online => User.online_users }
+    response = { :games => games, :online => User.online_users, :multiday => multiday_games }
 
     render :json => response
   end

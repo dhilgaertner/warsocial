@@ -99,9 +99,9 @@ Lobby.prototype.injectDomData = function(data) {
 
     add_to_me = $('#multi-day .table tbody');
 
-    $.each(data.multiday, function(i, game) {
-        add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
-    });
+    //$.each(data.multiday, function(i, game) {
+    //    add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
+    //});
 
     add_to_me = $('#online .table tbody');
 
