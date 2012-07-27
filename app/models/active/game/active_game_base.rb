@@ -87,8 +87,8 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   # Find games to be shown in the lobby
-  def self.get_lobby_games
-    lobby_games = REDIS.smembers("lobby_games")
+  def self.get_lobby_games(lobby_games_key)
+    lobby_games = REDIS.smembers(lobby_games_key)
 
     game_data = REDIS.multi do
       lobby_games.each do |lg|

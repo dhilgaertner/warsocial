@@ -8,4 +8,8 @@ class ActiveGameNormal < ActiveGameBase
           connections,turn_timer_id, turn_count, seated_players_count, "normal")
 
   end
+
+  def self.get_active_games
+    return get_lobby_games("lobby_games")
+  end
 end
