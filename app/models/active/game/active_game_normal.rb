@@ -9,7 +9,12 @@ class ActiveGameNormal < ActiveGameBase
 
   end
 
-  def self.get_active_games
-    return get_lobby_games("lobby_games")
+  def redis_prefix
+    return "normal"
   end
+
+  def turn_timer_run_at
+    return 20.seconds.from_now
+  end
+
 end

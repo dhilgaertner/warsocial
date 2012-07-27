@@ -9,8 +9,8 @@ class ActiveGameMultiDay < ActiveGameBase
           connections, turn_timer_id, turn_count, seated_players_count, "multi_day")
   end
 
-  def self.get_active_games
-    return get_lobby_games("lobby_multiday_games")
+  def self.redis_prefix
+    return "multiday"
   end
 
   def turn_timer_run_at

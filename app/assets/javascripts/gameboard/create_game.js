@@ -6,6 +6,8 @@ function CreateGame(elementId, lobby_maps) {
     this.maps = lobby_maps;
     this._url_prefix = "";
 
+    $('.btn-group').button();
+
     this._modal = $('#' + this.elementId);
 
     this.setupCreateGameModal();

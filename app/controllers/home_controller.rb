@@ -18,7 +18,7 @@ class HomeController < ApplicationController
     @user = User.new(params[:user])
 
     if (params[:game_name] == nil)
-      lobby_games = ActiveGameNormal.get_active_games
+      lobby_games = ActiveGameNormal.get_lobby_games
       running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
       name = running_games.empty? ? "home" : running_games.first[:name]
     else
@@ -252,8 +252,8 @@ class HomeController < ApplicationController
   end
 
   def get_lobby_games
-    games = ActiveGameNormal.get_active_games
-    multiday_games = ActiveGameMultiDay.get_active_games
+    games = ActiveGameNormal.get_lobby_games
+    multiday_games = ActiveGameMultiDay.get_lobby_games
 
     response = { :games => games, :online => User.online_users, :multiday => multiday_games }
 

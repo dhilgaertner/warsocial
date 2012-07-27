@@ -1,0 +1,48 @@
+<div class="modal" id="create_game" style="display: none;">
+  <%= form_tag(create_game_home_index_path, :id => "create_game_form", :remote=>true) do %>
+
+  <div class="modal-body">
+    <div class="well" style="height: 350px;">
+      <h2 style="margin-left: 30px; margin-bottom: 10px;">Select Map</h2>
+      <div style="float: left; width: 200px; height: 300px; overflow-y: scroll;">
+        <ul class="thumbnails">
+          <% [1,2,3,4,5,6,7,8,9,10].each do |map| %>
+            <li class="span2">
+              <a href="#" class="thumbnail">
+                <img src="<%= @maps.first.preview_url %>" alt="">
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div style="float: right; width: 250px; height: 350; margin-top: 40px;">
+        <h2>Choose # of Players</h2>
+        <div class="btn-group" data-toggle="buttons-radio">
+          <button class="btn btn-large active" onclick="return false;">2</button>
+          <button class="btn btn-large" onclick="return false;">3</button>
+          <button class="btn btn-large" onclick="return false;">4</button>
+          <button class="btn btn-large" onclick="return false;">5</button>
+          <button class="btn btn-large" onclick="return false;">6</button>
+          <button class="btn btn-large" onclick="return false;">7</button>
+        </div>
+
+        <h2 style="margin-top: 50px;">Choose Wager</h2>
+        <div class="btn-group" data-toggle="buttons-radio">
+          <button class="btn active" onclick="return false;">0</button>
+          <button class="btn" onclick="return false;">50</button>
+          <button class="btn" onclick="return false;">100</button>
+          <button class="btn" onclick="return false;">200</button>
+          <button class="btn" onclick="return false;">500</button>
+          <button class="btn" onclick="return false;">2000</button>
+          <button class="btn" onclick="return false;">5000</button>
+          <button class="btn" onclick="return false;">10000</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn">Cancel</a> <input type="submit" class="btn btn-success" value="Create">
+  </div>
+  <% end %>
+</div>

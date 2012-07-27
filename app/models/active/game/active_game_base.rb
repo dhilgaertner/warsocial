@@ -21,7 +21,7 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   def save
-    REDIS.sadd("lobby_games", self.name)
+    REDIS.sadd("#{redis_prefix}_lobby_games", self.name)
     REDIS.hset(self.id, "name", self.name)
     REDIS.hset(self.id, "state", self.state)
     REDIS.hset(self.id, "turn_timer_id", self.turn_timer_id)
@@ -38,7 +38,7 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   def delete
-    REDIS.srem("lobby_games", self.name)
+    REDIS.srem("#{redis_prefix}_lobby_games", self.name)
     REDIS.hdel(self.id, "name")
     REDIS.hdel(self.id, "state")
     REDIS.hdel(self.id, "turn_timer_id")
@@ -87,8 +87,8 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   # Find games to be shown in the lobby
-  def self.get_lobby_games(lobby_games_key)
-    lobby_games = REDIS.smembers(lobby_games_key)
+  def self.get_lobby_games
+    lobby_games = REDIS.smembers("#{redis_prefix}_lobby_games")
 
     game_data = REDIS.multi do
       lobby_games.each do |lg|
