@@ -8,15 +8,16 @@
         <ul class="thumbnails">
           <% [1,2,3,4,5,6,7,8,9,10].each do |map| %>
             <li class="span2">
-              <a href="#" class="thumbnail">
+              <a href="#" class="thumbnail" onclick="$('#create_game a.thumbnail.active').removeClass('active'); $(this).addClass('active'); return false;">
                 <img src="<%= @maps.first.preview_url %>" alt="">
+                <p style="margin-left: 5px; margin-top: 5px; margin-bottom: 5px;"><%= @maps.first.name %></p>
               </a>
             </li>
           <% end %>
         </ul>
       </div>
-      <div style="float: right; width: 250px; height: 350; margin-top: 40px;">
-        <h2>Choose # of Players</h2>
+      <div style="float: right; width: 250px; height: 350;">
+        <h2 style="margin-bottom: 10px;">Choose # of Players</h2>
         <div class="btn-group" data-toggle="buttons-radio">
           <button class="btn btn-large active" onclick="return false;">2</button>
           <button class="btn btn-large" onclick="return false;">3</button>
@@ -26,16 +27,16 @@
           <button class="btn btn-large" onclick="return false;">7</button>
         </div>
 
-        <h2 style="margin-top: 50px;">Choose Wager</h2>
+        <h2 style="margin-top: 40px; margin-bottom: 10px;">Choose Wager</h2>
         <div class="btn-group" data-toggle="buttons-radio">
-          <button class="btn active" onclick="return false;">0</button>
-          <button class="btn" onclick="return false;">50</button>
-          <button class="btn" onclick="return false;">100</button>
-          <button class="btn" onclick="return false;">200</button>
-          <button class="btn" onclick="return false;">500</button>
-          <button class="btn" onclick="return false;">2000</button>
-          <button class="btn" onclick="return false;">5000</button>
-          <button class="btn" onclick="return false;">10000</button>
+          <button class="btn btn-large active" onclick="return false;">0</button>
+          <button class="btn btn-large" onclick="return false;">50</button>
+          <button class="btn btn-large" onclick="return false;">100</button>
+          <button class="btn btn-large" onclick="return false;">200</button>
+          <button class="btn btn-large" onclick="return false;">500</button>
+          <button class="btn btn-large" onclick="return false;">2000</button>
+          <button class="btn btn-large" onclick="return false;">5000</button>
+          <button class="btn btn-large" onclick="return false;">10000</button>
         </div>
       </div>
 
