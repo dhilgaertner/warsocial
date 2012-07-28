@@ -150,7 +150,11 @@ class HomeController < ApplicationController
     if (current_user.admin?)
       game = ActiveGame.get_active_game(game_name)
 
-      if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
+      if (!["home", "theonering", "texas", "k8dice", "skullhead",
+            "home100", "theonering100", "texas100", "k8dice100", "skullhead100",
+            "seeb500", "texas500",
+            "seeb2k", "texas2k",
+            "seeb10k", "texas10k"].include?(game_name))
         gr = GameRule.find_all_by_game_name(game_name).first
 
         if gr
