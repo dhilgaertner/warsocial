@@ -520,13 +520,13 @@ class ActiveGame
     end
   end
 
-  # Start Game
-  private
-  def start_game
+  def setup_start_postions
 
     lands = get_lands
     land_ids = lands.keys
-    lands_each = (lands.length / self.players.values.size).to_i
+
+    lands_total = lands.length
+    lands_each = (lands_total / self.players.values.size).to_i
     random_picks = Array.new
 
     #Randomly distribute the land amongst the players
@@ -551,9 +551,18 @@ class ActiveGame
       end
     end
 
+    next_player = self.players.values.sample
+    next_player.is_turn = true
+
+    pos = create_seat_order_array(next_player.seat_number, self.players.size)
+
     #Randomly distribute the armies amongst the player's lands
     self.players.values.each do |player|
       dice = player.lands.size * 2
+
+      if (player.seat_number == pos.at(-1)) # if player is last to go
+        dice = dice + (dice * 0.2).to_i
+      end
 
       dice.times do |i|
         non_full_lands = player.lands.values.select {|l| l.deployment < max_starting_stack_by_lands(self.lands.size)}
@@ -564,11 +573,23 @@ class ActiveGame
       end
     end
 
+  end
+
+  private
+  def create_seat_order_array(first_seat_number, num_players)
+    all = [1,2,3,4,5,6,7][0..(num_players - 1)]
+    first = first_seat_number
+    pos = first == 1 ? all : all[(first - 1)..(num_players - 1)] + all[0..(first - 2)]
+  end
+
+  # Start Game
+  private
+  def start_game
+
+    self.setup_start_postions
+
     self.state = Game::STARTED_STATE
     restart_turn_timer
-
-    next_player = self.players.values.sample
-    next_player.is_turn = true
 
     update_delta_points
 
@@ -603,7 +624,7 @@ class ActiveGame
       ActiveGame.get_active_game(self.name)
 
       REDIS.multi do
-        ActiveStats.game_finished(self)
+        #TODO: ActiveStats.game_finished(self)
         REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:players:#{self.players.values.collect { |x| x.username }.join(",")}:wager:#{self.wager_level.to_s}:#{DateTime.now.to_s}")
       end
 
