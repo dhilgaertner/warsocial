@@ -7,7 +7,9 @@
     <ul class="nav nav-pills">
       <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">1</span></a></li>
       <li class="active"><a href="#tables" data-toggle="tab">Tables<span id="tables_badge" class="badge">1</span></a></li>
-      <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">1</span><span id="multi_badge_2" class="badge">1</span></a></li>
+      <% if current_user.admin? %>
+        <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">1</span><span id="multi_badge_2" class="badge">1</span></a></li>
+      <% end %>
     </ul>
     <div class="well">
       <div class="tab-content">
@@ -40,21 +42,23 @@
             </tbody>
           </table>
         </div>
-        <div class="tab-pane" id="multi-day">
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th>Name</th>
-              <th>Players</th>
-              <th>Wager</th>
-              <th>State</th>
-            </tr>
-            </thead>
-            <tbody>
+        <% if current_user.admin? %>
+          <div class="tab-pane" id="multi-day">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Players</th>
+                <th>Wager</th>
+                <th>State</th>
+              </tr>
+              </thead>
+              <tbody>
 
-            </tbody>
-          </table>
-        </div>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

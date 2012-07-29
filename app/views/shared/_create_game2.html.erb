@@ -46,11 +46,13 @@
             <button class="btn btn-large" onclick="return false;">10000</button>
           </div>
 
-          <h3 style="margin-top: 10px; margin-bottom: 10px;">Choose Game Type</h3>
-          <div id="create_game_type" class="btn-group" data-toggle="buttons-radio">
-            <button class="btn btn-large active" onclick="return false;">Normal</button>
-            <button class="btn btn-large" onclick="return false;">Mutli-Day</button>
-          </div>
+          <% if current_user.admin? %>
+            <h3 style="margin-top: 10px; margin-bottom: 10px;">Choose Game Type</h3>
+            <div id="create_game_type" class="btn-group" data-toggle="buttons-radio">
+              <button class="btn btn-large active" onclick="return false;">Normal</button>
+              <button class="btn btn-large" onclick="return false;">Mutli-Day</button>
+            </div>
+          <% end %>
         </div>
 
       </div>
