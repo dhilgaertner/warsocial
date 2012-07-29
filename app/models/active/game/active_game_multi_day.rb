@@ -13,6 +13,10 @@ class ActiveGameMultiDay < ActiveGameBase
     return "multiday"
   end
 
+  def self.get_lobby_games
+    ActiveGameMultiDay.get_lobby_games_with_key("multiday")
+  end
+
   def turn_timer_run_at
     return 24.hours.from_now
   end

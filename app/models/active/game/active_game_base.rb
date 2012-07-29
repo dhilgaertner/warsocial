@@ -87,7 +87,7 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   # Find games to be shown in the lobby
-  def self.get_lobby_games
+  def self.get_lobby_games_with_key(redis_prefix)
     lobby_games = REDIS.smembers("#{redis_prefix}_lobby_games")
 
     game_data = REDIS.multi do
@@ -132,35 +132,6 @@ class ActiveGameBase < ActiveGameBaseSettings
       return self.players[user.id].is_turn
     else
       return false
-    end
-  end
-
-  # Create a new game with custom rules (Handles Form Submit From View)
-  def create_game
-    if (current_user != nil)
-      map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
-      number_of_players = [2,3,4,5,6,7].include?(params[:select_players].to_i) ? params[:select_players].to_i : 2
-      wager = params[:select_wager].to_i >= 0 ? params[:select_wager].to_i : 0
-      game_name = nil
-
-      try_name = current_user.username
-      try = 1
-
-      while game_name == nil
-        gr = GameRule.find_by_game_name(try_name)
-
-        if (gr == nil)
-          game_name = try_name
-          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players, :wager_level => wager)
-        else
-          try = try + 1
-          try_name = current_user.username + try.to_s
-        end
-      end
-
-      render :text=>game_name, :status=>200
-    else
-      render :text=>"Forbidden", :status=>403
     end
   end
 

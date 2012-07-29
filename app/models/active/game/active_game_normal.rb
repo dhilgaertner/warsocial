@@ -13,6 +13,10 @@ class ActiveGameNormal < ActiveGameBase
     return "normal"
   end
 
+  def self.get_lobby_games
+    ActiveGameNormal.get_lobby_games_with_key("normal")
+  end
+
   def turn_timer_run_at
     return 20.seconds.from_now
   end

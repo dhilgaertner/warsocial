@@ -76,6 +76,8 @@ class HomeController < ApplicationController
       map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
       number_of_players = [2,3,4,5,6,7].include?(params[:select_players].to_i) ? params[:select_players].to_i : 2
       wager = [0,50,100,200,500,1000,2000,5000,10000].include?(params[:select_wager].to_i) ? params[:select_wager].to_i : 0
+      game_type = ["normal", "multiday"].include?(params[:game_type]) ? params[:game_type] : "normal"
+
       game_name = nil
 
       try_name = current_user.username
@@ -86,7 +88,11 @@ class HomeController < ApplicationController
 
         if (gr == nil)
           game_name = try_name
-          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players, :wager_level => wager)
+          GameRule.create(:game_name => game_name,
+                          :map_name => map_name,
+                          :player_count => number_of_players,
+                          :wager_level => wager,
+                          :game_type => game_type)
         else
           try = try + 1
           try_name = current_user.username + try.to_s
