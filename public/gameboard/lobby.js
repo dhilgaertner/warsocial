@@ -43,19 +43,21 @@ Lobby.prototype.setupDataTables = function() {
     this.ttable.fnSort( [ [3,'desc'], [2,'asc'], [1,'desc'] ] );
     this.ttable.find('tr:contains("game started")').css("color", "grey")
 
-    this.mtable = $('#game_lobby #multi-day table').dataTable({
-        iDisplayLength: 100,
-        bFilter: false,
-        bInfo: false,
-        bLengthChange: false,
-        bDestroy: true,
-        oLanguage: {
-            sEmptyTable: "None"
-        }
-    });
+    if ($('#game_lobby #multi-day table').length > 0) {
+        this.mtable = $('#game_lobby #multi-day table').dataTable({
+            iDisplayLength: 100,
+            bFilter: false,
+            bInfo: false,
+            bLengthChange: false,
+            bDestroy: true,
+            oLanguage: {
+                sEmptyTable: "None"
+            }
+        });
 
-    this.mtable.fnSort( [ [3,'desc'], [2,'asc'], [1,'desc'] ] );
-    this.mtable.find('tr:contains("game started")').css("color", "grey")
+        this.mtable.fnSort( [ [3,'desc'], [2,'asc'], [1,'desc'] ] );
+        this.mtable.find('tr:contains("game started")').css("color", "grey");
+    }
 
     this.otable = $('#game_lobby #online table').dataTable({
         iDisplayLength: 100,
