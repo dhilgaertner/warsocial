@@ -18,7 +18,7 @@ class PusherController < ApplicationController
                                "seeb10k", "texas10k"]
 
             if (!permenant_games.include?(game_name))
-              game = ActiveGameNormal.get_active_game(game_name)
+              game = ActiveGameFactory.get_active_game(game_name)
 
               if (game.players.size == 0 && game.state == Game::WAITING_STATE)
                 gr = GameRule.find_all_by_game_name(game_name).first
