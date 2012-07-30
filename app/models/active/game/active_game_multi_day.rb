@@ -9,7 +9,7 @@ class ActiveGameMultiDay < ActiveGameBase
           connections, turn_timer_id, turn_count, seated_players_count, "multi_day")
   end
 
-  def self.redis_prefix
+  def redis_prefix
     return "multiday"
   end
 

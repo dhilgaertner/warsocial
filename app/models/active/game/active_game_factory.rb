@@ -29,7 +29,7 @@ class ActiveGameFactory
     case(type)
       when "normal"
         game = ActiveGameNormal.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
-      when "multi_day"
+      when "multiday"
         game = ActiveGameMultiDay.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
     end
 

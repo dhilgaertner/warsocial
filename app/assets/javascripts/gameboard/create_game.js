@@ -31,7 +31,7 @@ CreateGame.prototype.setupCreateGameModal = function() {
     }
 
     function updateGenericButtonInput(button, inputName) {
-        $('input[name="' + inputName + '"]').val($(button).html());
+        $('input[name="' + inputName + '"]').val($(button).val());
     }
 
     updateMapInput($('#create_game_maps a.active'));

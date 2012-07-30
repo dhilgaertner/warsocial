@@ -26,31 +26,31 @@
         <div style="float: right; width: 250px; height: 350;">
           <h3 style="margin-bottom: 10px;">Choose # of Players</h3>
           <div id="create_game_players" class="btn-group" data-toggle="buttons-radio">
-            <button class="btn btn-large active" onclick="return false;">2</button>
-            <button class="btn btn-large" onclick="return false;">3</button>
-            <button class="btn btn-large" onclick="return false;">4</button>
-            <button class="btn btn-large" onclick="return false;">5</button>
-            <button class="btn btn-large" onclick="return false;">6</button>
-            <button class="btn btn-large" onclick="return false;">7</button>
+            <button class="btn btn-large active" value="2" onclick="return false;">2</button>
+            <button class="btn btn-large" value="3" onclick="return false;">3</button>
+            <button class="btn btn-large" value="4" onclick="return false;">4</button>
+            <button class="btn btn-large" value="5" onclick="return false;">5</button>
+            <button class="btn btn-large" value="6" onclick="return false;">6</button>
+            <button class="btn btn-large" value="7" onclick="return false;">7</button>
           </div>
 
           <h3 style="margin-top: 10px; margin-bottom: 10px;">Choose Wager</h3>
           <div id="create_game_wager" class="btn-group" data-toggle="buttons-radio">
-            <button class="btn btn-large active" onclick="return false;">0</button>
-            <button class="btn btn-large" onclick="return false;">50</button>
-            <button class="btn btn-large" onclick="return false;">100</button>
-            <button class="btn btn-large" onclick="return false;">200</button>
-            <button class="btn btn-large" onclick="return false;">500</button>
-            <button class="btn btn-large" onclick="return false;">2000</button>
-            <button class="btn btn-large" onclick="return false;">5000</button>
-            <button class="btn btn-large" onclick="return false;">10000</button>
+            <button class="btn btn-large active" value="0" onclick="return false;">0</button>
+            <button class="btn btn-large" value="50" onclick="return false;">50</button>
+            <button class="btn btn-large" value="100" onclick="return false;">100</button>
+            <button class="btn btn-large" value="200" onclick="return false;">200</button>
+            <button class="btn btn-large" value="500" onclick="return false;">500</button>
+            <button class="btn btn-large" value="2000" onclick="return false;">2000</button>
+            <button class="btn btn-large" value="5000" onclick="return false;">5000</button>
+            <button class="btn btn-large" value="10000" onclick="return false;">10000</button>
           </div>
 
           <% if current_user != nil && current_user.admin? && ["deadcode", "dc"].include?(current_user.username) %>
             <h3 style="margin-top: 10px; margin-bottom: 10px;">Choose Game Type</h3>
             <div id="create_game_type" class="btn-group" data-toggle="buttons-radio">
-              <button class="btn btn-large active" onclick="return false;">Normal</button>
-              <button class="btn btn-large" onclick="return false;">Mutli-Day</button>
+              <button class="btn btn-large active" value="normal" onclick="return false;">Normal</button>
+              <button class="btn btn-large" value="multiday" onclick="return false;">Multi-Day</button>
             </div>
           <% end %>
         </div>
