@@ -1,5 +1,4 @@
 require 'active/active_user'
-require 'active/active_game'
 require 'active/active_player'
 require 'active/active_land'
 
