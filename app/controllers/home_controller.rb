@@ -13,6 +13,7 @@ class HomeController < ApplicationController
   end
 
   def index
+
     @isGame = true
 
     @user = User.new(params[:user])
