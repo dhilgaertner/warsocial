@@ -46,7 +46,7 @@
             <button class="btn btn-large" value="10000" onclick="return false;">10000</button>
           </div>
 
-          <% if current_user != nil && current_user.admin? && ["deadcode", "dc"].include?(current_user.username) %>
+          <% if current_user != nil && current_user.admin? %>
             <h3 style="margin-top: 10px; margin-bottom: 10px;">Choose Game Type</h3>
             <div id="create_game_type" class="btn-group" data-toggle="buttons-radio">
               <button class="btn btn-large active" value="normal" onclick="return false;">Normal</button>
