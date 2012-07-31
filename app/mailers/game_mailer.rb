@@ -1,5 +1,5 @@
 class GameMailer < ActionMailer::Base
-  default :from => "notification@warsocial.com"
+  default :from => "WarSocial Notification <notification@warsocial.com>"
 
   def user_turn_started(user, game)
     @user = user
