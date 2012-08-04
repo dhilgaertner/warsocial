@@ -7,7 +7,7 @@
     <ul class="nav nav-pills">
       <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">1</span></a></li>
       <li class="active"><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge">1</span></a></li>
-      <% if current_user != nil && current_user.admin? %>
+      <% if current_user != nil && current_user.admin? || ["jurgen"].include?(current_user.username) %>
         <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">1</span><span id="multi_badge_2" class="badge">1</span></a></li>
       <% end %>
     </ul>
@@ -42,7 +42,7 @@
             </tbody>
           </table>
         </div>
-        <% if current_user != nil && current_user.admin? %>
+        <% if current_user != nil && current_user.admin? || ["jurgen"].include?(current_user.username) %>
           <div class="tab-pane" id="multi-day">
             <table class="table table-striped">
               <thead>
