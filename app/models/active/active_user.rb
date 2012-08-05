@@ -62,7 +62,7 @@ class ActiveUser
       return nil
     end
 
-    uh = ActiveGame.array_to_hash(user_data[0])
+    uh = ActiveGameFactory.array_to_hash(user_data[0])
     user = ActiveUser.new(uh["user_id"],
                           uh["stats_toggle"],
                           uh["sounds_toggle"],

@@ -6,13 +6,15 @@ function CreateGame(elementId, lobby_maps) {
     this.maps = lobby_maps;
     this._url_prefix = "";
 
+    $('.btn-group').button();
+
     this._modal = $('#' + this.elementId);
 
     this.setupCreateGameModal();
 
     this._modal.on('show', function () {
         if (!$(ctx._modal[0]).is(":visible")) {
-            ctx.setupView();
+            //DO STUFF HERE ONLOAD?
         }
     })
 }
@@ -20,28 +22,38 @@ function CreateGame(elementId, lobby_maps) {
 CreateGame.prototype.setupCreateGameModal = function() {
     var ctx = this;
 
-    this._modal.find('select.styled:first').change(function() {
-        $.each(ctx.maps, function(index, map){
-            var map_name = $('select.styled:first option:selected').val();
-            var clear_bg = function() {
-                $('#map_preview').attr("style", "");
-            };
+    function updateMapInput(element) {
+        $('#create_game a.thumbnail.active').removeClass('active');
+        $(element).addClass('active');
 
-            if (map_name == $('select.styled:first option:first').val()) {
-                clear_bg();
-                return false;
-            }
+        var mapName = $(element).data("map");
+        $('input[name="select_map"]').val(mapName) ;
+    }
 
-            if (map.name == map_name) {
-                if (map.preview_url != null) {
-                    $('#map_preview').attr("style", "background: url('" + map.preview_url + "') no-repeat scroll center transparent");
-                } else {
-                    clear_bg();
-                }
-            }
-        });
+    function updateGenericButtonInput(button, inputName) {
+        $('input[name="' + inputName + '"]').val($(button).val());
+    }
+
+    updateMapInput($('#create_game_maps a.active'));
+    updateGenericButtonInput($('#create_game_players button.active'), "select_players");
+    updateGenericButtonInput($('#create_game_wager button.active'), "select_wager");
+    updateGenericButtonInput($('#create_game_type button.active'), "game_type");
+
+    $('#create_game_maps a').click(function(){
+        updateMapInput(this);
     });
 
+    $('#create_game_players button').click(function(){
+        updateGenericButtonInput(this, "select_players");
+    });
+
+    $('#create_game_wager button').click(function(){
+        updateGenericButtonInput(this, "select_wager");
+    });
+
+    $('#create_game_type button').click(function(){
+        updateGenericButtonInput(this, "game_type");
+    });
 
     $('#create_game_form')
         .bind('ajax:beforeSend', function(xhr, settings) {
@@ -58,10 +70,6 @@ CreateGame.prototype.setupCreateGameModal = function() {
         .bind('ajax:error', function(xhr, status, error) {
 
         });
-};
-
-CreateGame.prototype.setupView = function() {
-
 };
 
 CreateGame.prototype.setContext = function(context) {

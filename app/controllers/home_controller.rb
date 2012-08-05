@@ -1,4 +1,6 @@
-require 'active/active_game'
+require 'active/game/active_game_factory'
+require 'active/game/active_game_normal'
+require 'active/game/active_game_multi_day'
 require 'active/active_player'
 require 'active/active_land'
 require 'active/active_user'
@@ -11,12 +13,13 @@ class HomeController < ApplicationController
   end
 
   def index
+
     @isGame = true
 
     @user = User.new(params[:user])
 
     if (params[:game_name] == nil)
-      lobby_games = ActiveGame.get_lobby_games
+      lobby_games = ActiveGameNormal.get_lobby_games
       running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
       name = running_games.empty? ? "home" : running_games.first[:name]
     else
@@ -26,7 +29,7 @@ class HomeController < ApplicationController
     @dev = params[:dev] == nil ? false : true
     @dev_image = params[:dev_image] == nil ? false : true
 
-    @game = ActiveGame.get_active_game(name)
+    @game = ActiveGameFactory.get_active_game(name)
 
     if(current_user != nil && current_user.admin?)
       @maps = Map.where("is_public = ?", true).select("name, preview_url")
@@ -74,6 +77,8 @@ class HomeController < ApplicationController
       map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
       number_of_players = [2,3,4,5,6,7].include?(params[:select_players].to_i) ? params[:select_players].to_i : 2
       wager = [0,50,100,200,500,1000,2000,5000,10000].include?(params[:select_wager].to_i) ? params[:select_wager].to_i : 0
+      game_type = ["normal", "multiday"].include?(params[:game_type]) ? params[:game_type] : "normal"
+
       game_name = nil
 
       try_name = current_user.username
@@ -84,7 +89,11 @@ class HomeController < ApplicationController
 
         if (gr == nil)
           game_name = try_name
-          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players, :wager_level => wager)
+          GameRule.create(:game_name => game_name,
+                          :map_name => map_name,
+                          :player_count => number_of_players,
+                          :wager_level => wager,
+                          :game_type => game_type)
         else
           try = try + 1
           try_name = current_user.username + try.to_s
@@ -103,7 +112,7 @@ class HomeController < ApplicationController
       attacking_land_id = params[:atk_land_id]
       defending_land_id = params[:def_land_id]
 
-      game = ActiveGame.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
 
       if (game.is_users_turn?(current_user))
         if game.state == Game::STARTED_STATE
@@ -126,7 +135,7 @@ class HomeController < ApplicationController
     if (current_user != nil)
       game_name = params[:game_name]
 
-      game = ActiveGame.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
 
       if (game.is_users_turn?(current_user))
         if game.state == Game::STARTED_STATE
@@ -148,9 +157,13 @@ class HomeController < ApplicationController
     game_name = params[:game_name]
 
     if (current_user.admin?)
-      game = ActiveGame.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
 
-      if (!["home", "default", "alex", "jurgen", "k8dice"].include?(game_name))
+      if (!["home", "theonering", "texas", "k8dice", "skullhead",
+            "home100", "theonering100", "texas100", "k8dice100", "skullhead100",
+            "seeb500", "texas500",
+            "seeb2k", "texas2k",
+            "seeb10k", "texas10k"].include?(game_name))
         gr = GameRule.find_all_by_game_name(game_name).first
 
         if gr
@@ -169,7 +182,7 @@ class HomeController < ApplicationController
   def sit
     game_name = params[:game_name]
     
-    game = ActiveGame.get_active_game(game_name)
+    game = ActiveGameFactory.get_active_game(game_name)
 
     if (current_user != nil)
       if(!game.is_user_in_game?(current_user))
@@ -197,7 +210,7 @@ class HomeController < ApplicationController
     if (current_user != nil)
       game_name = params[:game_name]
 
-      game = ActiveGame.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
 
       if (game.is_user_in_game?(current_user))
         if game.state == Game::WAITING_STATE
@@ -219,7 +232,7 @@ class HomeController < ApplicationController
   def flag
     game_name = params[:game_name]
     
-    game = ActiveGame.get_active_game(game_name)
+    game = ActiveGameFactory.get_active_game(game_name)
     
     if (game.is_user_in_game?(current_user))
       if game.state == Game::STARTED_STATE
@@ -240,7 +253,7 @@ class HomeController < ApplicationController
     turn_count = params[:turn_count].to_i
 
     if auth == "whisper" #TODO: Better auth (Dustin)
-      game = ActiveGame.get_active_game(game_name)
+      game = ActiveGameFactory.get_active_game(game_name)
       if (game.turn_count == turn_count)
         game.force_end_turn
       end
@@ -250,9 +263,10 @@ class HomeController < ApplicationController
   end
 
   def get_lobby_games
-    games = ActiveGame.get_lobby_games
+    games = ActiveGameNormal.get_lobby_games
+    multiday_games = ActiveGameMultiDay.get_lobby_games
 
-    response = { :games => games, :online => User.online_users }
+    response = { :games => games, :online => User.online_users, :multiday => multiday_games }
 
     render :json => response
   end

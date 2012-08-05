@@ -3,8 +3,10 @@
 <head>
 <title>Play Risk Online - WarSocial</title>
 
-<meta name="Description" content="WarSocial is a free dice-based online multiplayer social strategy game similar to Risk, Conquerclub, Dicewars, Kdice and Lux Delux.">
+<meta name="Description" content="WarSocial is a free turn-based real time multiplayer HTML5 social strategy game inspired by Risk.">
 <meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
+
+<meta property="og:image" content="<%= image_path "logo.png" %>"/>
 
 <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
 <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -59,7 +61,7 @@
 			src: url('/Atrament/Atrament-5-Medium.otf');
 		}
 
-		body { 
+		body {
 		  background-color: white;
 		  margin: 0px;
 		}
@@ -179,7 +181,7 @@
 
 		div#header {
 			width: 849px;
-			height: 130px;
+			height: 90px;
 		}
 
 		div#header p {
@@ -327,28 +329,28 @@
             margin-bottom: 3px;
 			/*background-color: #5DFC0A;*/
 		}
-		
+
 		div#game_main #left_players .turn_progress {
 			width: 55px;
 			height: 6px;
 			margin-left: auto;
 			margin-right: auto;
 		}
-		
+
 		div#game_main #right_players .turn_progress {
 			width: 55px;
 			height: 6px;
 			margin-left: auto;
 			margin-right: auto;
 		}
-		
+
 		div#game_main #top_players .turn_progress {
 			width: 55px;
 			height: 6px;
 			float: left;
 			margin-left: 23px;
 		}
-		
+
 		div#game_main #right_players .player {
 			margin-top: 40px;
 			width: 77px;
@@ -507,6 +509,16 @@
             background:url(<%=image_path "lobby/create_game_bottom.png"%>) no-repeat center right;
         }
 
+        div#create_game a.thumbnail.active {
+          color: white;
+          background-color: #2F96B4
+        }
+
+        div#create_game button.active {
+          color: white;
+          background-color: #2F96B4
+        }
+
         /*#simplemodal-container a.modalCloseImg {*/
             /*background:url(<%=image_path "lobby/x.png"%>) no-repeat; *//* adjust url as required */
             /*background-position: center;*/
@@ -531,7 +543,7 @@
 			-moz-border-radius: 5px 5px;
 			border-radius: 5px 5px;
 			height: 215px;
-			overflow: auto; 
+			overflow: auto;
 		}
 
         div#chat_window tr {

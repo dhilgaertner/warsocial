@@ -1,10 +1,12 @@
-class ActiveGame
+require 'active/game/active_game_base_settings'
+
+class ActiveGameBase < ActiveGameBaseSettings
 
   attr_accessor :name, :state, :turn_timer_id, :max_player_count, :wager_level, :map_name, :map_json, :connections,
-                :seated_players_counter, :turn_count
+                :seated_players_counter, :turn_count, :game_type
 
   def initialize(name, state, max_player_count, wager_level, map_name, map_json,
-      connections=nil, turn_timer_id=nil, turn_count=0, seated_players_count=0)
+      connections=nil, turn_timer_id=nil, turn_count=0, seated_players_count=0, game_type="normal")
     self.name = name
     self.state = state
     self.max_player_count = max_player_count.to_i
@@ -15,10 +17,11 @@ class ActiveGame
     self.turn_timer_id = turn_timer_id == "" ? nil : turn_timer_id
     self.seated_players_counter = seated_players_count
     self.turn_count = turn_count.to_i
+    self.game_type = game_type
   end
 
   def save
-    REDIS.sadd("lobby_games", self.name)
+    REDIS.sadd("#{redis_prefix}_lobby_games", self.name)
     REDIS.hset(self.id, "name", self.name)
     REDIS.hset(self.id, "state", self.state)
     REDIS.hset(self.id, "turn_timer_id", self.turn_timer_id)
@@ -27,6 +30,7 @@ class ActiveGame
     REDIS.hset(self.id, "map_name", self.map_name)
     REDIS.hset(self.id, "map_json", self.map_json)
     REDIS.hset(self.id, "turn_count", self.turn_count)
+    REDIS.hset(self.id, "game_type", self.game_type)
 
     if (self.connections != nil)
       REDIS.hset(self.id, "connections", self.connections)
@@ -34,7 +38,7 @@ class ActiveGame
   end
 
   def delete
-    REDIS.srem("lobby_games", self.name)
+    REDIS.srem("#{redis_prefix}_lobby_games", self.name)
     REDIS.hdel(self.id, "name")
     REDIS.hdel(self.id, "state")
     REDIS.hdel(self.id, "turn_timer_id")
@@ -44,6 +48,7 @@ class ActiveGame
     REDIS.hdel(self.id, "map_json")
     REDIS.hdel(self.id, "connections")
     REDIS.hdel(self.id, "turn_count")
+    REDIS.hdel(self.id, "game_type")
 
     REDIS.del(self.redis_seat_counter_id)
   end
@@ -81,101 +86,9 @@ class ActiveGame
     }
   end
 
-  # Find running game by name or create a new one
-  def self.get_active_game(name)
-
-    game = ActiveGame.load_active_game(name)
-
-    if game == nil
-      settings = GameRule.where("game_name = ?", name).first
-
-      map_name = (settings == nil) ? "default" : settings.map_name
-      num_players = (settings == nil) ? 2 : settings.player_count
-      wager = (settings == nil) ? 0 : settings.wager_level
-
-      map = Map.where("name = ?", map_name).first
-
-      game = ActiveGame.new(name, Game::WAITING_STATE, num_players, wager, map.name, map.json)
-
-      REDIS.multi do
-        game.save
-      end
-    end
-
-    return game
-  end
-
-  # Loads game from REDIS; return NIL if none found
-  def self.load_active_game(name)
-    game_data = REDIS.multi do
-      REDIS.hgetall("game:#{name}")
-      REDIS.keys("game:#{name}:player:*")
-      REDIS.keys("game:#{name}:land:*")
-    end
-
-    if game_data[0].empty?
-      return nil
-    end
-
-    gh = ActiveGame.array_to_hash(game_data[0])
-    game = ActiveGame.new(gh["name"],
-                          gh["state"],
-                          gh["max_player_count"],
-                          gh["wager_level"],
-                          gh["map_name"],
-                          gh["map_json"],
-                          gh["connections"],
-                          gh["turn_timer_id"],
-                          gh["turn_count"])
-
-    player_and_land_data = REDIS.multi do
-      game_data[1].each do |key|
-        REDIS.hgetall(key)
-      end
-      game_data[2].each do |key|
-        REDIS.hgetall(key)
-      end
-    end
-
-    player_data = player_and_land_data[0, game_data[1].size]
-    land_data = player_and_land_data[-1 * game_data[2].size, game_data[2].size]
-
-    player_data.each do |pd|
-      ph = ActiveGame.array_to_hash(pd)
-      player = ActivePlayer.new(name,
-                                ph["seat_number"],
-                                ph["state"],
-                                ph["user_id"],
-                                ph["username"],
-                                ph["current_points"],
-                                ph["is_turn"],
-                                ph["current_delta_points"],
-                                ph["current_place"],
-                                ph["reserves"],
-                                ph["missed_turns"])
-
-      game.players[player.user_id] = player
-    end
-
-    land_data.each do |ld|
-      lh = ActiveGame.array_to_hash(ld)
-      land = ActiveLand.new(name,
-                            lh["map_land_id"],
-                            lh["deployment"],
-                            lh["player_id"])
-
-      if land.player_id != nil
-        game.players[land.player_id].lands[land.map_land_id] = land
-      end
-      game.lands[land.map_land_id] = land
-    end
-
-    return game
-  end
-
   # Find games to be shown in the lobby
-  def self.get_lobby_games
-    lobby_games = REDIS.smembers("lobby_games")
+  def self.get_lobby_games_with_key(redis_prefix)
+    lobby_games = REDIS.smembers("#{redis_prefix}_lobby_games")
 
     game_data = REDIS.multi do
       lobby_games.each do |lg|
@@ -191,7 +104,7 @@ class ActiveGame
 
       case results_case
         when 0
-          gh = ActiveGame.array_to_hash(data)
+          gh = ActiveGameFactory.array_to_hash(data)
           player_count = game_data[index + 1].size
 
           result << {  :name => gh["name"],
@@ -208,24 +121,6 @@ class ActiveGame
     return result
   end
 
-  # Parse REDIS hgetall Array and return Hash
-  def self.array_to_hash(arr)
-    current_key = nil
-    hash = Hash.new
-
-    arr.each_with_index do |item, index|
-      is_key = (index % 2) == 0
-
-      if is_key
-        current_key = item
-      else
-        hash[current_key] = item
-      end
-    end
-
-    return hash
-  end
-
   # Is the user in the game?
   def is_user_in_game?(user)
     self.players.has_key?(user.id)
@@ -237,35 +132,6 @@ class ActiveGame
       return self.players[user.id].is_turn
     else
       return false
-    end
-  end
-
-  # Create a new game with custom rules (Handles Form Submit From View)
-  def create_game
-    if (current_user != nil)
-      map_name = Map.find_all_by_name(params[:select_map]).empty? ? "default" : params[:select_map]
-      number_of_players = [2,3,4,5,6,7].include?(params[:select_players].to_i) ? params[:select_players].to_i : 2
-      wager = params[:select_wager].to_i >= 0 ? params[:select_wager].to_i : 0
-      game_name = nil
-
-      try_name = current_user.username
-      try = 1
-
-      while game_name == nil
-        gr = GameRule.find_by_game_name(try_name)
-
-        if (gr == nil)
-          game_name = try_name
-          GameRule.create(:game_name => game_name, :map_name => map_name, :player_count => number_of_players, :wager_level => wager)
-        else
-          try = try + 1
-          try_name = current_user.username + try.to_s
-        end
-      end
-
-      render :text=>game_name, :status=>200
-    else
-      render :text=>"Forbidden", :status=>403
     end
   end
 
@@ -443,6 +309,8 @@ class ActiveGame
 
     save_all
 
+    #Fire event for a new players turns
+    self.on_players_turn(np)
   end
 
   # Force the end of the current players turn
@@ -520,13 +388,13 @@ class ActiveGame
     end
   end
 
-  # Start Game
-  private
-  def start_game
+  def setup_start_postions
 
     lands = get_lands
     land_ids = lands.keys
-    lands_each = (lands.length / self.players.values.size).to_i
+
+    lands_total = lands.length
+    lands_each = (lands_total / self.players.values.size).to_i
     random_picks = Array.new
 
     #Randomly distribute the land amongst the players
@@ -551,9 +419,18 @@ class ActiveGame
       end
     end
 
+    next_player = self.players.values.sample
+    next_player.is_turn = true
+
+    pos = create_seat_order_array(next_player.seat_number, self.players.size)
+
     #Randomly distribute the armies amongst the player's lands
     self.players.values.each do |player|
       dice = player.lands.size * 2
+
+      if (player.seat_number == pos.at(-1)) # if player is last to go
+        dice = dice + (dice * 0.2).to_i
+      end
 
       dice.times do |i|
         non_full_lands = player.lands.values.select {|l| l.deployment < max_starting_stack_by_lands(self.lands.size)}
@@ -564,11 +441,23 @@ class ActiveGame
       end
     end
 
+  end
+
+  private
+  def create_seat_order_array(first_seat_number, num_players)
+    all = [1,2,3,4,5,6,7][0..(num_players - 1)]
+    first = first_seat_number
+    pos = first == 1 ? all : all[(first - 1)..(num_players - 1)] + all[0..(first - 2)]
+  end
+
+  # Start Game
+  private
+  def start_game
+
+    self.setup_start_postions
+
     self.state = Game::STARTED_STATE
     restart_turn_timer
-
-    next_player = self.players.values.sample
-    next_player.is_turn = true
 
     update_delta_points
 
@@ -600,10 +489,10 @@ class ActiveGame
 
       self.delete_all  #TODO: store the game for archive
 
-      ActiveGame.get_active_game(self.name)
+      ActiveGameFactory.get_active_game(self.name)
 
       REDIS.multi do
-        ActiveStats.game_finished(self)
+        #TODO: ActiveStats.game_finished(self)
         REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:players:#{self.players.values.collect { |x| x.username }.join(",")}:wager:#{self.wager_level.to_s}:#{DateTime.now.to_s}")
       end
 
@@ -749,7 +638,7 @@ class ActiveGame
   def restart_turn_timer
     kill_turn_timer
 
-    new_job = Delayed::Job.enqueue(TurnJob.new(self.name, self.turn_count), :run_at => 20.seconds.from_now)
+    new_job = Delayed::Job.enqueue(TurnJob.new(self.name, self.turn_count), :run_at => self.turn_timer_run_at)
     self.turn_timer_id = new_job.id
   end
 
