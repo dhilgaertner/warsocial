@@ -22,6 +22,29 @@ class User < ActiveRecord::Base
     self.forem_admin
   end
 
+  def medals
+    places = Array.new
+    self.season_scores.order("created_at").each do |score|
+      places.push(score.season.season_scores.count(:conditions => ['points > ?', score.points]) + 1)
+    end
+
+    return places
+  end
+
+  def medals
+    places = Array.new
+    self.season_scores.order("created_at").each do |score|
+      places.push(score.season.season_scores.count(:conditions => ['points > ?', score.points]) + 1)
+    end
+
+    return places
+  end
+
+  def medals_json
+    medals = self.medals
+    return medals.size > 0 ? "[#{medals * ","}]" : "[]"
+  end
+
   def self.find_for_oauth(access_token, signed_in_resource=nil)
     logger.info access_token
     

@@ -170,7 +170,8 @@ class ActiveGameBase < ActiveGameBaseSettings
                                        Player::DEFAULT_PLAYER_STATE,
                                        user.id,
                                        user.username,
-                                       user.current_points)
+                                       user.current_points,
+                                       user.medals_json)
 
       self.players[user.id] = new_player
 
