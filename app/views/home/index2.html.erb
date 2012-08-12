@@ -3,17 +3,19 @@
 <% end %>
 
 <div id="game-container">
+  <div class="game">
 
-</div>
-
-<div class="row">
-  <div class="span8" style="height: 620px; min-width: 780px;">
-
-    <%= render "shared/game_board" %>
+    <%= render "shared/game_board2" %>
 
   </div>
-  <div class="span4" style="margin-left: 0px; height: 290px; min-width: 200px;">
+  <div class="sidebar">
     <h5>Room: <%= @game.name %> - <%= "#{@game.wager_level} wager" %> - <%= "#{@game.max_player_count} seats" %></h5>
+    <div id="log_window">
+      <table style="width: 100%">
+        <tbody>
+        </tbody>
+      </table>
+    </div>
     <div id="chat_window">
       <table style="margin-left: 5px; margin-right: 5px;">
         <tbody>
@@ -29,14 +31,6 @@
         <% end %>
       </div>
     <% end %>
-  </div>
-  <div class="span4" style="margin-left: 0px; height: 270px; min-width: 200px;">
-    <div id="log_window">
-      <table style="width: 100%">
-        <tbody>
-        </tbody>
-      </table>
-    </div>
   </div>
 </div>
 
