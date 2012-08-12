@@ -662,35 +662,46 @@
     /*  INDEX2  */
 
     #game-container {
-      border: 1px solid green;
+      border: 1px solid grey;
+      height: 620px;
     }
 
     #game-container div.game {
-      border: 1px solid red;
+      /*border: 1px solid red;*/
       float: left;
+      background-color: #A6CBE0;
     }
 
     #game-container div.sidebar {
-      border: 1px solid blue;
       float:right;
+      height: 620px;
     }
 
     #game-container div.players-container {
-      border: 1px solid yellow;
+      background-color: #DCDDDD;
+      /*border: 1px solid yellow;*/
       height: 100px;
+    }
+
+    /* Landscape phones and down */
+    @media (max-width: 480px) {
+
+    }
+
+    /* Landscape phone to portrait tablet */
+    @media (max-width: 767px) {
+
     }
 
     /* Portrait tablet to landscape and desktop */
     @media (min-width: 768px) and (max-width: 979px) {
-      #game-container div.sidebar {
-        width: 45px;
-      }
+
     }
 
     /* Desktop */
     @media (min-width: 980px) and (max-width: 1199px) {
       #game-container div.sidebar {
-        width: 275px;
+        width: 283px;
       }
 
       #game-main {
@@ -701,7 +712,7 @@
     /* Large desktop */
     @media (min-width: 1200px) {
       #game-container div.sidebar {
-        width: 385px;
+        width: 393px;
       }
       #game-main {
         width: 775px;
