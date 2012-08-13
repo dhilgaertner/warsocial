@@ -9,14 +9,16 @@
 
   </div>
   <div class="sidebar">
-    <h5>Room: <%= @game.name %> - <%= "#{@game.wager_level} wager" %> - <%= "#{@game.max_player_count} seats" %></h5>
-    <div id="log_window">
+    <div id="game-details">
+      <h5>Room: <%= @game.name %> - <%= "#{@game.wager_level} wager" %> - <%= "#{@game.max_player_count} seats" %></h5>
+    </div>
+    <div id="log-window">
       <table style="width: 100%">
         <tbody>
         </tbody>
       </table>
     </div>
-    <div id="chat_window">
+    <div id="chat-window">
       <table style="margin-left: 5px; margin-right: 5px;">
         <tbody>
         </tbody>
