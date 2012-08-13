@@ -95,9 +95,41 @@
       </div>
     </div>
   </div>
-  <div style="position: relative">
+  <div>
+    <div id="game-controls">
+      <% if user_signed_in? %>
+        <div>
+          <%= link_to "Create", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);" %>
+        </div>
+        <div>
+          <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);" %>
+        </div>
+        <div>
+          <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote => true, :id => "sit_button", :class => "btn" %>
+        </div>
+        <div>
+          <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
+        </div>
+        <div>
+          <%= link_to '<i style="margin-top: 2px;" class="icon-flag icon-white"></i> Forfeit'.html_safe, flag_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?" %>
+        </div>
+        <div>
+          <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :id => "end_turn", :class => "btn btn-success", :style => "display: none;" %>
+        </div>
 
-    <div id="stage" style="top: 0px; left: 0px; position:relative; padding:0; margin:0 auto 0 auto; width:600px; height:420px;">
+        <% if current_user.admin? %>
+          <div>
+            <%= link_to "Kill Table", kill_table_home_index_path(:game_name => @game.name), :confirm => "Kill Table #{@game.name}: Are you sure?", :style => "", :class => "btn" %>
+          </div>
+        <% end %>
+
+      <% else %>
+        <div>
+          <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :style => "margin-left: 10px;" %>
+        </div>
+      <% end %>
+    </div>
+    <div id="stage">
       <canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
       <canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
       <canvas id="canvas_hilight_player" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
