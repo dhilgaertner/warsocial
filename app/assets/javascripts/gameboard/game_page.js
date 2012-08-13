@@ -11,8 +11,8 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     var seats = new Seats(7, global_init_data.players);
     seats.update_player_data(global_init_data.players);
 
-    var chatbox = new ChatBox("chat_window", seats);
-    var gamelog = new GameLog("log_window", seats);
+    var chatbox = new ChatBox("chat-window", seats);
+    var gamelog = new GameLog("log-window", seats);
 
     if (!is_production) {
         // Enable pusher logging - don't include this in production
@@ -202,6 +202,8 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
             $.post(urls.settings_toggle_sounds_url, { on: checked });
         }
     });
+
+    $('div.label-over label').labelOver('over-apply')
 
     $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
         switch(xhr.responseText) {

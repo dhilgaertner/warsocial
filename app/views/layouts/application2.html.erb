@@ -659,6 +659,11 @@
       border-radius: 0px;
     }
 
+    #footer2 {
+      height: 25px;
+      background-color: #2C2C2C;
+    }
+
     /*  INDEX2  */
 
     #game-container {
@@ -683,6 +688,48 @@
       height: 100px;
     }
 
+    #game-container div.players {
+      width: 776px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #game-container div.player {
+      height: 100px;
+      width: 193.75px;
+      float: left;
+    }
+
+    #game-container div.player.active {
+      background-color: #009F9D;
+    }
+
+    #game-container div.player div.avatar {
+      height: 75px;
+      width: 75px;
+
+      background: transparent url(<%=image_path "default_avatar2.png"%>) 0 0px no-repeat;
+      background-position: center;
+
+      -moz-border-radius: 0;
+      border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+    }
+
+    #game-container div.medals {
+      height: 25px;
+    }
+
+    #game-container div.medal {
+      float: left;
+      background-color: #E5E8E7;
+      height: 17px;
+      width: 17px;
+      margin-top: 4px;
+      margin-left: 4px;
+    }
+
     #game-details {
       height: 45px;
     }
@@ -695,10 +742,21 @@
 
     #chat-window {
       border-top: 2px solid #E5E8E7;
-      height: 300px;
+      height: 320px;
     }
 
+    #form-chat {
+      margin: 0px;
+    }
 
+    #form-chat input {
+      margin: 0px;
+      height: 31px;
+    }
+
+    /* label-over.js */
+    div.label-over { position: relative; float: left; }
+    label.over-apply { color: #ccc; position: absolute; top: 5px; left: 5px;}
 
     /* Landscape phones and down */
     @media (max-width: 480px) {
@@ -717,22 +775,32 @@
 
     /* Desktop */
     @media (min-width: 980px) and (max-width: 1199px) {
+      #game-main {
+        width: 655px;
+      }
+
       #game-container div.sidebar {
         width: 283px;
       }
 
-      #game-main {
-        width: 655px;
+      #form-chat input {
+        width: 283px;
+        border: 0px;
       }
     }
 
     /* Large desktop */
     @media (min-width: 1200px) {
+      #game-main {
+        width: 775px;
+      }
+
       #game-container div.sidebar {
         width: 393px;
       }
-      #game-main {
-        width: 775px;
+
+      #form-chat input {
+        width: 375px;
       }
     }
 
@@ -767,6 +835,7 @@
     </div>
   </div>
   <%= yield %>
+  <div id="footer2"></div>
 </div>
 </body>
 </html>
