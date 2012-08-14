@@ -28,6 +28,7 @@ class HomeController < ApplicationController
 
     @dev = params[:dev] == nil ? false : true
     @dev_image = params[:dev_image] == nil ? false : true
+    @test = params[:test] == nil ? false : true
 
     @game = ActiveGameFactory.get_active_game(name)
 

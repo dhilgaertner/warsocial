@@ -676,8 +676,8 @@
       padding:0;
       width:600px;
       height:420px;
-      float:left;
-      background-color: yellow;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     #game-container #game-controls {
@@ -714,6 +714,7 @@
     }
 
     #game-container div.player.active {
+      color: white;
       background-color: #009F9D;
     }
 
@@ -728,6 +729,33 @@
       border-radius: 0;
       -moz-border-radius: 0;
       border-radius: 0;
+
+      float: left;
+    }
+    #game-container div.player div.player-stats {
+      height: 75px;
+    }
+
+    #game-container div.player div.info {
+      float: right;
+    }
+
+    #game-container div.player div.name {
+      text-align: center;
+      width: 118px;
+      margin-top: 3px;
+    }
+
+    #game-container div.player div.action-sit {
+      text-align: center;
+      margin-top: 19px;
+      width: 118px;
+    }
+
+    #game-container div.player div.action-stand {
+      text-align: center;
+      margin-top: 5px;
+      width: 118px;
     }
 
     #game-container div.medals {

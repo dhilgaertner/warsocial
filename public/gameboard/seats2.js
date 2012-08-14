@@ -1,5 +1,5 @@
 
-function Seats(numberOfSeats, players) {
+function Seats(who_am_i, numberOfSeats, players, is_started) {
     var ctx = this;
     this._seats = new Object();
 
@@ -14,6 +14,12 @@ function Seats(numberOfSeats, players) {
         item.player = player;
         $(item.seat).find('.name').html(player.name);
 
+        $(item.seat).find('.action-sit').hide();
+
+        if(!is_started && player.name == who_am_i) {
+            $(item.seat).find('.action-stand').show();
+        }
+
         $(item.seat).show();
     };
 
@@ -22,8 +28,14 @@ function Seats(numberOfSeats, players) {
 
         item.player = null;
         $(item.seat).find('.name').html("");
+        $(item.seat).find('.place').html("");
+        $(item.seat).find('.points').html("");
+        $(item.seat).find('.delta_points').html("");
+        $(item.seat).find('.lands').html("");
         $(item.seat).find('.turn_progress').hide();
-        $(item.seat).hide();
+
+        $(item.seat).find('.action-sit').show();
+        $(item.seat).find('.action-stand').hide();
     };
 
     if (players != null) {
@@ -35,6 +47,14 @@ function Seats(numberOfSeats, players) {
         }
     }
 
+    if (!is_started) {
+        var ctx = this;
+        $.each(this._seats, function(key, occupant) {
+            if (occupant.player == null) {
+                $(ctx._seats[key].seat).find('.action-sit').show();
+            }
+        });
+    }
 }
 
 Seats.prototype.clear = function() {
@@ -44,16 +64,11 @@ Seats.prototype.clear = function() {
             ctx.emptySeat(key);
         }
     });
-
-    $("div#game_main div.place").html("");
-    $("div#game_main div.points").html("");
-    $("div#game_main div.delta_points").html("");
-    $("div#game_main div.lands").html("");
 };
 
 Seats.prototype.sit = function(player) {
 	var ctx = this;
-  $.each(this._seats, function(key, occupant) { 
+    $.each(this._seats, function(key, occupant) {
 		if (occupant.player == null) {
 			ctx.occupySeat(key, player);
 			return false; // Returning false get's you out of the $.each()
@@ -62,7 +77,8 @@ Seats.prototype.sit = function(player) {
 };
 
 Seats.prototype.game_started = function() {
-
+    this._seats.find('.action-sit').hide();
+    this._seats.find('.action-stand').hide();
 };
 
 Seats.prototype.update_player_data = function(players) {
@@ -118,9 +134,11 @@ Seats.prototype.turn_start = function(player_thin) {
   $.each(this._seats, function(key, occupant) { 
 		if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
 			occupant.seat.find(".turn_progress").show();
+            occupant.seat.addClass("active");
             occupant.timer.restart();
 		} else {
 			occupant.seat.find(".turn_progress").hide();
+            occupant.seat.removeClass("active");
 		}
 	});
 };

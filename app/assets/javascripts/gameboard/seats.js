@@ -61,6 +61,10 @@ Seats.prototype.sit = function(player) {
 	});
 };
 
+Seats.prototype.game_started = function() {
+
+};
+
 Seats.prototype.update_player_data = function(players) {
     var ctx = this;
     $.each(players, function(index, player) {

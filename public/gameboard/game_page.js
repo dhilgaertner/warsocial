@@ -8,7 +8,15 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     lobby_maps = maps;
     game = null;
 
-    var seats = new Seats(7, global_init_data.players);
+    var is_game_started = false;
+
+    for(var i=0; i<global_init_data.players.length; i++) {
+        if (global_init_data.players[i].is_turn == true) {
+            is_game_started = true;
+        }
+    }
+
+    var seats = new Seats(user_name, 7, global_init_data.players, is_game_started);
     seats.update_player_data(global_init_data.players);
 
     var chatbox = new ChatBox("chat-window", seats);
@@ -104,6 +112,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
 
         SoundManager.play("game_start");
 
+        seats.game_started();
         seats.update_player_data(data.players);
     });
 

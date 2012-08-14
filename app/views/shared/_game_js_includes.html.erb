@@ -71,7 +71,11 @@
 
     head.js(
       '/gameboard/turn_timer.js?v=2',
+      <% if @test %>
+      '/gameboard/seats2.js?v=2',
+      <% else %>
       '/gameboard/seats.js?v=2',
+      <% end %>
       '/gameboard/lobby.js?v=2',
       '/gameboard/chatbox.js?v=2',
       '/gameboard/gamelog.js?v=2',
