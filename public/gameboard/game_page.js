@@ -67,7 +67,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     // GAMEBOARD INIT!
     init(global_init_data);
 
-    $('#end_turn').hide();
+    $('.end_turn').hide();
 
     var lobby_modal = new Lobby("game_lobby");
     var create_game_modal = new CreateGame("create_game", lobby_maps);
@@ -79,7 +79,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
         if (global_init_data.players[i].is_turn == true) {
             seats.turn_start(global_init_data.players[i]);
             if (global_init_data.players[i].player_id == who_am_i) {
-                $('#end_turn').show();
+                $('.end_turn').show();
             }
         }
     }
@@ -93,14 +93,14 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     channel.bind('game_start', function(data) {
         data.who_am_i = who_am_i;
 
-        $('#end_turn').hide();
+        $('.end_turn').hide();
         for(var i=0; i<data.players.length; i++) {
             var p = data.players[i];
 
             if (p.is_turn == true) {
                 seats.turn_start(p);
                 if (p.player_id == who_am_i) {
-                    $('#end_turn').show();
+                    $('.end_turn').show();
                 }
 
                 gamelog.logGameStarted();
@@ -142,17 +142,17 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
 
     channel.bind('game_winner', function(player) {
         seats.clear();
-        $('#end_turn').hide();
+        $('.end_turn').hide();
 
         gamelog.logGameWinner(player.name);
     });
 
     channel.bind('new_turn', function(data) {
         if (data.current_player.player_id == who_am_i) {
-            $('#end_turn').show();
+            $('.end_turn').show();
             SoundManager.play("my_turn");
         } else {
-            $('#end_turn').hide();
+            $('.end_turn').hide();
         }
 
         next_turn(data.current_player.player_id);

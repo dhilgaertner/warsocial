@@ -3,14 +3,18 @@
     <div class="players">
       <div id="game_seat_0" class="player">
         <div class="player-stats">
-          <div class="avatar" style="background-color: #f8af01"></div>
+          <div class="avatar" style="background-color: #f8af01">
+            <div class="action-endturn" style="display: none;">
+              <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :class => "end_turn btn btn-success", :style => "display: none;" %>
+            </div>
+          </div>
           <div class="info">
             <div class="name"></div>
-            <div class="stats" style="display:none;">
-              <div class="place"></div>
-              <div class="points"></div>
-              <div class="dice stats_enabled"></div>
-              <div class="lands stats_enabled"></div>
+            <div class="stats" style="display: none;">
+              <div class="col1"><i class="icon-flag"></i><div class="place"></div></div>
+              <div class="col2"><i class="icon-map-marker"></i><div class="lands"></div></div>
+              <div class="col1"><i class="icon-star"></i><div class="dice"></div></div>
+              <div class="col2"><i class="icon-cog"></i><div class="points"></div></div>
             </div>
             <div class="action-sit" style="display: none;">
               <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 1), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
@@ -34,14 +38,18 @@
       </div>
       <div id="game_seat_2" class="player">
         <div class="player-stats">
-          <div class="avatar" style="background-color: #c22b2b"></div>
+          <div class="avatar" style="background-color: #c22b2b">
+            <div class="action-endturn" style="display: none;">
+              <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :class => "end_turn btn btn-success", :style => "display: none;" %>
+            </div>
+          </div>
           <div class="info">
             <div class="name"></div>
-            <div class="stats" style="display:none;">
-              <div class="place"></div>
-              <div class="points"></div>
-              <div class="dice stats_enabled"></div>
-              <div class="lands stats_enabled"></div>
+            <div class="stats" style="display: none;">
+              <div class="col1"><i class="icon-flag"></i><div class="place"></div></div>
+              <div class="col2"><i class="icon-map-marker"></i><div class="lands"></div></div>
+              <div class="col1"><i class="icon-star"></i><div class="dice"></div></div>
+              <div class="col2"><i class="icon-cog"></i><div class="points"></div></div>
             </div>
             <div class="action-sit" style="display: none;">
               <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 3), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
@@ -65,14 +73,18 @@
       </div>
       <div id="game_seat_4" class="player">
         <div class="player-stats">
-          <div class="avatar" style="background-color: #603bb3"></div>
+          <div class="avatar" style="background-color: #603bb3">
+            <div class="action-endturn" style="display: none;">
+              <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :class => "end_turn btn btn-success", :style => "display: none;" %>
+            </div>
+          </div>
           <div class="info">
             <div class="name"></div>
-            <div class="stats" style="display:none;">
-              <div class="place"></div>
-              <div class="points"></div>
-              <div class="dice stats_enabled"></div>
-              <div class="lands stats_enabled"></div>
+            <div class="stats" style="display: none;">
+              <div class="col1"><i class="icon-flag"></i><div class="place"></div></div>
+              <div class="col2"><i class="icon-map-marker"></i><div class="lands"></div></div>
+              <div class="col1"><i class="icon-star"></i><div class="dice"></div></div>
+              <div class="col2"><i class="icon-cog"></i><div class="points"></div></div>
             </div>
             <div class="action-sit" style="display: none;">
               <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 5), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
@@ -96,14 +108,18 @@
       </div>
       <div id="game_seat_6" class="player">
         <div class="player-stats">
-          <div class="avatar" style="background-color: #ad3bac"></div>
+          <div class="avatar" style="background-color: #ad3bac">
+            <div class="action-endturn" style="display: none;">
+              <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :class => "end_turn btn btn-success", :style => "display: none;" %>
+            </div>
+          </div>
           <div class="info">
             <div class="name"></div>
-            <div class="stats" style="display:none;">
-              <div class="place"></div>
-              <div class="points"></div>
-              <div class="dice stats_enabled"></div>
-              <div class="lands stats_enabled"></div>
+            <div class="stats" style="display: none;">
+              <div class="col1"><i class="icon-flag"></i><div class="place"></div></div>
+              <div class="col2"><i class="icon-map-marker"></i><div class="lands"></div></div>
+              <div class="col1"><i class="icon-star"></i><div class="dice"></div></div>
+              <div class="col2"><i class="icon-cog"></i><div class="points"></div></div>
             </div>
             <div class="action-sit" style="display: none;">
               <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 7), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
@@ -195,14 +211,18 @@
   <div id="bottom-players" class="players-container">
     <div id="game_seat_1" class="player">
       <div class="player-stats">
-        <div class="avatar" style="background-color: #3760ae"></div>
+        <div class="avatar" style="background-color: #3760ae">
+          <div class="action-endturn" style="display: none;">
+            <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :class => "end_turn btn btn-success", :style => "display: none;" %>
+          </div>
+        </div>
         <div class="info">
           <div class="name"></div>
-          <div class="stats" style="display:none;">
-            <div class="place"></div>
-            <div class="points"></div>
-            <div class="dice stats_enabled"></div>
-            <div class="lands stats_enabled"></div>
+          <div class="stats" style="display: none;">
+            <div class="col1"><i class="icon-flag"></i><div class="place"></div></div>
+            <div class="col2"><i class="icon-map-marker"></i><div class="lands"></div></div>
+            <div class="col1"><i class="icon-star"></i><div class="dice"></div></div>
+            <div class="col2"><i class="icon-cog"></i><div class="points"></div></div>
           </div>
           <div class="action-sit" style="display: none;">
             <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 2), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
@@ -226,14 +246,18 @@
     </div>
     <div id="game_seat_3" class="player">
       <div class="player-stats">
-        <div class="avatar" style="background-color: #5fb61f"></div>
+        <div class="avatar" style="background-color: #5fb61f">
+          <div class="action-endturn" style="display: none;">
+            <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :class => "end_turn btn btn-success", :style => "display: none;" %>
+          </div>
+        </div>
         <div class="info">
           <div class="name"></div>
-          <div class="stats" style="display:none;">
-            <div class="place"></div>
-            <div class="points"></div>
-            <div class="dice stats_enabled"></div>
-            <div class="lands stats_enabled"></div>
+          <div class="stats" style="display: none;">
+            <div class="col1"><i class="icon-flag"></i><div class="place"></div></div>
+            <div class="col2"><i class="icon-map-marker"></i><div class="lands"></div></div>
+            <div class="col1"><i class="icon-star"></i><div class="dice"></div></div>
+            <div class="col2"><i class="icon-cog"></i><div class="points"></div></div>
           </div>
           <div class="action-sit" style="display: none;">
             <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 4), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
@@ -257,14 +281,18 @@
     </div>
     <div id="game_seat_5" class="player">
       <div class="player-stats">
-        <div class="avatar" style="background-color: #27a7b2"></div>
+        <div class="avatar" style="background-color: #27a7b2">
+          <div class="action-endturn" style="display: none;">
+            <%= link_to "End Turn", end_turn_home_index_path(:game_name => @game.name), :remote => true, :class => "end_turn btn btn-success", :style => "display: none;" %>
+          </div>
+        </div>
         <div class="info">
           <div class="name"></div>
-          <div class="stats" style="display:none;">
-            <div class="place"></div>
-            <div class="points"></div>
-            <div class="dice stats_enabled"></div>
-            <div class="lands stats_enabled"></div>
+          <div class="stats" style="display: none;">
+            <div class="col1"><i class="icon-flag"></i><div class="place"></div></div>
+            <div class="col2"><i class="icon-map-marker"></i><div class="lands"></div></div>
+            <div class="col1"><i class="icon-star"></i><div class="dice"></div></div>
+            <div class="col2"><i class="icon-cog"></i><div class="points"></div></div>
           </div>
           <div class="action-sit" style="display: none;">
             <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 6), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>

@@ -20,6 +20,10 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
             $(item.seat).find('.action-stand').show();
         }
 
+        if (player.name == who_am_i) {
+            $(item.seat).find('.avatar .action-endturn').show();
+        }
+
         $(item.seat).show();
     };
 
@@ -77,8 +81,10 @@ Seats.prototype.sit = function(player) {
 };
 
 Seats.prototype.game_started = function() {
-    this._seats.find('.action-sit').hide();
-    this._seats.find('.action-stand').hide();
+    $.each(this._seats, function(key, s) {
+        s.seat.find('.action-sit').hide();
+        s.seat.find('.action-stand').hide();
+    });
 };
 
 Seats.prototype.update_player_data = function(players) {
@@ -92,6 +98,7 @@ Seats.prototype.update_player_data = function(players) {
             $(el).hide();
         } else {
             $(el).show();
+            $(el).find('div.stats').show();
         }
 
         var points_string = player.delta_points.toString();
@@ -122,10 +129,10 @@ Seats.prototype.update_player_data = function(players) {
             }
         };
 
-        $(el).find(".place").html("Game: " + convert_place_to_string(player.place));
-        $(el).find(".points").html("Pts: " + player.current_points.toString() + " (" + points_string + ")");
-        $(el).find(".dice").html("Dice: " + player.dice_count.toString() + " (+" + player.reserves.toString() + ")");
-        $(el).find(".lands").html("Lands: " + player.land_count.toString());
+        $(el).find(".place").html(convert_place_to_string(player.place));
+        $(el).find(".points").html(player.current_points.toString() + " (" + points_string + ")");
+        $(el).find(".dice").html(player.dice_count.toString() + " (+" + player.reserves.toString() + ")");
+        $(el).find(".lands").html(player.land_count.toString());
     });
 };
 

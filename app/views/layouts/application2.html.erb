@@ -719,6 +719,8 @@
     }
 
     #game-container div.player div.avatar {
+      margin-left: 5px;
+
       height: 75px;
       width: 75px;
 
@@ -738,24 +740,77 @@
 
     #game-container div.player div.info {
       float: right;
+      width: 113px;
+      height: 74px;
+      overflow: hidden;
     }
 
     #game-container div.player div.name {
       text-align: center;
-      width: 118px;
+      width: 113px;
       margin-top: 3px;
+    }
+
+    #game-container div.player div.stats {
+      font-family: Arial;
+      font-size: .6em;
+    }
+
+    #game-container div.player div.stats i {
+      float: left;
+      margin-top: 0px;
+    }
+
+    #game-container div.player.active div.stats i {
+      background-image: url('/bootstrap/img/glyphicons-halflings-white.png');
+    }
+
+    #game-container div.player div.stats div.col1 {
+      width: 38px;
+      float: left;
+      margin-left: 17px;
+      margin-top: 5px;
+    }
+
+    #game-container div.player div.stats div.col1 div {
+      float: left;
+      width: 20px;
+      margin-left: 3px;
+      line-height: 14px;
+    }
+
+    #game-container div.player div.stats div.col2 {
+      width: 38px;
+      float: left;
+      margin-top: 5px;
+    }
+
+    #game-container div.player div.stats div.col2 div {
+      float: left;
+      width: 20px;
+      margin-left: 3px;
+      line-height: 14px;
+    }
+
+    #game-container div.player div.stats i.icon-star {
+      background-image: url(<%=image_path "dice.png"%>);
+      background-position: 0;
+    }
+
+    #game-container div.player div.action-endturn {
+      margin-top: 14px;
     }
 
     #game-container div.player div.action-sit {
       text-align: center;
       margin-top: 19px;
-      width: 118px;
+      width: 113px;
     }
 
     #game-container div.player div.action-stand {
       text-align: center;
       margin-top: 5px;
-      width: 118px;
+      width: 113px;
     }
 
     #game-container div.medals {
@@ -764,7 +819,7 @@
 
     #game-container div.medal {
       float: left;
-      background-color: #E5E8E7;
+      background-color: #A4A5A5;
       height: 17px;
       width: 17px;
       margin-top: 4px;
