@@ -2,6 +2,8 @@
 function Seats(who_am_i, numberOfSeats, players, is_started) {
     var ctx = this;
     this._seats = new Object();
+    this.is_game_started = is_started;
+    this.who_am_i = who_am_i;
 
     for (i = 0;i < numberOfSeats;i++) {
         var s = $('#game_seat_' + i.toString());
@@ -18,6 +20,14 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
 
         if(!is_started && player.name == who_am_i) {
             $(item.seat).find('.action-stand').show();
+        }
+
+        if (player.name == who_am_i) {
+            $(item.seat).find('.avatar .action-endturn').show();
+
+            if(is_started) {
+                $("#game-forfeit").show();
+            }
         }
 
         $(item.seat).show();
@@ -94,7 +104,14 @@ Seats.prototype.update_player_data = function(players) {
             $(el).hide();
         } else {
             $(el).show();
-            $(el).find('div.stats').show();
+
+            if (ctx.is_game_started) {
+                $(el).find('div.stats').show();
+            }
+        }
+
+        if (player.name == ctx.who_am_i){
+            $('#game_forfeit').show();
         }
 
         var points_string = player.delta_points.toString();
@@ -133,7 +150,8 @@ Seats.prototype.update_player_data = function(players) {
 };
 
 Seats.prototype.turn_start = function(player_thin) {
-	var ctx = this;
+  this.is_game_started = true;
+  var ctx = this;
   $.each(this._seats, function(key, occupant) { 
 		if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
 			occupant.seat.find(".turn_progress").show();

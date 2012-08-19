@@ -10,7 +10,11 @@
   </div>
   <div class="sidebar">
     <div id="game-details">
-      <h5>Room: <%= @game.name %> - <%= "#{@game.wager_level} wager" %> - <%= "#{@game.max_player_count} seats" %></h5>
+      <div id="game-forfeit" class="wrapper forfeit" style="display:none; margin-top: 8px; margin-left: 10px;">
+        <%= link_to '<i style="margin-top: 2px;" class="icon-flag icon-white"></i>'.html_safe, flag_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?" %>
+      </div>
+      <div class="wrapper room" style="margin-left: 0px;"><div class="icon"></div><%= @game.name %></div>
+      <div class="wrapper wager"><div class="icon"></div><%= "#{@game.wager_level}" %></div>
     </div>
     <div id="log-window">
       <table style="width: 100%">

@@ -14,6 +14,8 @@ class HomeController < ApplicationController
 
   def index
 
+    @js_page_type = "game"
+
     @isGame = true
 
     @user = User.new(params[:user])
