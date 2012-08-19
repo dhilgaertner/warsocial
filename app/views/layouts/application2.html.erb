@@ -835,6 +835,7 @@
       height: 200px;
       border-top: 2px solid #E5E8E7;
       overflow: auto;
+      padding-left: 5px;
     }
 
     #chat-window {
@@ -921,7 +922,10 @@
         <!--</ul>-->
         <ul class="nav pull-right">
           <li class="dropdown" id="fat-menu">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">deadcode <b class="caret"></b></a>
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              <%= current_user != nil ? current_user.username : "" %>
+              <b class="caret"></b>
+            </a>
             <ul class="dropdown-menu">
               <li><a href="#">Settings</a></li>
               <li class="divider"></li>

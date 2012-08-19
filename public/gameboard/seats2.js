@@ -18,14 +18,14 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
 
         $(item.seat).find('.action-sit').hide();
 
-        if(!is_started && player.name == who_am_i) {
+        if(!ctx.is_game_started && player.name == who_am_i) {
             $(item.seat).find('.action-stand').show();
         }
 
         if (player.name == who_am_i) {
             $(item.seat).find('.avatar .action-endturn').show();
 
-            if(is_started) {
+            if(ctx.is_game_started) {
                 $("#game-forfeit").show();
             }
         }
@@ -71,9 +71,16 @@ Seats.prototype.clear = function() {
 	var ctx = this;
     $.each(this._seats, function(key, occupant) {
         if (occupant.player != null) {
+            $(occupant.seat).removeClass('dead');
             ctx.emptySeat(key);
         }
     });
+
+    $('div.stats').hide();
+    $('.action-sit').show();
+    $('#game-forfeit').hide();
+    this.is_game_started = false;
+
 };
 
 Seats.prototype.sit = function(player) {
@@ -87,9 +94,14 @@ Seats.prototype.sit = function(player) {
 };
 
 Seats.prototype.game_started = function() {
+    var ctx = this;
+    this.is_game_started = true;
     $.each(this._seats, function(key, s) {
         s.seat.find('.action-sit').hide();
         s.seat.find('.action-stand').hide();
+        if (s.player != null && s.player.name == ctx.who_am_i) {
+            $('#game-forfeit').hide();
+        }
     });
 };
 
@@ -101,17 +113,13 @@ Seats.prototype.update_player_data = function(players) {
         var el = s.seat;
 
         if (player.state == "dead") {
-            $(el).hide();
+            $(el).addClass('dead');
         } else {
             $(el).show();
 
             if (ctx.is_game_started) {
                 $(el).find('div.stats').show();
             }
-        }
-
-        if (player.name == ctx.who_am_i){
-            $('#game_forfeit').show();
         }
 
         var points_string = player.delta_points.toString();
@@ -157,9 +165,14 @@ Seats.prototype.turn_start = function(player_thin) {
 			occupant.seat.find(".turn_progress").show();
             occupant.seat.addClass("active");
             occupant.timer.restart();
+
+            if (player_thin.name == ctx.who_am_i) {
+                occupant.seat.find(".end_turn").show();
+            }
 		} else {
 			occupant.seat.find(".turn_progress").hide();
             occupant.seat.removeClass("active");
+            occupant.seat.find(".end_turn").hide();
 		}
 	});
 };

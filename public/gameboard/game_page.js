@@ -143,30 +143,30 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     channel.bind('game_winner', function(player) {
         seats.clear();
         $('.end_turn').hide();
+        $('#game_forfeit').hide();
 
         gamelog.logGameWinner(player.name);
     });
 
     channel.bind('new_turn', function(data) {
         if (data.current_player.player_id == who_am_i) {
-            $('.end_turn').show();
             SoundManager.play("my_turn");
-        } else {
-            $('.end_turn').hide();
         }
 
         next_turn(data.current_player.player_id);
-        seats.turn_start({ player_id: data.current_player.player_id});
+        seats.turn_start({ name: data.current_player.name, player_id: data.current_player.player_id});
         seats.update_player_data([data.previous_player, data.current_player]);
 
         gamelog.logTurnChange(data.current_player.name);
     });
 
-    $("#form_chat")
-        .bind("ajax:beforeSend", function(xhr, settings) {
+    $('#entry').keyup(function(event){
+        if(event.keyCode == 13){
             chatbox.addChatLine(who_am_i_name, $('#entry').val());
             $('#entry').val("");
-        });
+            $("#form_chat").submit();
+        }
+    });
 
     $('#dice_visible').change(function() {
         var checked = $('#dice_visible').prop('checked');
