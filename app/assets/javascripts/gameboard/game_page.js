@@ -8,19 +8,11 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     lobby_maps = maps;
     game = null;
 
-    var is_game_started = false;
-
-    for(var i=0; i<global_init_data.players.length; i++) {
-        if (global_init_data.players[i].is_turn == true) {
-            is_game_started = true;
-        }
-    }
-
-    var seats = new Seats(user_name, 7, global_init_data.players, is_game_started);
+    var seats = new Seats(7, global_init_data.players);
     seats.update_player_data(global_init_data.players);
 
-    var chatbox = new ChatBox("chat-window", seats);
-    var gamelog = new GameLog("log-window", seats);
+    var chatbox = new ChatBox("chat_window", seats);
+    var gamelog = new GameLog("log_window", seats);
 
     if (!is_production) {
         // Enable pusher logging - don't include this in production
@@ -67,7 +59,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     // GAMEBOARD INIT!
     init(global_init_data);
 
-    $('.end_turn').hide();
+    $('#end_turn').hide();
 
     var lobby_modal = new Lobby("game_lobby");
     var create_game_modal = new CreateGame("create_game", lobby_maps);
@@ -79,7 +71,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
         if (global_init_data.players[i].is_turn == true) {
             seats.turn_start(global_init_data.players[i]);
             if (global_init_data.players[i].player_id == who_am_i) {
-                $('.end_turn').show();
+                $('#end_turn').show();
             }
         }
     }
@@ -93,14 +85,14 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     channel.bind('game_start', function(data) {
         data.who_am_i = who_am_i;
 
-        $('.end_turn').hide();
+        $('#end_turn').hide();
         for(var i=0; i<data.players.length; i++) {
             var p = data.players[i];
 
             if (p.is_turn == true) {
                 seats.turn_start(p);
                 if (p.player_id == who_am_i) {
-                    $('.end_turn').show();
+                    $('#end_turn').show();
                 }
 
                 gamelog.logGameStarted();
@@ -112,7 +104,6 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
 
         SoundManager.play("game_start");
 
-        seats.game_started();
         seats.update_player_data(data.players);
     });
 
@@ -142,17 +133,17 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
 
     channel.bind('game_winner', function(player) {
         seats.clear();
-        $('.end_turn').hide();
+        $('#end_turn').hide();
 
         gamelog.logGameWinner(player.name);
     });
 
     channel.bind('new_turn', function(data) {
         if (data.current_player.player_id == who_am_i) {
-            $('.end_turn').show();
+            $('#end_turn').show();
             SoundManager.play("my_turn");
         } else {
-            $('.end_turn').hide();
+            $('#end_turn').hide();
         }
 
         next_turn(data.current_player.player_id);
@@ -211,8 +202,6 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
             $.post(urls.settings_toggle_sounds_url, { on: checked });
         }
     });
-
-    $('div.label-over label').labelOver('over-apply')
 
     $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
         switch(xhr.responseText) {

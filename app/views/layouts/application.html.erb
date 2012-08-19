@@ -14,36 +14,18 @@
 <script src="/headjs/head.min.js"></script>
 
 <% if !Rails.env.development? %>
-  <script>
-    head.js('<%= asset_path("application.js") %>');
-
-    <% if !@dev && !@dev_image %>
-      head.js('<%= asset_path("game.js") %>');
-    <% end %>
-
-  </script>
-
   <%= stylesheet_link_tag "application" %>
 <% else %>
-  <!-- DEV: The following lines are needed so any "data-method" instruction would work in forem. For instance : the pin / lock / hide / delete method for topic, -->
-  <script>
-    head.js(
-      '/jquery/jquery-1.7.min.js?v=2',
-      '/jquery/jquery_ujs.js?v=2'
-    );
-  </script>
   <%= stylesheet_link_tag "forem/twist/style" %>
 <% end %>
-
-<script>
-  head.js(
-    '/bootstrap/js/bootstrap.min.js'
-  );
-</script>
 
 <%= yield :javascript_includes %>
 
 <%= csrf_meta_tags %>
+
+<script>
+  head.js('<%= js_to_add(@js_page_type).join("','") %>');
+</script>
 
 <script type="text/javascript">
   var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-29117828-1']); _gaq.push(['_setDomainName', 'warsocial.com']); _gaq.push(['_trackPageview']);

@@ -5,6 +5,8 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
     this.is_game_started = is_started;
     this.who_am_i = who_am_i;
 
+    $('.end_turn').hide();
+
     for (i = 0;i < numberOfSeats;i++) {
         var s = $('#game_seat_' + i.toString());
         this._seats[i.toString()] = { player: null, seat: s, timer: new TurnTimer(s, 20) };
@@ -23,8 +25,6 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
         }
 
         if (player.name == who_am_i) {
-            $(item.seat).find('.avatar .action-endturn').show();
-
             if(ctx.is_game_started) {
                 $("#game-forfeit").show();
             }
@@ -79,8 +79,9 @@ Seats.prototype.clear = function() {
     $('div.stats').hide();
     $('.action-sit').show();
     $('#game-forfeit').hide();
-    this.is_game_started = false;
+    $('.end_turn').hide();
 
+    this.is_game_started = false;
 };
 
 Seats.prototype.sit = function(player) {
@@ -100,7 +101,7 @@ Seats.prototype.game_started = function() {
         s.seat.find('.action-sit').hide();
         s.seat.find('.action-stand').hide();
         if (s.player != null && s.player.name == ctx.who_am_i) {
-            $('#game-forfeit').hide();
+            $('#game-forfeit').show();
         }
     });
 };

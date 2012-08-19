@@ -5,7 +5,7 @@ module ApplicationHelper
     if !Rails.env.development?
       r.push(asset_path("application.js"))
 
-      if !@dev && !@dev_image
+      if !@dev && !@dev_image && !@test
         r.push(asset_path("game.js"))
       end
     else
@@ -36,7 +36,11 @@ module ApplicationHelper
         r.push('/gameboard/shared.js?v=2')
         r.push('/gameboard/warsocial.js?v=2')
       elsif @dev || @dev_image
-        r.push('/gameboard/game_page.js')
+        if @test
+          r.push('/gameboard/game_page2.js')
+        else
+          r.push('/gameboard/game_page.js')
+        end
         r.push('http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=4')
         r.push('http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/soundmanager.js?v=4')
         r.push('http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/dicebox.js?v=4')
@@ -50,6 +54,17 @@ module ApplicationHelper
         r.push('http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/player.js?v=4')
         r.push('http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/shared.js?v=4')
         r.push('http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/warsocial.js?v=4')
+      elsif !(@dev || @dev_image) && @test
+        r.push('/gameboard/game_page2.js')
+        r.push('/gameboard/communications.js?v=2')
+        r.push('/gameboard/soundmanager.js?v=2')
+        r.push('/gameboard/dicebox.js?v=2')
+        r.push('/gameboard/land.js?v=2')
+        r.push('/gameboard/map.js?v=2')
+        r.push('/gameboard/mapcanvas.js?v=2')
+        r.push('/gameboard/player.js?v=2')
+        r.push('/gameboard/shared.js?v=2')
+        r.push('/gameboard/warsocial.js?v=2')
       end
 
       if Rails.env.development? || @dev || @dev_image
