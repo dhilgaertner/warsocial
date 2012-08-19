@@ -430,7 +430,7 @@ class ActiveGameBase < ActiveGameBaseSettings
       dice = player.lands.size * 2
 
       if (player.seat_number == pos.at(-1)) # if player is last to go
-        dice = dice + (dice * 0.2).to_i
+        dice = dice + (dice * 0.3).to_i
       end
 
       dice.times do |i|
