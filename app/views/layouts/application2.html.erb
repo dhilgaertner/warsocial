@@ -919,6 +919,9 @@
           <li><%= link_to "Forum", "/forums/forums/1", :target => @isGame ? "_blank" : "_self" %></li>
           <!--<li><%= link_to "Map Creator", "http://blog.warsocial.com/post/18214496263/ma1achais-map-creator", :target => @isGame ? "_blank" : "_self" %></li>-->
           <li><%= link_to "Blog", "http://blog.warsocial.com", :target => @isGame ? "_blank" : "_self" %></li>
+          <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);" %></li>
+          <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);" %></li>
+
         </ul>
         <ul class="nav pull-right">
           <li class="dropdown" id="fat-menu">
