@@ -92,6 +92,11 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
 
         $(item.seat).find('.action-sit').show();
         $(item.seat).find('.action-stand').hide();
+
+        var el = $(item.seat).find(".medal");
+
+        $(el).css("background", "");
+        $(el).tooltip("destroy");
     };
 
     if (players != null) {
