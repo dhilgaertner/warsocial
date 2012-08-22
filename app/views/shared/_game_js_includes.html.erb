@@ -2,6 +2,15 @@
 
 <script type="text/javascript">
 
+  var badges = {
+    gold: "<%= image_path "trophies/gold_trophy.png" %>",
+    silver: "<%= image_path "trophies/silver_trophy.png" %>",
+    bronze: "<%= image_path "trophies/bronze_trophy.png" %>",
+    top10: "<%= image_path "trophies/top10_trophy.png" %>",
+    top25: "<%= image_path "trophies/top25_trophy.png" %>",
+    top100: "<%= image_path "trophies/top100_trophy.png" %>"
+  }
+
   head.ready(function() {
     var urls = {
       paurl: "<%= auth_pusher_index_path %>",

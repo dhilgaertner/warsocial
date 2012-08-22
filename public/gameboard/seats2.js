@@ -30,6 +30,52 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
             }
         }
 
+        function finishPositionToBadge(position) {
+            var response = {
+                url: null,
+                name: null
+            };
+
+            if (position > 100) return response;
+
+            if (position > 25) {
+                response.url = badges.top100;
+                response.name = "Top 100";
+            } else if(position > 10) {
+                response.url = badges.top25;
+                response.name = "Top 25";
+            } else if(position > 3) {
+                response.url = badges.top10;
+                response.name = "Top 10";
+            } else if(position == 3) {
+                response.url = badges.bronze;
+                response.name = "3rd";
+            } else if(position == 2) {
+                response.url = badges.silver;
+                response.name = "2nd";
+            } else if(position == 1) {
+                response.url = badges.gold;
+                response.name = "1st";
+            }
+
+            return response;
+        };
+
+        var finishes = $.parseJSON(player.medals_json);
+
+        $.each(finishes, function (index, finish) {
+            var el = $(item.seat).find(".medal")[index];
+            var badge = finishPositionToBadge(finish);
+
+            if (badge.url == null) return;
+
+            $(el).css("background", "url('" + badge.url + "') transparent");
+            $(el).tooltip({
+                html: false,
+                title: badge.name
+            });
+        });
+
         $(item.seat).show();
     };
 
