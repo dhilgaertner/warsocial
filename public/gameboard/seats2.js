@@ -70,10 +70,19 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
             if (badge.url == null) return;
 
             $(el).css("background", "url('" + badge.url + "') transparent");
-            $(el).tooltip({
-                html: false,
-                title: badge.name
-            });
+
+            var tooltip = $(el).data('tooltip');
+
+            if (tooltip != null) {
+                tooltip.enable();
+                tooltip.options.title = badge.name;
+            } else {
+                $(el).tooltip({
+                    html: false,
+                    title: badge.name,
+                    trigger: 'hover'
+                });
+            }
         });
 
         $(item.seat).show();
@@ -88,15 +97,24 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
         $(item.seat).find('.points').html("");
         $(item.seat).find('.delta_points').html("");
         $(item.seat).find('.lands').html("");
+        $(item.seat).find('.stats').hide();
         $(item.seat).find('.turn_progress').hide();
-
         $(item.seat).find('.action-sit').show();
         $(item.seat).find('.action-stand').hide();
+        $(item.seat).find('.end_turn').hide();
 
         var el = $(item.seat).find(".medal");
 
         $(el).css("background", "");
-        $(el).tooltip("destroy");
+
+        $.each($(el), function (index, medal) {
+            var tooltip = $(medal).data('tooltip');
+
+            if (tooltip != null) {
+                tooltip.disable();
+            }
+            //$(medal).data('tooltip', null);
+        });
     };
 
     if (players != null) {
@@ -121,16 +139,11 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
 Seats.prototype.clear = function() {
 	var ctx = this;
     $.each(this._seats, function(key, occupant) {
-        if (occupant.player != null) {
-            $(occupant.seat).removeClass('dead');
-            ctx.emptySeat(key);
-        }
+        $(occupant.seat).removeClass('dead');
+        ctx.emptySeat(key);
     });
 
-    $('div.stats').hide();
-    $('.action-sit').show();
     $('#game-forfeit').hide();
-    $('.end_turn').hide();
 
     this.is_game_started = false;
 };

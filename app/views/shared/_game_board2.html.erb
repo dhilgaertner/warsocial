@@ -156,19 +156,73 @@
     <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
     <div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
     <div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
-    <%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
-    <%= image_tag("gameboard/dice1.png", :id => 'dice1', :style => 'display:none') %>
-    <%= image_tag("gameboard/dice2.png", :id => 'dice2', :style => 'display:none') %>
-    <%= image_tag("gameboard/dice3.png", :id => 'dice3', :style => 'display:none') %>
-    <%= image_tag("gameboard/dice4.png", :id => 'dice4', :style => 'display:none') %>
-    <%= image_tag("gameboard/dice5.png", :id => 'dice5', :style => 'display:none') %>
-    <%= image_tag("gameboard/dice6.png", :id => 'dice6', :style => 'display:none') %>
-    <%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
 
     <% if @dev_image %>
+      <%= image_tag("gameboard/dice1.png", :id => 'dice0_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice2.png", :id => 'dice0_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice3.png", :id => 'dice0_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice4.png", :id => 'dice0_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice5.png", :id => 'dice0_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice6.png", :id => 'dice0_6', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_orange1.png", :id => 'dice1_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_orange2.png", :id => 'dice1_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_orange3.png", :id => 'dice1_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_orange4.png", :id => 'dice1_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_orange5.png", :id => 'dice1_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_orange6.png", :id => 'dice1_6', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_blue1.png", :id => 'dice2_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_blue2.png", :id => 'dice2_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_blue3.png", :id => 'dice2_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_blue4.png", :id => 'dice2_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_blue5.png", :id => 'dice2_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_blue6.png", :id => 'dice2_6', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_red1.png", :id => 'dice3_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_red2.png", :id => 'dice3_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_red3.png", :id => 'dice3_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_red4.png", :id => 'dice3_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_red5.png", :id => 'dice3_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_red6.png", :id => 'dice3_6', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_green1.png", :id => 'dice4_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_green2.png", :id => 'dice4_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_green3.png", :id => 'dice4_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_green4.png", :id => 'dice4_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_green5.png", :id => 'dice4_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_green6.png", :id => 'dice4_6', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple1.png", :id => 'dice5_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple2.png", :id => 'dice5_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple3.png", :id => 'dice5_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple4.png", :id => 'dice5_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple5.png", :id => 'dice5_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple6.png", :id => 'dice5_6', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_cyan1.png", :id => 'dice6_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_cyan2.png", :id => 'dice6_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_cyan3.png", :id => 'dice6_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_cyan4.png", :id => 'dice6_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_cyan5.png", :id => 'dice6_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_cyan6.png", :id => 'dice6_6', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple2_1.png", :id => 'dice7_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple2_2.png", :id => 'dice7_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple2_3.png", :id => 'dice7_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple2_4.png", :id => 'dice7_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple2_5.png", :id => 'dice7_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_purple2_6.png", :id => 'dice7_6', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_brown1.png", :id => 'dice8_1', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_brown2.png", :id => 'dice8_2', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_brown3.png", :id => 'dice8_3', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_brown4.png", :id => 'dice8_4', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_brown5.png", :id => 'dice8_5', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_brown6.png", :id => 'dice8_6', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_grey.png", :id => 'tile0', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_orange.png", :id => 'tile1', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_blue.png", :id => 'tile2', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_red.png", :id => 'tile3', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_green.png", :id => 'tile4', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple.png", :id => 'tile5', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_cyan.png", :id => 'tile6', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple2.png", :id => 'tile7', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_brown.png", :id => 'tile8', :style => 'display:none') %>
+      <%= image_tag("gameboard/texture.png", :id => 'pattern', :style => 'display:none') %>
+      <%= image_tag("gameboard/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_border0.png", :id => 'tile_border0', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_border1.png", :id => 'tile_border1', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_border2.png", :id => 'tile_border2', :style => 'display:none') %>
@@ -193,6 +247,42 @@
       <%= image_tag("gameboard/tile_blue_border3.png", :id => 'tile2_border3', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_blue_border4.png", :id => 'tile2_border4', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_blue_border5.png", :id => 'tile2_border5', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_red_border0.png", :id => 'tile3_border0', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_red_border1.png", :id => 'tile3_border1', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_red_border2.png", :id => 'tile3_border2', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_red_border3.png", :id => 'tile3_border3', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_red_border4.png", :id => 'tile3_border4', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_red_border5.png", :id => 'tile3_border5', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_green_border0.png", :id => 'tile4_border0', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_green_border1.png", :id => 'tile4_border1', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_green_border2.png", :id => 'tile4_border2', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_green_border3.png", :id => 'tile4_border3', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_green_border4.png", :id => 'tile4_border4', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_green_border5.png", :id => 'tile4_border5', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple_border0.png", :id => 'tile5_border0', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple_border1.png", :id => 'tile5_border1', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple_border2.png", :id => 'tile5_border2', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple_border3.png", :id => 'tile5_border3', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple_border4.png", :id => 'tile5_border4', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple_border5.png", :id => 'tile5_border5', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_cyan_border0.png", :id => 'tile6_border0', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_cyan_border1.png", :id => 'tile6_border1', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_cyan_border2.png", :id => 'tile6_border2', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_cyan_border3.png", :id => 'tile6_border3', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_cyan_border4.png", :id => 'tile6_border4', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_cyan_border5.png", :id => 'tile6_border5', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple2_border0.png", :id => 'tile7_border0', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple2_border1.png", :id => 'tile7_border1', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple2_border2.png", :id => 'tile7_border2', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple2_border3.png", :id => 'tile7_border3', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple2_border4.png", :id => 'tile7_border4', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_purple2_border5.png", :id => 'tile7_border5', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_brown_border0.png", :id => 'tile8_border0', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_brown_border1.png", :id => 'tile8_border1', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_brown_border2.png", :id => 'tile8_border2', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_brown_border3.png", :id => 'tile8_border3', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_brown_border4.png", :id => 'tile8_border4', :style => 'display:none') %>
+      <%= image_tag("gameboard/tile_brown_border5.png", :id => 'tile8_border5', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_border_in_dark0.png", :id => 'tile_border_in_dark0', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_border_in_dark1.png", :id => 'tile_border_in_dark1', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_border_in_dark2.png", :id => 'tile_border_in_dark2', :style => 'display:none') %>
@@ -205,6 +295,15 @@
       <%= image_tag("gameboard/tile_border_in_lite3.png", :id => 'tile_border_in_lite3', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_border_in_lite4.png", :id => 'tile_border_in_lite4', :style => 'display:none') %>
       <%= image_tag("gameboard/tile_border_in_lite5.png", :id => 'tile_border_in_lite5', :style => 'display:none') %>
+    <% else %>
+      <%= image_tag("gameboard/old/dice1.png", :id => 'dice1', :style => 'display:none') %>
+      <%= image_tag("gameboard/old/dice2.png", :id => 'dice2', :style => 'display:none') %>
+      <%= image_tag("gameboard/old/dice3.png", :id => 'dice3', :style => 'display:none') %>
+      <%= image_tag("gameboard/old/dice4.png", :id => 'dice4', :style => 'display:none') %>
+      <%= image_tag("gameboard/old/dice5.png", :id => 'dice5', :style => 'display:none') %>
+      <%= image_tag("gameboard/old/dice6.png", :id => 'dice6', :style => 'display:none') %>
+      <%= image_tag("gameboard/old/texture.png", :id => 'pattern', :style => 'display:none') %>
+      <%= image_tag("gameboard/old/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
     <% end %>
   </div>
 
