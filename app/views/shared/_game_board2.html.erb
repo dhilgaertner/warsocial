@@ -1,4 +1,8 @@
-<div id="game-main">
+<div id="game-main" style="position: relative;">
+  <div id="game-settings" class="well">
+    <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Dice Toggle']);" /> <span>dice</span>
+    <input id="sounds" type="checkbox" <%= setting_checked(@active_user, "sounds_toggle", true) %> style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Sounds Toggle']);" /> <span>sounds</span>
+  </div>
   <div id="top-players" class="players-container">
     <div class="players">
       <div id="game_seat_0" class="player" style="<%= @game.max_player_count > 0 ? '' : 'display:none;' %>">

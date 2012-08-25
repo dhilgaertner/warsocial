@@ -85,6 +85,7 @@ module ApplicationHelper
         r.push("/gameboard/turn_timer.js?v=#{vers}")
         if @test
           r.push("/gameboard/seats2.js?v=#{vers}")
+          r.push("/gameboard/settings.js?v=#{vers}")
         else
           r.push("/gameboard/seats.js?v=#{vers}")
         end

@@ -853,6 +853,18 @@
       height: 31px;
     }
 
+    #game-settings {
+      position: absolute;
+      top: 454px;
+      left: 470px;
+      z-index: 9999;
+    }
+
+    #game-main {
+      position: relative;
+      width: 655px;
+    }
+
     /* label-over.js */
     div.label-over { position: relative; float: left; }
     label.over-apply { color: #ccc; position: absolute; top: 5px; left: 5px;}
@@ -886,6 +898,11 @@
         width: 283px;
         border: 0px;
       }
+
+      #game-settings {
+        top: 454px;
+        left: 470px;
+      }
     }
 
     /* Large desktop */
@@ -900,6 +917,11 @@
 
       #form-chat input {
         width: 375px;
+      }
+
+      #game-settings {
+        top: 454px;
+        left: 589px;
       }
     }
 
@@ -930,7 +952,7 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#">Settings</a></li>
+              <li><%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);" %></li>
               <li class="divider"></li>
               <li><%= link_to "Logout", "/users/sign_out", :method => :delete %></li>
             </ul>
@@ -942,5 +964,8 @@
   <%= yield %>
   <div id="footer2"></div>
 </div>
+
+<%= render "shared/settings" %>
+
 </body>
 </html>
