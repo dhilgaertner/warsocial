@@ -25,15 +25,6 @@ class User < ActiveRecord::Base
   def medals
     places = Array.new
     self.season_scores.order("created_at").each do |score|
-      places.push(score.season.season_scores.count(:conditions => ['points > ?', score.points]) + 1)
-    end
-
-    return places
-  end
-
-  def medals
-    places = Array.new
-    self.season_scores.order("created_at").each do |score|
       if (score.points > 0)
         places.push(score.season.season_scores.count(:conditions => ['points > ?', score.points]) + 1)
       end
