@@ -19,6 +19,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
         $(item.seat).find('.name').html(player.name);
 
         $(item.seat).find('.action-sit').hide();
+        $(item.seat).removeClass('dead');
 
         if(!ctx.is_game_started && player.name == who_am_i) {
             $(item.seat).find('.action-stand').show();
@@ -102,6 +103,8 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
         $(item.seat).find('.action-sit').show();
         $(item.seat).find('.action-stand').hide();
         $(item.seat).find('.end_turn').hide();
+        $(item.seat).addClass('dead');
+        $(item.seat).removeClass('active');
 
         var el = $(item.seat).find(".medal");
 
