@@ -843,12 +843,32 @@
       height: 17px;
       width: 17px;
       margin-right: 5px;
+      margin-top: 0px;
+
+      border: 1px solid grey;
+      -moz-border-radius: 5px 5px;
+      border-radius: 5px 5px;
+    }
+
+    #game-details div.icon i {
+      margin-left: 2px;
+      margin-top: 2px;
     }
 
     #game-details div.wrapper {
       float: left;
       margin-top: 15px;
       margin-right: 15px;
+    }
+
+    #main-navbar div.navbar-inner {
+      background-image: url(<%=image_path "logo2.png"%>);
+      background-position: center;
+
+    }
+
+    ul.nav {
+      font-size: .8em;
     }
 
     #log-window {
@@ -859,8 +879,8 @@
     }
 
     #chat-window {
-      border-top: 2px solid #E5E8E7;
-      height: 320px;
+      border-top: 10px solid #E5E8E7;
+      height: 313px;
       overflow: auto;
     }
 

@@ -30,7 +30,6 @@ class HomeController < ApplicationController
 
     @dev = params[:dev] == nil ? false : true
     @dev_image = params[:dev_image] == nil ? false : true
-    @test = params[:test] == nil ? false : true
 
     @game = ActiveGameFactory.get_active_game(name)
 
@@ -50,7 +49,9 @@ class HomeController < ApplicationController
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
 
-      if (@active_user.layout_id == 2 || params[:test] == "yes")
+      @test = (params[:test] == "yes" || @active_user.layout_id == 2) ? false : true
+
+      if (@test)
         render :action => "index2", :layout => "application2"
       else
         render :action => "index", :layout => "application"
