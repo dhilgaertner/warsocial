@@ -2,7 +2,7 @@ class ActiveUser
 
   attr_accessor :user_id, :stats_toggle, :sounds_toggle, :layout_id
 
-  def initialize(user_id, stats_toggle=true, sounds_toggle=true, layout_id=1)
+  def initialize(user_id, stats_toggle=true, sounds_toggle=true, layout_id=0)
     self.user_id = user_id.to_i
     self.stats_toggle = stats_toggle.to_s == "true"
     self.sounds_toggle = sounds_toggle.to_s == "true"
