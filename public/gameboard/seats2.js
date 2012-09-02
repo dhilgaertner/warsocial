@@ -5,7 +5,14 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
     this.is_game_started = is_started;
     this.who_am_i = who_am_i;
 
-    $('.end_turn').hide();
+    $('#game-forfeit').hide();
+    $('#game-endturn').hide();
+
+    $('#game-endturn').click(function() {
+        if ($(this).hasClass('disabled')){
+            return false;
+        }
+    });
 
     for (i = 0;i < numberOfSeats;i++) {
         var s = $('#game_seat_' + i.toString());
@@ -28,6 +35,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
         if (player.name == who_am_i) {
             if(ctx.is_game_started) {
                 $("#game-forfeit").show();
+                $("#game-endturn").show();
             }
         }
 
@@ -102,7 +110,6 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
         $(item.seat).find('.turn_progress').hide();
         $(item.seat).find('.action-sit').show();
         $(item.seat).find('.action-stand').hide();
-        $(item.seat).find('.end_turn').hide();
         $(item.seat).addClass('dead');
         $(item.seat).removeClass('active');
 
@@ -147,6 +154,7 @@ Seats.prototype.clear = function() {
     });
 
     $('#game-forfeit').hide();
+    $('#game-endturn').hide();
 
     this.is_game_started = false;
 };
@@ -169,6 +177,7 @@ Seats.prototype.game_started = function() {
         s.seat.find('.action-stand').hide();
         if (s.player != null && s.player.name == ctx.who_am_i) {
             $('#game-forfeit').show();
+            $('#game-endturn').show();
         }
     });
 };
@@ -235,12 +244,13 @@ Seats.prototype.turn_start = function(player_thin) {
             occupant.timer.restart();
 
             if (player_thin.name == ctx.who_am_i) {
-                occupant.seat.find(".end_turn").show();
+                $('#game-endturn').removeClass("disabled");
+            } else {
+                $('#game-endturn').addClass("disabled");
             }
 		} else {
 			occupant.seat.find(".turn_progress").hide();
             occupant.seat.removeClass("active");
-            occupant.seat.find(".end_turn").hide();
 		}
 	});
 };

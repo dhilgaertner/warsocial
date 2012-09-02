@@ -49,7 +49,7 @@ class HomeController < ApplicationController
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
 
-      @test = (params[:test] == "yes" || @active_user.layout_id == 2) ? false : true
+      @test = (params[:test] == "yes" || @active_user.layout_id == 1) ? true : false
 
       if (@test)
         render :action => "index2", :layout => "application2"

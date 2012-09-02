@@ -633,6 +633,19 @@
   }
 
 </style>
+<script type="text/javascript">
+  var urls = {
+    paurl: "/pusher/auth",
+    settings_toggle_stats_url: "/settings/toggle_stats",
+    settings_toggle_sounds_url: "/settings/toggle_sounds",
+    settings_toggle_layout_url: "/settings/toggle_layout"
+  };
+
+  head.ready(function() {
+    ws_init();
+  });
+</script>
+
 </head>
 <body>
 
@@ -655,7 +668,7 @@
       <div style="margin-top: 30px;">
         <div class="avatar"></div>
         <p id="username"><%= current_user.username %></p><br>
-        <%= link_to "Settings", "#", :class => "top_links", :style => "display:none;" %>
+        <%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :class => "top_links", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);" %>
         <%= link_to "Logout", "/users/sign_out", :method => :delete, :class => "top_links" %>
       </div>
     <% end %>
@@ -751,5 +764,6 @@
     <p>&copy; 2011-2012 WarSocial. All Rights Reserved.</p>
   </div>
 </div>
+<%= render "shared/settings" %>
 </body>
 </html>

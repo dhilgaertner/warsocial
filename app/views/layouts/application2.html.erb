@@ -967,6 +967,18 @@
 
   </style>
 
+  <script type="text/javascript">
+    var urls = {
+      paurl: "<%= auth_pusher_index_path %>",
+      settings_toggle_stats_url: "<%= settings_toggle_stats_url %>",
+      settings_toggle_sounds_url: "<%= settings_toggle_sounds_url %>",
+      settings_toggle_layout_url: "<%= settings_toggle_layout_url %>"
+    };
+
+    head.ready(function() {
+      ws_init();
+    });
+  </script>
 </head>
 <body>
 

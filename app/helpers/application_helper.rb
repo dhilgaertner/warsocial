@@ -23,6 +23,7 @@ module ApplicationHelper
         r.push("/assets/lib/jquery.dataTables.min.js?v=#{vers}")
         r.push("/assets/lib/customSelect.jquery.js")
         r.push("/assets/lib/labelover.js")
+        r.push("/assets/lib/ws.app.js?v=#{vers}")
       end
 
       if Rails.env.development? && !(@dev || @dev_image || @test)

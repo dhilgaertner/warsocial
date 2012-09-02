@@ -1,8 +1,16 @@
 <div class="modal" id="settings" style="display: none;">
   <div class="modal-body">
-    <div class="well">
-      <h4>Coming Soon.</h4>
+    <h2>Settings</h2>
+    <div class="well" style="margin-top: 10px;">
+      <div style="float: left; width: 200px;">
+        <h3>Layout</h3>
+      </div>
+      <div id="setting-layout" class="btn-group" data-toggle="buttons-radio" style="float: right;">
+        <button class="btn <%= setting_active(@active_user, "layout_id", 0) %>" value="0">original</button>
+        <button class="btn <%= setting_active(@active_user, "layout_id", 1) %>" value="1">new (beta)</button>
+      </div>
     </div>
+
   </div>
   <div class="modal-footer">
     <a href="#" data-dismiss="modal" class="btn btn-success">Done</a>
