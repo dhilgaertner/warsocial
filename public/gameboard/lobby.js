@@ -59,6 +59,7 @@ Lobby.prototype.setupDataTables = function() {
     if (this.mtable != null) {
         this.mtable.fnSort( [ [3,'desc'], [2,'asc'], [1,'desc'] ] );
         this.mtable.find('tr:contains("game started")').css("color", "grey");
+
     }
 
     this.otable = $('#game_lobby #online table').dataTable({
@@ -97,19 +98,35 @@ Lobby.prototype.injectDomData = function(data) {
     $("#tables_badge").text(data.games.length.toString());
     $("#online_badge").text(data.online.length.toString());
     $("#multi_badge_2").text(data.multiday.length.toString());
-    $("#multi_badge_1").text("0");
 
     var add_to_me = $('#tables .table tbody');
 
     $.each(data.games, function(i, game) {
-        add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
+        var classes = [];
+
+        if (game.am_i_seated) classes.push("seated");
+        if (game.is_my_turn) classes.push("turn");
+
+        add_to_me.append("<tr class='" + classes.join(" ") + "'><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
     });
 
     add_to_me = $('#multi-day .table tbody');
 
+    var multiday_alert_count = 0;
+
     $.each(data.multiday, function(i, game) {
-        add_to_me.append("<tr><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
+        var classes = [];
+
+        if (game.am_i_seated) classes.push("seated");
+        if (game.is_my_turn) {
+            multiday_alert_count += 1;
+            classes.push("turn");
+        }
+
+        add_to_me.append("<tr class='" + classes.join(" ") + "'><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
     });
+
+    $("#multi_badge_1").text(multiday_alert_count.toString());
 
     add_to_me = $('#online .table tbody');
 

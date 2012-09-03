@@ -1,6 +1,6 @@
 module ApplicationHelper
   def js_to_add(type)
-    vers = "7"
+    vers = "8"
     r = Array.new
 
     if !Rails.env.development?

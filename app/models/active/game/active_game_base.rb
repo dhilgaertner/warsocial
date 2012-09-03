@@ -87,24 +87,27 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   # Find games to be shown in the lobby
-  def self.get_lobby_games_with_key(redis_prefix)
+  def self.get_lobby_games_with_key(redis_prefix, user)
     lobby_games = REDIS.smembers("#{redis_prefix}_lobby_games")
+    user_id = user == nil ? -1 : user.id
 
     game_data = REDIS.multi do
       lobby_games.each do |lg|
         REDIS.hgetall("game:#{lg}")
         REDIS.keys("game:#{lg}:player:*")
+        REDIS.hgetall("game:#{lg}:player:#{user_id.to_s}")
       end
     end
 
     result = Array.new
 
     game_data.each_with_index do |data, index|
-      results_case = (index % 2)
+      results_case = (index % 3)
 
       case results_case
         when 0
           gh = ActiveGameFactory.array_to_hash(data)
+          ph = ActiveGameFactory.array_to_hash(game_data[index + 2])
           player_count = game_data[index + 1].size
 
           result << {  :name => gh["name"],
@@ -113,7 +116,8 @@ class ActiveGameBase < ActiveGameBaseSettings
                        :max_players => gh["max_player_count"].to_i,
                        :map => gh["map_name"],
                        :wager => gh["wager_level"].to_i,
-                       :state => gh["state"]
+                       :am_i_seated => !ph.empty?,
+                       :is_my_turn => !ph.empty? ? ph["is_turn"] == "true" : false
           }
       end
     end
