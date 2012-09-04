@@ -1,6 +1,10 @@
 module ApplicationHelper
   def js_to_add(type)
+
     vers = "8"
+    cn = controller.controller_name
+    ca = controller.action_name
+
     r = Array.new
 
     if !Rails.env.development?
@@ -15,6 +19,11 @@ module ApplicationHelper
     end
 
     r.push("/bootstrap/js/bootstrap.min.js")
+
+    if (cn == "posts" || cn == "topics")
+      r.push("/mark_it_up/jquery.markitup.js")
+      r.push("/mark_it_up/set.js")
+    end
 
     if type == "game"
       r.push("http://js.pusher.com/1.12/pusher.min.js")
