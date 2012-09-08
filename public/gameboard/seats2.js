@@ -1,12 +1,14 @@
 
-function Seats(who_am_i, numberOfSeats, players, is_started) {
+function Seats(who_am_i, numberOfSeats, players, is_started, timer_length) {
     var ctx = this;
     this._seats = new Object();
     this.is_game_started = is_started;
     this.who_am_i = who_am_i;
+    this.timer = new TurnTimer($('#turn-timer-box') , timer_length);
 
     $('#game-forfeit').hide();
     $('#game-endturn').hide();
+    $('#turn-timer-box').hide();
 
     $('#game-endturn').click(function() {
         if ($(this).hasClass('disabled')){
@@ -16,7 +18,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
 
     for (i = 0;i < numberOfSeats;i++) {
         var s = $('#game_seat_' + i.toString());
-        this._seats[i.toString()] = { player: null, seat: s, timer: new TurnTimer(s, 20) };
+        this._seats[i.toString()] = { player: null, seat: s };
     }
 
     this.occupySeat = function(key, player) {
@@ -36,6 +38,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
             if(ctx.is_game_started) {
                 $("#game-forfeit").show();
                 $("#game-endturn").show();
+                $('#turn-timer-box').show();
             }
         }
 
@@ -107,7 +110,6 @@ function Seats(who_am_i, numberOfSeats, players, is_started) {
         $(item.seat).find('.delta_points').html("");
         $(item.seat).find('.lands').html("");
         $(item.seat).find('.stats').hide();
-        $(item.seat).find('.turn_progress').hide();
         $(item.seat).find('.action-sit').show();
         $(item.seat).find('.action-stand').hide();
         $(item.seat).addClass('dead');
@@ -155,6 +157,7 @@ Seats.prototype.clear = function() {
 
     $('#game-forfeit').hide();
     $('#game-endturn').hide();
+    $('#turn-timer-box').hide();
 
     this.is_game_started = false;
 };
@@ -178,6 +181,7 @@ Seats.prototype.game_started = function() {
         if (s.player != null && s.player.name == ctx.who_am_i) {
             $('#game-forfeit').show();
             $('#game-endturn').show();
+            $('#turn-timer-box').show();
         }
     });
 };
@@ -239,29 +243,25 @@ Seats.prototype.turn_start = function(player_thin) {
   var ctx = this;
   $.each(this._seats, function(key, occupant) { 
 		if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
-			occupant.seat.find(".turn_progress").show();
-            occupant.seat.addClass("active");
-            occupant.timer.restart();
+			occupant.seat.addClass("active");
 
             if (player_thin.name == ctx.who_am_i) {
                 $('#game-endturn').removeClass("disabled");
             } else {
                 $('#game-endturn').addClass("disabled");
             }
-		} else {
-			occupant.seat.find(".turn_progress").hide();
-            occupant.seat.removeClass("active");
+
+            ctx.timer.restart();
+            $('#turn-username').html(occupant.player.name);
+
+        } else {
+		    occupant.seat.removeClass("active");
 		}
 	});
 };
 
 Seats.prototype.turn_timer_restart = function(player_thin) {
-    var ctx = this;
-    $.each(this._seats, function(key, occupant) {
-        if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
-            occupant.timer.restart();
-        }
-    });
+    this.timer.restart();
 };
 
 Seats.prototype.stand = function(player) {

@@ -1,7 +1,14 @@
 <div id="game-main" style="position: relative;">
-  <div id="game-settings" class="well">
-    <input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Dice Toggle']);" /> <span>dice</span>
-    <input id="sounds" type="checkbox" <%= setting_checked(@active_user, "sounds_toggle", true) %> style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Sounds Toggle']);" /> <span>sounds</span>
+  <div id="game-settings" class="well" style="height: 30px; width: 150px; padding: 15px;">
+    <div id="turn-timer-box" style="float: left; width: 110px; position: relative; background-color: #DCDDDD; height: 28px; border-radius: 4px 4px 4px 4px;">
+      <span id="turn-username" style="position: absolute; top: 5px; left: 5px; color: white;"></span>
+      <div class="turn_progress progress progress-success progress-striped active" style="height: 28px;">
+        <div class="bar" style="background-color: #009F9D; width: 100%; height: 28px;"></div>
+      </div>
+    </div>
+    <%= link_to '<i style="margin-top: 2px;" class="icon-ok icon-white"></i>'.html_safe, end_turn_home_index_path(:game_name => @game.name), :remote => true, :id => "game-endturn", :class => "btn btn-success", :style => "display:none; float: right;" %>
+    <!--<input id="dice_visible" type="checkbox" checked="checked" style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Dice Toggle']);" /> <span>dice</span>-->
+    <!--<input id="sounds" type="checkbox" <%= setting_checked(@active_user, "sounds_toggle", true) %> style="margin-left: 10px;" onclick="_gaq.push(['_trackEvent', 'Settings', 'Sounds Toggle']);" /> <span>sounds</span>-->
   </div>
   <div id="top-players" class="players-container">
     <div class="players">

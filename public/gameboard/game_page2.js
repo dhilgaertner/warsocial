@@ -1,7 +1,7 @@
 var global_game_name;
 var global_init_data;
 
-function game_page_init(game_name, init_data, maps, is_production, pusher_key, user_id, user_name, urls) {
+function game_page_init(game_name, game_type, init_data, maps, is_production, pusher_key, user_id, user_name, urls) {
 
     global_game_name = game_name;
     global_init_data = init_data;
@@ -15,8 +15,8 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
             is_game_started = true;
         }
     }
-
-    var seats = new Seats(user_name, 7, global_init_data.players, is_game_started);
+    var timer_time = game_type == "multi_day" ? 1000000 : 20;
+    var seats = new Seats(user_name, 7, global_init_data.players, is_game_started, timer_time);
     seats.update_player_data(global_init_data.players);
 
     var chatbox = new ChatBox("chat-window", seats);
@@ -157,11 +157,19 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
         }
     });
 
-    $('#dice_visible').change(function() {
-        var checked = $('#dice_visible').prop('checked');
+    $('#dice_visible').click(function() {
+        var visible = $(this).hasClass('active');
+
+        if (visible) {
+            $(this).find('i').removeClass('icon-eye-close');
+            $(this).find('i').addClass('icon-eye-open');
+        } else {
+            $(this).find('i').removeClass('icon-eye-open');
+            $(this).find('i').addClass('icon-eye-close');
+        }
 
         if (typeof dice_visible !== 'undefined') {
-            dice_visible(checked);
+            dice_visible(visible);
         }
     });
     $('#dice_visible').change();
@@ -184,22 +192,10 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
         }
     });
 
-    var update_sounds_checkbox = function() {
-        var checked = $('#sounds').prop('checked');
-
-        if (typeof sounds_toggle !== 'undefined') {
-            sounds_toggle(checked);
-        }
-    };
-    update_sounds_checkbox();
-    $('#sounds').change(function() {
-        update_sounds_checkbox();
-        var checked = $('#sounds').prop('checked');
-
-        if (user_id != 0) {
-            $.post(urls.settings_toggle_sounds_url, { on: checked });
-        }
-    });
+    var sounds_on = $('#setting-sounds .active').val() == 'true';
+    if (typeof sounds_toggle !== 'undefined') {
+        sounds_toggle(sounds_on);
+    }
 
     $('div.label-over label').labelOver('over-apply')
 
