@@ -13,6 +13,17 @@ class ActiveGameMultiDay < ActiveGameBase
     return "multiday"
   end
 
+  def self.reset_games_to_zero_wager
+    games = ActiveGameMultiDay.get_lobby_games(nil)
+
+    games.each do |g|
+      if (g.wager_level > 0)
+        g.wager_level = 0
+        g.save
+      end
+    end
+  end
+
   def self.get_lobby_games(user)
     games = ActiveGameMultiDay.get_lobby_games_with_key("multiday", user)
 
