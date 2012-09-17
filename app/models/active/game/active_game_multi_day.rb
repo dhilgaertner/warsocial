@@ -17,7 +17,7 @@ class ActiveGameMultiDay < ActiveGameBase
     games = ActiveGameMultiDay.get_lobby_games(nil)
 
     games.each do |g|
-      game = ActiveGameFactory.get_active_game(["name"]);
+      game = ActiveGameFactory.get_active_game(g[:name]);
       if (game.wager_level > 0)
         game.wager_level = 0
         game.save
