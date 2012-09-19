@@ -25,4 +25,10 @@ class Season < ActiveRecord::Base
 
     return all_users.size
   end
+
+  def self.test
+    h = Hominid::API.new('9d39943ff176f9969ded6cf80998f34b-us4')
+    h.list_subscribe('e9e492cb4c', 'dhilgaertner@gmail.com', {'USERNAME' => 'deadcode'}, 'html', false, true, true, false)
+
+  end
 end
