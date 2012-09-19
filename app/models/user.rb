@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :games, :through => :players
   has_many :season_scores
 
+  after_create :update_mailing_list
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
@@ -17,6 +19,11 @@ class User < ActiveRecord::Base
   validates_presence_of :username
   validates_uniqueness_of :username
   validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
+
+  def update_mailing_list
+    h = Hominid::API.new('9d39943ff176f9969ded6cf80998f34b-us4')
+    h.list_subscribe('e9e492cb4c', self.email, {'USERNAME' => self.username}, 'html', false, true, true, false)
+  end
 
   def admin?
     self.forem_admin
