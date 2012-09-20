@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
   def update_mailing_list
     h = Hominid::API.new('9d39943ff176f9969ded6cf80998f34b-us4')
-    h.list_subscribe('e9e492cb4c', self.email, {'USERNAME' => self.username}, 'html', false, true, true, false)
+    h.list_subscribe('e9e492cb4c', self.email, {'FNAME' => self.username}, 'html', false, true, true, false)
   end
 
   def admin?
