@@ -275,6 +275,12 @@ class HomeController < ApplicationController
     render :json => response
   end
 
+  def get_online_users
+    response = { :online => User.online_users }
+
+    render :json => response
+  end
+
   def sign_up_confirmation
 
   end

@@ -41,6 +41,7 @@ Dice::Application.routes.draw do
       get :stand, :as => :stand
       get :flag, :as => :flag
       get :get_lobby_games, :as => :get_lobby_games
+      get :get_online_users, :as => :get_online_users
   #    get :force_end_turn, :as => :force_end_turn
     end
   end

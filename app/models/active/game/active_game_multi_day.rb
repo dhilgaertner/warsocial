@@ -13,6 +13,9 @@ class ActiveGameMultiDay < ActiveGameBase
     return "multiday"
   end
 
+  # WARNING: MAKE SURE YOU WANT TO RUN THIS!
+  # I USE IT TO RESET THE MULTIDAY GAME WAGERS
+  # AT THE END OF THE SEASON
   def self.reset_games_to_zero_wager
     games = ActiveGameMultiDay.get_lobby_games(nil)
 

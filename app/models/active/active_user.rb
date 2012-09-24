@@ -27,7 +27,8 @@ class ActiveUser
     {
         :user_id => self.user_id,
         :stats_toggle => self.stats_toggle,
-        :sounds_toggle => self.sounds_toggle
+        :sounds_toggle => self.sounds_toggle,
+        :layout_id => self.layout_id
     }
   end
 
