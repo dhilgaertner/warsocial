@@ -123,7 +123,7 @@ Lobby.prototype.injectDomData = function(data) {
             classes.push("turn");
         }
 
-        add_to_me.append("<tr class='" + classes.join(" ") + "'><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
+        add_to_me.append("<tr class='" + classes.join(" ") + "'><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td><td>" + (game.is_my_turn ? "!!!" : "") + "</td></tr>");
     });
 
     $("#multi_badge_1").text(multiday_alert_count.toString());
