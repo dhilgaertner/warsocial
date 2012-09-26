@@ -41,7 +41,7 @@ Lobby.prototype.setupDataTables = function() {
     });
 
     if (this.ttable != null) {
-        this.ttable.fnSort( [ [3,'desc'], [2,'asc'], [1,'desc'] ] );
+        this.ttable.fnSort( [ [3,'asc'], [2,'asc'], [1,'desc'] ] );
         this.ttable.find('tr:contains("game started")').css("color", "grey")
     }
 
@@ -57,7 +57,7 @@ Lobby.prototype.setupDataTables = function() {
     });
 
     if (this.mtable != null) {
-        this.mtable.fnSort( [ [3,'desc'], [2,'asc'], [1,'desc'] ] );
+        this.mtable.fnSort( [ [3,'asc'], [2,'asc'], [1,'desc'] ] );
         this.mtable.find('tr:contains("game started")').css("color", "grey");
 
     }
