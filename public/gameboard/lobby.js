@@ -107,6 +107,9 @@ Lobby.prototype.injectDomData = function(data) {
         if (game.am_i_seated) classes.push("seated");
         if (game.is_my_turn) classes.push("turn");
 
+        game.state = game.state == "waiting for players" ? "open" : game.state;
+        game.state = game.state == "game started" ? "started" : game.state;
+
         add_to_me.append("<tr class='" + classes.join(" ") + "'><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td></tr>");
     });
 
@@ -122,6 +125,9 @@ Lobby.prototype.injectDomData = function(data) {
             multiday_alert_count += 1;
             classes.push("turn");
         }
+
+        game.state = game.state == "waiting for players" ? "open" : game.state;
+        game.state = game.state == "game started" ? "started" : game.state;
 
         add_to_me.append("<tr class='" + classes.join(" ") + "'><td>" + game.name + "</td><td>" + game.player_count.toString() + "/" + game.max_players + "</td><td>" + game.wager + "</td><td>" + game.state + "</td><td>" + (game.is_my_turn ? "!!!" : "") + "</td></tr>");
     });
