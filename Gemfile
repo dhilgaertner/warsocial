@@ -24,6 +24,7 @@ gem 'kaminari'
 gem 'mark_it_up', :git => 'git://github.com/cingel/mark_it_up.git'
 gem 'activeadmin'
 gem 'hominid'
+gem 'gravtastic'
 
 group :production do
   # gems specifically for Heroku go here

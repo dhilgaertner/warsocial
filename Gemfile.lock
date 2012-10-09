@@ -126,6 +126,7 @@ GEM
       forem
     formtastic (2.1.1)
       actionpack (~> 3.0)
+    gravtastic (3.2.6)
     haml (3.1.6)
     has_scope (0.5.1)
     hashie (1.2.0)
@@ -269,6 +270,7 @@ DEPENDENCIES
   forem!
   forem-textile_formatter
   forem-theme-twist!
+  gravtastic
   hominid
   jquery-rails
   json

@@ -1,4 +1,10 @@
 class User < ActiveRecord::Base
+  include Gravtastic
+  gravtastic :filetype => :png,
+             :size => 70,
+             :default => "identicon",
+             :rating => "X"
+
   has_many :players
   has_many :games, :through => :players
   has_many :season_scores
