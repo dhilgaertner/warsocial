@@ -140,7 +140,7 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   # Sit player at game table.
-  def add_player(user)
+  def add_player(user, default_avatar)
     if self.state == Game::WAITING_STATE
 
       if (user.current_points < self.wager_level)
@@ -175,6 +175,7 @@ class ActiveGameBase < ActiveGameBaseSettings
                                        user.id,
                                        user.username,
                                        user.current_points,
+                                       user.gravatar_url(:default => default_avatar),
                                        user.medals_json)
 
       self.players[user.id] = new_player

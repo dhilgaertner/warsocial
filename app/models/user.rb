@@ -2,7 +2,6 @@ class User < ActiveRecord::Base
   include Gravtastic
   gravtastic :filetype => :png,
              :size => 70,
-             :default => "identicon",
              :rating => "X"
 
   has_many :players

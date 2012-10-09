@@ -104,6 +104,7 @@ class ActiveGameFactory
                                 ph["user_id"],
                                 ph["username"],
                                 ph["current_points"],
+                                ph["avatar_url"],
                                 ph["medals_json"],
                                 ph["is_turn"],
                                 ph["current_delta_points"],
