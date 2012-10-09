@@ -48,6 +48,7 @@
     <orderEntry type="library" scope="PROVIDED" name="forem-textile_formatter (v0.1.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="forem-theme-twist (v[path], /Users/dhilgaertner/Documents/warsocial/vendor/forem-theme-twist) [path][gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formtastic (v2.1.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="gravtastic (v3.2.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="haml (v3.1.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="has_scope (v0.5.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hashie (v1.2.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
