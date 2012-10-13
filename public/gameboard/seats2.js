@@ -26,7 +26,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started, timer_length) {
 
         item.player = player;
         $(item.seat).find('.name').html(player.name);
-
+        $(item.seat).find('.avatar').css('background-image', 'url("' + player.avatar_url  + '")');
         $(item.seat).find('.action-sit').hide();
         $(item.seat).removeClass('dead');
 
@@ -105,6 +105,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started, timer_length) {
 
         item.player = null;
         $(item.seat).find('.name').html("");
+        $(item.seat).find('.avatar').css('background-image', '');
         $(item.seat).find('.place').html("");
         $(item.seat).find('.points').html("");
         $(item.seat).find('.delta_points').html("");
