@@ -1,9 +1,60 @@
 <% content_for :javascript_includes do %>
-
+  <%= render "shared/profile_js_includes" %>
 <% end %>
 
-<ul>
-<div class="thumbnail small">
+<div style="height: 620px;">
+  <div style="float: left; width: 225px;">
+    <ul class="thumbnails" style="margin-top: 10px;">
+      <li style="width: 220px;">
+        <a href="#" class="thumbnail" style="border-radius: 0px;">
+          <img src="<%= @user.gravatar_url(:size => 210) %>" alt="">
+        </a>
+      </li>
+    </ul>
+    <div style="text-align: center; margin-top: -20px;">
+      <h1 style="line-height: 30px;"><%= @user.username %></h1>
+    </div>
+    <div style="margin-top: 10px; margin-bottom: 10px; text-align: center; border-top: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; ">
+      <p style="margin-top: 10px; margin-bottom: 10px;">
+        Joined <%= @user.created_at.strftime("%b %d, %Y") %>
+      </p>
+    </div>
+    <div style="text-align: center;">
+      <% @user.medals.each do |i| %>
+        <% case i
+             when 1 %>
+          <img src="<%= image_path("trophies/gold_trophy.png") %>" alt="">
+        <%   when 2 %>
+          <img src="<%= image_path("trophies/silver_trophy.png") %>" alt="">
+        <%   when 3 %>
+          <img src="<%= image_path("trophies/bronze_trophy.png") %>" alt="">
+        <%   when 4..10 %>
+          <img src="<%= image_path("trophies/top10_trophy.png") %>" alt="">
+        <%   when 11..25 %>
+          <img src="<%= image_path("trophies/top25_trophy.png") %>" alt="">
+        <%   when 26..100 %>
+          <img src="<%= image_path("trophies/top100_trophy.png") %>" alt="">
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div style="height: 598px; width: 700px; float: left; padding-top: 20px; margin-left: 20px;">
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#profile">Profile</a></li>
+      <li><a href="#stats">Stats</a></li>
+      <li><a href="#friends">Friends</a></li>
+    </ul>
 
+    <div class="tab-content">
+      <div class="tab-pane active" id="profile">
+        <%= render "shared/profile_info" %>
+      </div>
+      <div class="tab-pane" id="stats">
+        <%= render "shared/profile_stats" %>
+      </div>
+      <div class="tab-pane" id="friends">
+        <%= render "shared/profile_friends" %>
+      </div>
+    </div>
+  </div>
 </div>
-</ul>
