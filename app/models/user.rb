@@ -106,7 +106,7 @@ class User < ActiveRecord::Base
     REDIS.expire(loc_key, 60 * 20)
   end
 
-# Who's online
+  # Who's online
   def self.online_user_ids
     REDIS.sunion(*keys_in_last_n_minutes(10))
   end
