@@ -138,6 +138,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.how_much_debt(user_id)
+    data = REDIS.keys "game:*:player:#{user_id}"
+    names = data.map { |x| x.split(":")[1] }
+
+    wagers = REDIS.multi do
+      names.each do |name|
+        REDIS.hget "game:#{name}", "wager_level"
+      end
+    end
+
+    wagers = wagers.map { |x| x.to_i }
+    wagers.sum
+  end
+
   private
   def self.online_friend_ids(interested_user_id)
     REDIS.multi do

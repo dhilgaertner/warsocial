@@ -143,15 +143,12 @@ class ActiveGameBase < ActiveGameBaseSettings
   def add_player(user)
     if self.state == Game::WAITING_STATE
 
-      if (user.current_points < self.wager_level)
-        return
-      end
-
       num_seated = REDIS.incr(self.redis_seat_counter_id)
 
       if (num_seated > self.max_player_count)
         REDIS.decr(self.redis_seat_counter_id)
-        return
+        return { :status => false,
+                 :message => "SEAT_FULL"}
       end
 
       sorted_players = self.players.values.sort { |a,b| a.seat_number <=> b.seat_number }
@@ -189,9 +186,11 @@ class ActiveGameBase < ActiveGameBaseSettings
         end
       end
 
-      return new_player
+      return { :status => true,
+               :player => new_player}
     else
-      return nil
+      return { :status => false,
+               :message => "GAME_STARTED"}
     end
   end
 
@@ -386,7 +385,11 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   def can_i_afford_it?(user)
-    if user.current_points >= self.wager_level
+    if (self.wager_level == 0)
+      return true
+    end
+
+    if ((user.current_points - self.wager_level) >= User.how_much_debt(user.id))
       return true
     else
       return false

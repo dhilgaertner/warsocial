@@ -13,7 +13,6 @@ class HomeController < ApplicationController
   end
 
   def index
-
     @js_page_type = "game"
 
     @isGame = true
