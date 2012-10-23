@@ -199,7 +199,7 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
 
     $('div.label-over label').labelOver('over-apply')
 
-    $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
+    $('.action-sit a').bind('ajax:complete', function(evt, xhr, status) {
         switch(xhr.responseText) {
             case "not_logged_in":
                 chatbox.addChatLine("Room", "You are not currently logged in.  Please re-login.");
