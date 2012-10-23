@@ -202,13 +202,13 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
     $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
         switch(xhr.responseText) {
             case "not_logged_in":
-                addToChat("Room", "You are not currently logged in.  Please re-login.");
+                chatbox.addChatLine("Room", "You are not currently logged in.  Please re-login.");
                 break;
             case "not_enough_points":
-                addToChat("Room", "You do not have enough points to sit at this table.");
+                chatbox.addChatLine("Room", "You do not have enough points to sit at this table.  This includes amounts already wagered at other tables you are currently seated at..");
                 break;
             case "already_in_game":
-                addToChat("Room", "You are already seated in this game.");
+                chatbox.addChatLine("Room", "You are already seated in this game.");
                 break;
         }
     });
