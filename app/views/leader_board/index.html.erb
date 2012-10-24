@@ -20,7 +20,7 @@
       <% @player_list.each_with_index do |player, index| %>
         <tr>
           <td><%= (@rank_start + index).to_s %></td>
-          <td><%= player.username %></td>
+          <td><%= link_to player.username, profile_path(player.username), :style => "color: blue" %></td>
           <td><%= player.current_points %></td>
         </tr>
       <% end %>
