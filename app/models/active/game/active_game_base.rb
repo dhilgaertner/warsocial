@@ -495,12 +495,13 @@ class ActiveGameBase < ActiveGameBaseSettings
 
       cash_player_out(1, winner)
 
+      ActiveStats.game_finished(self)
+
       self.delete_all  #TODO: store the game for archive
 
       ActiveGameFactory.get_active_game(self.name)
 
       REDIS.multi do
-        #TODO: ActiveStats.game_finished(self)
         REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:players:#{self.players.values.collect { |x| x.username }.join(",")}:wager:#{self.wager_level.to_s}:#{DateTime.now.to_s}")
       end
 
