@@ -21,9 +21,9 @@ class User < ActiveRecord::Base
                   :current_points, :total_points
   
   validates_presence_of :email
-  validates_uniqueness_of :email
+  validates_uniqueness_of :email, :case_sensitive => false
   validates_presence_of :username
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :case_sensitive => false
   validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
 
   def update_mailing_list
