@@ -515,7 +515,10 @@ class ActiveGameBase < ActiveGameBaseSettings
   def cash_player_out(position, player)
     user = User.find(player.user_id)
 
-    new_point_total = user.current_points + GameRule.calc_delta_points(position, self.wager_level, self.max_player_count)
+    player.current_points = position
+    player.current_delta_points = GameRule.calc_delta_points(position, self.wager_level, self.max_player_count)
+
+    new_point_total = user.current_points + player.current_delta_points
     new_point_total = new_point_total < 0 ? 0 : new_point_total
 
     user.current_points = new_point_total
@@ -634,7 +637,7 @@ class ActiveGameBase < ActiveGameBaseSettings
 
   private
   def update_delta_points
-    players = self.players.values
+    players = self.players.values.select {|p| p.state != Player::DEAD_PLAYER_STATE}
     players.sort! { |a,b| b.lands.size <=> a.lands.size }
 
     players.each_index { |index|
