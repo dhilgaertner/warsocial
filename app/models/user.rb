@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :players
   has_many :games, :through => :players
   has_many :season_scores
+  has_many :archived_players
 
   after_create :update_mailing_list
 
@@ -20,9 +21,9 @@ class User < ActiveRecord::Base
                   :current_points, :total_points
   
   validates_presence_of :email
-  validates_uniqueness_of :email
+  validates_uniqueness_of :email, :case_sensitive => false
   validates_presence_of :username
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :case_sensitive => false
   validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
 
   def update_mailing_list
@@ -135,6 +136,20 @@ class User < ActiveRecord::Base
     else
       return []
     end
+  end
+
+  def self.how_much_debt(user_id)
+    data = REDIS.keys "game:*:player:#{user_id}"
+    names = data.map { |x| x.split(":")[1] }
+
+    wagers = REDIS.multi do
+      names.each do |name|
+        REDIS.hget "game:#{name}", "wager_level"
+      end
+    end
+
+    wagers = wagers.map { |x| x.to_i }
+    wagers.sum
   end
 
   private

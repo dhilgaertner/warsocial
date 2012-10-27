@@ -1,4 +1,5 @@
 require 'active/game/active_game_base_settings'
+require 'active/active_stats'
 
 class ActiveGameBase < ActiveGameBaseSettings
 
@@ -143,15 +144,12 @@ class ActiveGameBase < ActiveGameBaseSettings
   def add_player(user, default_avatar)
     if self.state == Game::WAITING_STATE
 
-      if (user.current_points < self.wager_level)
-        return
-      end
-
       num_seated = REDIS.incr(self.redis_seat_counter_id)
 
       if (num_seated > self.max_player_count)
         REDIS.decr(self.redis_seat_counter_id)
-        return
+        return { :status => false,
+                 :message => "SEAT_FULL"}
       end
 
       sorted_players = self.players.values.sort { |a,b| a.seat_number <=> b.seat_number }
@@ -190,9 +188,11 @@ class ActiveGameBase < ActiveGameBaseSettings
         end
       end
 
-      return new_player
+      return { :status => true,
+               :player => new_player}
     else
-      return nil
+      return { :status => false,
+               :message => "GAME_STARTED"}
     end
   end
 
@@ -387,7 +387,11 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   def can_i_afford_it?(user)
-    if user.current_points >= self.wager_level
+    if (self.wager_level == 0)
+      return true
+    end
+
+    if ((user.current_points - self.wager_level) >= User.how_much_debt(user.id))
       return true
     else
       return false
@@ -493,12 +497,13 @@ class ActiveGameBase < ActiveGameBaseSettings
 
       cash_player_out(1, winner)
 
+      ActiveStats.game_finished(self)
+
       self.delete_all  #TODO: store the game for archive
 
       ActiveGameFactory.get_active_game(self.name)
 
       REDIS.multi do
-        #TODO: ActiveStats.game_finished(self)
         REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:players:#{self.players.values.collect { |x| x.username }.join(",")}:wager:#{self.wager_level.to_s}:#{DateTime.now.to_s}")
       end
 
@@ -512,7 +517,10 @@ class ActiveGameBase < ActiveGameBaseSettings
   def cash_player_out(position, player)
     user = User.find(player.user_id)
 
-    new_point_total = user.current_points + GameRule.calc_delta_points(position, self.wager_level, self.max_player_count)
+    player.current_points = position
+    player.current_delta_points = GameRule.calc_delta_points(position, self.wager_level, self.max_player_count)
+
+    new_point_total = user.current_points + player.current_delta_points
     new_point_total = new_point_total < 0 ? 0 : new_point_total
 
     user.current_points = new_point_total
@@ -631,7 +639,7 @@ class ActiveGameBase < ActiveGameBaseSettings
 
   private
   def update_delta_points
-    players = self.players.values
+    players = self.players.values.select {|p| p.state != Player::DEAD_PLAYER_STATE}
     players.sort! { |a,b| b.lands.size <=> a.lands.size }
 
     players.each_index { |index|

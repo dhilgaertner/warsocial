@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 
+  archived_game_id: 
+  seat_number: 
+  delta_points: 
+  finishing_place: 
+
+two:
+  user_id: 
+  archived_game_id: 
+  seat_number: 
+  delta_points: 
+  finishing_place: 
