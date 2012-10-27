@@ -12,16 +12,17 @@ class ActiveStats
       :map_json => game.map_json
     )
 
-    ag.save!
-
     ArchivedGame.transaction do
+      ag.save!
+
       game.players.values.each do |p|
-        ag.archived_players.create(
+        ap = ag.archived_players.create(
           :user_id => p.user_id,
           :seat_number => p.seat_number,
           :finishing_place => p.current_place,
           :delta_points => p.current_delta_points
         )
+        ap.save!
       end
     end
   end
