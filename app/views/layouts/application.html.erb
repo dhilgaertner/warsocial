@@ -14,36 +14,18 @@
 <script src="/headjs/head.min.js"></script>
 
 <% if !Rails.env.development? %>
-  <script>
-    head.js('<%= asset_path("application.js") %>');
-
-    <% if !@dev && !@dev_image %>
-      head.js('<%= asset_path("game.js") %>');
-    <% end %>
-
-  </script>
-
   <%= stylesheet_link_tag "application" %>
 <% else %>
-  <!-- DEV: The following lines are needed so any "data-method" instruction would work in forem. For instance : the pin / lock / hide / delete method for topic, -->
-  <script>
-    head.js(
-      '/jquery/jquery-1.7.min.js?v=2',
-      '/jquery/jquery_ujs.js?v=2'
-    );
-  </script>
   <%= stylesheet_link_tag "forem/twist/style" %>
 <% end %>
-
-<script>
-  head.js(
-    '/bootstrap/js/bootstrap.min.js'
-  );
-</script>
 
 <%= yield :javascript_includes %>
 
 <%= csrf_meta_tags %>
+
+<script>
+  head.js('<%= js_to_add(@js_page_type).join("','") %>');
+</script>
 
 <script type="text/javascript">
   var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-29117828-1']); _gaq.push(['_setDomainName', 'warsocial.com']); _gaq.push(['_trackPageview']);
@@ -633,6 +615,14 @@
     cursor: pointer;
   }
 
+  #game_lobby tr.seated td {
+    color: #4169e1;
+  }
+
+  #game_lobby tr.turn td {
+    color: red;
+  }
+
   #DataTables_Table_0_next {
     margin-left: 10px;
   }
@@ -651,6 +641,19 @@
   }
 
 </style>
+<script type="text/javascript">
+  var urls = {
+    paurl: "/pusher/auth",
+    settings_toggle_stats_url: "/settings/toggle_stats",
+    settings_toggle_sounds_url: "/settings/toggle_sounds",
+    settings_toggle_layout_url: "/settings/toggle_layout"
+  };
+
+  head.ready(function() {
+    ws_init();
+  });
+</script>
+
 </head>
 <body>
 
@@ -673,7 +676,7 @@
       <div style="margin-top: 30px;">
         <div class="avatar"></div>
         <p id="username"><%= current_user.username %></p><br>
-        <%= link_to "Settings", "#", :class => "top_links", :style => "display:none;" %>
+        <%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :class => "top_links", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);" %>
         <%= link_to "Logout", "/users/sign_out", :method => :delete, :class => "top_links" %>
       </div>
     <% end %>
@@ -769,5 +772,6 @@
     <p>&copy; 2011-2012 WarSocial. All Rights Reserved.</p>
   </div>
 </div>
+<%= render "shared/settings" %>
 </body>
 </html>

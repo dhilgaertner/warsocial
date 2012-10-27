@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  wager: 
+  map_name: MyString
+  map_json: MyString
+  type: 
+
+two:
+  name: MyString
+  wager: 
+  map_name: MyString
+  map_json: MyString
+  type: 

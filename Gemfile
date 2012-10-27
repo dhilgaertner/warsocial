@@ -19,11 +19,12 @@ gem 'forem', :git => 'git://github.com/radar/forem.git'
 gem 'forem-theme-twist', :path => "vendor/forem-theme-twist"
 gem 'forem-textile_formatter' # rich-text formatter for forem
 gem 'redis'
-gem 'ohm'
 gem 'delayed_job_admin'
 gem 'kaminari'
 gem 'mark_it_up', :git => 'git://github.com/cingel/mark_it_up.git'
 gem 'activeadmin'
+gem 'hominid'
+gem 'gravtastic'
 
 group :production do
   # gems specifically for Heroku go here

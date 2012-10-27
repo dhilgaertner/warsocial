@@ -5,8 +5,8 @@
 
 <meta name="Description" content="WarSocial is a free turn-based real time multiplayer HTML5 social strategy game inspired by Risk.">
 <meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
-
 <meta property="og:image" content="<%= image_path "logo.png" %>"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
 <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -14,36 +14,18 @@
 <script src="/headjs/head.min.js"></script>
 
 <% if !Rails.env.development? %>
-  <script>
-    head.js('<%= asset_path("application.js") %>');
-
-    <% if !@dev && !@dev_image %>
-    head.js('<%= asset_path("game.js") %>');
-    <% end %>
-
-  </script>
-
   <%= stylesheet_link_tag "application" %>
 <% else %>
-  <!-- DEV: The following lines are needed so any "data-method" instruction would work in forem. For instance : the pin / lock / hide / delete method for topic, -->
-  <script>
-    head.js(
-      '/jquery/jquery-1.7.min.js?v=2',
-      '/jquery/jquery_ujs.js?v=2'
-    );
-  </script>
   <%= stylesheet_link_tag "forem/twist/style" %>
 <% end %>
-
-<script>
-  head.js(
-    '/bootstrap/js/bootstrap.min.js'
-  );
-</script>
 
 <%= yield :javascript_includes %>
 
 <%= csrf_meta_tags %>
+
+<script>
+  head.js('<%= js_to_add(@js_page_type).join("','") %>');
+</script>
 
 <script type="text/javascript">
   var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-29117828-1']); _gaq.push(['_setDomainName', 'warsocial.com']); _gaq.push(['_trackPageview']);
@@ -325,32 +307,6 @@
 			float: left;
 		}
 
-		div#game_main .turn_progress {
-            margin-bottom: 3px;
-			/*background-color: #5DFC0A;*/
-		}
-
-		div#game_main #left_players .turn_progress {
-			width: 55px;
-			height: 6px;
-			margin-left: auto;
-			margin-right: auto;
-		}
-
-		div#game_main #right_players .turn_progress {
-			width: 55px;
-			height: 6px;
-			margin-left: auto;
-			margin-right: auto;
-		}
-
-		div#game_main #top_players .turn_progress {
-			width: 55px;
-			height: 6px;
-			float: left;
-			margin-left: 23px;
-		}
-
 		div#game_main #right_players .player {
 			margin-top: 40px;
 			width: 77px;
@@ -622,6 +578,14 @@
             cursor: pointer;
         }
 
+        #game_lobby tr.seated td {
+          color: #4169e1;
+        }
+
+        #game_lobby tr.turn td {
+          color: red;
+        }
+
         #DataTables_Table_0_next {
             margin-left: 10px;
         }
@@ -640,28 +604,392 @@
         }
 
 	</style>
+
+
+  <style type="text/css" media="screen">
+
+    /*  NAVBAR  */
+
+    #main-navbar {
+      margin-bottom: 0px;
+    }
+
+    #main-navbar div.navbar-inner {
+      box-shadow: none;
+      min-height: 0px;
+      background-image: none;
+      background-repeat: no-repeat;
+      background-color: #2C2C2C;
+      border-radius: 0px;
+    }
+
+    #footer2 {
+      height: 25px;
+      background-color: #2C2C2C;
+    }
+
+    /*  INDEX2  */
+
+    #game-container {
+      border: 1px solid #E5E8E7;
+      height: 620px;
+    }
+
+    #game-container #stage {
+      position:relative;
+      padding:0;
+      width:600px;
+      height:420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #game-container #game-controls {
+      float:left;
+    }
+
+    #game-container div.game {
+      /*border: 1px solid red;*/
+      float: left;
+      background-color: #A6CBE0;
+    }
+
+    #game-container div.sidebar {
+      float:right;
+      height: 620px;
+      width: 392px;
+    }
+
+    #game-container div.players-container {
+      background-color: #DCDDDD;
+      /*border: 1px solid yellow;*/
+      height: 100px;
+    }
+
+    #game-container div.players {
+      width: 776px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #game-container div.player {
+      height: 100px;
+      width: 193.75px;
+      float: left;
+    }
+
+    #game-container div.player.active {
+      color: white;
+      background-color: #009F9D;
+    }
+
+    #game-container div.player.dead .avatar {
+      opacity:0.4;
+      filter:alpha(opacity=40);
+    }
+
+    #game-container div.player.dead .stats {
+      opacity:0.4;
+      filter:alpha(opacity=40);
+    }
+
+    #game-container div.player.dead .medals {
+      opacity:0.4;
+      filter:alpha(opacity=40);
+    }
+
+    #game-container div.player.dead .name {
+      opacity:0.4;
+      filter:alpha(opacity=40);
+    }
+
+    #game-container div.player div.avatar {
+      margin-left: 5px;
+
+      height: 75px;
+      width: 75px;
+
+      background: transparent url(<%=image_path "default_avatar2.png"%>) 0 0px no-repeat;
+      background-position: center;
+
+      -moz-border-radius: 0;
+      border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+
+      float: left;
+    }
+    #game-container div.player div.player-stats {
+      height: 75px;
+    }
+
+    #game-container div.player div.info {
+      float: right;
+      width: 113px;
+      height: 74px;
+      overflow: hidden;
+    }
+
+    #game-container div.player div.name {
+      text-align: center;
+      width: 113px;
+      margin-top: 3px;
+    }
+
+    #game-container div.player div.stats {
+      font-family: Arial;
+      font-size: .6em;
+    }
+
+    #game-container div.player div.stats i {
+      float: left;
+      margin-top: 0px;
+    }
+
+    #game-container div.player.active div.stats i {
+      background-image: url('/bootstrap/img/glyphicons-halflings-white.png');
+    }
+
+    #game-container div.player div.stats div.col1 {
+      width: 38px;
+      float: left;
+      margin-left: 17px;
+      margin-top: 5px;
+    }
+
+    #game-container div.player div.stats div.col1 div {
+      float: left;
+      width: 20px;
+      margin-left: 3px;
+      line-height: 14px;
+    }
+
+    #game-container div.player div.stats div.col2 {
+      width: 38px;
+      float: left;
+      margin-top: 5px;
+    }
+
+    #game-container div.player div.stats div.col2 div {
+      float: left;
+      width: 20px;
+      margin-left: 3px;
+      line-height: 14px;
+    }
+
+    #game-container div.player div.stats i.icon-star {
+      background-image: url(<%=image_path "dice.png"%>);
+      background-position: 0;
+    }
+
+    #game-container div.player div.action-endturn {
+      margin-top: 13px;
+    }
+
+    #game-container div.player div.action-endturn a {
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+
+    #game-container div.player div.action-sit {
+      text-align: center;
+      margin-top: 19px;
+      width: 113px;
+    }
+
+    #game-container div.player div.action-stand {
+      text-align: center;
+      margin-top: 5px;
+      width: 113px;
+    }
+
+    #game-container div.medals {
+      height: 25px;
+    }
+
+    #game-container div.medal {
+      float: left;
+      background-color: #A4A5A5;
+      height: 17px;
+      width: 17px;
+      margin-top: 4px;
+      margin-left: 4px;
+    }
+
+    #game-details {
+      height: 45px;
+    }
+
+    #game-details div.icon {
+      float: left;
+      background-color: #A4A5A5;
+      height: 17px;
+      width: 17px;
+      margin-right: 5px;
+      margin-top: 0px;
+
+      border: 1px solid grey;
+      -moz-border-radius: 5px 5px;
+      border-radius: 5px 5px;
+    }
+
+    #game-details div.icon i {
+      margin-left: 2px;
+      margin-top: 2px;
+    }
+
+    #game-details div.wrapper {
+      float: left;
+      margin-top: 15px;
+      margin-right: 15px;
+    }
+
+    #main-navbar div.navbar-inner {
+      background-image: url(<%=image_path "logo2.png"%>);
+      background-position: center;
+
+    }
+
+    ul.nav {
+      font-size: .8em;
+    }
+
+    #log-window {
+      height: 200px;
+      border-top: 2px solid #E5E8E7;
+      overflow: auto;
+      padding-left: 5px;
+    }
+
+    #chat-window {
+      border-top: 10px solid #E5E8E7;
+      height: 313px;
+      overflow: auto;
+    }
+
+    #form-chat {
+      margin: 0px;
+    }
+
+    #form-chat input {
+      margin: 0px;
+      height: 31px;
+      width: 375px;
+    }
+
+    #game-settings {
+      position: absolute;
+      z-index: 150;
+      top: 454px;
+      left: 589px;
+    }
+
+    #game-main {
+      position: relative;
+      width: 775px;
+    }
+
+    /* label-over.js */
+    div.label-over { position: relative; float: left; }
+    label.over-apply { color: #ccc; position: absolute; top: 5px; left: 5px;}
+
+    /* Landscape phones and down */
+    @media (max-width: 480px) {
+
+    }
+
+    /* Landscape phone to portrait tablet */
+    @media (max-width: 767px) {
+
+    }
+
+    /* Portrait tablet to landscape and desktop */
+    @media (min-width: 768px) and (max-width: 979px) {
+
+    }
+
+    /* Desktop */
+    @media (min-width: 980px) and (max-width: 1199px) {
+      #game-main {
+        width: 655px;
+      }
+
+      #game-container div.sidebar {
+        width: 283px;
+      }
+
+      #form-chat input {
+        width: 265px;
+      }
+
+      #game-settings {
+        top: 454px;
+        left: 470px;
+      }
+    }
+
+    /* Large desktop */
+    @media (min-width: 1200px) {
+      #game-main {
+        width: 775px;
+      }
+
+      #game-container div.sidebar {
+        width: 392px;
+      }
+
+      #form-chat input {
+        width: 375px;
+      }
+
+      #game-settings {
+        top: 454px;
+        left: 589px;
+      }
+    }
+
+  </style>
+
+  <script type="text/javascript">
+    var urls = {
+      paurl: "<%= auth_pusher_index_path %>",
+      settings_toggle_stats_url: "<%= settings_toggle_stats_url %>",
+      settings_toggle_sounds_url: "<%= settings_toggle_sounds_url %>",
+      settings_toggle_layout_url: "<%= settings_toggle_layout_url %>"
+    };
+
+    head.ready(function() {
+      ws_init();
+    });
+  </script>
 </head>
 <body>
 
-<div class="container-fluid violet">
-  <div class="navbar navbar-static" id="navbar-example">
+<div class="container">
+  <div class="navbar navbar-static" id="main-navbar">
     <div class="navbar-inner">
       <div style="width: auto;" class="container">
-        <a href="#" class="brand">WarSocial</a>
+
         <ul class="nav">
           <li><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :target => @isGame ? "_blank" : "_self" %></li>
           <li><%= link_to "Leaderboard", "/leaderboard", :target => @isGame ? "_blank" : "_self" %></li>
           <li><%= link_to "Forum", "/forums/forums/1", :target => @isGame ? "_blank" : "_self" %></li>
           <!--<li><%= link_to "Map Creator", "http://blog.warsocial.com/post/18214496263/ma1achais-map-creator", :target => @isGame ? "_blank" : "_self" %></li>-->
           <li><%= link_to "Blog", "http://blog.warsocial.com", :target => @isGame ? "_blank" : "_self" %></li>
+          <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);" %></li>
+          <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);" %></li>
+
         </ul>
         <ul class="nav pull-right">
           <li class="dropdown" id="fat-menu">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">deadcode <b class="caret"></b></a>
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              <%= current_user != nil ? current_user.username : "" %>
+              <b class="caret"></b>
+            </a>
             <ul class="dropdown-menu">
-              <li><a href="#">Settings</a></li>
+              <li><%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);" %></li>
               <li class="divider"></li>
-              <li><a href="#">Logout</a></li>
+              <li><%= link_to "Logout", "/users/sign_out", :method => :delete %></li>
             </ul>
           </li>
         </ul>
@@ -669,6 +997,10 @@
     </div>
   </div>
   <%= yield %>
+  <div id="footer2"></div>
 </div>
+
+<%= render "shared/settings" %>
+
 </body>
 </html>

@@ -13,8 +13,8 @@ class ActiveGameNormal < ActiveGameBase
     return "normal"
   end
 
-  def self.get_lobby_games
-    ActiveGameNormal.get_lobby_games_with_key("normal")
+  def self.get_lobby_games(user)
+    ActiveGameNormal.get_lobby_games_with_key("normal", user)
   end
 
   def turn_timer_run_at

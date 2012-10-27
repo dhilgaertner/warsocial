@@ -46,13 +46,12 @@
             <button class="btn btn-large" value="10000" onclick="return false;">10k</button>
           </div>
 
-          <% if current_user != nil && (current_user.admin? || ["jurgen"].include?(current_user.username)) %>
-            <h3 style="margin-top: 20px; margin-bottom: 10px; margin-left: 70px;">Game Type</h3>
-            <div id="create_game_type" class="btn-group" data-toggle="buttons-radio">
-              <button class="btn btn-large active" value="normal" onclick="return false;">Normal</button>
-              <button class="btn btn-large" value="multiday" onclick="return false;">Multi-Day</button>
-            </div>
-          <% end %>
+          <h3 style="margin-top: 20px; margin-bottom: 10px; margin-left: 70px;">Game Type</h3>
+          <div id="create_game_type" class="btn-group" data-toggle="buttons-radio">
+            <button class="btn btn-large active" value="normal" onclick="return false;">Normal</button>
+            <button class="btn btn-large" value="multiday" onclick="return false;">Multi-Day</button>
+          </div>
+
         </div>
 
       </div>

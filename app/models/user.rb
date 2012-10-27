@@ -1,7 +1,16 @@
 class User < ActiveRecord::Base
+  include Gravtastic
+  gravtastic :filetype => :png,
+             :size => 70,
+             :default => "identicon",
+             :rating => "X"
+
   has_many :players
   has_many :games, :through => :players
   has_many :season_scores
+  has_many :archived_players
+
+  after_create :update_mailing_list
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :lockable, :timeoutable and :omniauthable
@@ -13,13 +22,34 @@ class User < ActiveRecord::Base
                   :current_points, :total_points
   
   validates_presence_of :email
-  validates_uniqueness_of :email
+  validates_uniqueness_of :email, :case_sensitive => false
   validates_presence_of :username
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :case_sensitive => false
   validates_format_of :username, :with => /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/, :message => 'cannot contain special characters.'
+
+  def update_mailing_list
+    h = Hominid::API.new('9d39943ff176f9969ded6cf80998f34b-us4')
+    h.list_subscribe('e9e492cb4c', self.email, {'FNAME' => self.username}, 'html', false, true, true, false)
+  end
 
   def admin?
     self.forem_admin
+  end
+
+  def medals
+    places = Array.new
+    self.season_scores.order("created_at").each do |score|
+      if (score.points > 0)
+        places.push(score.season.season_scores.count(:conditions => ['points > ?', score.points]) + 1)
+      end
+    end
+
+    return places
+  end
+
+  def medals_json
+    medals = self.medals
+    return medals.size > 0 ? "[#{medals * ","}]" : "[]"
   end
 
   def self.find_for_oauth(access_token, signed_in_resource=nil)
@@ -107,6 +137,20 @@ class User < ActiveRecord::Base
     else
       return []
     end
+  end
+
+  def self.how_much_debt(user_id)
+    data = REDIS.keys "game:*:player:#{user_id}"
+    names = data.map { |x| x.split(":")[1] }
+
+    wagers = REDIS.multi do
+      names.each do |name|
+        REDIS.hget "game:#{name}", "wager_level"
+      end
+    end
+
+    wagers = wagers.map { |x| x.to_i }
+    wagers.sum
   end
 
   private

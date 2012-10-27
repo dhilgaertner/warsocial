@@ -48,10 +48,12 @@
     <orderEntry type="library" scope="PROVIDED" name="forem-textile_formatter (v0.1.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="forem-theme-twist (v[path], /Users/dhilgaertner/Documents/warsocial/vendor/forem-theme-twist) [path][gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formtastic (v2.1.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="gravtastic (v3.2.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="haml (v3.1.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="has_scope (v0.5.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hashie (v1.2.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hike (v1.2.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="hominid (v3.0.5, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hpricot (v0.8.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="httpauth (v0.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v0.6.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
@@ -66,10 +68,8 @@
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v1.18, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.3.5, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multipart-post (v1.1.5, RVM: ruby-1.9.2-p318) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="nest (v1.1.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="oauth (v0.4.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="oauth2 (v0.6.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="ohm (v1.0.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="omniauth (v1.1.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="omniauth-facebook (v1.3.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="omniauth-oauth (v1.0.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
@@ -97,7 +97,6 @@
     <orderEntry type="library" scope="PROVIDED" name="rubypython (v0.5.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass (v3.1.18, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass-rails (v3.2.5, RVM: ruby-1.9.2-p318) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="scrivener (v0.0.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="signature (v0.1.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="simple_form (v2.0.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v2.1.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />

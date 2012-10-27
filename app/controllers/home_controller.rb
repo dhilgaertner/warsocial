@@ -13,13 +13,14 @@ class HomeController < ApplicationController
   end
 
   def index
+    @js_page_type = "game"
 
     @isGame = true
 
     @user = User.new(params[:user])
 
     if (params[:game_name] == nil)
-      lobby_games = ActiveGameNormal.get_lobby_games
+      lobby_games = ActiveGameNormal.get_lobby_games(current_user)
       running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
       name = running_games.empty? ? "home" : running_games.first[:name]
     else
@@ -47,7 +48,9 @@ class HomeController < ApplicationController
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
 
-      if (@active_user.layout_id == 2 || params[:test] == "yes")
+      @test = (params[:test] == "yes" || @active_user.layout_id == 1) ? true : false
+
+      if (@test)
         render :action => "index2", :layout => "application2"
       else
         render :action => "index", :layout => "application"
@@ -263,10 +266,16 @@ class HomeController < ApplicationController
   end
 
   def get_lobby_games
-    games = ActiveGameNormal.get_lobby_games
-    multiday_games = ActiveGameMultiDay.get_lobby_games
+    games = ActiveGameNormal.get_lobby_games(current_user)
+    multiday_games = ActiveGameMultiDay.get_lobby_games(current_user)
 
     response = { :games => games, :online => User.online_users, :multiday => multiday_games }
+
+    render :json => response
+  end
+
+  def get_online_users
+    response = { :online => User.online_users }
 
     render :json => response
   end

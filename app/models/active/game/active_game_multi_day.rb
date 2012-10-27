@@ -13,8 +13,25 @@ class ActiveGameMultiDay < ActiveGameBase
     return "multiday"
   end
 
-  def self.get_lobby_games
-    ActiveGameMultiDay.get_lobby_games_with_key("multiday")
+  # WARNING: MAKE SURE YOU WANT TO RUN THIS!
+  # I USE IT TO RESET THE MULTIDAY GAME WAGERS
+  # AT THE END OF THE SEASON
+  def self.reset_games_to_zero_wager
+    games = ActiveGameMultiDay.get_lobby_games(nil)
+
+    games.each do |g|
+      game = ActiveGameFactory.get_active_game(g[:name]);
+      if (game.wager_level > 0)
+        game.wager_level = 0
+        game.save
+      end
+    end
+  end
+
+  def self.get_lobby_games(user)
+    games = ActiveGameMultiDay.get_lobby_games_with_key("multiday", user)
+
+    return games
   end
 
   def turn_timer_run_at
