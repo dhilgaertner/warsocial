@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722155605) do
+ActiveRecord::Schema.define(:version => 20121027202210) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -44,6 +44,26 @@ ActiveRecord::Schema.define(:version => 20120722155605) do
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "archived_games", :force => true do |t|
+    t.string   "name"
+    t.integer  "wager"
+    t.string   "map_name"
+    t.string   "map_json"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "game_type"
+  end
+
+  create_table "archived_players", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "archived_game_id"
+    t.integer  "seat_number"
+    t.integer  "delta_points"
+    t.integer  "finishing_place"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0

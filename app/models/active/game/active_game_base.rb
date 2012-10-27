@@ -1,4 +1,5 @@
 require 'active/game/active_game_base_settings'
+require 'active/active_stats'
 
 class ActiveGameBase < ActiveGameBaseSettings
 
