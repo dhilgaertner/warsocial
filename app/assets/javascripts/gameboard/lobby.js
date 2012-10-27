@@ -30,7 +30,7 @@ Lobby.prototype.setupDataTables = function() {
     var url_prefix = this._url_prefix;
 
     this.ttable = $('#game_lobby #tables table').dataTable({
-        iDisplayLength: 100,
+        iDisplayLength: 500,
         bFilter: false,
         bInfo: false,
         bLengthChange: false,
@@ -46,7 +46,7 @@ Lobby.prototype.setupDataTables = function() {
     }
 
     this.mtable = $('#game_lobby #multi-day table').dataTable({
-        iDisplayLength: 100,
+        iDisplayLength: 500,
         bFilter: false,
         bInfo: false,
         bLengthChange: false,
