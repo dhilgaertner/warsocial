@@ -1,17 +1,26 @@
 <% require 'archived/archived_player' %>
 <% require 'archived/archived_game' %>
 
-<table class="table table-hover">
+<h3>Recent Games</h3>
+<br>
+<table class="table table-condensed" style="font-size: .8em;">
   <thead>
-
+    <tr>
+      <th>Name</th>
+      <th>Pos.</th>
+      <th>P/L</th>
+      <th>Wager</th>
+      <th>Type</th>
+    </tr>
   </thead>
   <tbody>
     <% @user.archived_games.each do |game| %>
-      <tr>
+      <tr style="<%= game_row_class(game) %>">
         <td><%=	game.name %></td>
+        <td><%=	find_me(game, current_user).finishing_place.to_s %></td>
+        <td><%=	find_me(game, current_user).delta_points.to_s %></td>
         <td><%=	game.wager %></td>
-        <td><%=	game.name %></td>
-        <td><%=	game.name %></td>
+        <td><%=	game.game_type %></td>
       </tr>
     <% end %>
   </tbody>
