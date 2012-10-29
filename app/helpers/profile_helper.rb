@@ -5,8 +5,8 @@ module ProfileHelper
     return me.first
   end
 
-  def game_row_class(game)
-    me = find_me(game, current_user)
+  def game_row_class(game, user)
+    me = find_me(game, user)
     if (me.delta_points > 0)
       return "background-color: #DFF0D8;"
     elsif (me.delta_points < 0)

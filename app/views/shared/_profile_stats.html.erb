@@ -15,10 +15,10 @@
   </thead>
   <tbody>
     <% @user.archived_games.each do |game| %>
-      <tr style="<%= game_row_class(game) %>">
+      <tr style="<%= game_row_class(game, @user) %>">
         <td><%=	game.name %></td>
-        <td><%=	find_me(game, current_user).finishing_place.to_s %></td>
-        <td><%=	find_me(game, current_user).delta_points.to_s %></td>
+        <td><%=	find_me(game, @user).finishing_place.to_s %></td>
+        <td><%=	find_me(game, @user).delta_points.to_s %></td>
         <td><%=	game.wager %></td>
         <td><%=	game.game_type %></td>
       </tr>
