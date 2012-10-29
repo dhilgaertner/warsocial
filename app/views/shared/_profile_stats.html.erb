@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @user.archived_games.each do |game| %>
+    <% @user.archived_games.first(10).each do |game| %>
       <tr style="<%= game_row_class(game, @user) %>">
         <td><%=	game.name %></td>
         <td><%=	find_me(game, @user).finishing_place.to_s %></td>
