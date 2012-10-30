@@ -5,7 +5,7 @@ module Forem
     end
 
     def avatar_url(user)
-      return user.gravatar_url(:default => image_path("default_avatar2.png"), :size => 80)
+      return user.gravatar_url(:default => "http://www.warsocial.com#{image_path("default_avatar2.png")}", :size => 80)
     end
 
     def default_gravatar

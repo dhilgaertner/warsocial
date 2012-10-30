@@ -5,7 +5,7 @@
     <div class='username' style="color: black;">
       <%= link_to_if Forem.user_profile_links, post.user.username, [main_app, post.user] %>
     </div>
-    <div class='icon' style="background: url(<%= avatar_url(post.user) %>); height: 80px; width: 80px; background-color: #838a90;"></div>
+    <div class='icon' style="background: url(<%= avatar_url(post.user) %>) center no-repeat; height: 80px; width: 80px; background-color: #838a90;"></div>
   </div>
 
   <div class='contents' style="border-radius: 5px 5px 5px 5px; border: 1px solid #6688aa; background-color: transparent; margin-bottom: 10px;">
