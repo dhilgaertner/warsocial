@@ -1,7 +1,7 @@
 module ApplicationHelper
   def js_to_add(type)
 
-    vers = "9"
+    vers = "10"
     cn = controller.controller_name
     ca = controller.action_name
 

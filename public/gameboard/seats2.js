@@ -255,6 +255,8 @@ Seats.prototype.turn_start = function(player_thin) {
             ctx.timer.restart();
             $('#turn-username').html(occupant.player.name);
 
+            var bgcolor = $('div.avatar', occupant.seat).first().css('background-color');
+            $('#turn-timer-box .bar').css('background-color', bgcolor);
         } else {
 		    occupant.seat.removeClass("active");
 		}
