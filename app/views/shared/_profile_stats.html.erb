@@ -6,20 +6,20 @@
 <table class="table table-condensed" style="font-size: .8em;">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Pos.</th>
+      <th>When (utc)</th>
+      <th>Game</th>
+      <th>Place</th>
       <th>P/L</th>
-      <th>Wager</th>
       <th>Type</th>
     </tr>
   </thead>
   <tbody>
-    <% @user.archived_games.first(10).each do |game| %>
+    <% @user.archived_games.order('created_at DESC').first(10).each do |game| %>
       <tr style="<%= game_row_class(game, @user) %>">
+        <td><%=	game.created_at.strftime('%b %d %I:%M %p') %></td>
         <td><%=	game.name %></td>
         <td><%=	find_me(game, @user).finishing_place.to_s %></td>
         <td><%=	find_me(game, @user).delta_points.to_s %></td>
-        <td><%=	game.wager %></td>
         <td><%=	game.game_type %></td>
       </tr>
     <% end %>
