@@ -1,3 +1,5 @@
+require 'constants/time_series_type'
+
 class User < ActiveRecord::Base
   include Gravtastic
   gravtastic :filetype => :png,
@@ -50,6 +52,20 @@ class User < ActiveRecord::Base
   def medals_json
     medals = self.medals
     return medals.size > 0 ? "[#{medals * ","}]" : "[]"
+  end
+
+  def save_time_series_entries
+    points = TimeSeries.new(
+        :name => TimeSeriesType::POINTS,
+        :key => self.id,
+        :value => self.current_points)
+    points.save!
+
+    #place = TimeSeries.new(
+    #    :name => TimeSeriesType::PLACE,
+    #    :key => self.id,
+    #    :value => self.current_place)
+    #place.save!
   end
 
   def self.find_for_oauth(access_token, signed_in_resource=nil)
