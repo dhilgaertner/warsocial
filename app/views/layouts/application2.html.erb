@@ -997,19 +997,22 @@
           <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);" %></li>
         </ul>
 
+        <% if (current_user != nil) %>
         <ul class="nav pull-right">
           <li class="dropdown" id="fat-menu">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-              <%= current_user != nil ? current_user.username : "" %>
+              <%= current_user.username %>
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
+              <li><%= link_to "Profile", profile_path(current_user.username) %></li>
               <li><%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);" %></li>
               <li class="divider"></li>
               <li><%= link_to "Logout", "/users/sign_out", :method => :delete %></li>
             </ul>
           </li>
         </ul>
+        <% end %>
       </div>
     </div>
   </div>

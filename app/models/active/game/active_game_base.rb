@@ -359,13 +359,15 @@ class ActiveGameBase < ActiveGameBaseSettings
           end_turn(false)
         end
 
-        player.state = Player::DEAD_PLAYER_STATE
-
         player.lands.values.each do |l|
           l.player_id = nil
         end
 
         player.lands.clear
+
+        update_delta_points
+
+        player.state = Player::DEAD_PLAYER_STATE
 
         broadcast(self.name, GameMsgType::QUIT, player)
 

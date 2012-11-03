@@ -25,7 +25,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started, timer_length) {
         var item = ctx._seats[key];
 
         item.player = player;
-        $(item.seat).find('.name').html(player.name);
+        $(item.seat).find('.name').html("<a target='_blank' style='color: inherit;' href='/u/" + player.name + "'>" + player.name + "</a>");
         $(item.seat).find('.avatar').css('background-image', 'url("' + player.avatar_url  + '")');
         $(item.seat).find('.action-sit').hide();
         $(item.seat).removeClass('dead');
