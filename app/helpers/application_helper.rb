@@ -1,7 +1,7 @@
 module ApplicationHelper
   def js_to_add(type)
 
-    vers = "10"
+    vers = "11"
     cn = controller.controller_name
     ca = controller.action_name
 
@@ -16,6 +16,9 @@ module ApplicationHelper
     else
       r.push("/jquery/jquery-1.7.min.js?v=#{vers}")
       r.push("/jquery/jquery_ujs.js?v=#{vers}")
+      r.push("/highcharts/highcharts.js?v=#{vers}")
+      r.push("/gameboard/lobby.js?v=#{vers}")
+      r.push("/gameboard/create_game.js?v=#{vers}")
     end
 
     r.push("/bootstrap/js/bootstrap.min.js")
@@ -48,10 +51,8 @@ module ApplicationHelper
         r.push("/gameboard/warsocial.js?v=#{vers}")
         r.push("/gameboard/turn_timer.js?v=#{vers}")
         r.push("/gameboard/seats.js?v=#{vers}")
-        r.push("/gameboard/lobby.js?v=#{vers}")
         r.push("/gameboard/chatbox.js?v=#{vers}")
         r.push("/gameboard/gamelog.js?v=#{vers}")
-        r.push("/gameboard/create_game.js?v=#{vers}")
       elsif @dev || @dev_image || @test
 
         if @test
@@ -99,10 +100,8 @@ module ApplicationHelper
         else
           r.push("/gameboard/seats.js?v=#{vers}")
         end
-        r.push("/gameboard/lobby.js?v=#{vers}")
         r.push("/gameboard/chatbox.js?v=#{vers}")
         r.push("/gameboard/gamelog.js?v=#{vers}")
-        r.push("/gameboard/create_game.js?v=#{vers}")
 
       end
     end

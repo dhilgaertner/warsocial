@@ -16,7 +16,10 @@
     </div>
     <div style="margin-top: 10px; margin-bottom: 10px; text-align: center; border-top: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; ">
       <p style="margin-top: 10px; margin-bottom: 10px;">
-        Joined <%= @user.created_at.strftime("%b %d, %Y") %>
+        <%= @user.current_points %> points
+      </p>
+      <p style="margin-top: 10px; margin-bottom: 10px;">
+        <small>Joined <%= @user.created_at.strftime("%b %d, %Y") %></small>
       </p>
     </div>
     <div style="text-align: center;">
@@ -41,16 +44,16 @@
   <div style="height: 598px; width: 700px; float: left; padding-top: 20px; margin-left: 20px;">
     <ul class="nav nav-tabs" id="myTab">
       <li class="active"><a href="#stats">Stats</a></li>
-      <li><a href="#friends">Friends</a></li>
+      <!--<li><a href="#friends">Friends</a></li>-->
     </ul>
 
     <div class="tab-content">
       <div class="tab-pane active" id="stats">
         <%= render "shared/profile_stats" %>
       </div>
-      <div class="tab-pane" id="friends">
-        <%= render "shared/profile_friends" %>
-      </div>
+      <!--<div class="tab-pane" id="friends">-->
+        <!--<%= render "shared/profile_friends" %>-->
+      <!--</div>-->
     </div>
   </div>
 </div>
