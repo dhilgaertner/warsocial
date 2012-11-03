@@ -2,8 +2,8 @@
 <div id='post_<%= post.id %>' class='post <%= cycle('odd', 'even') -%>'>
 
   <div class='user' style="background-color: transparent;">
-    <div class='username' style="color: black;">
-      <%= link_to_if Forem.user_profile_links, post.user.username, [main_app, post.user] %>
+    <div class='username' style="color: black; font-size: 1em;">
+      <%= link_to post.user.username, "/u/#{post.user.username}", :class => "username" %>
     </div>
     <div class='icon' style="background: url(<%= avatar_url(post.user) %>) center no-repeat; height: 80px; width: 80px; background-color: #838a90;"></div>
   </div>
