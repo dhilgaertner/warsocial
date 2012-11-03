@@ -6,8 +6,8 @@
   <div style="float: left; width: 225px;">
     <ul id="avatar" class="thumbnails" style="margin-top: 10px;">
       <li style="width: 220px;">
-        <a href="http://gravatar.com/emails/" class="thumbnail" style="border-radius: 0px;">
-          <img src="<%= @user.gravatar_url(:size => 210) %>" alt="">
+        <a href="http://gravatar.com/emails/" class="thumbnail" style="border-radius: 0px; height: 210px; width: 210px;">
+          <img height="210px" width="210px" src="<%= @user.gravatar_url(:size => 210, :default => "http://www.warsocial.com#{image_path("default_avatar2.png")}") %>" alt="">
         </a>
       </li>
     </ul>
