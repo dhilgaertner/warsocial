@@ -7,6 +7,13 @@
       $(this).tab('show');
     });
 
+    <% if (@js_page_type == "profile") %>
+      $('#avatar a').tooltip({
+        title: "Change your avatar at gravatar.com",
+        placement: "bottom",
+        animation: true
+      });
+    <% end %>
   });
 
 </script>
