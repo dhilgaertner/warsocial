@@ -34,12 +34,12 @@ function Seats(who_am_i, numberOfSeats, players, is_started, timer_length) {
             $(item.seat).find('.action-stand').show();
         }
 
-        if (player.name == who_am_i) {
-            if(ctx.is_game_started) {
+        if(ctx.is_game_started) {
+            if (player.name == who_am_i) {
                 $("#game-forfeit").show();
-                $("#game-endturn").show();
-                $('#turn-timer-box').show();
             }
+            $("#game-endturn").show();
+            $('#turn-timer-box').show();
         }
 
         function finishPositionToBadge(position) {
@@ -181,9 +181,9 @@ Seats.prototype.game_started = function() {
         s.seat.find('.action-stand').hide();
         if (s.player != null && s.player.name == ctx.who_am_i) {
             $('#game-forfeit').show();
-            $('#game-endturn').show();
-            $('#turn-timer-box').show();
         }
+        $('#game-endturn').show();
+        $('#turn-timer-box').show();
     });
 };
 
