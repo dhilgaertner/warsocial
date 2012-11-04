@@ -29,6 +29,7 @@
   </table>
 </div>
 
+<% if(current_user != nil && ["deadcode","dc"].include?(current_user.username)) %>
 <div class="span3 well well-small" style="width: 291px;">
   <div>
     <%= high_chart("chart-points", @h) %>
@@ -37,6 +38,7 @@
     <%= high_chart("chart-place", @f) %>
   </div>
 </div>
+<% end %>
 
 
 
