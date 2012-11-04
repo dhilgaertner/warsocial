@@ -14,11 +14,15 @@ module ApplicationHelper
         r.push(asset_path("game.js"))
       end
     else
+
       r.push("/jquery/jquery-1.7.min.js?v=#{vers}")
       r.push("/jquery/jquery_ujs.js?v=#{vers}")
-      r.push("/highcharts/highcharts.js?v=#{vers}")
       r.push("/gameboard/lobby.js?v=#{vers}")
       r.push("/gameboard/create_game.js?v=#{vers}")
+
+      # Profile
+      r.push("/highcharts/highcharts.js?v=#{vers}")
+      r.push("/tweet/jquery.tweet.js?v=#{vers}")
     end
 
     r.push("/bootstrap/js/bootstrap.min.js")

@@ -3,7 +3,29 @@
 <% end %>
 
 <% content_for :javascript_includes do %>
+  <link rel="stylesheet" type="text/css" href="/tweet/jquery.tweet.css">
+
   <%= render "shared/profile_js_includes" %>
+
+  <script type='text/javascript'>
+    head.ready(function() {
+      jQuery(function($){
+        $("#tweets").tweet({
+          username: "seaofclouds",
+          join_text: "auto",
+          avatar_size: 32,
+          count: 3,
+          auto_join_text_default: "we said,",
+          auto_join_text_ed: "we",
+          auto_join_text_ing: "we were",
+          auto_join_text_reply: "we replied to",
+          auto_join_text_url: "we were checking out",
+          loading_text: "loading tweets..."
+        });
+      });
+    });
+  </script>
+
 <% end %>
 
 <div style="height: 620px;">
@@ -48,16 +70,16 @@
   <div style="height: 598px; width: 700px; float: left; padding-top: 20px; margin-left: 20px;">
     <ul class="nav nav-tabs" id="myTab">
       <li class="active"><a href="#stats">Stats</a></li>
-      <!--<li><a href="#friends">Friends</a></li>-->
+      <!--<li><a href="#about-me">About Me</a></li>-->
     </ul>
 
     <div class="tab-content">
       <div class="tab-pane active" id="stats">
         <%= render "shared/profile_stats" %>
       </div>
-      <!--<div class="tab-pane" id="friends">-->
-        <!--<%= render "shared/profile_friends" %>-->
-      <!--</div>-->
+      <div class="tab-pane" id="about-me">
+        <%= render "shared/profile_about_me" %>
+      </div>
     </div>
   </div>
 </div>
