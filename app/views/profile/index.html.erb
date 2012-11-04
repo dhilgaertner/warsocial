@@ -1,3 +1,7 @@
+<% content_for :title do %>
+  <title><%= "#{@user.username}'s Profile - WarSocial" %></title>
+<% end %>
+
 <% content_for :javascript_includes do %>
   <%= render "shared/profile_js_includes" %>
 <% end %>
