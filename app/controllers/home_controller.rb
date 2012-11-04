@@ -25,6 +25,12 @@ class HomeController < ApplicationController
       name = running_games.empty? ? "home" : running_games.first[:name]
     else
       name = params[:game_name]
+      has_valid_characters = /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/.match(name) != nil
+
+      if (!has_valid_characters)
+        redirect_to :root
+        return
+      end
     end
 
     @dev = params[:dev] == nil ? false : true
