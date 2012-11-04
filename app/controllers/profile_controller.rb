@@ -16,7 +16,7 @@ class ProfileController < ApplicationController
 
     @h = LazyHighCharts::HighChart.new('graph', style: '') do |f|
       f.options[:title][:text] = "Points"
-      f.options[:chart][:width] = 300
+      f.options[:chart][:width] = 291
       f.options[:chart][:height] = 200
       f.options[:chart][:defaultSeriesType] = "area"
       f.options[:plotOptions] = {areaspline: {pointInterval: 1.day, pointStart: 10.days.ago}}

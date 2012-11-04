@@ -2,10 +2,11 @@
 <% require 'archived/archived_game' %>
 
 
-<h3>Recent Games</h3>
-<br>
-<table class="table table-condensed" style="font-size: .8em;">
-  <thead>
+<div class="span6" style="margin-left: 0px; width: 584px;">
+  <h3>Recent Games</h3>
+  <br>
+  <table class="table table-condensed" style="font-size: .8em;">
+    <thead>
     <tr>
       <th>When (utc)</th>
       <th>Game</th>
@@ -13,8 +14,8 @@
       <th>P/L</th>
       <th>Type</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <% @user.archived_games.order('created_at DESC').first(10).each do |game| %>
       <tr style="<%= game_row_class(game, @user) %>">
         <td><%=	game.created_at.strftime('%b %d %I:%M %p') %></td>
@@ -24,14 +25,18 @@
         <td><%=	game.game_type %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 
-<!--<div class="row">-->
-  <!--<div class="span3" style="margin-left: 60px;">-->
-    <!--<%= high_chart("my_id", @h) %>-->
-  <!--</div>-->
-  <!--<div class="span3" style="margin-left: 60px;">-->
-    <!--<%= high_chart("my_id2", @h) %>-->
-  <!--</div>-->
-<!--</div>-->
+<div class="span3 well well-small" style="width: 291px;">
+  <div>
+    <%= high_chart("my_id", @h) %>
+  </div>
+  <div style="margin-top: 10px;">
+    <%= high_chart("my_id2", @h) %>
+  </div>
+</div>
+
+
+
