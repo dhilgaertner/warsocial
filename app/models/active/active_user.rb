@@ -1,3 +1,5 @@
+require 'active/game/active_game_factory'
+
 class ActiveUser
 
   attr_accessor :user_id, :stats_toggle, :sounds_toggle, :layout_id

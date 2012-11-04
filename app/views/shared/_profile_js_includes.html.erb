@@ -1,0 +1,19 @@
+<script type="text/javascript">
+
+  head.ready(function() {
+
+    $('#myTab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+
+    <% if (@js_page_type == "profile") %>
+      $('#avatar a').tooltip({
+        title: "Change your avatar at gravatar.com",
+        placement: "bottom",
+        animation: true
+      });
+    <% end %>
+  });
+
+</script>

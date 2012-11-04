@@ -191,7 +191,7 @@ class HomeController < ApplicationController
       if(!game.is_user_in_game?(current_user))
         if game.state == Game::WAITING_STATE
           if game.can_i_afford_it?(current_user)
-            game.add_player(current_user)
+            game.add_player(current_user, "http://www.warsocial.com#{view_context.image_path("default_avatar2.png")}")
 
             render :text=>"success", :status=>200
           else

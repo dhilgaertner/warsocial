@@ -25,6 +25,7 @@ gem 'mark_it_up', :git => 'git://github.com/cingel/mark_it_up.git'
 gem 'activeadmin'
 gem 'hominid'
 gem 'gravtastic'
+gem 'lazy_high_charts'
 
 group :production do
   # gems specifically for Heroku go here

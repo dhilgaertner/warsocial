@@ -1,0 +1,85 @@
+<% content_for :title do %>
+  <title><%= "#{@user.username}'s Profile - WarSocial" %></title>
+<% end %>
+
+<% content_for :javascript_includes do %>
+  <link rel="stylesheet" type="text/css" href="/tweet/jquery.tweet.css">
+
+  <%= render "shared/profile_js_includes" %>
+
+  <script type='text/javascript'>
+    head.ready(function() {
+      jQuery(function($){
+        $("#tweets").tweet({
+          username: "seaofclouds",
+          join_text: "auto",
+          avatar_size: 32,
+          count: 3,
+          auto_join_text_default: "we said,",
+          auto_join_text_ed: "we",
+          auto_join_text_ing: "we were",
+          auto_join_text_reply: "we replied to",
+          auto_join_text_url: "we were checking out",
+          loading_text: "loading tweets..."
+        });
+      });
+    });
+  </script>
+
+<% end %>
+
+<div style="height: 620px;">
+  <div style="float: left; width: 225px;">
+    <ul id="avatar" class="thumbnails" style="margin-top: 10px;">
+      <li style="width: 220px;">
+        <a href="http://gravatar.com/emails/" class="thumbnail" style="border-radius: 0px; height: 210px; width: 210px;">
+          <img height="210px" width="210px" src="<%= @user.gravatar_url(:size => 210, :default => "http://www.warsocial.com#{image_path("default_avatar2.png")}") %>" alt="">
+        </a>
+      </li>
+    </ul>
+    <div style="text-align: center; margin-top: -20px;">
+      <h1 style="line-height: 30px;"><%= @user.username %></h1>
+    </div>
+    <div style="margin-top: 10px; margin-bottom: 10px; text-align: center; border-top: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; ">
+      <p style="margin-top: 10px; margin-bottom: 10px;">
+        <%= @user.current_points %> points
+      </p>
+      <p style="margin-top: 10px; margin-bottom: 10px;">
+        <small>Joined <%= @user.created_at.strftime("%b %d, %Y") %></small>
+      </p>
+    </div>
+    <div style="text-align: center;">
+      <% @user.medals.each do |i| %>
+        <% case i
+             when 1 %>
+          <img src="<%= image_path("trophies/gold_trophy.png") %>" alt="">
+        <%   when 2 %>
+          <img src="<%= image_path("trophies/silver_trophy.png") %>" alt="">
+        <%   when 3 %>
+          <img src="<%= image_path("trophies/bronze_trophy.png") %>" alt="">
+        <%   when 4..10 %>
+          <img src="<%= image_path("trophies/top10_trophy.png") %>" alt="">
+        <%   when 11..25 %>
+          <img src="<%= image_path("trophies/top25_trophy.png") %>" alt="">
+        <%   when 26..100 %>
+          <img src="<%= image_path("trophies/top100_trophy.png") %>" alt="">
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div style="height: 598px; width: 700px; float: left; padding-top: 20px; margin-left: 20px;">
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#stats">Stats</a></li>
+      <!--<li><a href="#about-me">About Me</a></li>-->
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="stats">
+        <%= render "shared/profile_stats" %>
+      </div>
+      <div class="tab-pane" id="about-me">
+        <%= render "shared/profile_about_me" %>
+      </div>
+    </div>
+  </div>
+</div>

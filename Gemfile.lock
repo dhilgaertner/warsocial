@@ -150,6 +150,8 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
+    lazy_high_charts (1.2.2)
+      bundler (~> 1.0)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -275,6 +277,7 @@ DEPENDENCIES
   jquery-rails
   json
   kaminari
+  lazy_high_charts
   mark_it_up!
   omniauth-facebook
   omniauth-twitter

@@ -141,7 +141,7 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   # Sit player at game table.
-  def add_player(user)
+  def add_player(user, default_avatar)
     if self.state == Game::WAITING_STATE
 
       num_seated = REDIS.incr(self.redis_seat_counter_id)
@@ -173,6 +173,7 @@ class ActiveGameBase < ActiveGameBaseSettings
                                        user.id,
                                        user.username,
                                        user.current_points,
+                                       user.gravatar_url(:default => default_avatar),
                                        user.medals_json)
 
       self.players[user.id] = new_player
@@ -358,13 +359,15 @@ class ActiveGameBase < ActiveGameBaseSettings
           end_turn(false)
         end
 
-        player.state = Player::DEAD_PLAYER_STATE
-
         player.lands.values.each do |l|
           l.player_id = nil
         end
 
         player.lands.clear
+
+        update_delta_points
+
+        player.state = Player::DEAD_PLAYER_STATE
 
         broadcast(self.name, GameMsgType::QUIT, player)
 

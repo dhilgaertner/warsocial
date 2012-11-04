@@ -8,7 +8,7 @@ class LeaderBoardController < ApplicationController
     per_page = 100
 
     @rank_start = ((page - 1) * per_page) + 1
-    @player_list = User.order("current_points DESC").page(params[:page]).per(per_page)
+    @player_list = User.where("current_points > 0").order("current_points DESC").page(params[:page]).per(per_page)
 
     @active_user = nil
 
@@ -49,7 +49,7 @@ class LeaderBoardController < ApplicationController
 
     @rank_start = ((page - 1) * per_page) + 1
     @season = Season.find(params[:season_id])
-    @scores = @season.season_scores.order("points DESC").page(params[:page]).per(per_page)
+    @scores = @season.season_scores.where("points > 0").order("points DESC").page(params[:page]).per(per_page)
 
     @active_user = nil
 

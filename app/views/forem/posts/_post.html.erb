@@ -1,14 +1,14 @@
 <a name='post-<%= post.id %>'></a>
 <div id='post_<%= post.id %>' class='post <%= cycle('odd', 'even') -%>'>
 
-  <div class='user'>
-    <div class='username'>
-      <%= link_to_if Forem.user_profile_links, post.user.username, [main_app, post.user] %>
+  <div class='user' style="background-color: transparent;">
+    <div class='username' style="color: black; font-size: 1em;">
+      <%= link_to post.user.username, "/u/#{post.user.username}", :class => "username" %>
     </div>
-    <div class='icon' style="background: url(<%= avatar_url(post.user.email) %>)"></div>
+    <div class='icon' style="background: url(<%= avatar_url(post.user) %>) center no-repeat; height: 80px; width: 80px; background-color: #838a90;"></div>
   </div>
 
-  <div class='contents'>
+  <div class='contents' style="border-radius: 5px 5px 5px 5px; border: 1px solid #6688aa; background-color: transparent; margin-bottom: 10px;">
     <time datetime="<%= post.created_at.to_s(:db) -%>"><%= "#{time_ago_in_words(post.created_at)} #{t("ago")}" %></time>
     <%= raw RedCloth.new(post.text).to_html %>
     <% if post.reply_to %>
@@ -17,7 +17,7 @@
       </span>
     <% end %>
 
-    <ul class='actions'>
+    <ul class='actions' style="margin-top:6px;">
       <% if forem_user %>
         <% if can?(:reply, @topic) %>
           <% if @topic.can_be_replied_to? %>

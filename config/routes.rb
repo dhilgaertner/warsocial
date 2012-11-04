@@ -46,6 +46,8 @@ Dice::Application.routes.draw do
     end
   end
 
+  match 'u/:username' => 'profile#index', :as => :profile
+
   match 'settings/toggle_stats' => 'user_settings#toggle_stats', :via => :post
   match 'settings/toggle_sounds' => 'user_settings#toggle_sounds', :via => :post
   match 'settings/toggle_layout' => 'user_settings#toggle_layout', :via => :post

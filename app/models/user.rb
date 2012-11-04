@@ -1,21 +1,23 @@
+require 'constants/time_series_type'
+
 class User < ActiveRecord::Base
   include Gravtastic
   gravtastic :filetype => :png,
-             :size => 70,
-             :default => "identicon",
+             :size => 75,
              :rating => "X"
 
   has_many :players
   has_many :games, :through => :players
   has_many :season_scores
   has_many :archived_players
+  has_many :archived_games, :through => :archived_players
 
   after_create :update_mailing_list
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
-         :recoverable, :rememberable, :trackable, :validatable#, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :remember_me, :username, :forem_admin,
@@ -50,6 +52,20 @@ class User < ActiveRecord::Base
   def medals_json
     medals = self.medals
     return medals.size > 0 ? "[#{medals * ","}]" : "[]"
+  end
+
+  def save_time_series_entries
+    points = TimeSeries.new(
+        :name => TimeSeriesType::POINTS,
+        :key => self.id,
+        :value => self.current_points)
+    points.save!
+
+    #place = TimeSeries.new(
+    #    :name => TimeSeriesType::PLACE,
+    #    :key => self.id,
+    #    :value => self.current_place)
+    #place.save!
   end
 
   def self.find_for_oauth(access_token, signed_in_resource=nil)
@@ -108,7 +124,7 @@ class User < ActiveRecord::Base
     REDIS.expire(loc_key, 60 * 20)
   end
 
-# Who's online
+  # Who's online
   def self.online_user_ids
     REDIS.sunion(*keys_in_last_n_minutes(10))
   end

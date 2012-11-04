@@ -25,8 +25,8 @@ function Seats(who_am_i, numberOfSeats, players, is_started, timer_length) {
         var item = ctx._seats[key];
 
         item.player = player;
-        $(item.seat).find('.name').html(player.name);
-
+        $(item.seat).find('.name').html("<a target='_blank' style='color: inherit;' href='/u/" + player.name + "'>" + player.name + "</a>");
+        $(item.seat).find('.avatar').css('background-image', 'url("' + player.avatar_url  + '")');
         $(item.seat).find('.action-sit').hide();
         $(item.seat).removeClass('dead');
 
@@ -105,6 +105,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started, timer_length) {
 
         item.player = null;
         $(item.seat).find('.name').html("");
+        $(item.seat).find('.avatar').css('background-image', '');
         $(item.seat).find('.place').html("");
         $(item.seat).find('.points').html("");
         $(item.seat).find('.delta_points').html("");
@@ -254,6 +255,8 @@ Seats.prototype.turn_start = function(player_thin) {
             ctx.timer.restart();
             $('#turn-username').html(occupant.player.name);
 
+            var bgcolor = $('div.avatar', occupant.seat).first().css('background-color');
+            $('#turn-timer-box .bar').css('background-color', bgcolor);
         } else {
 		    occupant.seat.removeClass("active");
 		}
