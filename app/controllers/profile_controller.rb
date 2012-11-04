@@ -1,3 +1,5 @@
+require 'constants/time_series_type'
+
 class ProfileController < ApplicationController
 
   def index
@@ -14,14 +16,26 @@ class ProfileController < ApplicationController
     username = params[:username]
     @user = User.find_by_username(username)
 
+    points_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, @user.id).order("created_at ASC").first(10)
+
     @h = LazyHighCharts::HighChart.new('graph', style: '') do |f|
       f.options[:title][:text] = "Points"
       f.options[:chart][:width] = 291
       f.options[:chart][:height] = 200
       f.options[:chart][:defaultSeriesType] = "area"
-      f.options[:plotOptions] = {areaspline: {pointInterval: 1.day, pointStart: 10.days.ago}}
-      f.series(:name=>'Points', :data=> [1, 3, 4, 3, 3, 5, 4,6,7,8,8,9,9,10,14,18,20,25])
-      f.xAxis(type: :datetime)
+      f.options[:xAxis][:categories] = points_ts.collect { |p| p.created_at.strftime("%b %d") }
+      f.series(:name=>'Points', :data=> points_ts.collect { |p| p.value.to_i })
+    end
+
+    place_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::PLACE, @user.id).order("created_at ASC").first(10)
+
+    @f = LazyHighCharts::HighChart.new('graph', style: '') do |f|
+      f.options[:title][:text] = "Place"
+      f.options[:chart][:width] = 291
+      f.options[:chart][:height] = 200
+      f.options[:chart][:defaultSeriesType] = "area"
+      f.options[:xAxis][:categories] = place_ts.collect { |p| p.created_at.strftime("%b %d") }
+      f.series(:name=>'Place', :data=> place_ts.collect { |p| p.value.to_i })
     end
 
     render :action => "index", :layout => "application2"
