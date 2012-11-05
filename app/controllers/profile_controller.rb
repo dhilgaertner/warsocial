@@ -17,14 +17,16 @@ class ProfileController < ApplicationController
     @user = User.find_by_username(username)
 
     points_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, @user.id.to_s).order("created_at ASC").first(10)
+    points_x = points_ts.collect { |p| p.created_at.strftime("%d") }.push("Now")
+    points_y = points_ts.collect { |p| p.value.to_i }.push(@user.current_points)
 
     @h = LazyHighCharts::HighChart.new('graph', style: '') do |f|
       f.options[:title][:text] = "Points"
       f.options[:chart][:width] = 291
       f.options[:chart][:height] = 200
       f.options[:chart][:defaultSeriesType] = "area"
-      f.options[:xAxis][:categories] = points_ts.collect { |p| p.created_at.strftime("%b %d") }
-      f.series(:name=>'Points', :data=> points_ts.collect { |p| p.value.to_i })
+      f.options[:xAxis][:categories] = points_x
+      f.series(:name=>'Points', :data=> points_y)
     end
 
     place_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::PLACE, @user.id.to_s).order("created_at ASC").first(10)

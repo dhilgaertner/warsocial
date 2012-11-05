@@ -60,12 +60,6 @@ class User < ActiveRecord::Base
         :key => self.id,
         :value => self.current_points)
     points.save!
-
-    #place = TimeSeries.new(
-    #    :name => TimeSeriesType::PLACE,
-    #    :key => self.id,
-    #    :value => self.current_place)
-    #place.save!
   end
 
   def self.find_for_oauth(access_token, signed_in_resource=nil)
