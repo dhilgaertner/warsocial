@@ -31,14 +31,15 @@ class ProfileController < ApplicationController
       f.options[:title][:text] = "Points"
       f.options[:chart][:width] = 291
       f.options[:chart][:height] = 200
-      f.options[:chart][:defaultSeriesType] = "area"
+      f.options[:chart][:defaultSeriesType] = "line"
       f.options[:xAxis][:categories] = points_x
 
+      f.series(:name=>@user.username, :data=> points_me)
+
       if (!am_i_leader)
-        f.series(:name=>"Leader", :data=> points_lead)
+        f.series(:name=>"#{leader.username} (leader)", :data=> points_lead)
       end
 
-      f.series(:name=>'You', :data=> points_me)
     end
 
     render :action => "index", :layout => "application2"
