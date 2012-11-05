@@ -29,17 +29,6 @@ class ProfileController < ApplicationController
       f.series(:name=>'Points', :data=> points_y)
     end
 
-    place_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::PLACE, @user.id.to_s).order("created_at ASC").first(10)
-
-    @f = LazyHighCharts::HighChart.new('graph', style: '') do |f|
-      f.options[:title][:text] = "Place"
-      f.options[:chart][:width] = 291
-      f.options[:chart][:height] = 200
-      f.options[:chart][:defaultSeriesType] = "area"
-      f.options[:xAxis][:categories] = place_ts.collect { |p| p.created_at.strftime("%b %d") }
-      f.series(:name=>'Place', :data=> place_ts.collect { |p| p.value.to_i })
-    end
-
     render :action => "index", :layout => "application2"
   end
 
