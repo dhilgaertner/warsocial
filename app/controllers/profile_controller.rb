@@ -15,10 +15,17 @@ class ProfileController < ApplicationController
 
     username = params[:username]
     @user = User.find_by_username(username)
+    leader = User.order("current_points DESC").first
+    am_i_leader = leader.id == @user.id
 
     points_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, @user.id.to_s).order("created_at ASC").first(10)
     points_x = points_ts.collect { |p| p.created_at.strftime("%d") }.push("Now")
-    points_y = points_ts.collect { |p| p.value.to_i }.push(@user.current_points)
+    points_me = points_ts.collect { |p| p.value.to_i }.push(@user.current_points)
+
+    if (!am_i_leader)
+      lead_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, leader.id.to_s).order("created_at ASC").first(10)
+      points_lead = lead_ts.collect { |p| p.value.to_i }.push(leader.current_points)
+    end
 
     @h = LazyHighCharts::HighChart.new('graph', style: '') do |f|
       f.options[:title][:text] = "Points"
@@ -26,7 +33,12 @@ class ProfileController < ApplicationController
       f.options[:chart][:height] = 200
       f.options[:chart][:defaultSeriesType] = "area"
       f.options[:xAxis][:categories] = points_x
-      f.series(:name=>'Points', :data=> points_y)
+
+      if (!am_i_leader)
+        f.series(:name=>"Leader", :data=> points_lead)
+      end
+
+      f.series(:name=>'You', :data=> points_me)
     end
 
     render :action => "index", :layout => "application2"
