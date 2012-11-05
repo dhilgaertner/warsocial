@@ -150,7 +150,7 @@ function Seats(who_am_i, numberOfSeats, players, is_started, timer_length) {
 }
 
 Seats.prototype.clear = function() {
-	var ctx = this;
+    var ctx = this;
     $.each(this._seats, function(key, occupant) {
         $(occupant.seat).removeClass('dead');
         ctx.emptySeat(key);
@@ -164,13 +164,13 @@ Seats.prototype.clear = function() {
 };
 
 Seats.prototype.sit = function(player) {
-	var ctx = this;
+    var ctx = this;
     $.each(this._seats, function(key, occupant) {
-		if (occupant.player == null) {
-			ctx.occupySeat(key, player);
-			return false; // Returning false get's you out of the $.each()
-		}
-	});
+        if (occupant.player == null) {
+            ctx.occupySeat(key, player);
+            return false; // Returning false get's you out of the $.each()
+        }
+    });
 };
 
 Seats.prototype.game_started = function() {
@@ -240,11 +240,11 @@ Seats.prototype.update_player_data = function(players) {
 };
 
 Seats.prototype.turn_start = function(player_thin) {
-  this.is_game_started = true;
-  var ctx = this;
-  $.each(this._seats, function(key, occupant) { 
-		if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
-			occupant.seat.addClass("active");
+    this.is_game_started = true;
+    var ctx = this;
+    $.each(this._seats, function(key, occupant) {
+        if (occupant.player != null && occupant.player.player_id == player_thin.player_id) {
+            occupant.seat.addClass("active");
 
             if (player_thin.name == ctx.who_am_i) {
                 $('#game-endturn').removeClass("disabled");
@@ -258,9 +258,9 @@ Seats.prototype.turn_start = function(player_thin) {
             var bgcolor = $('div.avatar', occupant.seat).first().css('background-color');
             $('#turn-timer-box .bar').css('background-color', bgcolor);
         } else {
-		    occupant.seat.removeClass("active");
-		}
-	});
+            occupant.seat.removeClass("active");
+        }
+    });
 };
 
 Seats.prototype.turn_timer_restart = function(player_thin) {
@@ -268,14 +268,14 @@ Seats.prototype.turn_timer_restart = function(player_thin) {
 };
 
 Seats.prototype.stand = function(player) {
-	var ctx = this;
-	$.each(this._seats, function(key, occupant) {
-		if (occupant.player != null) {
-			if (occupant.player.player_id == player.player_id) {
-				ctx.emptySeat(key);
-			}
-		}
-	});
+    var ctx = this;
+    $.each(this._seats, function(key, occupant) {
+        if (occupant.player != null) {
+            if (occupant.player.player_id == player.player_id) {
+                ctx.emptySeat(key);
+            }
+        }
+    });
 };
 
 Seats.prototype.getColorOrNil = function(username) {
