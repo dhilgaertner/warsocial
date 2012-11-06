@@ -29,13 +29,12 @@
   </table>
 </div>
 
-<% if(current_user != nil && ["deadcode","dc"].include?(current_user.username)) %>
 <div class="span3 well well-small" style="width: 291px;">
+  <div class="alert alert-info">Premium Feature. Enjoy!</div>
   <div>
     <%= high_chart("chart-points", @h) %>
   </div>
 </div>
-<% end %>
 
 
 
