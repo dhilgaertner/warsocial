@@ -128,7 +128,7 @@ class LeaderBoardController < ApplicationController
 
     chart = LazyHighCharts::HighChart.new('graph', style: '') do |f|
       f.options[:title][:text] = "Top #{how_many.to_s}"
-      #f.options[:chart][:width] = 500
+      #f.options[:chart][:width] = 600
       f.options[:chart][:height] = 400
       f.options[:chart][:defaultSeriesType] = "line"
       f.options[:xAxis][:categories] = data.first[:x_data]

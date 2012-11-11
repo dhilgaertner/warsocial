@@ -11,11 +11,9 @@
   <h5>Ends November 15th Midnight EST</h5>
   <h5><%= link_to "View Past Seasons", leaderboard_archived_path, :style => "color: blue" %></h5>
 
-  <div class="well well-small">
+  <div class="well well-small" style="width: 600px; margin-left: auto; margin-right: auto; margin-top: 10px;">
     <div class="alert alert-info">Premium Feature. Enjoy!</div>
-    <center>
     <%= high_chart("chart-points", @h) %>
-    </center>
   </div>
 
   <%= paginate @player_list %>
