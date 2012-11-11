@@ -117,11 +117,12 @@ class LeaderBoardController < ApplicationController
   private
   def top_points_chart
     how_many = 5
+    how_long = 10
     leaders = User.order("current_points DESC").first(how_many)
     data = Array.new
 
     leaders.each do |u|
-      ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, u.id.to_s).order("created_at ASC").first(how_many)
+      ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, u.id.to_s).order("created_at ASC").first(how_long)
       data.push(create_top_series_data(ts, u))
     end
 
