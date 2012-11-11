@@ -633,7 +633,13 @@
 
     #game-container {
       border: 1px solid #E5E8E7;
-      height: 620px;
+
+    }
+
+    #game-container:before, #game-container:after {
+      clear: both;
+      content: "";
+      display: table;
     }
 
     #game-container #stage {
