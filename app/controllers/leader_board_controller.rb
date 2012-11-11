@@ -12,7 +12,7 @@ class LeaderBoardController < ApplicationController
 
     @active_user = nil
 
-    @h = top_10_chart
+    @h = top_points_chart
 
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
@@ -115,17 +115,18 @@ class LeaderBoardController < ApplicationController
   end
 
   private
-  def top_10_chart
-    leaders = User.order("current_points DESC").first(10)
+  def top_points_chart
+    how_many = 5
+    leaders = User.order("current_points DESC").first(how_many)
     data = Array.new
 
     leaders.each do |u|
-      ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, u.id.to_s).order("created_at ASC").first(10)
-      data.push(create_top10_series_data(ts, u))
+      ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, u.id.to_s).order("created_at ASC").first(how_many)
+      data.push(create_top_series_data(ts, u))
     end
 
     chart = LazyHighCharts::HighChart.new('graph', style: '') do |f|
-      f.options[:title][:text] = "Top 10"
+      f.options[:title][:text] = "Top #{how_many.to_s}"
       #f.options[:chart][:width] = 500
       f.options[:chart][:height] = 400
       f.options[:chart][:defaultSeriesType] = "line"
@@ -140,7 +141,7 @@ class LeaderBoardController < ApplicationController
   end
 
   private
-  def create_top10_series_data(time_series, user)
+  def create_top_series_data(time_series, user)
     points_x = time_series.collect { |p| p.created_at.strftime("%b %d") }.push("Now")
     points_y = time_series.collect { |p| p.value.to_i }.push(user.current_points)
 
