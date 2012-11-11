@@ -11,6 +11,14 @@
   <h5>Ends November 15th Midnight EST</h5>
   <h5><%= link_to "View Past Seasons", leaderboard_archived_path, :style => "color: blue" %></h5>
 
+  <% if (current_user != nil && current_user.forem_admin) %>
+  <div class="well well-small">
+    <center>
+    <%= high_chart("chart-points", @h) %>
+    </center>
+  </div>
+  <% end %>
+
   <%= paginate @player_list %>
   <br>
   <table id="leaderboard">
