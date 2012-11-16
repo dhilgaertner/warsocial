@@ -3,12 +3,13 @@ require 'active/active_player'
 require 'active/active_land'
 
 class LeaderBoardController < ApplicationController
+
   def index
     page = params[:page] == nil ? 1 : params[:page].to_i
     per_page = 100
 
     @rank_start = ((page - 1) * per_page) + 1
-    @player_list = User.where("current_points > 0").order("current_points DESC").page(params[:page]).per(per_page)
+    @player_list = User.where("current_points > -1").order("current_points DESC").page(params[:page]).per(per_page)
 
     @active_user = nil
 

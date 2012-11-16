@@ -25,6 +25,8 @@ Dice::Application.routes.draw do
   match 'leaderboard/archived' => 'leader_board#archived_list'
   match 'leaderboard/archived/:season_id' => 'leader_board#archived_season', :as => :leaderboard_archived_season
 
+  match 'help' => 'help#index'
+
   match 'sign_up_confirmed' => 'home#sign_up_confirmation'
 
   match 'game/:game_name/' => 'home#index'

@@ -1,0 +1,17 @@
+<% content_for :title do %>
+  <title>Help - WarSocial</title>
+<% end %>
+
+<% content_for :javascript_includes do %>
+
+  <script language="javascript">
+    function resizeFrameWrapper() {
+      var frame = document.getElementById('helpframe');
+      var frameHeight = frame.contentWindow.document.body.scrollHeight;
+      $('body > .container').css({ 'height': frameHeight + 'px' });
+    }
+  </script>
+
+<% end %>
+
+<iframe id="helpframe" frameborder="0" src="/helpdocs/Getting_Started.html" scrolling="no" width="100%" height="100%" onload="scroll(0,0);resizeFrameWrapper();"></iframe>
