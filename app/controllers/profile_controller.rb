@@ -18,12 +18,14 @@ class ProfileController < ApplicationController
     leader = User.order("current_points DESC").first
     am_i_leader = leader.id == @user.id
 
-    points_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, @user.id.to_s).order("created_at ASC").first(10)
+    points_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, @user.id.to_s).order("created_at DESC").first(10)
+    points_ts.reverse!
     points_x = points_ts.collect { |p| p.created_at.strftime("%d") }.push("Now")
     points_me = points_ts.collect { |p| p.value.to_i }.push(@user.current_points)
 
     if (!am_i_leader)
-      lead_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, leader.id.to_s).order("created_at ASC").first(10)
+      lead_ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, leader.id.to_s).order("created_at DESC").first(10)
+      lead_ts.reverse!
       points_lead = lead_ts.collect { |p| p.value.to_i }.push(leader.current_points)
     end
 
