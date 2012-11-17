@@ -133,7 +133,9 @@ class LeaderBoardController < ApplicationController
       #f.options[:chart][:width] = 600
       f.options[:chart][:height] = 400
       f.options[:chart][:defaultSeriesType] = "line"
-      f.options[:xAxis][:categories] = data.first[:x_data]
+      #f.options[:xAxis][:categories] = data.first[:x_data]
+      f.options[:xAxis][:type] = "datetime"
+      f.options[:xAxis][:dateTimeLabelFormats] = { :month => "%e. %b", :year => "%b" }
       f.options[:legend][:layout] = "horizontal"
       data.each do |d|
         f.series(:type=>"line", :name=>d[:user].username, :data=> d[:y_data])
@@ -145,6 +147,16 @@ class LeaderBoardController < ApplicationController
 
   private
   def create_top_series_data(time_series, user)
+    points_y = time_series.collect { |p| [p.created_at.utc.to_i * 1000, p.value.to_i] }
+
+    data = {
+        :user => user,
+        :y_data => points_y
+    }
+  end
+
+  private
+  def create_top_series_data2(time_series, user)
     points_x = time_series.collect { |p| p.created_at.strftime("%b %d") }.push("Now")
     points_y = time_series.collect { |p| p.value.to_i }.push(user.current_points)
 
