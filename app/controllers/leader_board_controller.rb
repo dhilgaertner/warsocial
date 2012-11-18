@@ -123,7 +123,7 @@ class LeaderBoardController < ApplicationController
     data = Array.new
 
     leaders.each do |u|
-      ts = TimeSeries.where("name = ? AND key = ?", TimeSeriesType::POINTS, u.id.to_s).order("created_at DESC").first(how_long)
+      ts = TimeSeries.where("name = ? AND key = ? AND created_at > ?", TimeSeriesType::POINTS, u.id.to_s, Date.new(2012,11,16)).order("created_at DESC").first(how_long)
       ts.reverse!
       data.push(create_top_series_data(ts, u))
     end
@@ -135,7 +135,7 @@ class LeaderBoardController < ApplicationController
       f.options[:chart][:defaultSeriesType] = "line"
       #f.options[:xAxis][:categories] = data.first[:x_data]
       f.options[:xAxis][:type] = "datetime"
-      f.options[:xAxis][:dateTimeLabelFormats] = { :month => "%e. %b", :year => "%b" }
+      #f.options[:xAxis][:dateTimeLabelFormats] = { :month => "%b %e", :year => "%b" }
       f.options[:legend][:layout] = "horizontal"
       data.each do |d|
         f.series(:type=>"line", :name=>d[:user].username, :data=> d[:y_data])
