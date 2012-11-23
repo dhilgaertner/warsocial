@@ -1,4 +1,6 @@
 require 'active/game/active_game_base'
+require 'active/active_bonus'
+require 'constants/bonus_type'
 
 class ActiveGameMultiDay < ActiveGameBase
 
@@ -42,6 +44,30 @@ class ActiveGameMultiDay < ActiveGameBase
     user = User.find(player.user_id)
 
     GameMailer.user_turn_started(user, self).deliver
+  end
+
+  def on_end_turn(player)
+    self.track_end_turn(player)
+  end
+
+  private
+  def track_end_turn(player)
+    response = ActiveBonus.incr_by_till_max_then_cool_down(
+        1,
+        BonusType::TURN_MULTIDAY,
+        player.user_id,
+        10,
+        (60 * 60 * 24) #24 hours
+    )
+
+    if (response.bonus_success)
+      self.broadcast(self.name, GameMsgType::SERVER_MSG, "BONUS!!!")
+    elsif (response.bonus_data[:bonus_value] != nil)
+      val = response.bonus_data[:bonus_value]
+      max = response.bonus_data[:bonus_max]
+
+      self.broadcast(self.name, GameMsgType::SERVER_MSG, "no bonus... #{val}/#{max}")
+    end
   end
 
 end

@@ -11,4 +11,5 @@ class GameMsgType
   STAND = "player_stand"
   INFO = "info"
   WINNER = "game_winner"
+  SERVER_MSG = "server_message"
 end

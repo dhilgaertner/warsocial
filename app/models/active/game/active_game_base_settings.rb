@@ -4,7 +4,15 @@ class ActiveGameBaseSettings
 
   end
 
+  def on_end_turn(player)
+
+  end
+
   def on_players_turn(player)
+
+  end
+
+  def on_player_cash_out(player)
 
   end
 
