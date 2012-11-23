@@ -27,21 +27,27 @@ class ActiveGameNormal < ActiveGameBase
 
   private
   def track_player_cash_out(player)
+    max = 15
+    reward = 100
     response = ActiveBonus.incr_by_till_max_then_cool_down(
         1,
         BonusType::GAME_LIVE,
         player.user_id,
-        15,
-        60 #(60 * 60 * 24) #24 hours
+        max,
+        (60 * 60 * 24) #24 hours
     )
 
     if (response.bonus_success)
-      broadcast(self.name, GameMsgType::SERVER_MSG, "BONUS!!!")
+      u = User.find(player.user_id)
+      u.current_points = u.current_points + reward
+      u.save
+
+      broadcast(self.name, GameMsgType::SERVER_MSG, "#{player.username} achieved the daily bonus.  #{max} games played!  +#{reward} points.  24hr cooldown.")
     elsif (response.bonus_data[:bonus_value] != nil)
       val = response.bonus_data[:bonus_value]
       max = response.bonus_data[:bonus_max]
 
-      broadcast(self.name, GameMsgType::SERVER_MSG, "no bonus... #{val}/#{max}")
+      broadcast(self.name, GameMsgType::SERVER_MSG, "#{player.username} needs #{max - val} more game(s) for the daily bonus.")
     end
   end
 

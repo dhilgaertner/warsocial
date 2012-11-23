@@ -10,8 +10,12 @@ class ActiveBonus
       bonus_value = REDIS.incrby(bonus_key, incr_by)
 
       if (bonus_value >= bonus_max)
-        REDIS.set(bonus_key, -999)
-        REDIS.expire(bonus_key, bonus_delay)
+
+        REDIS.multi do
+          REDIS.set(bonus_key, -999)
+          REDIS.expire(bonus_key, bonus_delay)
+          REDIS.sadd("bonus_log", "#{bonus_name}|#{bonus_id}|#{DateTime.now.to_s}")
+        end
 
         return ActiveBonusResponse.new(bonus_name, bonus_id, true, {
             :bonus_delay => bonus_delay
