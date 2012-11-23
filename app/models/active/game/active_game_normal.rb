@@ -21,4 +21,28 @@ class ActiveGameNormal < ActiveGameBase
     return 20.seconds.from_now
   end
 
+  def on_player_cash_out(player)
+    track_player_cash_out(player)
+  end
+
+  private
+  def track_player_cash_out(player)
+    response = ActiveBonus.incr_by_till_max_then_cool_down(
+        1,
+        BonusType::GAME_LIVE,
+        player.user_id,
+        15,
+        60 #(60 * 60 * 24) #24 hours
+    )
+
+    if (response.bonus_success)
+      broadcast(self.name, GameMsgType::SERVER_MSG, "BONUS!!!")
+    elsif (response.bonus_data[:bonus_value] != nil)
+      val = response.bonus_data[:bonus_value]
+      max = response.bonus_data[:bonus_max]
+
+      broadcast(self.name, GameMsgType::SERVER_MSG, "no bonus... #{val}/#{max}")
+    end
+  end
+
 end

@@ -47,7 +47,7 @@ class ActiveGameMultiDay < ActiveGameBase
   end
 
   def on_end_turn(player)
-    self.track_end_turn(player)
+    track_end_turn(player)
   end
 
   private
@@ -57,16 +57,16 @@ class ActiveGameMultiDay < ActiveGameBase
         BonusType::TURN_MULTIDAY,
         player.user_id,
         10,
-        (60 * 60 * 24) #24 hours
+        60 #(60 * 60 * 24) #24 hours
     )
 
     if (response.bonus_success)
-      self.broadcast(self.name, GameMsgType::SERVER_MSG, "BONUS!!!")
+      broadcast(self.name, GameMsgType::SERVER_MSG, "BONUS!!!")
     elsif (response.bonus_data[:bonus_value] != nil)
       val = response.bonus_data[:bonus_value]
       max = response.bonus_data[:bonus_max]
 
-      self.broadcast(self.name, GameMsgType::SERVER_MSG, "no bonus... #{val}/#{max}")
+      broadcast(self.name, GameMsgType::SERVER_MSG, "no bonus... #{val}/#{max}")
     end
   end
 
