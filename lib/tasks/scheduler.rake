@@ -1,4 +1,4 @@
-desc "This task saves time series data."
+desc "User Time-Series Recording"
 task :save_time_series_data => :environment do
   puts "Saving Time Series Data..."
   users = User.all
@@ -8,4 +8,15 @@ task :save_time_series_data => :environment do
     end
   end
   puts "done (stsd)..."
+end
+
+desc "Active Users Recording"
+task :save_active_users_data => :environment do
+  puts "Saving Monthly Active Users..."
+  User.save_active_users(30.days.ago, TimeSeriesType::MONTHLY_ACTIVE_USERS)
+  puts "done (smau)..."
+
+  puts "Saving Weekly Active Users..."
+  User.save_active_users(1.week.ago, TimeSeriesType::WEEKLY_ACTIVE_USERS)
+  puts "done (swau)..."
 end
