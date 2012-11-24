@@ -20,14 +20,6 @@ Dice::Application.routes.draw do
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
-  match 'leaderboard' => 'leader_board#index'
-  match 'leaderboard/games' => 'leader_board#games_played'
-  match 'leaderboard/archived' => 'leader_board#archived_list'
-  match 'leaderboard/archived/:season_id' => 'leader_board#archived_season', :as => :leaderboard_archived_season
-
-  match 'help' => 'help#index'
-
-  match 'sign_up_confirmed' => 'home#sign_up_confirmation'
 
   match 'game/:game_name/' => 'home#index'
   match 'game/:game_name/fet/:turn_count/:auth' => 'home#force_end_turn'
@@ -47,6 +39,17 @@ Dice::Application.routes.draw do
   #    get :force_end_turn, :as => :force_end_turn
     end
   end
+
+  match 'admin_test' => 'admin#index'
+
+  match 'sign_up_confirmed' => 'home#sign_up_confirmation'
+
+  match 'leaderboard' => 'leader_board#index'
+  match 'leaderboard/games' => 'leader_board#games_played'
+  match 'leaderboard/archived' => 'leader_board#archived_list'
+  match 'leaderboard/archived/:season_id' => 'leader_board#archived_season', :as => :leaderboard_archived_season
+
+  match 'help' => 'help#index'
 
   match 'u/:username' => 'profile#index', :as => :profile
 
