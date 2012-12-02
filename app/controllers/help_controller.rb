@@ -1,5 +1,5 @@
 class HelpController < ApplicationController
-  layout "application2"
+  layout "application"
 
   def index
 

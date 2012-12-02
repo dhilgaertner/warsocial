@@ -18,11 +18,7 @@ class LeaderBoardController < ApplicationController
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
 
-      if (@active_user.layout_id == 2 || params[:test] == "yes")
-        render :action => "index", :layout => "application2"
-      else
-        render :action => "index", :layout => "application"
-      end
+      render :action => "index", :layout => "application"
     else
       render :action => "index", :layout => "application"
     end
@@ -36,11 +32,7 @@ class LeaderBoardController < ApplicationController
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
 
-      if (@active_user.layout_id == 2 || params[:test] == "yes")
-        render :action => "archived_list", :layout => "application2"
-      else
-        render :action => "archived_list", :layout => "application"
-      end
+      render :action => "archived_list", :layout => "application"
     else
       render :action => "archived_list", :layout => "application"
     end
@@ -59,11 +51,7 @@ class LeaderBoardController < ApplicationController
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
 
-      if (@active_user.layout_id == 2 || params[:test] == "yes")
-        render :action => "archived_season", :layout => "application2"
-      else
-        render :action => "archived_season", :layout => "application"
-      end
+      render :action => "archived_season", :layout => "application"
     else
       render :action => "archived_season", :layout => "application"
     end
@@ -81,11 +69,7 @@ class LeaderBoardController < ApplicationController
     if (current_user != nil)
       @active_user = ActiveUser.get_active_user(current_user.id)
 
-      if (@active_user.layout_id == 2 || params[:test] == "yes")
-        render :action => "index", :layout => "application2"
-      else
-        render :action => "index", :layout => "application"
-      end
+      render :action => "index", :layout => "application"
     else
       render :action => "index", :layout => "application"
     end
@@ -95,21 +79,13 @@ class LeaderBoardController < ApplicationController
     if current_user && current_user.admin?
       @active_user = nil
 
-      if (current_user != nil)
-        per_page = 200
-        games = REDIS.lrange("games_finished", 0, -1)
+      per_page = 200
+      games = REDIS.lrange("games_finished", 0, -1)
 
-        @game_list = Kaminari.paginate_array(games).page(params[:page]).per(per_page)
-        @active_user = ActiveUser.get_active_user(current_user.id)
+      @game_list = Kaminari.paginate_array(games).page(params[:page]).per(per_page)
+      @active_user = ActiveUser.get_active_user(current_user.id)
 
-        if (@active_user.layout_id == 2 || params[:test] == "yes")
-          render :action => "games_played", :layout => "application2"
-        else
-          render :action => "games_played", :layout => "application"
-        end
-      else
-        render :action => "games_played", :layout => "application"
-      end
+      render :action => "games_played", :layout => "application"
     else
       redirect_to :root unless current_user && current_user.admin?
     end

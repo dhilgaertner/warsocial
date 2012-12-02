@@ -957,12 +957,7 @@
   </style>
 
   <script type="text/javascript">
-    var urls = {
-      paurl: "<%= auth_pusher_index_path %>",
-      settings_toggle_stats_url: "<%= settings_toggle_stats_url %>",
-      settings_toggle_sounds_url: "<%= settings_toggle_sounds_url %>",
-      settings_toggle_layout_url: "<%= settings_toggle_layout_url %>"
-    };
+
 
     head.ready(function() {
 
@@ -1024,7 +1019,13 @@
       </div>
     </div>
   </div>
-  <%= yield %>
+  <% if(params[:controller].starts_with?("forem")) %>
+    <div style="padding: 20px 80px 20px 80px;">
+      <%= yield %>
+    </div>
+  <% else %>
+    <%= yield %>
+  <% end %>
   <div id="footer2"></div>
 </div>
 

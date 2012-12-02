@@ -10,7 +10,7 @@ module ApplicationHelper
     if !Rails.env.development?
       r.push(asset_path("application.js"))
 
-      if type == "game" && !(@dev || @dev_image || @test)
+      if type == "game" && !(@dev || @dev_image)
         r.push(asset_path("game.js"))
       end
     else
@@ -42,8 +42,8 @@ module ApplicationHelper
         r.push("/assets/lib/ws.app.js?v=#{vers}")
       end
 
-      if Rails.env.development? && !(@dev || @dev_image || @test)
-        r.push("/gameboard/game_page.js?v=#{vers}")
+      if Rails.env.development? && !(@dev || @dev_image)
+        r.push("/gameboard/game_page2.js?v=#{vers}")
         r.push("/gameboard/communications.js?v=#{vers}")
         r.push("/gameboard/soundmanager.js?v=#{vers}")
         r.push("/gameboard/dicebox.js?v=#{vers}")
@@ -54,16 +54,13 @@ module ApplicationHelper
         r.push("/gameboard/shared.js?v=#{vers}")
         r.push("/gameboard/warsocial.js?v=#{vers}")
         r.push("/gameboard/turn_timer.js?v=#{vers}")
-        r.push("/gameboard/seats.js?v=#{vers}")
+        r.push("/gameboard/seats2.js?v=#{vers}")
+        r.push("/gameboard/settings.js?v=#{vers}")
         r.push("/gameboard/chatbox.js?v=#{vers}")
         r.push("/gameboard/gamelog.js?v=#{vers}")
-      elsif @dev || @dev_image || @test
+      elsif @dev || @dev_image
 
-        if @test
-          r.push("/gameboard/game_page2.js?v=#{vers}")
-        else
-          r.push("/gameboard/game_page.js?v=#{vers}")
-        end
+        r.push("/gameboard/game_page2.js?v=#{vers}")
 
         if @dev || @dev_image
           r.push("http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=#{vers}")
@@ -98,12 +95,8 @@ module ApplicationHelper
         end
 
         r.push("/gameboard/turn_timer.js?v=#{vers}")
-        if @test
-          r.push("/gameboard/seats2.js?v=#{vers}")
-          r.push("/gameboard/settings.js?v=#{vers}")
-        else
-          r.push("/gameboard/seats.js?v=#{vers}")
-        end
+        r.push("/gameboard/seats2.js?v=#{vers}")
+        r.push("/gameboard/settings.js?v=#{vers}")
         r.push("/gameboard/chatbox.js?v=#{vers}")
         r.push("/gameboard/gamelog.js?v=#{vers}")
 
