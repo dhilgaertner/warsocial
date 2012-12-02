@@ -20,3 +20,11 @@ task :save_active_users_data => :environment do
   User.save_active_users(1.week.ago, TimeSeriesType::WEEKLY_ACTIVE_USERS)
   puts "done (swau)..."
 end
+
+desc "Email Latest Chat Logs"
+task :email_latest_chat_logs => :environment do
+  puts "Emailing latest chat logs..."
+  AdminUser.email_latest_chat_logs(1000)
+  puts "done (elcl)..."
+end
+
