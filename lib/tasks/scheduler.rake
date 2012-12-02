@@ -24,7 +24,7 @@ end
 desc "Email Latest Chat Logs"
 task :email_latest_chat_logs => :environment do
   puts "Emailing latest chat logs..."
-  AdminUser.email_latest_chat_logs(1000)
+  AdminUser.email_latest_chat_logs(100)
   puts "done (elcl)..."
 end
 
