@@ -9,6 +9,7 @@ class HomeController < ApplicationController
   layout :resolve_layout
 
   def index
+
     @js_page_type = "game"
 
     @isGame = true
