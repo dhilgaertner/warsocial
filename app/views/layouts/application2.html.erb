@@ -633,7 +633,12 @@
 
     #game-container {
       border: 1px solid #E5E8E7;
-      height: 620px;
+    }
+
+    #game-container:before, #game-container:after {
+      clear: both;
+      content: "";
+      display: table;
     }
 
     #game-container #stage {
@@ -967,7 +972,6 @@
       <% else %>
         ws_init();
       <% end %>
-
     });
   </script>
 </head>
@@ -984,6 +988,7 @@
             </a>
 
             <ul class="dropdown-menu">
+              <li><%= link_to "Home", root_path %></li>
               <li><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :target => @isGame ? "_blank" : "_self" %></li>
               <li><%= link_to "Leaderboard", "/leaderboard", :target => @isGame ? "_blank" : "_self" %></li>
               <li><%= link_to "Forum", "/forums/forums/1", :target => @isGame ? "_blank" : "_self" %></li>

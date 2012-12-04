@@ -18,3 +18,10 @@ ChatBox.prototype.addChatLine = function(username, message) {
     this._tbody.append($('<tr><td><span style="color: ' + color + ';"><b>' + username + '</b></span>: ' + message + '</td></tr>'));
     this._chatwindow.animate({ scrollTop: this._chatwindow.prop("scrollHeight") }, 300);
 };
+
+ChatBox.prototype.addServerMessage = function(message) {
+    var color = "green";
+
+    this._tbody.append($('<tr><td class="well well-small"><span style="color: ' + color + ';">' + message + '</span></td></tr>'));
+    this._chatwindow.animate({ scrollTop: this._chatwindow.prop("scrollHeight") }, 300);
+};

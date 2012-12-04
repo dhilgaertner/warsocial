@@ -296,7 +296,7 @@ class ActiveGameBase < ActiveGameBaseSettings
   end
 
   # End the current players turn
-  def end_turn(will_reenforce=true)
+  def end_turn(will_reenforce=true, is_forced=false)
     cp = current_player
     np = next_player
 
@@ -316,6 +316,7 @@ class ActiveGameBase < ActiveGameBaseSettings
     save_all
 
     #Fire event for a new players turns
+    self.on_end_turn(cp)
     self.on_players_turn(np)
   end
 
@@ -329,7 +330,7 @@ class ActiveGameBase < ActiveGameBaseSettings
 
       flag_player(User.find(cp.user_id))
     else
-      end_turn
+      end_turn(true, true)
     end
   end
 
@@ -356,7 +357,7 @@ class ActiveGameBase < ActiveGameBaseSettings
       if (player != nil)
 
         if (player.is_turn)
-          end_turn(false)
+          end_turn(false, true)
         end
 
         player.lands.values.each do |l|
@@ -519,7 +520,7 @@ class ActiveGameBase < ActiveGameBaseSettings
   def cash_player_out(position, player)
     user = User.find(player.user_id)
 
-    player.current_points = position
+    player.current_place = position
     player.current_delta_points = GameRule.calc_delta_points(position, self.wager_level, self.max_player_count)
 
     new_point_total = user.current_points + player.current_delta_points
@@ -529,6 +530,9 @@ class ActiveGameBase < ActiveGameBaseSettings
     user.save
 
     player.current_points = new_point_total
+
+    #Fire event for a new players turns
+    self.on_player_cash_out(player)
   end
 
   # Check whether or not the land is owned by the player

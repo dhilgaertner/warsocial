@@ -8,18 +8,23 @@
 
 <div style="text-align: center;">
   <h1>Leaderboard</h1>
-  <h5>Ends November 15th Midnight EST</h5>
+  <h5>Ends December 15th Midnight EST</h5>
   <h5><%= link_to "View Past Seasons", leaderboard_archived_path, :style => "color: blue" %></h5>
+
+  <div class="well well-small" style="width: 600px; margin-left: auto; margin-right: auto; margin-top: 10px;">
+    <div class="alert alert-info">Premium Feature. Enjoy!</div>
+    <%= high_chart("chart-points", @h) %>
+  </div>
 
   <%= paginate @player_list %>
   <br>
   <table id="leaderboard">
-      <% @player_list.each_with_index do |player, index| %>
-        <tr>
-          <td><%= (@rank_start + index).to_s %></td>
-          <td><%= link_to player.username, profile_path(player.username), :style => "color: blue" %></td>
-          <td><%= player.current_points %></td>
-        </tr>
-      <% end %>
-    </table>
+    <% @player_list.each_with_index do |player, index| %>
+      <tr>
+        <td><%= (@rank_start + index).to_s %></td>
+        <td><%= link_to player.username, profile_path(player.username), :style => "color: blue" %></td>
+        <td><%= player.current_points %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>
