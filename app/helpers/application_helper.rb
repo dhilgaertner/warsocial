@@ -32,6 +32,11 @@ module ApplicationHelper
       r.push("/mark_it_up/set.js")
     end
 
+    if (cn == "map_creator")
+      r.push("/mapcreator/kinetic-v3.js")
+      r.push("/mapcreator/map_creator.js")
+    end
+
     if type == "game"
       r.push("http://js.pusher.com/1.12/pusher.min.js")
 
