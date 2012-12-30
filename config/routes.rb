@@ -49,6 +49,8 @@ Dice::Application.routes.draw do
   match 'leaderboard/archived' => 'leader_board#archived_list'
   match 'leaderboard/archived/:season_id' => 'leader_board#archived_season', :as => :leaderboard_archived_season
 
+  match 'mapcreator' => 'map_creator#index', :as => :map_creator
+
   match 'help' => 'help#index'
 
   match 'u/:username' => 'profile#index', :as => :profile
