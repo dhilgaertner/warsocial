@@ -1,8 +1,12 @@
 class MapCreatorController < ApplicationController
 
-  def index
+  def new
 
-    render :action => "index", :layout => "application2"
+    render :action => "map_creator", :layout => "application2"
   end
 
+  def edit
+
+    render :action => "map_creator", :layout => "application2"
+  end
 end

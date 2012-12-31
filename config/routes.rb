@@ -44,12 +44,17 @@ Dice::Application.routes.draw do
 
   match 'sign_up_confirmed' => 'home#sign_up_confirmation'
 
+  # Leaderboard Routes
   match 'leaderboard' => 'leader_board#index'
   match 'leaderboard/games' => 'leader_board#games_played'
   match 'leaderboard/archived' => 'leader_board#archived_list'
   match 'leaderboard/archived/:season_id' => 'leader_board#archived_season', :as => :leaderboard_archived_season
 
-  match 'mapcreator' => 'map_creator#index', :as => :map_creator
+  # Map Creator and Marketplace Routes
+  match 'maps' => 'maps#index', :as => :map_market
+  match 'maps/new' => 'map_creator#new', :as => :map_creator_new
+  match 'maps/:map_id' => 'maps#detail', :as => :map_detail
+  match 'maps/:map_id/edit' => 'map_creator#edit', :as => :map_creator_edit
 
   match 'help' => 'help#index'
 
