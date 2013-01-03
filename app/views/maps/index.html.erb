@@ -3,6 +3,25 @@
 <% end %>
 
 <div id="map-detail-container">
+  <ul class="thumbnails">
+    <% @maps.each do |map| %>
+      <li class="span2">
+        <div class="thumbnail">
+          <img src="<%= map.preview_url %>" alt="">
+          <h3><%= map.name %></h3>
+          <p>Thumbnail caption...</p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+
+  <% @map_counts.each do |map| %>
+    <div>
+      <%= map[0] %> - <%= map[1] %>
+    </div>
+  <% end %>
+
 
 </div>
 
