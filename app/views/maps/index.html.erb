@@ -7,7 +7,7 @@
     <% @maps.each do |map| %>
       <li class="span2">
         <div class="thumbnail">
-          <img src="<%= map.preview_url %>" alt="">
+          <img src="<%= map.preview_url %>" alt="" style="height: 100px;">
           <h3><%= map.name %></h3>
           <hr style="margin: 0px 0px 10px 0px;">
           <h5>Plays: <%= @map_counts[map.name] == nil ? "0" : @map_counts[map.name] %></h5>
