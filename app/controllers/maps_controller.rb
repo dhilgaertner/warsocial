@@ -2,7 +2,8 @@ class MapsController < ApplicationController
 
   def index
 
-    @maps = Map.all
+    @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
+
     @map_counts = ArchivedGame.map_usage_counts
 
     render :action => "index", :layout => "application2"
