@@ -37,6 +37,10 @@ module ApplicationHelper
       r.push("/mapcreator/map_creator.js")
     end
 
+    if (cn == "maps")
+      r.push("/isotope/jquery.isotope.min.js")
+    end
+
     if type == "game"
       r.push("http://js.pusher.com/1.12/pusher.min.js")
 
