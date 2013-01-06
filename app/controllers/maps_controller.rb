@@ -1,6 +1,7 @@
 class MapsController < ApplicationController
 
   def index
+    @js_page_type = "maps"
 
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
 
@@ -10,6 +11,8 @@ class MapsController < ApplicationController
   end
 
   def detail
+    @js_page_type = "maps"
+
     map_id = params[:map_id]
 
     @map = Map.find(map_id.to_i)

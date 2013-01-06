@@ -1031,7 +1031,7 @@
 
 <%= render "shared/settings" %>
 
-<% if(@js_page_type == "profile" || @js_page_type == "game") %>
+<% if(@js_page_type == "profile" || @js_page_type == "game" || @js_page_type == "maps") %>
   <%= render "shared/game_lobby" %>
   <%= render "shared/create_game2" %>
 <% end %>
