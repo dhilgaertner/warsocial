@@ -20,4 +20,18 @@ class MapsController < ApplicationController
     render :action => "detail", :layout => "application2"
   end
 
+  def vote
+    if current_user != nil
+      map_id = params[:map_id].to_i
+      vote = params[:vote].to_i
+
+      if map_id != 0
+        Map.vote(current_user.id, map_id, vote)
+
+        render :status=>200
+      end
+    end
+    render :status=>400
+  end
+
 end
