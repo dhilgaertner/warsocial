@@ -19,6 +19,13 @@
     });
   </script>
 
+  <style type="text/css">
+    .sentiment button
+    {
+      box-shadow: 0 1px 88px rgba(255, 255, 255, 0.81) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+
 <% end %>
 
 <div id="maps-container" style="margin-top: 10px;">
@@ -30,7 +37,11 @@
           <h3><%= map.name %></h3>
           <hr style="margin: 0px 0px 10px 0px;">
           <h5>Plays: <span class="plays"><%= @map_counts[map.name] == nil ? "0" : @map_counts[map.name] %></span></h5>
-          <h5>Rating: </h5>
+          <h5>Author: <a href="#">deadcode</a></h5>
+          <div class="btn-group sentiment" data-toggle="buttons-radio" style="margin-top: 10px;">
+            <button type="button" class="btn btn-mini btn-success" style="width: 50%;"><i class="icon-white icon-thumbs-up"></i></button>
+            <button type="button" class="btn btn-mini btn-danger" style="width: 50%;"><i class="icon-white icon-thumbs-down"></i></button>
+          </div>
         </div>
       </li>
     <% end %>
