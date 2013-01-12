@@ -40,7 +40,7 @@
     <%= form_tag(add_line_home_index_path, :id => "form_chat", :remote => true, :autocomplete => "off") do %>
       <%= hidden_field_tag 'game_name', @game.name %>
       <%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
-      <%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending...", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Chat Submit']);" } %>
+      <%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending...", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Chat Submit']);".html_safe } %>
     <% end %>
   </div>
 <% end %>
