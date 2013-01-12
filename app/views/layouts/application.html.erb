@@ -24,7 +24,7 @@
 <%= csrf_meta_tags %>
 
 <script>
-  head.js('<%= js_to_add(@js_page_type).join("','") %>');
+  head.js('<%= js_to_add(@js_page_type).join("','").html_safe %>');
 </script>
 
 <script type="text/javascript">
@@ -676,7 +676,7 @@
       <div style="margin-top: 30px;">
         <div class="avatar"></div>
         <p id="username"><%= current_user.username %></p><br>
-        <%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :class => "top_links", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);" %>
+        <%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :class => "top_links", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);".html_safe %>
         <%= link_to "Logout", "/users/sign_out", :method => :delete, :class => "top_links" %>
       </div>
     <% end %>

@@ -1,7 +1,7 @@
 <div id="game_main">
 <% if user_signed_in? %>
-  <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);" %>
-  <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);" %>
+  <%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :class => "btn", :style => "margin-left: 10px;", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %>
+  <%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :class => "btn", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %>
   <%= link_to "Sit", sit_home_index_path(:game_name => @game.name), :remote => true, :id => "sit_button", :class => "btn" %>
   <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn" %>
   <%= link_to '<i style="margin-top: 2px;" class="icon-flag icon-white"></i> Forfeit'.html_safe, flag_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-danger", :confirm => "Are you sure you want to surrender the battle?" %>
