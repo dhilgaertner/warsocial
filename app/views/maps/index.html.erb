@@ -16,6 +16,17 @@
         sortAscending : false
       });
 
+      $(".sentiment button").click(function() {
+        var map = $(this).parents('.map').data('map_id');
+        var vote = $(this).hasClass('upvote') ? 1 : 0;
+
+        $.ajax({
+          type: "POST",
+          url: "/maps/" + map + "/vote",
+          data: { vote: vote.toString() },
+          dataType: 'json'
+        });
+      });
     });
   </script>
 
@@ -31,7 +42,7 @@
 <div id="maps-container" style="margin-top: 10px;">
   <ul id="maps" class="thumbnails">
     <% @maps.each do |map| %>
-      <li class="span2" style="min-width: 170px;">
+      <li class="map span2" style="min-width: 170px;" data-map_id="<%= map.id %>">
         <div class="thumbnail">
           <img src="<%= map.preview_url %>" alt="" style="height: 100px;">
           <h3><%= map.name %></h3>
@@ -39,8 +50,8 @@
           <h5>Plays: <span class="plays"><%= @map_counts[map.name] == nil ? "0" : @map_counts[map.name] %></span></h5>
           <h5>Author: <a href="#"></a></h5>
           <div class="btn-group sentiment" data-toggle="buttons-radio" style="margin-top: 10px;">
-            <button type="button" class="btn btn-mini btn-success" style="width: 50%;"><i class="icon-white icon-thumbs-up"></i></button>
-            <button type="button" class="btn btn-mini btn-danger" style="width: 50%;"><i class="icon-white icon-thumbs-down"></i></button>
+            <button type="button" class="upvote btn btn-mini btn-success <%= vote_active_class(@my_votes, map.id, 1) %>" style="width: 50%;"><i class="icon-white icon-thumbs-up"></i></button>
+            <button type="button" class="btn btn-mini btn-danger <%= vote_active_class(@my_votes, map.id, 0) %>" style="width: 50%;"><i class="icon-white icon-thumbs-down"></i></button>
           </div>
         </div>
       </li>

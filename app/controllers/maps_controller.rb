@@ -5,6 +5,10 @@ class MapsController < ApplicationController
 
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
 
+    if current_user != nil
+      @my_votes = Map.get_votes(current_user)
+    end
+
     @map_counts = ArchivedGame.map_usage_counts
 
     render :action => "index", :layout => "application2"
@@ -26,12 +30,13 @@ class MapsController < ApplicationController
       vote = params[:vote].to_i
 
       if map_id != 0
-        Map.vote(current_user.id, map_id, vote)
+        Map.vote(current_user, map_id, vote)
 
-        render :status=>200
+        render :text=>"Success", :status=>200
+        return;
       end
     end
-    render :status=>400
+    render :text=>"Failure", :status=>400
   end
 
 end
