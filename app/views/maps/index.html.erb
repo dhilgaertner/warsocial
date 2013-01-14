@@ -8,17 +8,34 @@
         itemSelector : '.span2',
         layoutMode : 'fitRows',
         getSortData : {
-          number : function ( $elem ) {
-            return parseInt( $elem.find('.plays').text(), 10 );
+          games : function ( $elem ) {
+            return parseInt( $elem.find('.games').text(), 10 );
+          },
+          thumbs_up : function ( $elem ) {
+            return parseInt( $elem.find('.thumbs-up-count').text(), 10 );
           }
         },
-        sortBy : 'number',
-        sortAscending : false
+        sortBy : 'games',
+        sortAscending : false,
+        animationEngine: 'best-available',
+        animationOptions: {
+          duration: 750,
+          easing: 'linear',
+          queue: false
+        }
       });
 
       $(".sentiment button").click(function() {
         var map = $(this).parents('.map').data('map_id');
         var vote = $(this).hasClass('upvote') ? 1 : 0;
+
+        if (vote == 0) {
+          $(this).parents('.map').addClass("thumb-down")
+          $(this).parents('.map').removeClass("thumb-up")
+        } else {
+          $(this).parents('.map').addClass("thumb-up")
+          $(this).parents('.map').removeClass("thumb-down")
+        }
 
         $.ajax({
           type: "POST",
@@ -27,6 +44,19 @@
           dataType: 'json'
         });
       });
+
+      // filter items when filter link is clicked
+      $('#filters button').click(function(){
+        var selector = $(this).attr('data-filter');
+        $('#maps').isotope({ filter: selector });
+      });
+
+      $('#sort-by button').click(function(){
+        // get href attribute, minus the '#'
+        var sortName = $(this).attr('data-sort');
+        $('#maps').isotope({ sortBy : sortName });
+      });
+
     });
   </script>
 
@@ -35,24 +65,102 @@
     {
       box-shadow: 0 1px 88px rgba(255, 255, 255, 0.81) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
     }
+
+    .span3
+    {
+      margin-left: 10px;
+    }
+
+    .isotope-item {
+      z-index: 2;
+    }
+
+    .isotope-hidden.isotope-item {
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    i {
+      margin-top: 3px;
+    }
+
+    .isotope,
+    .isotope .isotope-item {
+      /* change duration value to whatever you like */
+      -webkit-transition-duration: 0.8s;
+      -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+      -o-transition-duration: 0.8s;
+      transition-duration: 0.8s;
+    }
+
+    .isotope {
+      -webkit-transition-property: height, width;
+      -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+      -o-transition-property: height, width;
+      transition-property: height, width;
+    }
+
+    .isotope .isotope-item {
+      -webkit-transition-property: -webkit-transform, opacity;
+      -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+      -o-transition-property:      -o-transform, opacity;
+      transition-property:         transform, opacity;
+    }
+
+      /**** disabling Isotope CSS3 transitions ****/
+
+    .isotope.no-transition,
+    .isotope.no-transition .isotope-item,
+    .isotope .isotope-item.no-transition {
+      -webkit-transition-duration: 0s;
+      -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+      -o-transition-duration: 0s;
+      transition-duration: 0s;
+    }
+
   </style>
 
 <% end %>
 
 <div id="maps-container" style="margin-top: 10px;">
+  <div class="well well-small">
+    <div id="sort-by" class="span3">
+      <h3>Sort-By</h3>
+      <div class="btn-group" data-toggle="buttons-radio" style="margin-bottom: 10px;">
+        <button class="btn active" data-sort="games"><i></i># games</button>
+        <button class="btn" data-sort="thumbs_up"># of <i class="icon-thumbs-up"></i></button>
+      </div>
+    </div>
+
+    <div id="filters" class="span3">
+      <h3>Filter</h3>
+      <div class="btn-group" data-toggle="buttons-radio" style="margin-bottom: 10px;">
+        <button class="btn active" data-filter="*">all<i></i></button>
+        <button class="btn" data-filter=".thumb-up"><i class="icon-thumbs-up"></i></button>
+        <button class="btn" data-filter=".thumb-down"><i class="icon-thumbs-down"></i></button>
+        <button class="btn" data-filter=":not(.thumb-up):not(.thumb-down)">new<i></i></button>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+
   <ul id="maps" class="thumbnails">
     <% @maps.each do |map| %>
-      <li class="map span2" style="min-width: 170px;" data-map_id="<%= map.id %>">
+      <li class="map span2 <%= map_vote_class(@my_votes, map.id) %>" style="min-width: 170px;" data-map_id="<%= map.id %>">
         <div class="thumbnail">
           <img src="<%= map.preview_url %>" alt="" style="height: 100px;">
           <h3><%= map.name %></h3>
           <hr style="margin: 0px 0px 10px 0px;">
-          <h5>Plays: <span class="plays"><%= @map_counts[map.name] == nil ? "0" : @map_counts[map.name] %></span></h5>
+          <h5>Games: <span class="games"><%= @map_counts[map.name] == nil ? "0" : @map_counts[map.name] %></span></h5>
           <h5>Author: <a href="#"></a></h5>
           <% if (current_user != nil) %>
             <div class="btn-group sentiment" data-toggle="buttons-radio" style="margin-top: 10px;">
               <button type="button" class="upvote btn btn-mini btn-success <%= vote_active_class(@my_votes, map.id, 1) %>" style="width: 50%;">
-                <%=	@map_votes[map.id.to_s][1] %>
+                <span class="thumbs-up-count"><%=	@map_votes[map.id.to_s][1] %></span>
                 <i style="margin-top: 1px;" class="icon-white icon-thumbs-up"></i>
               </button>
               <button type="button" class="btn btn-mini btn-danger <%= vote_active_class(@my_votes, map.id, 0) %>" style="width: 50%;">
