@@ -5,6 +5,8 @@ class MapsController < ApplicationController
 
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
 
+    @map_votes = Map.get_vote_counts
+
     if current_user != nil
       @my_votes = Map.get_votes(current_user)
     end

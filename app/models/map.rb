@@ -28,4 +28,25 @@ class Map < ActiveRecord::Base
 
     return response
   end
+
+  def self.get_vote_counts
+    keys = REDIS.keys("map:*:user_vote:*")
+    map_ids = keys.collect { |k| k.split(":")[1] }
+
+    votes = REDIS.multi do
+      map_ids.each do |map_id|
+        REDIS.scard("map:#{map_id}:user_vote:0")
+        REDIS.scard("map:#{map_id}:user_vote:1")
+      end
+    end
+
+    response = Hash.new
+
+    map_ids.each_with_index do |map_id, index|
+      map_vote_index = index * 2
+      response[map_id] = [votes[map_vote_index], votes[map_vote_index + 1]]
+    end
+
+    return response
+  end
 end

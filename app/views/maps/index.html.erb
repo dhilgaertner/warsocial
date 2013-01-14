@@ -49,10 +49,18 @@
           <hr style="margin: 0px 0px 10px 0px;">
           <h5>Plays: <span class="plays"><%= @map_counts[map.name] == nil ? "0" : @map_counts[map.name] %></span></h5>
           <h5>Author: <a href="#"></a></h5>
-          <div class="btn-group sentiment" data-toggle="buttons-radio" style="margin-top: 10px;">
-            <button type="button" class="upvote btn btn-mini btn-success <%= vote_active_class(@my_votes, map.id, 1) %>" style="width: 50%;"><i class="icon-white icon-thumbs-up"></i></button>
-            <button type="button" class="btn btn-mini btn-danger <%= vote_active_class(@my_votes, map.id, 0) %>" style="width: 50%;"><i class="icon-white icon-thumbs-down"></i></button>
-          </div>
+          <% if (current_user != nil) %>
+            <div class="btn-group sentiment" data-toggle="buttons-radio" style="margin-top: 10px;">
+              <button type="button" class="upvote btn btn-mini btn-success <%= vote_active_class(@my_votes, map.id, 1) %>" style="width: 50%;">
+                <%=	@map_votes[map.id.to_s][1] %>
+                <i style="margin-top: 1px;" class="icon-white icon-thumbs-up"></i>
+              </button>
+              <button type="button" class="btn btn-mini btn-danger <%= vote_active_class(@my_votes, map.id, 0) %>" style="width: 50%;">
+                <%=	@map_votes[map.id.to_s][0] %>
+                <i style="margin-top: 1px;" class="icon-white icon-thumbs-down"></i>
+              </button>
+            </div>
+          <% end %>
         </div>
       </li>
     <% end %>
