@@ -13,6 +13,9 @@
           },
           thumbs_up : function ( $elem ) {
             return parseInt( $elem.find('.thumbs-up-count').text(), 10 );
+          },
+          thumbs_down : function ( $elem ) {
+            return parseInt( $elem.find('.thumbs-down-count').text(), 10 );
           }
         },
         sortBy : 'games',
@@ -133,6 +136,7 @@
       <div class="btn-group" data-toggle="buttons-radio" style="margin-bottom: 10px;">
         <button class="btn active" data-sort="games"><i></i># games</button>
         <button class="btn" data-sort="thumbs_up"># of <i class="icon-thumbs-up"></i></button>
+        <button class="btn" data-sort="thumbs_down"># of <i class="icon-thumbs-down"></i></button>
       </div>
     </div>
 
@@ -164,7 +168,7 @@
                 <i style="margin-top: 1px;" class="icon-white icon-thumbs-up"></i>
               </button>
               <button type="button" class="btn btn-mini btn-danger <%= vote_active_class(@my_votes, map.id, 0) %>" style="width: 50%;">
-                <%=	@map_votes[map.id.to_s][0] %>
+                <span class="thumbs-down-count"><%=	@map_votes[map.id.to_s][0] %></span>
                 <i style="margin-top: 1px;" class="icon-white icon-thumbs-down"></i>
               </button>
             </div>
