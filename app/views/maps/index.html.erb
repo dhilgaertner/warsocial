@@ -148,6 +148,10 @@
       transition-duration: 0s;
     }
 
+    .map .favorite i {
+      margin-top: 1px;
+    }
+
     .map.del-favorite .favorite i.icon-star-empty {
       display:none;
     }
@@ -189,8 +193,8 @@
     <% @maps.each do |map| %>
       <li class="map span2 <%= map_vote_class(@my_votes, map.id) %> <%= map_favorite_class(@my_library, map.id) %>" style="min-width: 170px;" data-map_id="<%= map.id %>">
         <div class="thumbnail" style="position: relative;">
-          <button rel="tooltip" title="Favorite / Un-favorite this map" class="btn btn-mini favorite" href="#" style="position: absolute; top:0px; right:0px;">
-            <i class="icon icon-star-empty"></i><i class="icon icon-star"></i>
+          <button rel="tooltip" title="<%= map_tooltip_favorite(@map_favorites[map.id.to_s]) %>" class="btn btn-mini favorite" href="#" style="position: absolute; top:0px; right:0px;">
+            <%= @map_favorites[map.id.to_s] %><i class="icon icon-star-empty"></i><i class="icon icon-star"></i>
           </button>
           <img src="<%= map.preview_url %>" alt="" style="height: 100px;">
           <h3><%= map.name %></h3>
@@ -199,11 +203,11 @@
           <h5>Author: <a href="#"></a></h5>
           <% if (current_user != nil) %>
             <div class="btn-group sentiment" data-toggle="buttons-radio" style="margin-top: 10px;">
-              <button rel="tooltip" title="I like this map." type="button" class="upvote btn btn-mini btn-success <%= vote_active_class(@my_votes, map.id, 1) %>" style="width: 50%;">
+              <button rel="tooltip" title="<%= map_tooltip_like(@map_votes[map.id.to_s][1]) %>" type="button" class="upvote btn btn-mini btn-success <%= vote_active_class(@my_votes, map.id, 1) %>" style="width: 50%;">
                 <span class="thumbs-up-count"><%=	@map_votes[map.id.to_s][1] %></span>
                 <i style="margin-top: 1px;" class="icon-white icon-thumbs-up"></i>
               </button>
-              <button rel="tooltip" title="I do not like this map." type="button" class="btn btn-mini btn-danger <%= vote_active_class(@my_votes, map.id, 0) %>" style="width: 50%;">
+              <button rel="tooltip" title="<%= map_tooltip_unlike(@map_votes[map.id.to_s][0]) %>" type="button" class="btn btn-mini btn-danger <%= vote_active_class(@my_votes, map.id, 0) %>" style="width: 50%;">
                 <span class="thumbs-down-count"><%=	@map_votes[map.id.to_s][0] %></span>
                 <i style="margin-top: 1px;" class="icon-white icon-thumbs-down"></i>
               </button>
