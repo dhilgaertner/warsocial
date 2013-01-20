@@ -48,6 +48,27 @@
         });
       });
 
+      $("button.favorite").click(function() {
+        var $map = $(this).parents('.map');
+        var map = $map.data('map_id');
+        var favorite = $map.hasClass('add-favorite') ? 1 : 0;
+
+        if (favorite == 0) {
+          $map.addClass("add-favorite")
+          $map.removeClass("del-favorite")
+        } else {
+          $map.addClass("del-favorite")
+          $map.removeClass("add-favorite")
+        }
+
+        $.ajax({
+          type: "POST",
+          url: "/maps/" + map + "/favorite",
+          data: { favorite: favorite.toString() },
+          dataType: 'json'
+        });
+      });
+
       // filter items when filter link is clicked
       $('#filters button').click(function(){
         var selector = $(this).attr('data-filter');
@@ -125,6 +146,14 @@
       transition-duration: 0s;
     }
 
+    .map.del-favorite .favorite i.icon-ok {
+      display:none;
+    }
+
+    .map.add-favorite .favorite i.icon-remove {
+      display:none;
+    }
+
   </style>
 
 <% end %>
@@ -154,8 +183,11 @@
 
   <ul id="maps" class="thumbnails">
     <% @maps.each do |map| %>
-      <li class="map span2 <%= map_vote_class(@my_votes, map.id) %>" style="min-width: 170px;" data-map_id="<%= map.id %>">
-        <div class="thumbnail">
+      <li class="map span2 <%= map_vote_class(@my_votes, map.id) %> <%= map_favorite_class(@my_library, map.id) %>" style="min-width: 170px;" data-map_id="<%= map.id %>">
+        <div class="thumbnail" style="position: relative;">
+          <button class="btn btn-mini favorite" href="#" style="position: absolute; top:0px; right:0px;">
+            <i class="icon icon-ok"></i><i class="icon icon-remove"></i>
+          </button>
           <img src="<%= map.preview_url %>" alt="" style="height: 100px;">
           <h3><%= map.name %></h3>
           <hr style="margin: 0px 0px 10px 0px;">

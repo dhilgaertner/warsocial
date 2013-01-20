@@ -49,4 +49,43 @@ class Map < ActiveRecord::Base
 
     return response
   end
+
+  def self.add_favorite(user, map_id)
+    REDIS.multi do
+      REDIS.sadd("user:#{user.id}:map_favorites", map_id)
+      REDIS.sadd("map:#{map_id}:user_favorites", user.id)
+    end
+  end
+
+  def self.remove_favorite(user, map_id)
+    REDIS.multi do
+      REDIS.srem("user:#{user.id}:map_favorites", map_id)
+      REDIS.srem("map:#{map_id}:user_favorites", user.id)
+    end
+  end
+
+  def self.get_favorites(user)
+    response = REDIS.smembers("user:#{user.id}:map_favorites")
+
+    return response
+  end
+
+  def self.get_favorite_counts
+    keys = REDIS.keys("map:*:user_favorites")
+    map_ids = keys.collect { |k| k.split(":")[1] }
+
+    favorites = REDIS.multi do
+      map_ids.each do |map_id|
+        REDIS.scard("map:#{map_id}:user_favorites")
+      end
+    end
+
+    response = Hash.new
+
+    map_ids.each_with_index do |map_id, index|
+      response[map_id] = favorites[index]
+    end
+
+    return response
+  end
 end

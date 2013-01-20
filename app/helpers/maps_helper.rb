@@ -14,4 +14,11 @@ module MapsHelper
     end
   end
 
+  def map_favorite_class(library, map_id)
+    if library.include?(map_id.to_s)
+      return "del-favorite"
+    else
+      return "add-favorite"
+    end
+  end
 end
