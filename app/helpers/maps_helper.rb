@@ -33,4 +33,26 @@ module MapsHelper
   def map_tooltip_unlike(num_unlike)
     return "Vote AGAINST this map. <br> #{num_unlike == nil ? "0" : num_unlike} user(s) have voted AGAINST this map."
   end
+
+  def map_vote_count(map_votes, map, vote)
+    if map_votes.kind_of? Hash
+      if map_votes[map.id.to_s] != nil
+        if map_votes[map.id.to_s].size > vote
+          return map_votes[map.id.to_s][vote]
+        end
+      end
+    end
+
+    return 0
+  end
+
+  def map_fav_count(map_favs, map)
+    if map_favs.kind_of? Hash
+      if map_favs[map.id.to_s] != nil
+        return map_favs[map.id.to_s]
+      end
+    end
+
+    return 0
+  end
 end
