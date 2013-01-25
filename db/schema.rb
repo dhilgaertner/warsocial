@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121101044454) do
+ActiveRecord::Schema.define(:version => 20130125233618) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -211,6 +211,8 @@ ActiveRecord::Schema.define(:version => 20121101044454) do
     t.string   "preview_url"
     t.boolean  "is_public",     :default => false
     t.boolean  "is_admin_only", :default => true
+    t.integer  "user_id"
+    t.text     "desc"
   end
 
   create_table "players", :force => true do |t|
