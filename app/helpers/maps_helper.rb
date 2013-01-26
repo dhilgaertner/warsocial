@@ -5,6 +5,10 @@ module MapsHelper
   end
 
   def map_vote_class(votes, map_id)
+    if votes == nil
+      return ""
+    end
+
     if votes[0].include?(map_id.to_s)
       return "thumb-down"
     elsif votes[1].include?(map_id.to_s)
@@ -15,6 +19,10 @@ module MapsHelper
   end
 
   def map_favorite_class(library, map_id)
+    if library == nil
+      return ""
+    end
+
     if library.include?(map_id.to_s)
       return "del-favorite"
     else
@@ -27,11 +35,19 @@ module MapsHelper
   end
 
   def map_tooltip_like(num_like)
-    return "Vote FOR this map. <br> #{num_like == nil ? "0" : num_like} user(s) have voted FOR this map."
+    if current_user != nil
+      return "Vote FOR this map. <br> #{num_like == nil ? "0" : num_like} user(s) have voted FOR this map."
+    else
+      return "#{num_like == nil ? "0" : num_like} user(s) have voted FOR this map."
+    end
   end
 
   def map_tooltip_unlike(num_unlike)
-    return "Vote AGAINST this map. <br> #{num_unlike == nil ? "0" : num_unlike} user(s) have voted AGAINST this map."
+    if current_user != nil
+      return "Vote AGAINST this map. <br> #{num_unlike == nil ? "0" : num_unlike} user(s) have voted AGAINST this map."
+    else
+      return "#{num_unlike == nil ? "0" : num_unlike} user(s) have voted AGAINST this map."
+    end
   end
 
   def map_vote_count(map_votes, map, vote)
