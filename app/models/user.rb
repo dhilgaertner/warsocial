@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :season_scores
   has_many :archived_players
   has_many :archived_games, :through => :archived_players
+  has_many :maps
 
   after_create :update_mailing_list
 

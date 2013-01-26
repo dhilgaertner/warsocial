@@ -1,11 +1,14 @@
 class Map < ActiveRecord::Base
   has_many :games
-  
-  attr_accessible :name, :json, :preview_url, :is_public, :is_admin_only
+  belongs_to :user
+
+  attr_accessible :name, :json, :preview_url, :is_public, :is_admin_only, :desc
 
   def as_json(options={})
     { :name => self.name,
-      :preview_url => self.preview_url }
+      :preview_url => self.preview_url,
+      :author => self.user != nil ? self.user.username : nil,
+      :desc => self.desc }
   end
 
   def self.vote(user, map_id, vote)
