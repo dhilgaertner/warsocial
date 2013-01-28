@@ -9,8 +9,27 @@
     </div>
     <%= link_to '<i style="margin-top: 2px;" class="icon-ok icon-white"></i>'.html_safe, end_turn_home_index_path(:game_name => @game.name), :remote => true, :id => "game-endturn", :class => "btn btn-success", :style => "display:none; float: right;" %>
   </div>
-  <div id="game-map-info" class="well" style="height: 41px; width: 150px; padding: 15px; padding-top: 4px">
-    <h5 style="margin-top: 0px;">Map</h5>
+  <div id="game-map-info" class="well" style="height: 41px; width: 170px; padding: 4px 5px 15px 5px;">
+    <h5 style="margin-top: 0px;">Map: <%=	@game.map_name %></h5>
+    <table style="position: relative;">
+      <tbody style="">
+        <tr>
+          <td style="width: 20px;">
+            <span style="position: absolute; top: 7px; font-size: .6em;">30%</span>
+          </td>
+          <td style="width: 120px;">
+            <div class="progress progress-striped" style="height: 28px; position: relative">
+              <div class="bar" style="height: 28px; background-color: #f08080; position: absolute; width: 100%; top: 0px; left: 0px;"></div>
+              <div class="bar" style="height: 28px; background-color: green; position: absolute; width: 35%; top: 0px; left: 0px;"></div>
+            </div>
+          </td>
+          <td style="">
+            <span style="position: absolute; top: 7px; font-size: .6em;">100%</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
   <div id="top-players" class="players-container">
     <div class="players">

@@ -45,6 +45,10 @@ class HomeController < ApplicationController
       @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false).select("name, preview_url, desc")
     end
 
+    @map = Map.where("name = ?", @game.map_name).first
+    @map_votes = Map.get_vote_counts(@map.id)
+    @map_favorites = Map.get_favorite_counts(@map.id)
+
     @init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
                    :map_layout => ActiveSupport::JSON.decode(@game.map_json),
                    :players => @game.players.values,

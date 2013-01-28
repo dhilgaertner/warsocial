@@ -32,7 +32,16 @@ class Map < ActiveRecord::Base
     return response
   end
 
-  def self.get_vote_counts
+  def self.get_vote_counts(map_id)
+    votes = REDIS.multi do
+      REDIS.scard("map:#{map_id}:user_vote:0")
+      REDIS.scard("map:#{map_id}:user_vote:1")
+    end
+
+    return votes
+  end
+
+  def self.get_all_vote_counts
     keys = REDIS.keys("map:*:user_vote:*")
     map_ids = keys.collect { |k| k.split(":")[1] }
 
@@ -73,7 +82,15 @@ class Map < ActiveRecord::Base
     return response
   end
 
-  def self.get_favorite_counts
+  def self.get_favorite_counts(map_id)
+    favorites = REDIS.multi do
+      REDIS.scard("map:#{map_id}:user_favorites")
+    end
+
+    return favorites
+  end
+
+  def self.get_all_favorite_counts
     keys = REDIS.keys("map:*:user_favorites")
     map_ids = keys.collect { |k| k.split(":")[1] }
 
