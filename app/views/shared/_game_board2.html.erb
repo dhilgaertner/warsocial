@@ -11,27 +11,27 @@
   </div>
 
   <% if (current_user != nil && current_user.admin?) %>
-  <div id="game-map-info" class="well" style="height: 41px; width: 170px; padding: 4px 5px 15px 5px;">
-    <h5 style="margin-top: 0px;">Map: <%=	@game.map_name %></h5>
-    <table style="position: relative;">
-      <tbody style="">
-        <tr>
-          <td style="width: 24px;">
-            <span style="position: absolute; top: 7px; font-size: .6em;"><%= "#{vote_percentage(1)}%" %></span>
-          </td>
-          <td style="width: 120px;">
-            <div class="progress progress-striped" style="height: 28px; position: relative">
-              <div class="bar" style="height: 28px; background-color: #f08080; position: absolute; width: <%= "#{vote_percentage(0)}%" %>; top: 0px; left: 0px;"></div>
-              <div class="bar" style="height: 28px; background-color: green; position: absolute; width: <%= "#{vote_percentage(1)}%" %>; top: 0px; left: 0px;"></div>
-            </div>
-          </td>
-          <td style="">
-            <span style="position: absolute; top: 7px; font-size: .6em;"><%= "#{vote_percentage(0)}%" %></span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div id="game-map-info" class="well" style="height: 41px; width: 170px; padding: 4px 5px 15px 5px;">
+      <h5 style="margin-top: 0px;">Map: <%=	@game.map_name %></h5>
+      <table style="position: relative;">
+        <tbody style="">
+          <tr>
+            <td style="width: 24px;">
+              <span style="position: absolute; top: 7px; font-size: .6em;"><%= "#{vote_percentage(1)}%" %></span>
+            </td>
+            <td style="width: 120px;">
+              <div class="progress progress-striped" style="height: 28px; position: relative">
+                <div class="bar" style="height: 28px; background-color: #f08080; position: absolute; width: <%= "#{vote_percentage(0)}%" %>; top: 0px; left: 0px;"></div>
+                <div class="bar" style="height: 28px; background-color: green; position: absolute; width: <%= "#{vote_percentage(1)}%" %>; top: 0px; left: 0px;"></div>
+              </div>
+            </td>
+            <td style="">
+              <span style="position: absolute; top: 7px; font-size: .6em;"><%= "#{vote_percentage(0)}%" %></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   <% end %>
 
   <div id="top-players" class="players-container">
