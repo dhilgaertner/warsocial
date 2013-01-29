@@ -40,9 +40,9 @@ class HomeController < ApplicationController
     @game = ActiveGameFactory.get_active_game(name)
 
     if(current_user != nil && current_user.admin?)
-      @maps = Map.where("is_public = ?", true).select("name, preview_url, desc")
+      @maps = Map.where("is_public = ?", true)
     else
-      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false).select("name, preview_url, desc")
+      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
     end
 
     @map = Map.where("name = ?", @game.map_name).first
