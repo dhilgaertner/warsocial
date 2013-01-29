@@ -23,7 +23,9 @@ module HomeHelper
     if (@map_votes[v1] == 0)
       return 0
     else
-      return ((@map_votes[v1] + @map_votes[v2]) / @map_votes[v1]) * 100
+      perc = (@map_votes[v1].to_f / (@map_votes[v1].to_f + @map_votes[v2].to_f)) * 100.0
+
+      return perc.to_i
     end
   end
 end
