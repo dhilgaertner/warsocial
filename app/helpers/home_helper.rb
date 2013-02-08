@@ -28,4 +28,18 @@ module HomeHelper
       return perc.to_i
     end
   end
+
+  def map_vote_class(votes, map_id)
+    if votes == nil
+      return ""
+    end
+
+    if votes[0].include?(map_id.to_s)
+      return "thumb-down"
+    elsif votes[1].include?(map_id.to_s)
+      return "thumb-up"
+    else
+      return ""
+    end
+  end
 end

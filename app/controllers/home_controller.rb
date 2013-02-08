@@ -57,6 +57,9 @@ class HomeController < ApplicationController
     @active_user = nil
 
     if (current_user != nil)
+      @my_votes = Map.get_votes(current_user)
+      @my_library = Map.get_favorites(current_user)
+
       @active_user = ActiveUser.get_active_user(current_user.id)
 
       @test = (params[:test] == "yes" || @active_user.layout_id == 1) ? true : false
