@@ -415,7 +415,7 @@ MapEditor.prototype.defaultOptions = function() {
             x: 10,
             y: 10
         },
-        segmentSize: 14,
+        segmentSize: 13,
         size: {
             width: 800,
             height: 700
