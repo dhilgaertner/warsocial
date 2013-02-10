@@ -72,7 +72,11 @@ Dice::Application.routes.draw do
       post :webhook, :as => :webhook
     end   
   end
-    
+
+  match '/404', :to => 'errors#not_found'
+  match '/422', :to => 'errors#server_error'
+  match '/500', :to => 'errors#server_error'
+
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
