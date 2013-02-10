@@ -52,11 +52,11 @@ Dice::Application.routes.draw do
 
   # Map Creator and Marketplace Routes
   match 'maps' => 'maps#index', :as => :map_market
-  match 'maps/new' => 'map_creator#new', :as => :map_creator_new
+  match 'maps/new' => 'maps#creator', :as => :map_creator_new
   match 'maps/:map_id' => 'maps#detail', :as => :map_detail
   match 'maps/:map_id/vote' => 'maps#vote', :as => :map_vote, :via => :post
   match 'maps/:map_id/favorite' => 'maps#favorite', :as => :map_favorite, :via => :post
-  match 'maps/:map_id/edit' => 'map_creator#edit', :as => :map_creator_edit
+  match 'maps/:map_id/edit' => 'maps#creator_edit', :as => :map_creator_edit
 
   match 'help' => 'help#index'
 

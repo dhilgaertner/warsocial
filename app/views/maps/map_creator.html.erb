@@ -1,18 +1,23 @@
 <% content_for :javascript_includes do %>
 
+  <script>
+    head.ready(function() {
+
+      var mapEditor = new MapEditor("mapCanvas", null);
+
+    });
+  </script>
+
 <% end %>
 
 <div style="height: 1130px;">
-  <div id="controls">
-    <textarea id="gridCodeDisplay" rows="4" cols="85" readonly="readonly" style="display:none"></textarea>
-  </div>
   <div id="mapCanvas">
-    <canvas height="1500" width="1000" style="position: absolute; display: none;"></canvas>
-    <canvas height="1500" width="1000" style="position: absolute; display: none;"></canvas>
-    <canvas height="1500" width="1000" style="position: absolute;"></canvas>
-    <canvas height="1500" width="1000" style="position: absolute;"></canvas>
-    <canvas height="1500" width="1000" style="position: absolute;"></canvas>
-    <canvas height="1500" width="1000" style="position: absolute;"></canvas>
+    <canvas height="700" width="800" style="position: absolute; display: none;"></canvas>
+    <canvas height="700" width="800" style="position: absolute; display: none;"></canvas>
+    <canvas height="700" width="800" style="position: absolute;"></canvas>
+    <canvas height="700" width="800" style="position: absolute;"></canvas>
+    <canvas height="700" width="800" style="position: absolute;"></canvas>
+    <canvas height="700" width="800" style="position: absolute;"></canvas>
   </div>
 </div>
 

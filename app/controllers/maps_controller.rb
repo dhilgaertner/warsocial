@@ -18,6 +18,22 @@ class MapsController < ApplicationController
     render :action => "index", :layout => "application2"
   end
 
+  def creator
+    @js_page_type = "maps"
+
+    @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
+
+    render :action => "map_creator", :layout => "application2"
+  end
+
+  def creator_edit
+    @js_page_type = "maps"
+
+    @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
+
+    render :action => "map_creator", :layout => "application2"
+  end
+
   def detail
     @js_page_type = "maps"
 

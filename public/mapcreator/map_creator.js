@@ -1,88 +1,38 @@
-var _adminEmail = 'dustin@warsocial.com';
-var _gridRows = 25;
-var _gridColumns = 35;
-var _parentHexagon;
-var _selectedColor = new selectedColorArray();
-var _colorIndexCount = new colorIndexCountArray(_selectedColor.length);
-var _hexagons = _hexagonsArray(_gridRows,_gridColumns);
-var _changedHexagons = [];
-var _undoStack = [];
-var _redoStack = [];
-var _showGridCode = false;
+function MapEditor(options) {
+    var defaults = this.defaultOptions();
+    options = typeof options !== 'undefined' ? options : {};
+    var settings = $.extend({}, defaults, options);
 
-function writeMessage(messageLayer, message){
-    var context = messageLayer.getContext();
-    messageLayer.clear();
-    context.font = "10pt Calibri";
-    context.fillStyle = "black";
-    context.fillText(message, 10, 10);
-}
+    var _parentHexagon;
+    var _colorIndexCount = new colorIndexCountArray(settings.selectedColor.length);
+    var _hexagons = hexagonsArray(settings.gridRows, settings.gridColumns);
+    var _changedHexagons = [];
+    var _undoStack = [];
+    var _redoStack = [];
+    var _showGridCode = false;
 
-function WriteDirections(directionsLayer){
-    var context = directionsLayer.getContext();
-    var startX = 100;
-    var startY = 850;
-    var lineHeight = 25;
-    var lineMultiplier = 1;
-    directionsLayer.clear();
-    var directions = new GetDirectionsTextArray();
-    context.font = "20pt Calibri";
-    context.fillStyle = "steelblue";
-    context.fillText("DIRECTIONS:", 100, startY);
-    context.font = "16pt Calibri";
-    for (textLine = 0; textLine < directions.length; textLine++){
-        context.fillText(directions[textLine], startX, startY + lineHeight * lineMultiplier++);
-    }
-}
-
-function GetDirectionsTextArray(){
-    var directions = [
-        "1. There are two modes... Create and Erase.  You start in Create mode.",
-        "    The button at the top toggles you between modes.",
-        "2. In Create mode, clicking on an empty cell will change it to a new color (new land).",
-        "3. You can drag this color to contiguous cells to change them to the same color.",
-        "4. You can further expand a color by clicking on any of its cells and dragging (even over other colors).",
-        "5. In Erase mode, clicking on cells will remove their color. You can drag here as well to erase.",
-        "6. Be sure not to leave a color (land) cut in multiple pieces. There is not validation in place to check this yet.",
-        "7. Once finished, you can email the grid code to WarSocial.com by clicking the Email button.",
-        "    It should open an email already addressed in your default email program.",
-        "    Alternatively, you can click the 'Show Grid Code' button and copy (ctrl+c)/ paste the codes manually.",
-    ]
-    return directions;
-}
-
-window.onload = function () {
-    var stage = new Kinetic.Stage("mapCanvas", 1000, 1500);
+    var stage = new Kinetic.Stage(settings.elementId, settings.size.width, settings.size.height);
     var hexagonLayer = new Kinetic.Layer();
-    var messageLayer = new Kinetic.Layer();
-    var buttonLayer = new Kinetic.Layer();
-    var directionsLayer = new Kinetic.Layer();
     var isEraseMode = false;
     var isSelectionMode = false;
-    var startX = 100;
-    var startY = 100
-    var segmentSize = 15;
-    var halfSegment = segmentSize / 2;
-    var radius = segmentSize * 0.886025404;
+    var halfSegment = settings.segmentSize / 2;
+    var radius = settings.segmentSize * 0.886025404;
 
-    AddMailButton();
-    AddEraseCreateButton();
-    AddShowGridCodeButton();
-    AddUndoRedoButtons();
-
-    for (row = 0; row < _gridRows; row++) {
+    for (row = 0; row < settings.gridRows; row++) {
         var offsetHexagon = false;
         var offsetY;
-        for (col = 0; col < _gridColumns; col++) {
+        for (col = 0; col < settings.gridColumns; col++) {
             offsetY = offsetHexagon ? 1 : 0;
-            var posX = startX + col * (segmentSize + halfSegment);
-            var posY = startY + row * radius * 2 + (offsetY * radius);
+            var posX = settings.origin.x + col * (settings.segmentSize + halfSegment);
+            var posY = settings.origin.y + row * radius * 2 + (offsetY * radius);
             _hexagons[row][col] = CreateHexagon(posX, posY);
             _hexagons[row][col].Row = row;
             _hexagons[row][col].Column = col;
             offsetHexagon = !offsetHexagon;
         }
     }
+
+    stage.add(hexagonLayer);
 
     function CreateHexagon(beginX, beginY) {
         var hexagon = new Kinetic.Shape(function(){DrawHexagon(this)});
@@ -105,29 +55,22 @@ window.onload = function () {
         hexagonLayer.add(hexagon);
         return hexagon;
     }
-    stage.add(hexagonLayer);
-    stage.add(directionsLayer);
-    stage.add(messageLayer);
-    stage.add(buttonLayer);
-    //hexagonLayer.on("mouseout", OnLayerMouseOut());
-
-    WriteDirections(directionsLayer);
 
     function DrawHexagon(hexagon){
         var context = hexagon.getContext();
         context.beginPath();
         context.lineWidth = hexagon.lineWidth;
         if (hexagon.selected) {
-            hexagon.lineColor = _selectedColor[hexagon.colorIndex];
+            hexagon.lineColor = settings.selectedColor[hexagon.colorIndex];
         } else {
             hexagon.lineColor = "lightgray";
         }
         context.strokeStyle = hexagon.lineColor;
-        context.fillStyle = _selectedColor[hexagon.colorIndex];
+        context.fillStyle = settings.selectedColor[hexagon.colorIndex];
         context.moveTo(hexagon.StartX, hexagon.StartY);
-        context.lineTo(hexagon.StartX + segmentSize, hexagon.StartY);
-        context.lineTo(hexagon.StartX + segmentSize + halfSegment, hexagon.StartY + radius);
-        context.lineTo(hexagon.StartX + segmentSize, hexagon.StartY + 2 * radius);
+        context.lineTo(hexagon.StartX + settings.segmentSize, hexagon.StartY);
+        context.lineTo(hexagon.StartX + settings.segmentSize + halfSegment, hexagon.StartY + radius);
+        context.lineTo(hexagon.StartX + settings.segmentSize, hexagon.StartY + 2 * radius);
         context.lineTo(hexagon.StartX, hexagon.StartY + 2 * radius);
         context.lineTo(hexagon.StartX - halfSegment, hexagon.StartY + radius);
         context.closePath();
@@ -177,10 +120,6 @@ window.onload = function () {
     function OnHexagonMouseUp(hexagon) {
         isSelectionMode = false;
         UpdateUndoRedo();
-    }
-
-    function OnLayerMouseOut(){
-        isSelectionMode = false;
     }
 
     function AddChangedHexagon(hexagon, changedHexagonArray){
@@ -241,9 +180,9 @@ window.onload = function () {
         var isEvenColumn = (currentColumn % 2);
         var rowWithOffset = currentRow + (isEvenColumn ? 1 : -1);
         var isFirstRow = (currentRow == 0);
-        var isLastRow = (currentRow == _gridRows - 1);
+        var isLastRow = (currentRow == settings.gridRows - 1);
         var isFirstColumn = (currentColumn == 0);
-        var isLastColumn = (currentColumn == _gridColumns - 1);
+        var isLastColumn = (currentColumn == settings.gridColumns - 1);
 
         if (!isFirstRow) {
             // Directly above
@@ -257,7 +196,7 @@ window.onload = function () {
             // Same row to left
             surroundingHexagons[arrayIndex++] = _hexagons[currentRow][currentColumn - 1];
             // Row depends on whether column position is odd/even, look at column to left
-            if ((rowWithOffset >= 0) && (rowWithOffset < _gridRows)) {
+            if ((rowWithOffset >= 0) && (rowWithOffset < settings.gridRows)) {
                 surroundingHexagons[arrayIndex++] = _hexagons[rowWithOffset][currentColumn - 1];
             }
         }
@@ -265,7 +204,7 @@ window.onload = function () {
             // Same row to right
             surroundingHexagons[arrayIndex++] = _hexagons[currentRow][currentColumn + 1];
             // Row depends on whether column position is odd/even, look at column to right
-            if ((rowWithOffset >= 0) && (rowWithOffset < _gridRows)) {
+            if ((rowWithOffset >= 0) && (rowWithOffset < settings.gridRows)) {
                 surroundingHexagons[arrayIndex++] = _hexagons[rowWithOffset][currentColumn + 1];
             }
         }
@@ -279,9 +218,9 @@ window.onload = function () {
         var isEvenColumn = (currentColumn % 2);
         var rowWithOffset = currentRow + (isEvenColumn ? 1 : -1);
         var isFirstRow = (currentRow == 0);
-        var isLastRow = (currentRow == _gridRows - 1);
+        var isLastRow = (currentRow == settings.gridRows - 1);
         var isFirstColumn = (currentColumn == 0);
-        var isLastColumn = (currentColumn == _gridColumns - 1);
+        var isLastColumn = (currentColumn == settings.gridColumns - 1);
 
         if (!isFirstRow) {
             // Directly above
@@ -295,7 +234,7 @@ window.onload = function () {
             // Same row to left
             if (_hexagons[currentRow][currentColumn - 1].colorIndex == colorIndex) return true;
             // Row depends on whether column position is odd/even, look at column to left
-            if ((rowWithOffset >= 0) && (rowWithOffset < _gridRows)) {
+            if ((rowWithOffset >= 0) && (rowWithOffset < settings.gridRows)) {
                 if (_hexagons[rowWithOffset][currentColumn - 1].colorIndex == colorIndex) return true;
             }
         }
@@ -303,7 +242,7 @@ window.onload = function () {
             // Same row to right
             if (_hexagons[currentRow][currentColumn + 1].colorIndex == colorIndex) return true;
             // Row depends on whether column position is odd/even, look at column to right
-            if ((rowWithOffset >= 0) && (rowWithOffset < _gridRows)) {
+            if ((rowWithOffset >= 0) && (rowWithOffset < settings.gridRows)) {
                 if (_hexagons[rowWithOffset][currentColumn + 1].colorIndex == colorIndex) return true;
             }
         }
@@ -318,8 +257,8 @@ window.onload = function () {
 
     function getOutputString() {
         var output = '';
-        for (row = 0; row < _gridRows; row++) {
-            for (col = 0; col < _gridColumns; col++) {
+        for (row = 0; row < settings.gridRows; row++) {
+            for (col = 0; col < settings.gridColumns; col++) {
                 output = output + _hexagons[row][col].colorIndex + ',';
             }
             output = output + '\r\n';
@@ -438,39 +377,48 @@ window.onload = function () {
             $('#gridCodeDisplay').val(getOutputString());
         }
     }
+
+    function colorIndexCountArray(arrayLength){
+        var countArray = new Array(arrayLength);
+
+        for (index = 0; index < arrayLength; index++){
+            countArray[index] = 0;
+        }
+        return countArray;
+    }
+
+    function hexagonsArray(rows,columns){
+        var empty_hexagons = new Array(rows);
+        for (row = 0; row < rows; row++)
+        {
+            empty_hexagons[row] = new Array(columns);
+        }
+        return empty_hexagons;
+    }
+}
+
+MapEditor.prototype.defaultOptions = function() {
+    return {
+        elementId: "mapCanvas",
+        gridRows: 25,
+        gridColumns: 35,
+        selectedColor: [
+            'white', 'red', 'blue', 'green', 'purple', 'yellow', 'pink', 'gray', 'fuchsia', 'lime',
+            'maroon', 'aqua', 'navy', 'olive', 'silver', 'teal', 'blueviolet', 'peru', 'burlywood', 'cadetblue',
+            'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray',
+            'darkgreen', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'salmon', 'seagreen', 'darkseagreen', 'darkslateblue',
+            'darkslategray', 'darkturquoise', 'darkviolet', 'deeppink', 'dodgerblue', 'yellowgreen', 'forestgreen', 'gold', 'greenyellow', 'hotpink',
+            'indianred', 'indigo', 'khaki', 'lawngreen', 'lightblue', 'lightcoral', 'lightgreen', 'lightpink', 'goldenrod', 'lightsalmon',
+            'lightseagreen', 'lightsteelblue', 'limegreen', 'magenta', 'mediumblue', 'mediumorchid', 'mediumpurple', 'midnightblue', 'moccasin', 'orange', 'orchid'
+        ],
+        origin: {
+            x: 10,
+            y: 10
+        },
+        segmentSize: 14,
+        size: {
+            width: 800,
+            height: 700
+        }
+    };
 };
-
-function _hexagonsArray(rows,columns){
-    var empty_hexagons = new Array(rows);
-    for (row = 0; row < rows; row++)
-    {
-        empty_hexagons[row] = new Array(columns);
-    }
-    return empty_hexagons;
-}
-
-function selectedColorArray(){
-    var colors = [
-        'white', 'red', 'blue', 'green', 'purple', 'yellow', 'pink', 'gray', 'fuchsia', 'lime',
-        'maroon', 'aqua', 'navy', 'olive', 'silver', 'teal', 'blueviolet', 'peru', 'burlywood', 'cadetblue',
-        'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray',
-        'darkgreen', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'salmon', 'seagreen', 'darkseagreen', 'darkslateblue',
-        'darkslategray', 'darkturquoise', 'darkviolet', 'deeppink', 'dodgerblue', 'yellowgreen', 'forestgreen', 'gold', 'greenyellow', 'hotpink',
-        'indianred', 'indigo', 'khaki', 'lawngreen', 'lightblue', 'lightcoral', 'lightgreen', 'lightpink', 'goldenrod', 'lightsalmon',
-        'lightseagreen', 'lightsteelblue', 'limegreen', 'magenta', 'mediumblue', 'mediumorchid', 'mediumpurple', 'midnightblue', 'moccasin', 'orange', 'orchid'
-    ];
-    return colors;
-}
-
-function colorIndexCountArray(arrayLength){
-    var countArray = new Array(arrayLength);
-
-    for (index = 0; index < arrayLength; index++){
-        countArray[index] = 0;
-    }
-    return countArray;
-}
-
-function SaveMap(mapName){
-
-}
