@@ -26,4 +26,8 @@ function GameLobbyCtrl($scope, $http) {
         });
         return my_turns;
     };
+
+    $scope.gotoGame = function(game_name) {
+        alert(game_name);
+    };
 }

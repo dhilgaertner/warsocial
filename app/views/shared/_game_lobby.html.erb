@@ -21,7 +21,7 @@
             </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="online_user in online_users">
+              <tr ng-repeat="online_user in online_users" ng-click="gotoGame(online_user.location)">
                 <td>{{online_user.username}}</td>
                 <td>{{online_user.current_points}}</td>
                 <td>{{online_user.location}}</td>
@@ -40,7 +40,7 @@
             </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="live_game in live_games">
+              <tr ng-repeat="live_game in live_games" ng-click="gotoGame(live_game.name)">
                 <td>{{live_game.name}}</td>
                 <td>{{live_game.player_count + "/" + live_game.max_players}}</td>
                 <td>{{live_game.wager}}</td>
@@ -61,7 +61,7 @@
             </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="multiday_game in multiday_games">
+              <tr ng-repeat="multiday_game in multiday_games" ng-click="gotoGame(multiday_game.name)">
                 <td>{{multiday_game.name}}</td>
                 <td>{{multiday_game.player_count + "/" + multiday_game.max_players}}</td>
                 <td>{{multiday_game.wager}}</td>
