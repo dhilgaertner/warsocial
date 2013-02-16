@@ -344,13 +344,13 @@ MapEditor.prototype.defaultOptions = function() {
             'lightseagreen', 'lightsteelblue', 'limegreen', 'magenta', 'mediumblue', 'mediumorchid', 'mediumpurple', 'midnightblue', 'moccasin', 'orange', 'orchid'
         ],
         origin: {
-            x: 10,
-            y: 10
+            x: 7,
+            y: 5
         },
-        segmentSize: 13,
+        segmentSize: 12,
         size: {
-            width: 800,
-            height: 700
+            width: 645,
+            height: 550
         }
     };
 };
