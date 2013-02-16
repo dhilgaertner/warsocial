@@ -172,45 +172,6 @@ function MapEditor(options) {
         hexagonLayer.draw();
     }
 
-    function GetSurroundingHexagons(hexagon) {
-        var surroundingHexagons = new Array();
-        var arrayIndex = 0;
-        var currentRow = hexagon.Row;
-        var currentColumn = hexagon.Column;
-        var isEvenColumn = (currentColumn % 2);
-        var rowWithOffset = currentRow + (isEvenColumn ? 1 : -1);
-        var isFirstRow = (currentRow == 0);
-        var isLastRow = (currentRow == settings.gridRows - 1);
-        var isFirstColumn = (currentColumn == 0);
-        var isLastColumn = (currentColumn == settings.gridColumns - 1);
-
-        if (!isFirstRow) {
-            // Directly above
-            surroundingHexagons[arrayIndex++] = _hexagons[currentRow - 1][currentColumn];
-        }
-        if (!isLastRow) {
-            // Directly below
-            surroundingHexagons[arrayIndex++] = _hexagons[currentRow + 1][currentColumn];
-        }
-        if (!isFirstColumn) {
-            // Same row to left
-            surroundingHexagons[arrayIndex++] = _hexagons[currentRow][currentColumn - 1];
-            // Row depends on whether column position is odd/even, look at column to left
-            if ((rowWithOffset >= 0) && (rowWithOffset < settings.gridRows)) {
-                surroundingHexagons[arrayIndex++] = _hexagons[rowWithOffset][currentColumn - 1];
-            }
-        }
-        if (!isLastColumn) {
-            // Same row to right
-            surroundingHexagons[arrayIndex++] = _hexagons[currentRow][currentColumn + 1];
-            // Row depends on whether column position is odd/even, look at column to right
-            if ((rowWithOffset >= 0) && (rowWithOffset < settings.gridRows)) {
-                surroundingHexagons[arrayIndex++] = _hexagons[rowWithOffset][currentColumn + 1];
-            }
-        }
-        return surroundingHexagons;
-    }
-
     function IsSelectionValid(hexagon, colorIndex) {
         // Selection is valid if a contiguous hexagon is same color index
         var currentRow = hexagon.Row;
@@ -332,35 +293,6 @@ function MapEditor(options) {
             AddEraseCreateButton();
             buttonLayer.draw();
         });
-    }
-
-    function AddMailButton() {
-        var mailButton = AddButton(500, 20, 150, 50, 'Email to', 'WarSocial', 'lightseagreen', 'mailButton');
-        mailButton.on("mousedown touchstart", function () {
-            SendMail();
-        });
-        buttonLayer.add(mailButton);
-    }
-
-    function AddShowGridCodeButton() {
-        if (buttonLayer.getChild('showGridCodeButton')){
-            buttonLayer.remove('showGridCodeButton');
-        }
-        var showGridCodeButton = _showGridCode ?
-            AddButton(700, 20, 150, 50, 'Hide Grid', 'Code', 'darkviolet', 'showGridCodeButton') :
-            AddButton(700, 20, 150, 50, 'Show Grid', 'Code', 'lightcoral', 'showGridCodeButton');
-
-        showGridCodeButton.on("mousedown touchstart", function () {
-            ShowGridCode();
-        });
-        buttonLayer.add(showGridCodeButton);
-    }
-
-    function SendMail(message) {
-        var subject = 'New WarSocial Map';
-        window.location.href = 'mailto:' + _adminEmail +
-            '?subject=' + subject +
-            '&body=' + getOutputString();
     }
 
     function ShowGridCode() {
