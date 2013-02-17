@@ -48,10 +48,47 @@ class MapsController < ApplicationController
     if current_user != nil
       name = params[:name]
       map_code = params[:map_code]
+      preview_url = params[:preview_url]
+      desc = params[:desc]
+      map_code_string = "... #{map_code.split(",")} ..."
+
       resp = Map.validate_new_map(name, map_code)
 
       if resp[:response]
-        #create the map
+        Map.create(:name => name,
+                   :json => map_code_string,
+                   :preview_url => preview_url,
+                   :is_public => true,
+                   :is_admin_only => false,
+                   :desc => desc)
+
+        render :text=>"Success", :status=>200
+        return
+      else
+        render :text=>resp[:message], :status=>400
+      end
+    else
+      render :text=>"You must be logged in.", :status=>400
+    end
+  end
+
+  def update
+    if current_user != nil
+      map_id = params[:id]
+      name = params[:name]
+      map_code = params[:map_code]
+      preview_url = params[:preview_url]
+      desc = params[:desc]
+      map_code_string = "... #{map_code.split(",")} ..."
+
+      map = Map.find(map_id).first
+      resp = Map.validate_update_map(current_user, map, name, map_code)
+
+      if resp[:response]
+        map.json = map_code_string
+        map.preview_url = preview_url
+        map.desc = desc
+        map.save
 
         render :text=>"Success", :status=>200
         return

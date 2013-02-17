@@ -53,6 +53,32 @@ class Map < ActiveRecord::Base
     }
   end
 
+  def self.validate_update_map(current_user, map, name, map_code)
+    if (map == nil)
+      return {
+          :response => false,
+          :message => "Map not found."
+      }
+    end
+
+    if (map.user != current_user)
+      return {
+          :response => false,
+          :message => "Permission Denied."
+      }
+    end
+
+    resp = Map.validate_new_map(name, map_code)
+    if !resp[:response]
+      return resp
+    end
+
+    return {
+        :response => true,
+        :message => "Success"
+    }
+  end
+
   def self.get_votes(user)
     response = REDIS.multi do
       REDIS.smembers("user:#{user.id}:map_vote:0")
