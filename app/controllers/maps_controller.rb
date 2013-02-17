@@ -49,6 +49,7 @@ class MapsController < ApplicationController
       name = params[:name]
       map_code = params[:map_code]
       resp = Map.validate_new_map(name, map_code)
+
       if resp[:response]
         #create the map
 

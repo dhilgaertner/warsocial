@@ -24,7 +24,7 @@ class Map < ActiveRecord::Base
   end
 
   def self.validate_new_map(name, map_code)
-    if /^[0-9a-zA-Z ]+$/.match(name) == nil
+    if (/^[0-9a-zA-Z ]+$/.match(name) == nil)
       return {
           :response => false,
           :message => "The name can only contain alpha numeric characters and spaces."
