@@ -238,16 +238,15 @@ function MapEditor(options) {
         }
     }
 
-    function getOutputString() {
-        var output = '';
+    this._getOutputString = function() {
+        var output = [];
         for (row = 0; row < settings.gridRows; row++) {
             for (col = 0; col < settings.gridColumns; col++) {
-                output = output + _hexagons[row][col].colorIndex + ',';
+                output.push(_hexagons[row][col].colorIndex);
             }
-            output = output + '\r\n';
         }
-        return output.substr(0, output.length - 1);
-    }
+        return output.join(',');
+    };
 
     function colorIndexCountArray(arrayLength){
         var countArray = new Array(arrayLength);
@@ -267,6 +266,10 @@ function MapEditor(options) {
         return empty_hexagons;
     }
 }
+
+MapEditor.prototype.getCurrentMapCode = function() {
+    return this._getOutputString();
+};
 
 MapEditor.prototype.defaultOptions = function() {
     return {

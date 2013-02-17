@@ -13,6 +13,32 @@
         eraseButton: $('#erase')
       });
 
+      $('#save').click(function(){
+        var data = {
+          name: $('#name').val(),
+          map_code: mapEditor.getCurrentMapCode()
+        };
+
+        if (!validateInput(data)) return false;
+
+        $.ajax({
+          type: "POST",
+          url: '/maps',
+          data: data,
+          success: function(response) {
+            alert(response);
+          },
+          dataType: 'json'
+        });
+
+        return false;
+      });
+
+      function validateInput(data) {
+        if (data.name == null || data.name == "") return false;
+        if (data.map_code == null || data.map_code == "") return false;
+        return true;
+      };
     });
   </script>
 
@@ -32,7 +58,7 @@
             <button id="erase" class="btn">Erase Mode</button>
           </div>
         </div>
-        <button type="submit" class="btn btn-success" style="float: left; margin-left: 10px;">Save Map</button>
+        <button id="save" type="submit" class="btn btn-success" style="float: left; margin-left: 10px;">Save Map</button>
       </div>
       <div class="clearfix"></div>
       <div>
@@ -52,7 +78,7 @@
             <hr>
             <form>
               <fieldset>
-                <input type="text" placeholder="Name">
+                <input id="name" type="text" placeholder="Name">
                 <br>
 
               </fieldset>

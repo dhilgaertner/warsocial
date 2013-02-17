@@ -23,6 +23,36 @@ class Map < ActiveRecord::Base
     end
   end
 
+  def self.validate_new_map(name, map_code)
+    if /^[0-9a-zA-Z ]+$/.match(name) == nil
+      return {
+          :response => false,
+          :message => "The name can only contain alpha numeric characters and spaces."
+      }
+    end
+
+    map_code_array = map_code.split(",")
+
+    if (map_code_array.size != 875)
+      return {
+          :response => false,
+          :message => "The map code was invalid."
+      }
+    end
+
+    if (map_code_array.uniq.size >= 7)
+      return {
+          :response => false,
+          :message => "The map must contain a minimum of 7 lands."
+      }
+    end
+
+    return {
+        :response => true,
+        :message => "Map passed validation."
+    }
+  end
+
   def self.get_votes(user)
     response = REDIS.multi do
       REDIS.smembers("user:#{user.id}:map_vote:0")
