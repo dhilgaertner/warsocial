@@ -7,7 +7,11 @@
   <script>
     head.ready(function() {
 
-      var mapEditor = new MapEditor("mapCanvas", null);
+      var mapEditor = new MapEditor("mapCanvas", {
+        undoButton: $('#undo'),
+        redoButton: $('#redo'),
+        eraseButton: $('#erase')
+      });
 
     });
   </script>
@@ -23,9 +27,9 @@
         </span>
         <div style="float:left;">
           <div class="btn-group">
-            <button class="btn">Undo</button>
-            <button class="btn">Redo</button>
-            <button class="btn">Erase</button>
+            <button id="undo" class="btn">Undo</button>
+            <button id="redo" class="btn">Redo</button>
+            <button id="erase" class="btn">Erase Mode</button>
           </div>
         </div>
         <button type="submit" class="btn btn-success" style="float: left; margin-left: 10px;">Save Map</button>

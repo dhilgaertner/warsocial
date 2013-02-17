@@ -32,7 +32,24 @@ function MapEditor(options) {
         }
     }
 
+    settings.undoButton.click(function(){
+        OnUndoButtonClick(this);
+        UpdateUndoRedo();
+    });
+
+    settings.redoButton.click(function(){
+        OnRedoButtonClick(this);
+        UpdateUndoRedo();
+    });
+
+    settings.eraseButton.click(function(){
+        isEraseMode = !isEraseMode;
+        settings.eraseButton.html(isEraseMode ? "Create Mode" : "Erase Mode");
+    });
+
     stage.add(hexagonLayer);
+
+    UpdateUndoRedo();
 
     function CreateHexagon(beginX, beginY) {
         var hexagon = new Kinetic.Shape(function(){DrawHexagon(this)});
@@ -119,6 +136,8 @@ function MapEditor(options) {
 
     function OnHexagonMouseUp(hexagon) {
         isSelectionMode = false;
+        _undoStack.push(_changedHexagons);
+        _changedHexagons = [];
         UpdateUndoRedo();
     }
 
@@ -136,19 +155,22 @@ function MapEditor(options) {
     }
 
     function UpdateUndoRedo(){
-        _undoStack.push(_changedHexagons);
-        _changedHexagons = [];
-        _redoStack = [];
         if (_undoStack.length > 50){
             _undoStack.splice(0, _undoStack.length - 50);
         }
-        buttonLayer.remove(buttonLayer.getChild('undoButton'));
-        buttonLayer.clear();
-        AddUndoRedoButtons();
-        buttonLayer.draw();
-        if (_showGridCode){
-            UpdateGridCodeDisplay();
-        }
+
+        var undo_show = _undoStack.length > 0;
+        var redo_show = _redoStack.length > 0;
+
+        if (undo_show)
+            settings.undoButton.removeClass('disabled');
+        else
+            settings.undoButton.addClass('disabled');
+
+        if(redo_show)
+            settings.redoButton.removeClass('disabled');
+        else
+            settings.redoButton.addClass('disabled');
     }
 
     function OnUndoButtonClick(undoButton){
@@ -227,89 +249,6 @@ function MapEditor(options) {
         return output.substr(0, output.length - 1);
     }
 
-    function AddButton(startX, startY, width, height, text, text2, buttonColor,buttonName) {
-        var newButton = new Kinetic.Shape(function () {
-            var context = this.getContext();
-            context.fillStyle = buttonColor;
-            context.lineWidth = 1;
-            context.lineStyle = "black";
-            context.beginPath();
-            context.moveTo(startX, startY);
-            context.lineTo(startX, startY + height);
-            context.lineTo(startX + width, startY + height);
-            context.lineTo(startX + width, startY);
-            context.closePath();
-            context.fill();
-            context.stroke();
-            context.font = "15pt Calibri bold";
-            context.fillStyle = "white";
-            // Temp hack for multi-line text
-            var textOffset = text2.length > 0 ? 5 : 0;
-            context.fillText(text, startX + width / 5, startY + height / 2 - textOffset);
-            context.fillText(text2, startX + width / 5, startY + height / 2 - textOffset + 20);
-        },buttonName);
-        return newButton;
-    }
-
-    function AddUndoRedoButtons() {
-        var undoButton;
-        var buttonColor = _undoStack.length > 0 ? 'limegreen' : 'lightgray';
-        undoButton = AddButton(100, 20, 75, 50, 'Undo', '', buttonColor, 'undoButton');
-        undoButton.on("mousedown touchstart", function() {
-            OnUndoButtonClick(this);
-            buttonLayer.remove(undoButton);
-            buttonLayer.clear();
-            AddUndoRedoButtons();
-            buttonLayer.draw();
-        });
-        buttonLayer.add(undoButton);
-
-        var redoButton;
-        buttonColor = _redoStack.length > 0 ? 'limegreen' : 'lightgray';
-        redoButton = AddButton(175, 20, 75, 50, 'Redo', '', buttonColor, 'redoButton');
-        redoButton.on("mousedown touchstart", function() {
-            OnRedoButtonClick();
-            buttonLayer.remove(redoButton);
-            buttonLayer.clear();
-            AddUndoRedoButtons();
-            buttonLayer.draw();
-        });
-        buttonLayer.add(redoButton);
-    }
-
-    function AddEraseCreateButton() {
-        var eraseButton;
-        if (isEraseMode) {
-            eraseButton = AddButton(300, 20, 150, 50, 'To Create...', '', 'lightsalmon', 'eraseButton');
-        } else {
-            eraseButton = AddButton(300, 20, 150, 50, 'To Erase...', '', 'lightsteelblue', 'eraseButton');
-        }
-        buttonLayer.add(eraseButton);
-
-        eraseButton.on("mousedown touchstart", function () {
-            isEraseMode = !isEraseMode;
-            buttonLayer.remove(eraseButton);
-            buttonLayer.clear();
-            AddEraseCreateButton();
-            buttonLayer.draw();
-        });
-    }
-
-    function ShowGridCode() {
-        _showGridCode = !_showGridCode;
-        UpdateGridCodeDisplay();
-        document.getElementById('gridCodeDisplay').style.display = _showGridCode ? 'block' : 'none';
-        // alert('Press CTRL+C to copy the contents of this message. \r\n' +
-        // 'Paste into an email and send to ' + _adminEmail + ':\r\n\r\n' +
-        // getOutputString());
-    }
-
-    function UpdateGridCodeDisplay(){
-        if (_showGridCode){
-            $('#gridCodeDisplay').val(getOutputString());
-        }
-    }
-
     function colorIndexCountArray(arrayLength){
         var countArray = new Array(arrayLength);
 
@@ -351,6 +290,9 @@ MapEditor.prototype.defaultOptions = function() {
         size: {
             width: 645,
             height: 550
-        }
+        },
+        undoButton: $('#undo'),
+        redoButton: $('#redo'),
+        eraseButton: $('#erase')
     };
 };
