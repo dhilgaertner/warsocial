@@ -6,11 +6,12 @@
 
   <script>
     head.ready(function() {
-
-      var mapEditor = new MapEditor("mapCanvas", {
+      var mapEditor = new MapEditor({
+        elementId: "mapCanvas",
         undoButton: $('#undo'),
         redoButton: $('#redo'),
-        eraseButton: $('#erase')
+        eraseButton: $('#erase'),
+        init_map_code: <%= @map != nil ? ActiveSupport::JSON.decode(@map.json).to_json.html_safe : "null" %>
       });
 
       $('#save').click(function(){
@@ -73,12 +74,16 @@
         <div style="float: right; width: 475px; margin-right: 5px; margin-top: 15px;">
           <div class="well" style="background-color: white; border: 2px solid lightgray;">
             <h3>Map Settings
-              <small></small>
+              <small><%= @map != nil ? @map.name : "" %></small>
             </h3>
             <hr>
             <form>
               <fieldset>
-                <input id="name" type="text" placeholder="Name">
+                <input id="name"
+                       disabled="<%= @map != nil ? "disabled" : "" %>"
+                       type="text"
+                       placeholder="Name"
+                       value="<%= @map != nil ? @map.name : "" %>">
                 <br>
 
               </fieldset>

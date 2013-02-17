@@ -31,17 +31,10 @@ class MapsController < ApplicationController
 
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
 
-    render :action => "map_creator", :layout => "application2"
-  end
-
-  def show
-    @js_page_type = "maps"
-
     map_id = params[:id]
+    @map = Map.find(map_id)
 
-    @map = Map.find(map_id.to_i)
-
-    render :action => "detail", :layout => "application2"
+    render :action => "map_creator", :layout => "application2"
   end
 
   def create
@@ -81,7 +74,7 @@ class MapsController < ApplicationController
       desc = params[:desc]
       map_code_string = "... #{map_code.split(",")} ..."
 
-      map = Map.find(map_id).first
+      map = Map.find(map_id)
       resp = Map.validate_update_map(current_user, map, name, map_code)
 
       if resp[:response]

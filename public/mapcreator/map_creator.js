@@ -9,7 +9,6 @@ function MapEditor(options) {
     var _changedHexagons = [];
     var _undoStack = [];
     var _redoStack = [];
-    var _showGridCode = false;
 
     var stage = new Kinetic.Stage(settings.elementId, settings.size.width, settings.size.height);
     var hexagonLayer = new Kinetic.Layer();
@@ -28,6 +27,12 @@ function MapEditor(options) {
             _hexagons[row][col] = CreateHexagon(posX, posY);
             _hexagons[row][col].Row = row;
             _hexagons[row][col].Column = col;
+
+            if (settings.init_map_code != null){
+                hexIndex = (settings.init_map_code.width * row) + col
+                SetColorIndex(_hexagons[row][col], settings.init_map_code.land_id_tiles[hexIndex]);
+            }
+
             offsetHexagon = !offsetHexagon;
         }
     }
@@ -58,6 +63,7 @@ function MapEditor(options) {
         hexagon.StartY = beginY;
         hexagon.colorIndex = 0;
         hexagon.lineWidth = 2;
+        hexagon.lineColor = "lightgray";
         hexagon.selected = false;
 
         hexagon.on("mouseover", function () {
@@ -77,11 +83,7 @@ function MapEditor(options) {
         var context = hexagon.getContext();
         context.beginPath();
         context.lineWidth = hexagon.lineWidth;
-        if (hexagon.selected) {
-            hexagon.lineColor = settings.selectedColor[hexagon.colorIndex];
-        } else {
-            hexagon.lineColor = "lightgray";
-        }
+
         context.strokeStyle = hexagon.lineColor;
         context.fillStyle = settings.selectedColor[hexagon.colorIndex];
         context.moveTo(hexagon.StartX, hexagon.StartY);
