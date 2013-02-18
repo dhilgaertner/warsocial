@@ -21,15 +21,16 @@ class MapsController < ApplicationController
 
   def new
     @js_page_type = "maps"
-
+    @type = :new
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
+    @map = Map.new
 
     render :action => "map_creator", :layout => "application2"
   end
 
   def edit
     @js_page_type = "maps"
-
+    @type = :edit
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
 
     map_id = params[:id]
@@ -39,6 +40,7 @@ class MapsController < ApplicationController
   end
 
   def create
+    map = Map.new(params[:map])
     name = params[:name]
     map_code = params[:map_code]
     preview_url = params[:preview_url]
@@ -54,7 +56,13 @@ class MapsController < ApplicationController
                  :is_public => true,
                  :is_admin_only => false,
                  :desc => desc)
-
+      @status = Status.new(params[:status])
+      @status.date_added = Time.now
+      if @status.save
+        format.html { redirect_to @status } # Or :index if you want to redirect to index
+      else
+        render 'new'
+      end
       render :text=>"Success", :status=>200
       return
     else

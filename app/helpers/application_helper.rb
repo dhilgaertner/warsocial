@@ -18,12 +18,11 @@ module ApplicationHelper
       r.push("/jquery/jquery-1.7.min.js?v=#{vers}")
       r.push("/jquery/jquery_ujs.js?v=#{vers}")
 
-      # Cloudinary + Attachinary
+      # Cloudinary
       r.push("/cloudinary/jquery.ui.widget.js?v=#{vers}")
       r.push("/cloudinary/jquery.iframe-transport.js?v=#{vers}")
       r.push("/cloudinary/jquery.fileupload.js?v=#{vers}")
       r.push("/cloudinary/jquery.cloudinary.js?v=#{vers}")
-      r.push("/attachinary/attachinary.js?v=#{vers}")
 
       r.push("/gameboard/lobby.js?v=#{vers}")
       r.push("/gameboard/create_game.js?v=#{vers}")
@@ -34,6 +33,7 @@ module ApplicationHelper
     end
 
     r.push("/bootstrap/js/bootstrap.min.js")
+    r.push("/attachinary/attachinary.js?v=#{vers}")
 
     if (cn == "posts" || cn == "topics")
       r.push("/mark_it_up/jquery.markitup.js")

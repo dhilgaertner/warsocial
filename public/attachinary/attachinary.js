@@ -5,7 +5,7 @@
             disableWith: 'Uploading...',
             indicateProgress: true,
             invalidFormatMessage: 'Invalid file format',
-            template: "<ul>\n  <% for(var i=0; i<files.length; i++){ %>\n    <li>\n      <img\n        src=\"<%= $.cloudinary.url(files[i].public_id, { \"version\": files[i].version, \"format\": 'jpg', \"crop\": 'fill', \"width\": 75, \"height\": 75 }) %>\"\n        alt=\"\" width=\"75\" height=\"75\" />\n      <a href=\"#\" data-remove=\"<%= files[i].public_id %>\">Remove</a>\n    </li>\n  <% } %>\n</ul>",
+            template: "<ul style='margin: 0px; list-style-type: none;'>\n  <% for(var i=0; i<files.length; i++){ %>\n    <li>\n      <img\n        src=\"<%= $.cloudinary.url(files[i].public_id, { \"version\": files[i].version, \"format\": 'png', \"crop\": 'fill', \"height\": 200 }) %>\"\n        alt=\"\" />\n      <a href=\"#\" data-remove=\"<%= files[i].public_id %>\">Remove</a>\n    </li>\n  <% } %>\n</ul>",
             render: function(files) {
                 return $.attachinary.Templating.template(this.template, {
                     files: files

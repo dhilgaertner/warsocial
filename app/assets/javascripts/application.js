@@ -9,4 +9,3 @@
 //= require lib
 //= require shared
 //= require cloudinary
-//= require attachinary
