@@ -1,0 +1,100 @@
+<% content_for :title do %>
+  <title>Map Editor - WarSocial</title>
+<% end %>
+
+<% content_for :javascript_includes do %>
+
+  <script>
+    head.ready(function() {
+      var mapEditor = new MapEditor({
+        elementId: "mapCanvas",
+        undoButton: $('#undo'),
+        redoButton: $('#redo'),
+        eraseButton: $('#erase'),
+        init_map_code: <%= @map != nil ? ActiveSupport::JSON.decode(@map.json).to_json.html_safe : "null" %>
+      });
+
+      $('#save').click(function(){
+        var data = {
+          name: $('#name').val(),
+          map_code: mapEditor.getCurrentMapCode()
+        };
+
+        if (!validateInput(data)) return false;
+
+        $.ajax({
+          type: "POST",
+          url: '/maps',
+          data: data,
+          success: function(response) {
+            alert(response);
+          },
+          dataType: 'json'
+        });
+
+        return false;
+      });
+
+      function validateInput(data) {
+        if (data.name == null || data.name == "") return false;
+        if (data.map_code == null || data.map_code == "") return false;
+        return true;
+      };
+    });
+  </script>
+
+<% end %>
+
+<div style="height: 617px;">
+  <div>
+    <div class="well well-small" style="margin-top: 5px; margin-bottom: 0px;">
+      <div style="width: 655px;">
+        <span style="float:left; margin-right: 20px; margin-left: 20px;">
+          <h3>Map Editor</h3>
+        </span>
+        <div style="float:left;">
+          <div class="btn-group">
+            <button id="undo" class="btn">Undo</button>
+            <button id="redo" class="btn">Redo</button>
+            <button id="erase" class="btn">Erase Mode</button>
+          </div>
+        </div>
+        <% if (current_user != nil && current_user.username == "deadcode") %>
+          <button id="save" type="submit" class="btn btn-success" style="float: left; margin-left: 10px;">Save Map</button>
+        <% end %>
+      </div>
+      <div class="clearfix"></div>
+      <div>
+        <div id="mapCanvas" style="float: left; margin-left: 20px; margin-top: 10px; width: 645px; height: 550px;">
+          <canvas height="550" width="645" style="position: absolute; display: none;"></canvas>
+          <canvas height="550" width="645" style="position: absolute; display: none;"></canvas>
+          <canvas height="550" width="645" style="position: absolute;"></canvas>
+          <canvas height="550" width="645" style="position: absolute;"></canvas>
+          <canvas height="550" width="645" style="position: absolute;"></canvas>
+          <canvas height="550" width="645" style="position: absolute;"></canvas>
+        </div>
+        <div style="float: right; width: 475px; margin-right: 5px; margin-top: 15px;">
+          <div class="well" style="background-color: white; border: 2px solid lightgray;">
+            <h3>Map Settings
+              <small><%= @map != nil ? @map.name : "" %></small>
+            </h3>
+            <hr>
+            <form>
+              <fieldset>
+                <input id="name"
+                       disabled="<%= @map != nil ? "disabled" : "" %>"
+                       type="text"
+                       placeholder="Name"
+                       value="<%= @map != nil ? @map.name : "" %>">
+                <br>
+
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+

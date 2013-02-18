@@ -1,0 +1,13 @@
+<% content_for :javascript_includes do %>
+
+<% end %>
+
+<div class="well well-small" style="width: 600px; margin-left: auto; margin-right: auto; margin-top: 10px;">
+  <%= high_chart("games_played", games_played_chart) %>
+</div>
+<div class="well well-small" style="width: 600px; margin-left: auto; margin-right: auto; margin-top: 10px;">
+  <%= high_chart("mau", monthly_active_users_chart) %>
+</div>
+<div class="well well-small" style="width: 600px; margin-left: auto; margin-right: auto; margin-top: 10px;">
+  <%= high_chart("wau", weekly_active_users_chart) %>
+</div>

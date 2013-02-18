@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<h1>Latest chat logs:</h1>
+<table>
+  <tbody>
+    <% @cls.each do |cl| %>
+      <tr>
+        <td><%= cl %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</body>
+</html>

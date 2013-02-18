@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :season_scores
   has_many :archived_players
   has_many :archived_games, :through => :archived_players
+  has_many :maps
 
   after_create :update_mailing_list
 
@@ -55,11 +56,20 @@ class User < ActiveRecord::Base
   end
 
   def save_time_series_entries
-    points = TimeSeries.new(
+    ts = TimeSeries.new(
         :name => TimeSeriesType::POINTS,
         :key => self.id,
         :value => self.current_points)
-    points.save!
+    ts.save!
+  end
+
+  def self.save_active_users(time, time_series_name)
+    mau = User.where("current_sign_in_at > ? OR updated_at > ?", time, time).count
+    ts = TimeSeries.new(
+        :name => time_series_name,
+        :key => nil,
+        :value => mau)
+    ts.save!
   end
 
   def self.find_for_oauth(access_token, signed_in_resource=nil)

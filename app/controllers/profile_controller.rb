@@ -8,9 +8,9 @@ class ProfileController < ApplicationController
     @isGame = false
 
     if(current_user != nil && current_user.admin?)
-      @maps = Map.where("is_public = ?", true).select("name, preview_url")
+      @maps = Map.where("is_public = ?", true)
     else
-      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false).select("name, preview_url")
+      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
     end
 
     username = params[:username]

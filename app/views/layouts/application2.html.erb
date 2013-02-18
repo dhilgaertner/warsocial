@@ -4,6 +4,7 @@
 
 <%= yield :title %>
 
+<meta HTTP-EQUIV="Content-Language" Content="en">
 <meta name="Description" content="WarSocial is a free turn-based real time multiplayer HTML5 social strategy game inspired by Risk.">
 <meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
 <meta property="og:image" content="<%= image_path "logo.png" %>"/>
@@ -25,7 +26,7 @@
 <%= csrf_meta_tags %>
 
 <script>
-  head.js('<%= js_to_add(@js_page_type).join("','") %>');
+  head.js('<%= js_to_add(@js_page_type).join("','").html_safe %>');
 </script>
 
 <script type="text/javascript">
@@ -890,9 +891,32 @@
       left: 589px;
     }
 
+    #game-map-info {
+      position: absolute;
+      z-index: 150;
+      top: 454px;
+      left: 4px;
+    }
+
     #game-main {
       position: relative;
       width: 775px;
+    }
+
+    #game-map-info.thumb-up i.icon-thumbs-up {
+      background-position: -288px 0;
+    }
+
+    #game-map-info.thumb-down i.icon-thumbs-down {
+      background-position: -288px 0;
+    }
+
+    #game-map-info.thumb-up #vote-text{
+      display: none;
+    }
+
+    #game-map-info.thumb-down #vote-text{
+      display: none;
     }
 
     /* label-over.js */
@@ -986,11 +1010,11 @@
             <a data-toggle="dropdown" class="dropdown-toggle" style="font-size: 1.5em;" href="#">
               WarSocial<b class="caret"></b>
             </a>
-
             <ul class="dropdown-menu">
               <li><%= link_to "Home", root_path %></li>
               <li><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :target => @isGame ? "_blank" : "_self" %></li>
               <li><%= link_to "Leaderboard", "/leaderboard", :target => @isGame ? "_blank" : "_self" %></li>
+              <li><%= link_to "Maps Center", "/maps", :target => @isGame ? "_blank" : "_self" %></li>
               <li><%= link_to "Forum", "/forums/forums/1", :target => @isGame ? "_blank" : "_self" %></li>
               <!--<li><%= link_to "Map Creator", "http://blog.warsocial.com/post/18214496263/ma1achais-map-creator", :target => @isGame ? "_blank" : "_self" %></li>-->
               <li><%= link_to "Blog", "http://blog.warsocial.com", :target => @isGame ? "_blank" : "_self" %></li>
@@ -1001,8 +1025,8 @@
         </ul>
 
         <ul class="nav">
-          <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);" %></li>
-          <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);" %></li>
+          <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %></li>
+          <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
         </ul>
 
         <% if (current_user != nil) %>
@@ -1014,7 +1038,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><%= link_to "Profile", profile_path(current_user.username), :target => "_blank" %></li>
-              <li><%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);" %></li>
+              <li><%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);".html_safe %></li>
               <li class="divider"></li>
               <li><%= link_to "Logout", "/users/sign_out", :method => :delete %></li>
             </ul>
@@ -1030,7 +1054,7 @@
 
 <%= render "shared/settings" %>
 
-<% if(@js_page_type == "profile" || @js_page_type == "game") %>
+<% if(@js_page_type == "profile" || @js_page_type == "game" || @js_page_type == "maps") %>
   <%= render "shared/game_lobby" %>
   <%= render "shared/create_game2" %>
 <% end %>

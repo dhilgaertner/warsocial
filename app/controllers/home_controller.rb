@@ -13,6 +13,7 @@ class HomeController < ApplicationController
   end
 
   def index
+
     @js_page_type = "game"
 
     @isGame = true
@@ -39,10 +40,14 @@ class HomeController < ApplicationController
     @game = ActiveGameFactory.get_active_game(name)
 
     if(current_user != nil && current_user.admin?)
-      @maps = Map.where("is_public = ?", true).select("name, preview_url")
+      @maps = Map.where("is_public = ?", true)
     else
-      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false).select("name, preview_url")
+      @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
     end
+
+    @map = Map.where("name = ?", @game.map_name).first
+    @map_votes = Map.get_vote_counts(@map.id)
+    @map_favorites = Map.get_favorite_counts(@map.id)
 
     @init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
                    :map_layout => ActiveSupport::JSON.decode(@game.map_json),
@@ -52,6 +57,9 @@ class HomeController < ApplicationController
     @active_user = nil
 
     if (current_user != nil)
+      @my_votes = Map.get_votes(current_user)
+      @my_library = Map.get_favorites(current_user)
+
       @active_user = ActiveUser.get_active_user(current_user.id)
 
       @test = (params[:test] == "yes" || @active_user.layout_id == 1) ? true : false
