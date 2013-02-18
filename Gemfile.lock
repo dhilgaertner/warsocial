@@ -82,6 +82,10 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
+    attachinary (1.2.1)
+      cloudinary (~> 1.0.41)
+      rails (~> 3.2)
+    aws_cf_signer (0.1.1)
     bbenezech-nested_form (0.0.6)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
@@ -91,6 +95,9 @@ GEM
       sass (>= 3.1)
     builder (3.0.4)
     cancan (1.6.7)
+    cloudinary (1.0.44)
+      aws_cf_signer
+      rest-client
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -227,6 +234,8 @@ GEM
     remotipart (1.0.2)
     responders (0.9.1)
       railties (~> 3.1)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rubypython (0.5.3)
       blankslate (>= 2.1.2.3)
       ffi (~> 1.0.7)
@@ -265,7 +274,9 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  attachinary
   cancan
+  cloudinary
   coffee-rails (~> 3.2.1)
   delayed_job_active_record
   delayed_job_admin

@@ -17,6 +17,14 @@ module ApplicationHelper
 
       r.push("/jquery/jquery-1.7.min.js?v=#{vers}")
       r.push("/jquery/jquery_ujs.js?v=#{vers}")
+
+      # Cloudinary + Attachinary
+      r.push("/cloudinary/jquery.ui.widget.js?v=#{vers}")
+      r.push("/cloudinary/jquery.iframe-transport.js?v=#{vers}")
+      r.push("/cloudinary/jquery.fileupload.js?v=#{vers}")
+      r.push("/cloudinary/jquery.cloudinary.js?v=#{vers}")
+      r.push("/attachinary/attachinary.js?v=#{vers}")
+
       r.push("/gameboard/lobby.js?v=#{vers}")
       r.push("/gameboard/create_game.js?v=#{vers}")
 

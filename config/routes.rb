@@ -4,6 +4,7 @@ Dice::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users, :controllers => { :registrations => "users/registrations" }
 
+  mount Attachinary::Engine => "/attachinary"
   mount RailsAdmin::Engine => '/old_admin', :as => 'rails_admin'
 
   match "mark_it_up/preview" => "mark_it_up#preview"

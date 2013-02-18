@@ -14,6 +14,8 @@
         init_map_code: <%= @map != nil ? ActiveSupport::JSON.decode(@map.json).to_json.html_safe : "null" %>
       });
 
+      $('.attachinary-input').attachinary();
+
       $('#save').click(function(){
         var data = {
           name: $('#name').val(),
@@ -79,17 +81,15 @@
               <small><%= @map != nil ? @map.name : "" %></small>
             </h3>
             <hr>
-            <form>
-              <fieldset>
-                <input id="name"
-                       disabled="<%= @map != nil ? "disabled" : "" %>"
-                       type="text"
-                       placeholder="Name"
-                       value="<%= @map != nil ? @map.name : "" %>">
-                <br>
 
-              </fieldset>
-            </form>
+            <%= form_for(@map, :url => "/maps", :html => { :method => :post }) do |f| %>
+              <div><%= f.label :name %><br />
+                <%= f.text_field :name %></div>
+              <div><%= f.label :preview %><br />
+                <%= f.attachinary_file_field :preview %></div>
+              <div><%= f.submit "Save" %></div>
+            <% end %>
+
           </div>
         </div>
       </div>

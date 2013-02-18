@@ -1,6 +1,7 @@
 class Map < ActiveRecord::Base
   has_many :games
   belongs_to :user
+  has_attachment :preview, accept: [:jpg, :png, :gif]
 
   attr_accessible :name, :json, :preview_url, :is_public, :is_admin_only, :desc
 

@@ -1,0 +1,7 @@
+---
+development:
+  cloud_name: hedc00eau
+  api_key: '372649425983884'
+  api_secret: WcPK_BDCsrfwR0yjuktyjSh5mRs
+  enhance_image_tag: true
+  static_image_support: false

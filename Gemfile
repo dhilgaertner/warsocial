@@ -26,6 +26,8 @@ gem 'activeadmin'
 gem 'hominid'
 gem 'gravtastic'
 gem 'lazy_high_charts'
+gem 'cloudinary'
+gem 'attachinary'
 
 group :production do
   # gems specifically for Heroku go here
