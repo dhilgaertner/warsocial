@@ -29,8 +29,11 @@ function MapEditor(options) {
             _hexagons[row][col].Column = col;
 
             if (settings.init_map_code != null){
-                hexIndex = (settings.init_map_code.width * row) + col
-                SetColorIndex(_hexagons[row][col], settings.init_map_code.land_id_tiles[hexIndex]);
+                var hexIndex = (settings.init_map_code.width * row) + col;
+                var land_id = settings.init_map_code.land_id_tiles[hexIndex];
+                var hex = _hexagons[row][col];
+                hex.selected = land_id != 0;
+                SetColorIndex(hex, land_id);
             }
 
             offsetHexagon = !offsetHexagon;
