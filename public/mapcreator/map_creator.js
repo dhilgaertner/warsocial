@@ -9,7 +9,6 @@ function MapEditor(options) {
     var _changedHexagons = [];
     var _undoStack = [];
     var _redoStack = [];
-    var _showGridCode = false;
 
     var stage = new Kinetic.Stage(settings.elementId, settings.size.width, settings.size.height);
     var hexagonLayer = new Kinetic.Layer();
@@ -28,11 +27,37 @@ function MapEditor(options) {
             _hexagons[row][col] = CreateHexagon(posX, posY);
             _hexagons[row][col].Row = row;
             _hexagons[row][col].Column = col;
+
+            if (settings.init_map_code != null){
+                var hexIndex = (settings.init_map_code.width * row) + col;
+                var land_id = settings.init_map_code.land_id_tiles[hexIndex];
+                var hex = _hexagons[row][col];
+                hex.selected = land_id != 0;
+                SetColorIndex(hex, land_id);
+            }
+
             offsetHexagon = !offsetHexagon;
         }
     }
 
+    settings.undoButton.click(function(){
+        OnUndoButtonClick(this);
+        UpdateUndoRedo();
+    });
+
+    settings.redoButton.click(function(){
+        OnRedoButtonClick(this);
+        UpdateUndoRedo();
+    });
+
+    settings.eraseButton.click(function(){
+        isEraseMode = !isEraseMode;
+        settings.eraseButton.html(isEraseMode ? "Create Mode" : "Erase Mode");
+    });
+
     stage.add(hexagonLayer);
+
+    UpdateUndoRedo();
 
     function CreateHexagon(beginX, beginY) {
         var hexagon = new Kinetic.Shape(function(){DrawHexagon(this)});
@@ -41,6 +66,7 @@ function MapEditor(options) {
         hexagon.StartY = beginY;
         hexagon.colorIndex = 0;
         hexagon.lineWidth = 2;
+        hexagon.lineColor = "lightgray";
         hexagon.selected = false;
 
         hexagon.on("mouseover", function () {
@@ -60,11 +86,7 @@ function MapEditor(options) {
         var context = hexagon.getContext();
         context.beginPath();
         context.lineWidth = hexagon.lineWidth;
-        if (hexagon.selected) {
-            hexagon.lineColor = settings.selectedColor[hexagon.colorIndex];
-        } else {
-            hexagon.lineColor = "lightgray";
-        }
+
         context.strokeStyle = hexagon.lineColor;
         context.fillStyle = settings.selectedColor[hexagon.colorIndex];
         context.moveTo(hexagon.StartX, hexagon.StartY);
@@ -119,6 +141,8 @@ function MapEditor(options) {
 
     function OnHexagonMouseUp(hexagon) {
         isSelectionMode = false;
+        _undoStack.push(_changedHexagons);
+        _changedHexagons = [];
         UpdateUndoRedo();
     }
 
@@ -136,19 +160,22 @@ function MapEditor(options) {
     }
 
     function UpdateUndoRedo(){
-        _undoStack.push(_changedHexagons);
-        _changedHexagons = [];
-        _redoStack = [];
         if (_undoStack.length > 50){
             _undoStack.splice(0, _undoStack.length - 50);
         }
-        buttonLayer.remove(buttonLayer.getChild('undoButton'));
-        buttonLayer.clear();
-        AddUndoRedoButtons();
-        buttonLayer.draw();
-        if (_showGridCode){
-            UpdateGridCodeDisplay();
-        }
+
+        var undo_show = _undoStack.length > 0;
+        var redo_show = _redoStack.length > 0;
+
+        if (undo_show)
+            settings.undoButton.removeClass('disabled');
+        else
+            settings.undoButton.addClass('disabled');
+
+        if(redo_show)
+            settings.redoButton.removeClass('disabled');
+        else
+            settings.redoButton.addClass('disabled');
     }
 
     function OnUndoButtonClick(undoButton){
@@ -170,45 +197,6 @@ function MapEditor(options) {
         }
         toStack.push(currentChangedHexagons);
         hexagonLayer.draw();
-    }
-
-    function GetSurroundingHexagons(hexagon) {
-        var surroundingHexagons = new Array();
-        var arrayIndex = 0;
-        var currentRow = hexagon.Row;
-        var currentColumn = hexagon.Column;
-        var isEvenColumn = (currentColumn % 2);
-        var rowWithOffset = currentRow + (isEvenColumn ? 1 : -1);
-        var isFirstRow = (currentRow == 0);
-        var isLastRow = (currentRow == settings.gridRows - 1);
-        var isFirstColumn = (currentColumn == 0);
-        var isLastColumn = (currentColumn == settings.gridColumns - 1);
-
-        if (!isFirstRow) {
-            // Directly above
-            surroundingHexagons[arrayIndex++] = _hexagons[currentRow - 1][currentColumn];
-        }
-        if (!isLastRow) {
-            // Directly below
-            surroundingHexagons[arrayIndex++] = _hexagons[currentRow + 1][currentColumn];
-        }
-        if (!isFirstColumn) {
-            // Same row to left
-            surroundingHexagons[arrayIndex++] = _hexagons[currentRow][currentColumn - 1];
-            // Row depends on whether column position is odd/even, look at column to left
-            if ((rowWithOffset >= 0) && (rowWithOffset < settings.gridRows)) {
-                surroundingHexagons[arrayIndex++] = _hexagons[rowWithOffset][currentColumn - 1];
-            }
-        }
-        if (!isLastColumn) {
-            // Same row to right
-            surroundingHexagons[arrayIndex++] = _hexagons[currentRow][currentColumn + 1];
-            // Row depends on whether column position is odd/even, look at column to right
-            if ((rowWithOffset >= 0) && (rowWithOffset < settings.gridRows)) {
-                surroundingHexagons[arrayIndex++] = _hexagons[rowWithOffset][currentColumn + 1];
-            }
-        }
-        return surroundingHexagons;
     }
 
     function IsSelectionValid(hexagon, colorIndex) {
@@ -255,128 +243,15 @@ function MapEditor(options) {
         }
     }
 
-    function getOutputString() {
-        var output = '';
+    this._getOutputString = function() {
+        var output = [];
         for (row = 0; row < settings.gridRows; row++) {
             for (col = 0; col < settings.gridColumns; col++) {
-                output = output + _hexagons[row][col].colorIndex + ',';
+                output.push(_hexagons[row][col].colorIndex);
             }
-            output = output + '\r\n';
         }
-        return output.substr(0, output.length - 1);
-    }
-
-    function AddButton(startX, startY, width, height, text, text2, buttonColor,buttonName) {
-        var newButton = new Kinetic.Shape(function () {
-            var context = this.getContext();
-            context.fillStyle = buttonColor;
-            context.lineWidth = 1;
-            context.lineStyle = "black";
-            context.beginPath();
-            context.moveTo(startX, startY);
-            context.lineTo(startX, startY + height);
-            context.lineTo(startX + width, startY + height);
-            context.lineTo(startX + width, startY);
-            context.closePath();
-            context.fill();
-            context.stroke();
-            context.font = "15pt Calibri bold";
-            context.fillStyle = "white";
-            // Temp hack for multi-line text
-            var textOffset = text2.length > 0 ? 5 : 0;
-            context.fillText(text, startX + width / 5, startY + height / 2 - textOffset);
-            context.fillText(text2, startX + width / 5, startY + height / 2 - textOffset + 20);
-        },buttonName);
-        return newButton;
-    }
-
-    function AddUndoRedoButtons() {
-        var undoButton;
-        var buttonColor = _undoStack.length > 0 ? 'limegreen' : 'lightgray';
-        undoButton = AddButton(100, 20, 75, 50, 'Undo', '', buttonColor, 'undoButton');
-        undoButton.on("mousedown touchstart", function() {
-            OnUndoButtonClick(this);
-            buttonLayer.remove(undoButton);
-            buttonLayer.clear();
-            AddUndoRedoButtons();
-            buttonLayer.draw();
-        });
-        buttonLayer.add(undoButton);
-
-        var redoButton;
-        buttonColor = _redoStack.length > 0 ? 'limegreen' : 'lightgray';
-        redoButton = AddButton(175, 20, 75, 50, 'Redo', '', buttonColor, 'redoButton');
-        redoButton.on("mousedown touchstart", function() {
-            OnRedoButtonClick();
-            buttonLayer.remove(redoButton);
-            buttonLayer.clear();
-            AddUndoRedoButtons();
-            buttonLayer.draw();
-        });
-        buttonLayer.add(redoButton);
-    }
-
-    function AddEraseCreateButton() {
-        var eraseButton;
-        if (isEraseMode) {
-            eraseButton = AddButton(300, 20, 150, 50, 'To Create...', '', 'lightsalmon', 'eraseButton');
-        } else {
-            eraseButton = AddButton(300, 20, 150, 50, 'To Erase...', '', 'lightsteelblue', 'eraseButton');
-        }
-        buttonLayer.add(eraseButton);
-
-        eraseButton.on("mousedown touchstart", function () {
-            isEraseMode = !isEraseMode;
-            buttonLayer.remove(eraseButton);
-            buttonLayer.clear();
-            AddEraseCreateButton();
-            buttonLayer.draw();
-        });
-    }
-
-    function AddMailButton() {
-        var mailButton = AddButton(500, 20, 150, 50, 'Email to', 'WarSocial', 'lightseagreen', 'mailButton');
-        mailButton.on("mousedown touchstart", function () {
-            SendMail();
-        });
-        buttonLayer.add(mailButton);
-    }
-
-    function AddShowGridCodeButton() {
-        if (buttonLayer.getChild('showGridCodeButton')){
-            buttonLayer.remove('showGridCodeButton');
-        }
-        var showGridCodeButton = _showGridCode ?
-            AddButton(700, 20, 150, 50, 'Hide Grid', 'Code', 'darkviolet', 'showGridCodeButton') :
-            AddButton(700, 20, 150, 50, 'Show Grid', 'Code', 'lightcoral', 'showGridCodeButton');
-
-        showGridCodeButton.on("mousedown touchstart", function () {
-            ShowGridCode();
-        });
-        buttonLayer.add(showGridCodeButton);
-    }
-
-    function SendMail(message) {
-        var subject = 'New WarSocial Map';
-        window.location.href = 'mailto:' + _adminEmail +
-            '?subject=' + subject +
-            '&body=' + getOutputString();
-    }
-
-    function ShowGridCode() {
-        _showGridCode = !_showGridCode;
-        UpdateGridCodeDisplay();
-        document.getElementById('gridCodeDisplay').style.display = _showGridCode ? 'block' : 'none';
-        // alert('Press CTRL+C to copy the contents of this message. \r\n' +
-        // 'Paste into an email and send to ' + _adminEmail + ':\r\n\r\n' +
-        // getOutputString());
-    }
-
-    function UpdateGridCodeDisplay(){
-        if (_showGridCode){
-            $('#gridCodeDisplay').val(getOutputString());
-        }
-    }
+        return output.join(',');
+    };
 
     function colorIndexCountArray(arrayLength){
         var countArray = new Array(arrayLength);
@@ -397,6 +272,10 @@ function MapEditor(options) {
     }
 }
 
+MapEditor.prototype.getCurrentMapCode = function() {
+    return this._getOutputString();
+};
+
 MapEditor.prototype.defaultOptions = function() {
     return {
         elementId: "mapCanvas",
@@ -412,13 +291,16 @@ MapEditor.prototype.defaultOptions = function() {
             'lightseagreen', 'lightsteelblue', 'limegreen', 'magenta', 'mediumblue', 'mediumorchid', 'mediumpurple', 'midnightblue', 'moccasin', 'orange', 'orchid'
         ],
         origin: {
-            x: 10,
-            y: 10
+            x: 7,
+            y: 5
         },
-        segmentSize: 13,
+        segmentSize: 12,
         size: {
-            width: 800,
-            height: 700
-        }
+            width: 645,
+            height: 550
+        },
+        undoButton: $('#undo'),
+        redoButton: $('#redo'),
+        eraseButton: $('#erase')
     };
 };

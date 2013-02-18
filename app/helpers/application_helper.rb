@@ -38,7 +38,7 @@ module ApplicationHelper
     if (cn == "maps")
       r.push("/isotope/jquery.isotope.min.js")
 
-      if (ca == "creator" || ca == "creator_edit")
+      if (ca == "new" || ca == "edit")
         r.push("/mapcreator/kinetic-v3.js")
         r.push("/mapcreator/map_creator.js")
       end
