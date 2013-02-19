@@ -49,7 +49,16 @@ class MapsController < ApplicationController
     resp = Map.validate_new_map(map)
 
     if resp[:response]
-      map.save
+      if map.save
+        render :text=>map.id, :status=>200
+      else
+        if (map.errors.messages[:name] != nil)
+          msg = "Name #{map.errors.messages[:name][0]}"
+        else
+          msg = "Map Failed Validation."
+        end
+        render :text=>msg, :status=>400
+      end
     else
       render :text=>resp[:message], :status=>400
     end
@@ -65,10 +74,14 @@ class MapsController < ApplicationController
 
       if (m.user == current_user)
         m.json = map.json
-        m.preview = map.preview
+
+        if (current_user.admin?)
+          m.preview = map.preview
+        end
+
         m.save
 
-        render :text=>"Success", :status=>200
+        render :text=>m.id, :status=>200
       else
         render :text=>"Permission Denied.", :status=>400
       end

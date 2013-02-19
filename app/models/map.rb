@@ -5,6 +5,9 @@ class Map < ActiveRecord::Base
 
   attr_accessible :name, :json, :preview_url, :is_public, :is_admin_only, :desc
 
+  validates_uniqueness_of :name
+  validates_length_of :name, :in => (2..15)
+
   def as_json(options={})
     { :name => self.name,
       :preview_url => self.preview_url,

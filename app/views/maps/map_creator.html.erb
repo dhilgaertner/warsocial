@@ -30,8 +30,25 @@
         return false;
       });
 
+      $('#map_form')
+        .bind("ajax:success", function(evt, data, status, xhr){
+          alert("Map Saved!");
+          if(window.location.href.indexOf("/edit") == -1) {
+            window.location = "/maps/" + xhr.responseText + "/edit"
+          }
+        })
+        .bind('ajax:complete', function(evt, xhr, status){
+
+        })
+        .bind("ajax:error", function(evt, xhr, status, error){
+          alert(xhr.responseText);
+        });
+
       function validateInput(data) {
-        if (data.name == null || data.name == "") return false;
+        if (data.name == null || data.name == "") {
+          alert('Name is required.')
+          return false;
+        }
         if (data.map_code == null || data.map_code == "") return false;
         return true;
       };
@@ -54,7 +71,7 @@
             <button id="erase" class="btn">Erase Mode</button>
           </div>
         </div>
-        <% if (current_user != nil && current_user.admin?) %>
+        <% if (current_user != nil) %>
           <button id="save" type="submit" class="btn btn-success" style="float: left; margin-left: 10px;">Save Map</button>
         <% end %>
       </div>
@@ -76,19 +93,21 @@
             <hr>
 
             <% if (@type == :new) %>
-              <%= form_for(@map, :url => "/maps", :html => { :id => "map_form", :method => :post }) do |f| %>
+              <%= form_for(@map, :url => "/maps", :remote => true, :html => { :id => "map_form", :method => :post }) do |f| %>
                 <%= f.hidden_field :json, { :class => "map_code" } %>
                 <div>
                   <h3><%= f.label :name %></h3>
                   <%= f.text_field :name %>
                 </div>
+                <% if current_user.admin? %>
                 <div>
                   <h3><%= f.label :preview, "Preview Image" %></h3>
                   <%= f.attachinary_file_field :preview %>
                 </div>
+                <% end %>
               <% end %>
             <% elsif (@type == :edit) %>
-              <%= form_for(@map, :url => "/maps/#{@map.id}", :html => { :id => "map_form", :method => :put }) do |f| %>
+              <%= form_for(@map, :url => "/maps/#{@map.id}", :remote => true, :html => { :id => "map_form", :method => :put }) do |f| %>
                 <%= f.hidden_field :id %>
                 <%= f.hidden_field :json, { :class => "map_code" } %>
                 <%= f.hidden_field :name %>
@@ -96,10 +115,12 @@
                   <h3><%= f.label :name %></h3>
                   <%= f.text_field :name, { :disabled => "disabled" } %>
                 </div>
-                <div>
-                  <h3><%= f.label :preview, "Preview Image" %></h3>
-                  <%= f.attachinary_file_field :preview %>
-                </div>
+                <% if current_user.admin? %>
+                  <div>
+                    <h3><%= f.label :preview, "Preview Image" %></h3>
+                    <%= f.attachinary_file_field :preview %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           </div>
