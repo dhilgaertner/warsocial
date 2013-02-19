@@ -33,6 +33,7 @@ module ApplicationHelper
     end
 
     r.push("/bootstrap/js/bootstrap.min.js")
+    r.push("/utils/utils.js?v=#{vers}")
     r.push("/attachinary/attachinary.js?v=#{vers}")
 
     if (cn == "posts" || cn == "topics")

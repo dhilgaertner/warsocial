@@ -41,54 +41,37 @@ class MapsController < ApplicationController
 
   def create
     map = Map.new(params[:map])
-    name = params[:name]
-    map_code = params[:map_code]
-    preview_url = params[:preview_url]
-    desc = params[:desc]
-    map_code_string = "... #{map_code.split(",")} ..."
 
-    resp = Map.validate_new_map(name, map_code)
+    map.is_public = true
+    map.is_admin_only = false
+    map.user = current_user
+
+    resp = Map.validate_new_map(map)
 
     if resp[:response]
-      Map.create(:name => name,
-                 :json => map_code_string,
-                 :preview_url => preview_url,
-                 :is_public => true,
-                 :is_admin_only => false,
-                 :desc => desc)
-      @status = Status.new(params[:status])
-      @status.date_added = Time.now
-      if @status.save
-        format.html { redirect_to @status } # Or :index if you want to redirect to index
-      else
-        render 'new'
-      end
-      render :text=>"Success", :status=>200
-      return
+      map.save
     else
       render :text=>resp[:message], :status=>400
     end
   end
 
   def update
-    map_id = params[:id]
-    name = params[:name]
-    map_code = params[:map_code]
-    preview_url = params[:preview_url]
-    desc = params[:desc]
-    map_code_string = "... #{map_code.split(",")} ..."
+    map = Map.new(params[:map])
 
-    map = Map.find(map_id)
-    resp = Map.validate_update_map(current_user, map, name, map_code)
+    resp = Map.validate_new_map(map)
 
     if resp[:response]
-      map.json = map_code_string
-      map.preview_url = preview_url
-      map.desc = desc
-      map.save
+      m = Map.find(params[:map][:id])
 
-      render :text=>"Success", :status=>200
-      return
+      if (m.user == current_user)
+        m.json = map.json
+        m.preview = map.preview
+        m.save
+
+        render :text=>"Success", :status=>200
+      else
+        render :text=>"Permission Denied.", :status=>400
+      end
     else
       render :text=>resp[:message], :status=>400
     end

@@ -250,7 +250,9 @@ function MapEditor(options) {
                 output.push(_hexagons[row][col].colorIndex);
             }
         }
-        return output.join(',');
+        var template = '{"width":{0},"height":{1},"land_id_tiles":[{2}],"neutral_land_color":"#CCCCCC"}';
+        var code = template.format(settings.gridColumns.toString(), settings.gridRows.toString(), output.join(','));
+        return code;
     };
 
     function colorIndexCountArray(arrayLength){

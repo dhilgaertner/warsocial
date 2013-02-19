@@ -24,24 +24,38 @@ class Map < ActiveRecord::Base
     end
   end
 
-  def self.validate_new_map(name, map_code)
-    if (/^[0-9a-zA-Z ]+$/.match(name) == nil)
+  def self.validate_new_map(map)
+    if (/^[0-9a-zA-Z ]+$/.match(map.name) == nil)
       return {
           :response => false,
           :message => "The name can only contain alpha numeric characters and spaces."
       }
     end
 
-    map_code_array = map_code.split(",")
-
-    if (map_code_array.size != 875)
+    begin
+      map_code = ActiveSupport::JSON.decode(map.json)
+    rescue
       return {
           :response => false,
           :message => "The map code was invalid."
       }
     end
 
-    if (map_code_array.uniq.size >= 7)
+    height = map_code["height"].to_i
+    width = map_code["width"].to_i
+    map_code_array = map_code["land_id_tiles"]
+
+    if (map_code_array.size != (height * width))
+      return {
+          :response => false,
+          :message => "The map code was invalid."
+      }
+    end
+
+    uniq_minus_zero = map_code_array.uniq
+    uniq_minus_zero.delete(0)
+
+    if (uniq_minus_zero.size <= 6)
       return {
           :response => false,
           :message => "The map must contain a minimum of 7 lands."
@@ -54,7 +68,7 @@ class Map < ActiveRecord::Base
     }
   end
 
-  def self.validate_update_map(current_user, map, name, map_code)
+  def self.validate_update_map(current_user, map)
     if (map == nil)
       return {
           :response => false,

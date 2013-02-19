@@ -89,10 +89,12 @@
               <% end %>
             <% elsif (@type == :edit) %>
               <%= form_for(@map, :url => "/maps/#{@map.id}", :html => { :id => "map_form", :method => :put }) do |f| %>
+                <%= f.hidden_field :id %>
                 <%= f.hidden_field :json, { :class => "map_code" } %>
+                <%= f.hidden_field :name %>
                 <div>
                   <h3><%= f.label :name %></h3>
-                  <%= f.text_field :name %>
+                  <%= f.text_field :name, { :disabled => "disabled" } %>
                 </div>
                 <div>
                   <h3><%= f.label :preview, "Preview Image" %></h3>

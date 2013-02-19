@@ -989,8 +989,6 @@
     };
 
     head.ready(function() {
-      $.cloudinary.config({"api_key":"372649425983884","cloud_name":"hedc00eau"});
-
       <% if(@js_page_type == "profile") %>
         var lobby_modal = new Lobby("game_lobby");
         var create_game_modal = new CreateGame("create_game", <%= @maps.to_json.html_safe %>);
