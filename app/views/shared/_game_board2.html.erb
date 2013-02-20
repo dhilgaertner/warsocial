@@ -11,7 +11,14 @@
   </div>
 
   <div id="game-map-info" class="well <%= map_vote_class(@my_votes, @map.id) %>" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
-    <h5 style="margin-top: 0px;">Map: <%=	@map.name %></h5>
+    <h5 style="margin-top: 0px;">
+      Map:
+      <% if (current_user != nil && current_user.admin?) %>
+        <a href="<%= edit_map_url(@map.id) %>"><%= @map.name %></a>
+      <% else %>
+        <%=	@map.name %>
+      <% end %>
+    </h5>
     <table style="position: relative;">
       <tbody style="">
         <tr>
