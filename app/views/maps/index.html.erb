@@ -205,9 +205,17 @@
             </button>
           <% end %>
           <% if map.preview? %>
-            <%= cl_image_tag(map.preview.path, { size: '168x100', crop: :fit }) %>
+            <%= cl_image_tag(map.preview.path, { size: '168x100', crop: :fill }) %>
+          <% else %>
+            <img src="<%= map.preview_url %>" alt="">
           <% end %>
-          <h3><%= map.name %></h3>
+          <h3>
+            <% if (current_user != nil && current_user.admin?) %>
+              <a href="<%= edit_map_url(map.id) %>"><%= map.name %></a>
+            <% else %>
+              <%= map.name %>
+            <% end %>
+          </h3>
           <hr style="margin: 0px 0px 10px 0px;">
           <h5>Games: <span class="games"><%= @map_counts[map.name] == nil ? "0" : @map_counts[map.name] %></span></h5>
           <h5>

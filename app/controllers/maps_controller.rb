@@ -34,9 +34,14 @@ class MapsController < ApplicationController
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
 
     map_id = params[:id]
+
     @map = Map.find(map_id)
 
-    render :action => "map_creator", :layout => "application2"
+    if (@map.user == current_user || current_user.admin?)
+      render :action => "map_creator", :layout => "application2"
+    else
+      render :text=>"Permission Denied", :status=>400
+    end
   end
 
   def create
@@ -72,7 +77,7 @@ class MapsController < ApplicationController
     if resp[:response]
       m = Map.find(params[:map][:id])
 
-      if (m.user == current_user)
+      if (m.user == current_user || current_user.admin?)
         m.json = map.json
 
         if (current_user.admin?)

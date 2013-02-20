@@ -15,7 +15,11 @@
               <% @maps.each_with_index do |map, index| %>
                 <li class="span2">
                   <a href="#" class="thumbnail <%= index == 0 ? "active" : "" %>" data-map="<%= map.name %>" onclick="return false;">
-                    <img src="<%= map.preview_url %>" alt="">
+                    <% if map.preview? %>
+                      <%= cl_image_tag(map.preview.path, { size: '168x100', crop: :fill }) %>
+                    <% else %>
+                      <img src="<%= map.preview_url %>" alt="">
+                    <% end %>
                     <p style="margin-left: 5px; margin-top: 5px; margin-bottom: 5px;"><%= map.name %></p>
                   </a>
                 </li>
