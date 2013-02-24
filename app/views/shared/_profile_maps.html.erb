@@ -1,7 +1,9 @@
 <div>
   <div style="position: relative;">
     <h3>Maps authored by <%= @user.username %></h3>
-    <a class="btn btn-info" style="position: absolute; top: 0px; right: 0px;" href="/maps/new">Create New Map</a>
+    <% if (current_user != nil && current_user.id == @user.id) %>
+      <a class="btn btn-info" style="position: absolute; top: 0px; right: 0px;" href="/maps/new">Create New Map</a>
+    <% end %>
   </div>
   <br>
   <ul id="maps" class="thumbnails">
