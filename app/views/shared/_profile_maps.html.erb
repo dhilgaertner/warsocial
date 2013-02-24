@@ -7,7 +7,7 @@
   </div>
   <br>
   <ul id="maps" class="thumbnails">
-    <% @user.maps.each do |map| %>
+    <% @user.maps.where("is_public = ? AND is_admin_only = ?", true, false).each do |map| %>
       <li class="span2" style="min-width: 170px;">
         <div class="thumbnail">
           <% if map.preview? %>
