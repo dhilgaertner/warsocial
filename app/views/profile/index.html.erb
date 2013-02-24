@@ -9,20 +9,7 @@
 
   <script type='text/javascript'>
     head.ready(function() {
-      jQuery(function($){
-        $("#tweets").tweet({
-          username: "seaofclouds",
-          join_text: "auto",
-          avatar_size: 32,
-          count: 5,
-          auto_join_text_default: " we said,",
-          auto_join_text_ed: " we",
-          auto_join_text_ing: " we were",
-          auto_join_text_reply: " we replied to",
-          auto_join_text_url: " we were checking out",
-          loading_text: "loading tweets..."
-        });
-      });
+      $('[rel="tooltip"]').tooltip();
     });
   </script>
 
@@ -70,20 +57,16 @@
   <div style="height: 598px; width: 925px; float: left; padding-top: 20px; margin-left: 20px;">
     <ul class="nav nav-tabs" id="myTab">
       <li class="active"><a href="#stats">Stats</a></li>
-      <% if(current_user != nil && ["deadcode","dc"].include?(current_user.username)) %>
-      <li><a href="#about-me">About Me</a></li>
-      <% end %>
+      <li><a href="#maps">Maps <span class="label label-important">new</span></a></li>
     </ul>
 
     <div class="tab-content">
       <div class="tab-pane active" id="stats">
         <%= render "shared/profile_stats" %>
       </div>
-      <% if(current_user != nil && ["deadcode","dc"].include?(current_user.username)) %>
-      <div class="tab-pane" id="about-me">
-        <%= render "shared/profile_about_me" %>
+      <div class="tab-pane" id="maps">
+        <%= render "shared/profile_maps" %>
       </div>
-      <% end %>
     </div>
   </div>
 </div>

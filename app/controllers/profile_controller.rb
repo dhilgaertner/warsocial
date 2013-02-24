@@ -36,12 +36,11 @@ class ProfileController < ApplicationController
       f.options[:chart][:defaultSeriesType] = "line"
       f.options[:xAxis][:categories] = points_x
 
-      f.series(:type=>"area", :name=>@user.username, :data=> points_me)
+      f.series(:type=>"area", :name=>@user.username, :data=>points_me)
 
       if (!am_i_leader)
         f.series(:name=>"#{leader.username} (leader)", :data=> points_lead)
       end
-
     end
 
     render :action => "index", :layout => "application2"
