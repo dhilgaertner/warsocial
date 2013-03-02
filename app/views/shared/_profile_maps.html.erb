@@ -16,7 +16,7 @@
             <img src="<%= map.preview_url %>" alt="">
           <% end %>
           <h3 style="margin-top: 5px;">
-            <% if (current_user != nil && current_user.admin?) %>
+            <% if (current_user != nil && (current_user.admin? || current_user.id == map.user.id)) %>
               <a rel="tooltip" title="Click to edit map..." href="<%= edit_map_url(map.id) %>"><%= map.name %></a>
             <% else %>
               <%= map.name %>
