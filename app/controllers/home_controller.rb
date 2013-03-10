@@ -8,10 +8,6 @@ require 'active/active_user'
 class HomeController < ApplicationController
   layout :resolve_layout
 
-  def index2
-
-  end
-
   def index
 
     @js_page_type = "game"
@@ -59,19 +55,9 @@ class HomeController < ApplicationController
     if (current_user != nil)
       @my_votes = Map.get_votes(current_user)
       @my_library = Map.get_favorites(current_user)
-
-      @active_user = ActiveUser.get_active_user(current_user.id)
-
-      @test = (params[:test] == "yes" || @active_user.layout_id == 1) ? true : false
-
-      if (@test)
-        render :action => "index2", :layout => "application2"
-      else
-        render :action => "index", :layout => "application"
-      end
-    else
-      render :action => "index", :layout => "application"
     end
+
+    render :action => "index", :layout => "application"
   end
 
   def add_line
@@ -300,15 +286,6 @@ class HomeController < ApplicationController
 
   private
   def resolve_layout
-    case action_name
-      when "index"
-        if (params[:test] == "yes")
-          "application2"
-        else
-          "application"
-        end
-      else
-        "application"
-    end
+    return "application"
   end
 end

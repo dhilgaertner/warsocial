@@ -172,6 +172,9 @@ form {
     min-width: 35em;
     min-height: 75px;
     clear: both;
+    content: "";
+    display: table;
+    width: 100%;
     .user{
       float: left;
       width: 14.7%;
