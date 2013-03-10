@@ -15,7 +15,7 @@ class MapsController < ApplicationController
       @my_library = Map.get_favorites(current_user)
     end
 
-    render :action => "index", :layout => "application2"
+    render :action => "index", :layout => "application"
   end
 
   def new
@@ -24,7 +24,7 @@ class MapsController < ApplicationController
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
     @map = Map.new
 
-    render :action => "map_creator", :layout => "application2"
+    render :action => "map_creator", :layout => "application"
   end
 
   def edit
@@ -37,7 +37,7 @@ class MapsController < ApplicationController
     @map = Map.find(map_id)
 
     if (@map.user == current_user || current_user.admin?)
-      render :action => "map_creator", :layout => "application2"
+      render :action => "map_creator", :layout => "application"
     else
       render :text=>"Permission Denied", :status=>400
     end

@@ -43,7 +43,7 @@ class ProfileController < ApplicationController
       end
     end
 
-    render :action => "index", :layout => "application2"
+    render :action => "index", :layout => "application"
   end
 
 end

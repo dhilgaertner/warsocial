@@ -1,49 +1,47 @@
+<% content_for :title do %>
+  <title>Play Risk Online - WarSocial</title>
+<% end %>
+
 <% content_for :javascript_includes do %>
   <%= render "shared/game_js_includes" %>
 <% end %>
 
-<div id="game">
-  <div style="margin-bottom: 5px; font-size:.98em;">We are in alpha, so expect some bugs. If you can't play, try refreshing. Please report bugs in the <%= link_to "forum", "/forums/forums/1", :target => "_blank", :style => "color: blue" %>.</div>
-  <div id="game_header">
-    <div class="header_item" style="width:132px;">
-      <h3 style="text-align: center; margin-top: 4px;"><%= @game.name %></h3>
-    </div>
-    <div class="header_item" style="width: 97px;">
-      <h4 style="text-align: center; margin-top: 8px;"><%= "#{@game.wager_level} wager" %></h4>
-    </div>
-    <div class="header_item" style="width: 64px;">
-      <h4 style="text-align: center; margin-top: 8px;"><%= "#{@game.max_player_count} seats" %></h4>
-    </div>
-    <div class="header_item" style="width:482px;">
+<div id="game-container">
+  <div class="game">
 
-    </div>
+    <%= render "shared/game_board2" %>
+
   </div>
+  <div class="sidebar">
+    <div id="game-details">
+      <div class="wrapper" style="margin-top: 8px; margin-left: 10px;">
+        <button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
+        <%= link_to '<i style="margin-top: 2px;" class="icon-flag icon-white"></i>'.html_safe, flag_home_index_path(:game_name => @game.name), :remote => true, :id => "game-forfeit", :class => "btn btn-danger", :style => "display:none;", :confirm => "Are you sure you want to surrender the battle?" %>
 
-  <%= render "shared/game_board" %>
-
-  <div id="log_window">
-    <table style="width: 100%">
-      <tbody>
-      </tbody>
-    </table>
-  </div>
-  <div id="chat_window">
-    <table style="margin-left: 5px; margin-right: 5px;">
-      <tbody>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<% if user_signed_in? %>
-  <div style="text-align: center;">
-    <%= form_tag(add_line_home_index_path, :id => "form_chat", :remote => true, :autocomplete => "off") do %>
-      <%= hidden_field_tag 'game_name', @game.name %>
-      <%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
-      <%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending...", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Chat Submit']);".html_safe } %>
+      </div>
+      <div class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div><%= @game.name %></div>
+      <div class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div><%= "#{@game.wager_level}" %></div>
+    </div>
+    <div id="log-window">
+      <table style="width: 100%">
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div id="chat-window">
+      <table style="margin-left: 5px; margin-right: 5px;">
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <% if user_signed_in? %>
+      <%= form_tag(add_line_home_index_path, :id => "form-chat", :remote => true, :autocomplete => "off") do %>
+        <%= hidden_field_tag 'game_name', @game.name %>
+        <div class="label-over">
+          <label for="entry">Type your message here...</label>
+          <%= text_field_tag 'entry', nil, {:id => 'entry', :class => "input"} %>
+        </div>
+      <% end %>
     <% end %>
   </div>
-<% end %>
-
-<%= render "shared/game_lobby" %>
-<%= render "shared/create_game2" %>
+</div>
