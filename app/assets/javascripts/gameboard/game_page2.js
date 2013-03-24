@@ -1,18 +1,26 @@
 var global_game_name;
 var global_init_data;
 
-function game_page_init(game_name, init_data, maps, is_production, pusher_key, user_id, user_name, urls) {
+function game_page_init(game_name, game_type, init_data, maps, is_production, pusher_key, user_id, user_name, urls) {
 
     global_game_name = game_name;
     global_init_data = init_data;
     lobby_maps = maps;
     game = null;
 
-    var seats = new Seats(7, global_init_data.players);
+    var is_game_started = false;
+
+    for(var i=0; i<global_init_data.players.length; i++) {
+        if (global_init_data.players[i].is_turn == true) {
+            is_game_started = true;
+        }
+    }
+    var timer_time = game_type == "multi_day" ? 1000000 : 20;
+    var seats = new Seats(user_name, 7, global_init_data.players, is_game_started, timer_time);
     seats.update_player_data(global_init_data.players);
 
-    var chatbox = new ChatBox("chat_window", seats);
-    var gamelog = new GameLog("log_window", seats);
+    var chatbox = new ChatBox("chat-window", seats);
+    var gamelog = new GameLog("log-window", seats);
 
     if (!is_production) {
         // Enable pusher logging - don't include this in production
@@ -59,10 +67,9 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     // GAMEBOARD INIT!
     init(global_init_data);
 
-    $('#end_turn').hide();
-
     var lobby_modal = new Lobby("game_lobby");
     var create_game_modal = new CreateGame("create_game", lobby_maps);
+    var settings_modal = new Settings("settings");
 
     var who_am_i = user_id;
     var who_am_i_name = user_name;
@@ -70,9 +77,6 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
     for(var i=0; i<global_init_data.players.length; i++) {
         if (global_init_data.players[i].is_turn == true) {
             seats.turn_start(global_init_data.players[i]);
-            if (global_init_data.players[i].player_id == who_am_i) {
-                $('#end_turn').show();
-            }
         }
     }
 
@@ -82,19 +86,18 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
         }
     });
 
+    channel.bind('server_message', function(data) {
+        chatbox.addServerMessage(data);
+    });
+
     channel.bind('game_start', function(data) {
         data.who_am_i = who_am_i;
 
-        $('#end_turn').hide();
         for(var i=0; i<data.players.length; i++) {
             var p = data.players[i];
 
             if (p.is_turn == true) {
                 seats.turn_start(p);
-                if (p.player_id == who_am_i) {
-                    $('#end_turn').show();
-                }
-
                 gamelog.logGameStarted();
                 gamelog.logTurnChange(p.name);
             }
@@ -104,6 +107,7 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
 
         SoundManager.play("game_start");
 
+        seats.game_started();
         seats.update_player_data(data.players);
     });
 
@@ -133,37 +137,43 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
 
     channel.bind('game_winner', function(player) {
         seats.clear();
-        $('#end_turn').hide();
 
         gamelog.logGameWinner(player.name);
     });
 
     channel.bind('new_turn', function(data) {
         if (data.current_player.player_id == who_am_i) {
-            $('#end_turn').show();
             SoundManager.play("my_turn");
-        } else {
-            $('#end_turn').hide();
         }
 
         next_turn(data.current_player.player_id);
-        seats.turn_start({ player_id: data.current_player.player_id});
+        seats.turn_start({ name: data.current_player.name, player_id: data.current_player.player_id});
         seats.update_player_data([data.previous_player, data.current_player]);
 
         gamelog.logTurnChange(data.current_player.name);
     });
 
-    $("#form_chat")
-        .bind("ajax:beforeSend", function(xhr, settings) {
+    $('#entry').keyup(function(event){
+        if(event.keyCode == 13){
             chatbox.addChatLine(who_am_i_name, $('#entry').val());
             $('#entry').val("");
-        });
+            $("#form_chat").submit();
+        }
+    });
 
-    $('#dice_visible').change(function() {
-        var checked = $('#dice_visible').prop('checked');
+    $('#dice_visible').click(function() {
+        var visible = $(this).hasClass('active');
+
+        if (visible) {
+            $(this).find('i').removeClass('icon-eye-close');
+            $(this).find('i').addClass('icon-eye-open');
+        } else {
+            $(this).find('i').removeClass('icon-eye-open');
+            $(this).find('i').addClass('icon-eye-close');
+        }
 
         if (typeof dice_visible !== 'undefined') {
-            dice_visible(checked);
+            dice_visible(visible);
         }
     });
     $('#dice_visible').change();
@@ -186,24 +196,46 @@ function game_page_init(game_name, init_data, maps, is_production, pusher_key, u
         }
     });
 
-    var update_sounds_checkbox = function() {
-        var checked = $('#sounds').prop('checked');
+    var sounds_on = $('#setting-sounds .active').val() == 'true';
+    if (typeof sounds_toggle !== 'undefined') {
+        sounds_toggle(sounds_on);
+    }
 
-        if (typeof sounds_toggle !== 'undefined') {
-            sounds_toggle(checked);
-        }
-    };
-    update_sounds_checkbox();
-    $('#sounds').change(function() {
-        update_sounds_checkbox();
-        var checked = $('#sounds').prop('checked');
+    $('div.label-over label').labelOver('over-apply')
 
-        if (user_id != 0) {
-            $.post(urls.settings_toggle_sounds_url, { on: checked });
+    $('#map-voting').hover(
+        function () {
+            $(this).find('.btn').show();
+        },
+        function () {
+            $(this).find('.btn').hide();
         }
+    );
+
+    var $mapInfo = $('#game-map-info');
+    $mapInfo.find('a.vote').click(function(){
+        var map = $mapInfo.data("map-id");
+        var vote = $(this).data("vote");
+
+        if (vote == "0") {
+            $mapInfo.addClass("thumb-down")
+            $mapInfo.removeClass("thumb-up")
+        } else {
+            $mapInfo.addClass("thumb-up")
+            $mapInfo.removeClass("thumb-down")
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/maps/" + map + "/vote",
+            data: { vote: vote.toString() },
+            dataType: 'json'
+        });
+
+        return false;
     });
 
-    $('#sit_button').bind('ajax:complete', function(evt, xhr, status) {
+    $('.action-sit a').bind('ajax:complete', function(evt, xhr, status) {
         switch(xhr.responseText) {
             case "not_logged_in":
                 chatbox.addChatLine("Room", "You are not currently logged in.  Please re-login.");
