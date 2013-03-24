@@ -421,8 +421,8 @@ game.js: game-25f58d5f34616109f914fe340dc81d4e.js
 game/index.js: game-25f58d5f34616109f914fe340dc81d4e.js
 active_admin.css: active_admin-1da36b8afc001c4d4b5a9ad5fad8b57c.css
 active_admin/index.css: active_admin-1da36b8afc001c4d4b5a9ad5fad8b57c.css
-application.css: application-cab13f31213ccaa85d564b7f19d70fa2.css
-application/index.css: application-cab13f31213ccaa85d564b7f19d70fa2.css
+application.css: application-b37392971a9aeef25a494f064ef642f6.css
+application/index.css: application-b37392971a9aeef25a494f064ef642f6.css
 cloudinary_cors.html: cloudinary_cors-05f2af4874bd3914c79b03b8d9acd6d1.html
 cloudinary_cors/index.html: cloudinary_cors-05f2af4874bd3914c79b03b8d9acd6d1.html
 active_admin/admin_notes_icon.png: active_admin/admin_notes_icon-25b05cd8197f7a271d0624853a6dbdd5.png
