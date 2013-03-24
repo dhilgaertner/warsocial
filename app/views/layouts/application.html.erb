@@ -1020,20 +1020,25 @@
         </ul>
 
         <% if (current_user != nil) %>
-        <ul class="nav pull-right">
-          <li class="dropdown" id="fat-menu">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-              <%= current_user.username %>
-              <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Profile", profile_path(current_user.username), :target => "_blank" %></li>
-              <li><%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);".html_safe %></li>
-              <li class="divider"></li>
-              <li><%= link_to "Logout", "/users/sign_out", :method => :delete %></li>
-            </ul>
-          </li>
-        </ul>
+          <ul class="nav pull-right">
+            <li class="dropdown" id="fat-menu">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <%= current_user.username %>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Profile", profile_path(current_user.username), :target => "_blank" %></li>
+                <li><%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);".html_safe %></li>
+                <li class="divider"></li>
+                <li><%= link_to "Logout", "/users/sign_out", :method => :delete %></li>
+              </ul>
+            </li>
+          </ul>
+        <% else %>
+          <ul class="nav pull-right">
+            <li><%= link_to image_tag("buttons/login_button.png", :border => 0), "/users/sign_in", :class => 'button', :style => "padding-top: 0px; padding-bottom: 0px; margin-top: 5px;" %></li>
+            <li><%= link_to image_tag("buttons/register_button.png", :border => 0), "/users/sign_up", :class => 'button', :style => "padding-top: 0px; padding-bottom: 0px; margin-top: 5px;" %></li>
+          </ul>
         <% end %>
       </div>
     </div>
