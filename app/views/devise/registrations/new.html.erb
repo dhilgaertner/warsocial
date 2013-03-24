@@ -1,30 +1,21 @@
-<div class="well" style="width: 470px; margin-top: 50px; margin-left: 120px; margin-right: auto;">
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
-  <%= devise_error_messages! %>
 
-    <fieldset>
-      <legend>Sign Up</legend>
-      <div class="control-group">
-        <%= f.label :username, :class => "control-label" %>
-        <div class="controls">
-          <%= f.text_field :username, :class => "input-xlarge" %>
+<div class="row" style="margin-top: 139px; margin-bottom: 161px;">
+  <div class="span4 offset4">
+    <div class="well">
+      <legend>Register</legend>
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+
+        <div style="font-size: 0.8em; color: red;">
+          <%= devise_error_messages! %>
         </div>
-      </div>
-      <div class="control-group">
-        <%= f.label :email, :class => "control-label" %>
-        <div class="controls">
-          <%= f.email_field :email, :class => "input-xlarge" %>
-        </div>
-      </div>
-      <div class="control-group">
-        <%= f.label :password, :class => "control-label" %>
-        <div class="controls">
-          <%= f.password_field :password, :class => "input-xlarge" %>
-        </div>
-      </div>
-      <%= f.submit "Sign Up + Confirmation Email", :class => "btn btn-large btn-success", :style => "margin-left: 160px;" %>
-    </fieldset>
-<% end %>
+        <%= f.text_field :username, :class => "span3", :placeholder => "Username" %>
+        <%= f.email_field :email, :class => "span3", :placeholder => "Email" %>
+        <%= f.password_field :password, :class => "span3", :placeholder => "Password" %>
+
+        <%= f.submit "Sign Up + Confirmation Email", :class => "btn btn-info", :style => "margin-top: 10px;" %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 
