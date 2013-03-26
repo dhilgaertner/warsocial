@@ -1,13 +1,13 @@
-<div class="modal" id="game_lobby" style="display: none;">
+<div ng-controller="GameLobbyCtrl" class="modal" id="game_lobby" style="display: none;">
   <div class="modal-header">
     <button class="close" data-dismiss="modal">×</button>
     <h3>Lobby</h3>
   </div>
   <div class="modal-body">
     <ul class="nav nav-pills">
-      <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge"></span></a></li>
-      <li class="active"><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge"></span></a></li>
-      <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important"></span><span id="multi_badge_2" class="badge"></span></a></li>
+      <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">{{online_users.length}}</span></a></li>
+      <li class="active"><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge">{{live_games.length}}</span></a></li>
+      <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">{{myTurns(multiday_games).length}}</span><span id="multi_badge_2" class="badge">{{multiday_games.length}}</span></a></li>
     </ul>
     <div class="well">
       <div class="tab-content">
@@ -21,7 +21,11 @@
             </tr>
             </thead>
             <tbody>
-
+            <tr ng-repeat="online_user in online_users" ng-click="gotoGame(online_user.location)">
+              <td>{{online_user.username}}</td>
+              <td>{{online_user.current_points}}</td>
+              <td>{{online_user.location}}</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -36,7 +40,12 @@
             </tr>
             </thead>
             <tbody>
-
+            <tr ng-repeat="live_game in live_games" ng-click="gotoGame(live_game.name)">
+              <td>{{live_game.name}}</td>
+              <td>{{live_game.player_count + "/" + live_game.max_players}}</td>
+              <td>{{live_game.wager}}</td>
+              <td>{{live_game.state}}</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -52,7 +61,13 @@
             </tr>
             </thead>
             <tbody>
-
+            <tr ng-repeat="multiday_game in multiday_games" ng-click="gotoGame(multiday_game.name)">
+              <td>{{multiday_game.name}}</td>
+              <td>{{multiday_game.player_count + "/" + multiday_game.max_players}}</td>
+              <td>{{multiday_game.wager}}</td>
+              <td>{{multiday_game.state}}</td>
+              <td>{{formatIsTurn(multiday_game.is_my_turn)}}</td>
+            </tr>
             </tbody>
           </table>
         </div>

@@ -7,6 +7,9 @@ module ApplicationHelper
 
     r = Array.new
 
+    r.push("/angularjs/angular.min.js?v=#{vers}")
+    r.push("/angularjs/game_lobby/game_lobby.js?v=#{vers}")
+
     if !Rails.env.development?
       r.push(asset_path("application.js"))
 
