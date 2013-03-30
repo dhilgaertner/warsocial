@@ -53,6 +53,9 @@ Dice::Application.routes.draw do
 
   # Map Creator and Marketplace Routes
   resources :maps do
+    collection do
+      get 'get_maps'
+    end
     member do
       post 'vote'
       post 'favorite'

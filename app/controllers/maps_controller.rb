@@ -18,6 +18,18 @@ class MapsController < ApplicationController
     render :action => "index", :layout => "application"
   end
 
+  def get_maps
+    if(current_user != nil && current_user.admin?)
+      maps = Map.where("is_public = ?", true)
+    else
+      maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
+    end
+
+    response = { :maps => maps }
+
+    render :json => response
+  end
+
   def new
     @js_page_type = "maps"
     @type = :new
