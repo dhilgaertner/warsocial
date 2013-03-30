@@ -7,9 +7,6 @@ module ApplicationHelper
 
     r = Array.new
 
-    r.push("/angularjs/angular.min.js?v=#{vers}")
-    r.push("/angularjs/game_lobby/game_lobby.js?v=#{vers}")
-
     if !Rails.env.development?
       r.push(asset_path("application.js"))
 
@@ -34,6 +31,10 @@ module ApplicationHelper
       r.push("/highcharts/highcharts.js?v=#{vers}")
       r.push("/tweet/jquery.tweet.js?v=#{vers}")
     end
+
+    r.push("/angularjs/angular.min.js?v=#{vers}")
+    r.push("/angularjs/game_lobby.js?v=#{vers}")
+    r.push("/angularjs/game_create.js?v=#{vers}")
 
     r.push("/bootstrap/js/bootstrap.min.js")
     r.push("/utils/utils.js?v=#{vers}")

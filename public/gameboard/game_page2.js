@@ -68,7 +68,7 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
     init(global_init_data);
 
     //var lobby_modal = new Lobby("game_lobby");
-    var create_game_modal = new CreateGame("create_game", lobby_maps);
+    //var create_game_modal = new CreateGame("create_game", lobby_maps);
     var settings_modal = new Settings("settings");
 
     var who_am_i = user_id;

@@ -980,12 +980,7 @@
 
   <script type="text/javascript">
     head.ready(function() {
-      <% if(@js_page_type == "profile") %>
-        var lobby_modal = new Lobby("game_lobby");
-        var create_game_modal = new CreateGame("create_game", <%= @maps.to_json.html_safe %>);
-      <% else %>
         ws_init();
-      <% end %>
     });
   </script>
 </head>
@@ -1015,8 +1010,8 @@
         </ul>
 
         <ul class="nav">
-          <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %></li>
-          <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
+          <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %></li>
+          <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
         </ul>
 
         <% if (current_user != nil) %>
@@ -1048,10 +1043,8 @@
 </div>
 
 <%= render "shared/settings" %>
+<%= render "shared/game_lobby" %>
+<%= render "shared/create_game" %>
 
-<% if(@js_page_type == "profile" || @js_page_type == "game" || @js_page_type == "maps") %>
-  <%= render "shared/game_lobby" %>
-  <%= render "shared/create_game2" %>
-<% end %>
 </body>
 </html>
