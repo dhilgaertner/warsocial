@@ -6,6 +6,7 @@ require 'active/active_land'
 require 'active/active_user'
 
 class HomeController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   layout :resolve_layout
 
   def index

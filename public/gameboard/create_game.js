@@ -27,7 +27,7 @@ CreateGame.prototype.setupCreateGameModal = function() {
         $(element).addClass('active');
 
         var mapName = $(element).data("map");
-        $('input[name="select_map"]').val(mapName) ;
+        $('input[name="select_map"]').val(mapName);
     }
 
     function updateGenericButtonInput(button, inputName) {
