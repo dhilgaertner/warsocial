@@ -18,6 +18,11 @@
     top100: "<%= image_path "trophies/top100_trophy.png" %>"
   }
 
+  var ws_options = {
+    is_production: <%= Rails.env.production? %>,
+    pusherkey: "<%= Pusher.key %>"
+  }
+
   head.ready(function() {
 
     game_page_init("<%= @game.name %>", "<%= @game.game_type %>", <%= @init_data.to_json.html_safe %>, <%= @maps.to_json.html_safe %>, <%= Rails.env.production? %>, "<%= Pusher.key %>", <%= current_user != nil ? current_user.id : 0 %>, "<%= current_user != nil ? current_user.username : "anon" %>", urls);

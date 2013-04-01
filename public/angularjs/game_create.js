@@ -6,19 +6,41 @@
  */
 
 function GameCreateCtrl($scope, $http) {
+    $scope.selectedMap = "default";
+    $scope.selectedPlayers = 2;
+    $scope.selectedWager = 0;
+    $scope.selectedType = "normal";
 
-    angular.element('#game_create_open').bind('click', function() {
-        $scope.fetchData();
+    $http.get('/maps/get_maps').success(function(data) {
+        $scope.maps = data.maps;
     });
 
     $scope.selectMap = function(map) {
         $scope.selectedMap = map.name;
     };
 
-    $scope.fetchData = function() {
-        $http.get('/maps/get_maps').success(function(data) {
-            $scope.maps = data.maps;
-        });
+    $scope.selectPlayers = function(num) {
+        $scope.selectedPlayers = num;
     };
 
+    $scope.selectWager = function(wager) {
+        $scope.selectedWager = wager;
+    };
+
+    $scope.selectType = function(type) {
+        $scope.selectedType = type;
+    };
+
+    $scope.createGame = function() {
+        var postData = {
+            select_map: $scope.selectedMap,
+            select_players: $scope.selectedPlayers,
+            select_wager: $scope.selectedWager,
+            game_type: $scope.selectedType
+        };
+
+        $http.post('/home/create_game', postData, { withCredentials: true }).success(function(data) {
+            window.location.href = '/game/' + data;
+        });
+    };
 }

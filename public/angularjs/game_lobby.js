@@ -11,6 +11,16 @@ function GameLobbyCtrl($scope, $http) {
         $scope.fetchData();
     });
 
+    $scope.fetchData = function() {
+        $http.get('/home/get_lobby_games').success(function(data) {
+            $scope.online_users = data.online;
+            $scope.live_games = data.games;
+            $scope.multiday_games = data.multiday;
+        });
+    };
+
+    $scope.fetchData();
+
     $scope.formatIsTurn = function(is_my_turn) {
         return is_my_turn ? "!!!" : "";
     };
@@ -28,13 +38,4 @@ function GameLobbyCtrl($scope, $http) {
     $scope.gotoGame = function(game_name) {
         window.location.href = '/game/' + game_name;
     };
-
-    $scope.fetchData = function() {
-        $http.get('/home/get_lobby_games').success(function(data) {
-            $scope.online_users = data.online;
-            $scope.live_games = data.games;
-            $scope.multiday_games = data.multiday;
-        });
-    };
-
 }

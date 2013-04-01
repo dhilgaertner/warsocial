@@ -1,7 +1,7 @@
 module ApplicationHelper
   def js_to_add(type)
 
-    vers = "12"
+    vers = "13"
     cn = controller.controller_name
     ca = controller.action_name
 
@@ -33,8 +33,10 @@ module ApplicationHelper
     end
 
     r.push("/angularjs/angular.min.js?v=#{vers}")
+    r.push("/angularjs/pusher_service.js?v=#{vers}")
     r.push("/angularjs/game_lobby.js?v=#{vers}")
     r.push("/angularjs/game_create.js?v=#{vers}")
+    r.push("/angularjs/game_chat.js?v=#{vers}")
 
     r.push("/bootstrap/js/bootstrap.min.js")
     r.push("/utils/utils.js?v=#{vers}")
