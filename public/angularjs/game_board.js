@@ -21,6 +21,7 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
             $scope.deployment = data.deployment;
 
             init(data);
+            socket.change_channel(data.game_name);
         });
     };
 
