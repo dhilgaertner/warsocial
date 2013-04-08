@@ -22,9 +22,11 @@ Dice::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
+  match 'game/json' => 'home#get_game'
   match 'game/:game_name/' => 'home#index'
   match 'game/:game_name/fet/:turn_count/:auth' => 'home#force_end_turn'
   match 'game/:game_name/attack' => 'home#attack'
+  match 'game/:game_name/json' => 'home#get_game'
 
   resources :home do
     collection do

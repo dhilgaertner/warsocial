@@ -65,7 +65,7 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
     });
 
     // GAMEBOARD INIT!
-    init(global_init_data);
+    //init(global_init_data);
 
     //var lobby_modal = new Lobby("game_lobby");
     //var create_game_modal = new CreateGame("create_game", lobby_maps);

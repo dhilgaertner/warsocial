@@ -5,7 +5,7 @@
  * Time: 6:14 PM
  */
 
-function GameLobbyCtrl($scope, $http) {
+function GameLobbyCtrl($scope, $http, pubsub) {
 
     angular.element('#game_lobby_open').bind('click', function() {
         $scope.fetchData();
@@ -36,6 +36,7 @@ function GameLobbyCtrl($scope, $http) {
     };
 
     $scope.gotoGame = function(game_name) {
-        window.location.href = '/game/' + game_name;
+        pubsub.publish("change_game", [game_name]);
+        angular.element('#game_lobby_open').click();
     };
 }
