@@ -22,53 +22,6 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
     var chatbox = new ChatBox("chat-window", seats);
     var gamelog = new GameLog("log-window", seats);
 
-    if (!is_production) {
-        // Enable pusher logging - don't include this in production
-        Pusher.log = function(message) {
-            if (window.console && window.console.log) window.console.log(message);
-        };
-
-        // Flash fallback logging - don't include this in production
-        WEB_SOCKET_DEBUG = true;
-    }
-
-    var pusher = new Pusher(pusher_key);
-    var channel = pusher.subscribe("presence-" + game_name);
-    Pusher.channel_auth_endpoint = urls.paurl;
-
-    channel.bind('pusher:subscription_error', function(status) {
-        if(status == 408 || status == 503){
-            if (window.console && window.console.log) window.console.log("Error establishing connection: " + status.toString());
-        }
-    });
-
-    channel.bind('pusher:subscription_succeeded', function(members) {
-        var memArray = [];
-        members.each(function(member) {
-            if (member.id != "anon") {
-                memArray.push(member.info.name);
-            }
-        });
-        chatbox.addChatLine("Room", "Welcome to " + global_game_name + ". Players here: " + memArray.join(", ") + ".");
-    });
-
-    channel.bind('pusher:member_added', function(member) {
-        if (member.id != "anon") {
-            chatbox.addChatLine("Room", member.info.name + " is here.");
-        }
-    });
-
-    channel.bind('pusher:member_removed', function(member) {
-        if (member.id != "anon") {
-            chatbox.addChatLine("Room", member.info.name + " has left.")
-        }
-    });
-
-    // GAMEBOARD INIT!
-    //init(global_init_data);
-
-    //var lobby_modal = new Lobby("game_lobby");
-    //var create_game_modal = new CreateGame("create_game", lobby_maps);
     var settings_modal = new Settings("settings");
 
     var who_am_i = user_id;
