@@ -14,14 +14,14 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
 
         $http.get(url).success(function(data) {
             $scope.who_am_i = data.who_am_i;
-            $scope.map_layout = data.map_layout;
             $scope.game_name = data.game_name;
             $scope.game_wager = data.game_wager;
-            $scope.players = data.players;
-            $scope.deployment = data.deployment;
 
             init(data);
+
             socket.change_channel(data.game_name);
+
+            pubsub.publish("new_data", [data]);
         });
     };
 

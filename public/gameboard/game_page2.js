@@ -33,16 +33,6 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
         }
     }
 
-    channel.bind('new_chat_line', function(data) {
-        if (data.name != who_am_i_name) {
-            chatbox.addChatLine(data.name, data.entry);
-        }
-    });
-
-    channel.bind('server_message', function(data) {
-        chatbox.addServerMessage(data);
-    });
-
     channel.bind('game_start', function(data) {
         data.who_am_i = who_am_i;
 

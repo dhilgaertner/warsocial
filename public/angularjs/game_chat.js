@@ -29,6 +29,16 @@ function GameChatCtrl($scope, $http, socket, pubsub) {
                 //chatbox.addChatLine("Room", member.info.name + " has left.")
             }
         });
+
+        channel.bind('new_chat_line', function(data) {
+            if (data.name != who_am_i_name) {
+                //chatbox.addChatLine(data.name, data.entry);
+            }
+        });
+
+        channel.bind('server_message', function(data) {
+            //chatbox.addServerMessage(data);
+        });
     });
 
 }
