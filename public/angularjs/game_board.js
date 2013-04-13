@@ -31,4 +31,33 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
         $scope.fetchData(game_name);
     });
 
+    pubsub.subscribe("channel_changed", function(channel){
+
+        channel.bind('game_start', function(data) {
+            init(data);
+
+            SoundManager.play("game_start");
+        });
+
+        channel.bind('player_quit', function(player) {
+            player_quit(player.player_id);
+        });
+
+        channel.bind('attack', function(data) {
+            attack(data);
+        });
+
+        channel.bind('deploy', function(data) {
+            deploy(data);
+        });
+
+        channel.bind('new_turn', function(data) {
+            if (data.current_player.player_id == who_am_i) {
+                SoundManager.play("my_turn");
+            }
+
+            next_turn(data.current_player.player_id);
+        });
+
+    });
 }

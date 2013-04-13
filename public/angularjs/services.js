@@ -72,3 +72,11 @@ wsApp.factory('socket', function(pubsub) {
 
     return pusherController;
 });
+
+wsApp.directive('eatClick', function() {
+    return function(scope, element, attrs) {
+        $(element).click(function(event) {
+            event.preventDefault();
+        });
+    }
+})
