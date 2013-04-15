@@ -73,10 +73,10 @@
               <div class="col1"><i class="icon-star"></i><div class="dice">{{dice_count()}} ({{reserves()}})</div></div>
               <div class="col2"><i class="icon-cog"></i><div class="points">{{points()}} ({{delta_points()}})</div></div>
             </div>
-            <div class="action-sit" ng-hide="is_game_started()">
+            <div class="action-sit" ng-show="!is_game_started() && !am_i_seated()">
               <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 1), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
             </div>
-            <div class="action-stand" ng-hide="is_game_started()">
+            <div class="action-stand" ng-show="!is_game_started() && am_i_seated()">
               <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-large btn-danger" %>
             </div>
           </div>
