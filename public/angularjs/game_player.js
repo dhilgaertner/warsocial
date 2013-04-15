@@ -38,6 +38,10 @@ function GamePlayerCtrl($scope, pubsub) {
         });
     });
 
+    $scope.name = function() {
+        return $scope.player.name;
+    };
+
     $scope.place = function() {
         switch($scope.player.place)
         {
@@ -61,7 +65,7 @@ function GamePlayerCtrl($scope, pubsub) {
     };
 
     $scope.points = function() {
-        return $scope.player.current_points.toString();
+        return $scope.player.current_points;
     };
 
     $scope.delta_points = function() {
@@ -75,14 +79,27 @@ function GamePlayerCtrl($scope, pubsub) {
     };
 
     $scope.dice_count = function() {
-        return $scope.player.dice_count.toString();
+        return $scope.player.dice_count;
     };
 
-    $scope.reserves = function() {
-        return $scope.player.reserves.toString();
+    $scope.reserves = function() {;
+        return $scope.player.reserves
     };
 
     $scope.land_count = function() {
-        return $scope.player.land_count.toString();
+        return $scope.player.land_count;
     };
+
+    $scope.avatar_url = function() {
+        if($scope.player == null || $scope.player.avatar_url == null){
+            return "";
+        }
+        return $scope.player.avatar_url;
+    };
+
+    $scope.avatar_style = {
+        "background-image": "url('" + $scope.avatar_url() + "');",
+        "background-color": "#f8af01"
+    };
+
 }
