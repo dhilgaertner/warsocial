@@ -62,7 +62,7 @@ wsApp.factory('socket', function(pubsub) {
     var pusherController = {
         change_channel: function(name){
             if (channel != null) {
-                channel.unsubscribe();
+                pusher.unsubscribe(channel.name);
             }
             channel = pusher.subscribe("presence-" + name);
             pubsub.publish("channel_changed", [channel]);

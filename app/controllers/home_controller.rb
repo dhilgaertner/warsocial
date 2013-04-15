@@ -285,6 +285,7 @@ class HomeController < ApplicationController
     init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
                   :map_layout => ActiveSupport::JSON.decode(game.map_json),
                   :game_name => game.name,
+                  :game_state => game.state,
                   :game_wager => game.wager_level,
                   :players => game.players.values,
                   :deployment => game.lands.values }

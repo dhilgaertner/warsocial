@@ -33,68 +33,68 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
         }
     }
 
-    channel.bind('game_start', function(data) {
-        data.who_am_i = who_am_i;
-
-        for(var i=0; i<data.players.length; i++) {
-            var p = data.players[i];
-
-            if (p.is_turn == true) {
-                seats.turn_start(p);
-                gamelog.logGameStarted();
-                gamelog.logTurnChange(p.name);
-            }
-        }
-
-        init(data);
-
-        SoundManager.play("game_start");
-
-        seats.game_started();
-        seats.update_player_data(data.players);
-    });
-
-    channel.bind('player_sit', function(player) {
-        seats.sit(player);
-    });
-
-    channel.bind('player_stand', function(player) {
-        seats.stand(player);
-    });
-
-    channel.bind('player_quit', function(player) {
-        seats.update_player_data([player]);
-        player_quit(player.player_id);
-    });
-
-    channel.bind('attack', function(data) {
-        seats.turn_timer_restart({player_id: data.attack_info.attacker_player_id});
-        seats.update_player_data(data.players);
-        attack(data);
-        gamelog.logAttack(data);
-    });
-
-    channel.bind('deploy', function(data) {
-        deploy(data);
-    });
-
-    channel.bind('game_winner', function(player) {
-        seats.clear();
-
-        gamelog.logGameWinner(player.name);
-    });
-
-    channel.bind('new_turn', function(data) {
-        if (data.current_player.player_id == who_am_i) {
-            SoundManager.play("my_turn");
-        }
-
-        next_turn(data.current_player.player_id);
-        seats.turn_start({ name: data.current_player.name, player_id: data.current_player.player_id});
-        seats.update_player_data([data.previous_player, data.current_player]);
-
-        gamelog.logTurnChange(data.current_player.name);
-    });
+//    channel.bind('game_start', function(data) {
+//        data.who_am_i = who_am_i;
+//
+//        for(var i=0; i<data.players.length; i++) {
+//            var p = data.players[i];
+//
+//            if (p.is_turn == true) {
+//                seats.turn_start(p);
+//                gamelog.logGameStarted();
+//                gamelog.logTurnChange(p.name);
+//            }
+//        }
+//
+//        init(data);
+//
+//        SoundManager.play("game_start");
+//
+//        seats.game_started();
+//        seats.update_player_data(data.players);
+//    });
+//
+//    channel.bind('player_sit', function(player) {
+//        seats.sit(player);
+//    });
+//
+//    channel.bind('player_stand', function(player) {
+//        seats.stand(player);
+//    });
+//
+//    channel.bind('player_quit', function(player) {
+//        seats.update_player_data([player]);
+//        player_quit(player.player_id);
+//    });
+//
+//    channel.bind('attack', function(data) {
+//        seats.turn_timer_restart({player_id: data.attack_info.attacker_player_id});
+//        seats.update_player_data(data.players);
+//        attack(data);
+//        gamelog.logAttack(data);
+//    });
+//
+//    channel.bind('deploy', function(data) {
+//        deploy(data);
+//    });
+//
+//    channel.bind('game_winner', function(player) {
+//        seats.clear();
+//
+//        gamelog.logGameWinner(player.name);
+//    });
+//
+//    channel.bind('new_turn', function(data) {
+//        if (data.current_player.player_id == who_am_i) {
+//            SoundManager.play("my_turn");
+//        }
+//
+//        next_turn(data.current_player.player_id);
+//        seats.turn_start({ name: data.current_player.name, player_id: data.current_player.player_id});
+//        seats.update_player_data([data.previous_player, data.current_player]);
+//
+//        gamelog.logTurnChange(data.current_player.name);
+//    });
 
     $('#entry').keyup(function(event){
         if(event.keyCode == 13){

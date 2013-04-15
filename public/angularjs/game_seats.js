@@ -9,10 +9,23 @@ function GameSeatsCtrl($scope, pubsub) {
 
     $scope.top_seats = function() {
         var players = $scope.players;
+
+        return players;
     };
 
     $scope.bottom_seats = function() {
         var players = $scope.players;
+    };
+
+    $scope.am_i_seated = function() {
+        if ($scope.players != null){
+            angular.forEach($scope.players, function(player){
+                if($scope.who_am_i == player.name){
+                    return true;
+                }
+            });
+        }
+        return false;
     };
 
     pubsub.subscribe("channel_changed", function(channel){

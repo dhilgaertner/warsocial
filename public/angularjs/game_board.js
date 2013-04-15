@@ -7,6 +7,15 @@
 
 function GameBoardCtrl($scope, $http, socket, pubsub) {
 
+    $scope.is_game_started = function() {
+        if ($scope.game_state != null){
+            if ($scope.game_state == "game started") {
+                return true;
+            }
+        }
+        return false;
+    };
+
     $scope.fetchData = function(game_name) {
         var url = game_name != null
             ? '/game/' + game_name + '/json'
@@ -16,6 +25,7 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
             $scope.who_am_i = data.who_am_i;
             $scope.game_name = data.game_name;
             $scope.game_wager = data.game_wager;
+            $scope.game_state = data.game_state;
 
             init(data);
 
