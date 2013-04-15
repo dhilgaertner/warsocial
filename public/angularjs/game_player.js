@@ -97,6 +97,15 @@ function GamePlayerCtrl($scope, pubsub) {
         return $scope.player.avatar_url;
     };
 
+    $scope.is_this_me = function() {
+        if($scope.player != null){
+            if($scope.who_am_i == $scope.player.name){
+                return true;
+            }
+        }
+        return false;
+    };
+
     $scope.avatar_style = {
         "background-image": "url('" + $scope.avatar_url() + "');",
         "background-color": "#f8af01"
