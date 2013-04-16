@@ -31,7 +31,7 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
 
             socket.change_channel(data.game_name);
 
-            pubsub.publish("new_data", [data]);
+            pubsub.publish("game_init", [data]);
         });
     };
 

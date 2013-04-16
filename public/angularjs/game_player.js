@@ -5,7 +5,7 @@
  * Time: 2:10 PM
  */
 
-function GamePlayerCtrl($scope, pubsub) {
+function GamePlayerSeatCtrl($scope, pubsub) {
 
     pubsub.subscribe("channel_changed", function(channel){
 
@@ -38,12 +38,13 @@ function GamePlayerCtrl($scope, pubsub) {
         });
     });
 
-    $scope.name = function() {
-        return $scope.player.name;
+    $scope.player_name = function() {
+        return $scope.is_player_seated() ? $scope.seat.player.name : "";
     };
 
-    $scope.place = function() {
-        switch($scope.player.place)
+    $scope.player_place = function() {
+        var place = $scope.is_player_seated() ? $scope.seat.player.place : -1;
+        switch(place)
         {
             case 1:
                 return "1st";
@@ -64,42 +65,48 @@ function GamePlayerCtrl($scope, pubsub) {
         }
     };
 
-    $scope.points = function() {
-        return $scope.player.current_points;
+    $scope.player_points = function() {
+        return $scope.is_player_seated() ? $scope.seat.player.current_points : 0;
     };
 
-    $scope.delta_points = function() {
-        var dp = $scope.player.delta_points.toString();
+    $scope.player_delta_points = function() {
+        if (!$scope.is_player_seated()) return "0";
 
-        if ($scope.player.delta_points != 0) {
-            dp = player.delta_points > 0 ? "+" + dp : "-" + dp;
+        var dp = $scope.seat.player.delta_points.toString();
+
+        if ($scope.seat.player.delta_points != 0) {
+            dp = $scope.seat.player.delta_points > 0 ? "+" + dp : "-" + dp;
         }
 
         return dp;
     };
 
-    $scope.dice_count = function() {
-        return $scope.player.dice_count;
+    $scope.player_dice_count = function() {
+        return $scope.is_player_seated() ? $scope.seat.player.dice_count : 0;
     };
 
-    $scope.reserves = function() {;
-        return $scope.player.reserves
+    $scope.player_reserves = function() {
+        return $scope.is_player_seated() ? $scope.seat.player.reserves : 0;
     };
 
-    $scope.land_count = function() {
-        return $scope.player.land_count;
+    $scope.player_land_count = function() {
+        return $scope.is_player_seated() ? $scope.seat.player.land_count : 0;
     };
 
-    $scope.avatar_url = function() {
-        if($scope.player == null || $scope.player.avatar_url == null){
-            return "";
+    $scope.player_avatar_url = function() {
+        return $scope.is_player_seated() ? $scope.seat.player.avatar_url : "";
+    };
+
+    $scope.is_player_seated = function() {
+        if($scope.seat.player != null){
+            return true;
         }
-        return $scope.player.avatar_url;
+        return false;
     };
 
-    $scope.is_this_me = function() {
-        if($scope.player != null){
-            if($scope.who_am_i == $scope.player.name){
+    $scope.is_player_me = function() {
+        if($scope.seat.player != null){
+            if($scope.who_am_i == $scope.seat.player.name){
                 return true;
             }
         }
@@ -107,7 +114,7 @@ function GamePlayerCtrl($scope, pubsub) {
     };
 
     $scope.avatar_style = {
-        "background-image": "url('" + $scope.avatar_url() + "');",
+        "background-image": "url('" + $scope.player_avatar_url() + "');",
         "background-color": "#f8af01"
     };
 

@@ -6,15 +6,23 @@
  */
 
 function GameSeatsCtrl($scope, pubsub) {
+    $scope.seats = [{},{},{},{},{},{},{}];
 
     $scope.top_seats = function() {
-        var players = $scope.players;
-
-        return players;
+        return [
+            $scope.seats[0],
+            $scope.seats[2],
+            $scope.seats[4],
+            $scope.seats[6]
+        ];
     };
 
     $scope.bottom_seats = function() {
-        var players = $scope.players;
+        return [
+            $scope.seats[1],
+            $scope.seats[3],
+            $scope.seats[5]
+        ];
     };
 
     $scope.am_i_seated = function() {
@@ -26,6 +34,10 @@ function GameSeatsCtrl($scope, pubsub) {
             });
         }
         return false;
+    };
+
+    $scope.clear_seats = function() {
+        $scope.seats = [{},{},{},{},{},{},{}];
     };
 
     pubsub.subscribe("channel_changed", function(channel){
@@ -59,7 +71,10 @@ function GameSeatsCtrl($scope, pubsub) {
         });
     });
 
-    pubsub.subscribe("new_data", function(data){
-        $scope.players = data.players;
+    pubsub.subscribe("game_init", function(data){
+        $scope.clear_seats();
+        angular.forEach(data.players, function(player){
+            $scope.seats[player.seat_id - 1].player = player;
+        });
     });
 }

@@ -56,34 +56,11 @@
 
   <div id="top-players" class="players-container">
     <div ng-controller="GameSeatsCtrl" class="players">
-      <div ng-repeat="player in top_seats()"
-           ng-controller="GamePlayerCtrl"
+      <div ng-repeat="seat in top_seats()"
+           ng-controller="GamePlayerSeatCtrl"
            ng-class="'player'">
 
-        <div class="player-stats">
-          <div class="avatar" ng-style="avatar_style">
-          </div>
-          <div class="info">
-            <div class="name">
-              <a target='_blank' style='color: inherit;' ng-href='/u/{{name()}}'>{{name()}}</a>
-            </div>
-            <div class="stats" ng-show="is_game_started()">
-              <div class="col1"><i class="icon-flag"></i><div class="place">{{place()}}</div></div>
-              <div class="col2"><i class="icon-map-marker"></i><div class="lands">{{land_count()}}</div></div>
-              <div class="col1"><i class="icon-star"></i><div class="dice">{{dice_count()}} ({{reserves()}})</div></div>
-              <div class="col2"><i class="icon-cog"></i><div class="points">{{points()}} ({{delta_points()}})</div></div>
-            </div>
-            <div class="action-sit" ng-show="!is_game_started() && !am_i_seated()">
-              <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 1), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
-            </div>
-            <div class="action-stand" ng-show="!is_game_started() && am_i_seated()">
-              <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-large btn-danger" %>
-            </div>
-          </div>
-        </div>
-        <div class="medals" style='background-color: #f8af01'>
-          <div ng-repeat="medal in medals" class="medal"></div>
-        </div>
+        <%= render "shared/game_player" %>
       </div>
     </div>
   </div>
@@ -253,9 +230,11 @@
 
   <div id="bottom-players" class="players-container">
     <div ng-controller="GameSeatsCtrl" class="players">
-      <div ng-repeat="player in bottom_seats()"
-           ng-controller="GamePlayerCtrl">
-        {{player.name}}
+      <div ng-repeat="seat in bottom_seats()"
+           ng-controller="GamePlayerSeatCtrl"
+           ng-class="'player'">
+
+        <%= render "shared/game_player" %>
       </div>
     </div>
   </div>
