@@ -11,11 +11,11 @@
       <div class="col1"><i class="icon-star"></i><div class="dice">{{player_dice_count()}} ({{player_reserves()}})</div></div>
       <div class="col2"><i class="icon-cog"></i><div class="points">{{player_points()}} ({{player_delta_points()}})</div></div>
     </div>
-    <div class="action-sit" ng-show="!is_game_started() && !is_player_me()">
-      <%= link_to "Sit", sit_home_index_path(:game_name => @game.name, :seat => 1), :remote => true, :id => "sit_button", :class => "btn btn-large btn-success" %>
+    <div class="action-sit" ng-show="!is_game_started() && !is_player_me() && !is_player_seated()">
+      <a id="sit_button" class="btn btn-large btn-success" ng-click="sit(game_name)">Sit</a>
     </div>
     <div class="action-stand" ng-show="!is_game_started() && is_player_me()">
-      <%= link_to "Stand", stand_home_index_path(:game_name => @game.name), :remote => true, :class => "btn btn-large btn-danger" %>
+      <a class="btn btn-large btn-danger" ng-click="stand(game_name)">Stand</a>
     </div>
   </div>
 </div>
