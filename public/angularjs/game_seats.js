@@ -5,8 +5,14 @@
  * Time: 2:10 PM
  */
 
-function GameSeatsCtrl($scope, pubsub) {
+function GameSeatsCtrl($scope, $http, pubsub) {
     $scope.seats = [{},{},{},{},{},{},{}];
+
+    $scope.update_seats = function(players) {
+        angular.forEach(players, function(player){
+            $scope.seats[player.seat_id - 1].player = player;
+        });
+    };
 
     $scope.top_seats = function() {
         return [
@@ -40,41 +46,65 @@ function GameSeatsCtrl($scope, pubsub) {
         $scope.seats = [{},{},{},{},{},{},{}];
     };
 
+    $scope.sit = function(game_name) {
+        $http.get('/home/sit?game_name=' + game_name).success(function(data) {
+            console.log(data);
+        });
+    };
+
+    $scope.stand = function(game_name) {
+        $http.get('/home/stand?game_name=' + game_name).success(function(data) {
+            console.log(data);
+        });
+    };
+
     pubsub.subscribe("channel_changed", function(channel){
 
         channel.bind('game_start', function(data) {
-
+            $scope.$apply(function(){
+                $scope.update_seats(data.players);
+            });
         });
 
         channel.bind('player_sit', function(player) {
-
+            $scope.$apply(function(){
+                $scope.update_seats([player]);
+            });
         });
 
         channel.bind('player_stand', function(player) {
-
+            $scope.$apply(function(){
+                $scope.update_seats([player]);
+            });
         });
 
         channel.bind('player_quit', function(player) {
-
+            $scope.$apply(function(){
+                $scope.update_seats([player]);
+            });
         });
 
         channel.bind('attack', function(data) {
-
+            $scope.$apply(function(){
+                $scope.update_seats(data.players);
+            });
         });
 
         channel.bind('game_winner', function(player) {
-
+            $scope.$apply(function(){
+                $scope.clear_seats();
+            });
         });
 
         channel.bind('new_turn', function(data) {
-
+            $scope.$apply(function(){
+                $scope.update_seats([data.previous_player, data.current_player]);
+            });
         });
     });
 
     pubsub.subscribe("game_init", function(data){
         $scope.clear_seats();
-        angular.forEach(data.players, function(player){
-            $scope.seats[player.seat_id - 1].player = player;
-        });
+        $scope.update_seats(data.players);
     });
 }

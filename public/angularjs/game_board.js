@@ -7,9 +7,12 @@
 
 function GameBoardCtrl($scope, $http, socket, pubsub) {
 
+    var GAME_STARTED = "game started";
+    var WAITING_FOR_PLAYERS = "waiting for players";
+
     $scope.is_game_started = function() {
         if ($scope.game_state != null){
-            if ($scope.game_state == "game started") {
+            if ($scope.game_state == GAME_STARTED) {
                 return true;
             }
         }
@@ -44,6 +47,9 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
     pubsub.subscribe("channel_changed", function(channel){
 
         channel.bind('game_start', function(data) {
+            $scope.game_state = GAME_STARTED;
+            data.who_am_i = $scope.who_am_i;
+
             init(data);
 
             SoundManager.play("game_start");
@@ -61,8 +67,12 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
             deploy(data);
         });
 
+        channel.bind('game_winner', function(data) {
+            $scope.game_state = WAITING_FOR_PLAYERS;
+        });
+
         channel.bind('new_turn', function(data) {
-            if (data.current_player.player_id == who_am_i) {
+            if (data.current_player.player_id == $scope.who_am_i) {
                 SoundManager.play("my_turn");
             }
 

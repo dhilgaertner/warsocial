@@ -7,37 +7,6 @@
 
 function GamePlayerSeatCtrl($scope, pubsub) {
 
-    pubsub.subscribe("channel_changed", function(channel){
-
-        channel.bind('game_start', function(data) {
-
-        });
-
-        channel.bind('player_sit', function(player) {
-
-        });
-
-        channel.bind('player_stand', function(player) {
-
-        });
-
-        channel.bind('player_quit', function(player) {
-
-        });
-
-        channel.bind('attack', function(data) {
-
-        });
-
-        channel.bind('game_winner', function(player) {
-
-        });
-
-        channel.bind('new_turn', function(data) {
-
-        });
-    });
-
     $scope.player_name = function() {
         return $scope.is_player_seated() ? $scope.seat.player.name : "";
     };
@@ -106,9 +75,16 @@ function GamePlayerSeatCtrl($scope, pubsub) {
 
     $scope.is_player_me = function() {
         if($scope.seat.player != null){
-            if($scope.who_am_i == $scope.seat.player.name){
+            if($scope.who_am_i == $scope.seat.player.player_id){
                 return true;
             }
+        }
+        return false;
+    };
+
+    $scope.is_player_turn = function() {
+        if($scope.is_player_seated()){
+            return $scope.seat.player.is_turn != null ? $scope.seat.player.is_turn : false;
         }
         return false;
     };
@@ -117,5 +93,4 @@ function GamePlayerSeatCtrl($scope, pubsub) {
         "background-image": "url('" + $scope.player_avatar_url() + "');",
         "background-color": "#f8af01"
     };
-
 }
