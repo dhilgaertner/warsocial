@@ -281,8 +281,10 @@ class HomeController < ApplicationController
     end
 
     game = ActiveGameFactory.get_active_game(name)
+    map = Map.where("name = ?", game.map_name).first
 
     init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
+                  :map_id => map.id,
                   :map_layout => ActiveSupport::JSON.decode(game.map_json),
                   :game_name => game.name,
                   :game_state => game.state,

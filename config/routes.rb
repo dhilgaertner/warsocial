@@ -61,6 +61,7 @@ Dice::Application.routes.draw do
     member do
       post 'vote'
       post 'favorite'
+      get 'info'
     end
   end
 

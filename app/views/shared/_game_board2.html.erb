@@ -10,20 +10,20 @@
     <%= link_to '<i style="margin-top: 2px;" class="icon-ok icon-white"></i>'.html_safe, end_turn_home_index_path(:game_name => @game.name), :remote => true, :id => "game-endturn", :class => "btn btn-success", :style => "display:none; float: right;" %>
   </div>
 
-  <div id="game-map-info" class="well <%= map_vote_class(@my_votes, @map.id) %>" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
+  <div id="game-map-info" ng-controller="GameMapInfoCtrl" class="well <%= map_vote_class(@my_votes, @map.id) %>" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
     <h5 style="margin-top: 0px;">
       Map:
       <% if (current_user != nil && current_user.admin?) %>
-        <a href="<%= edit_map_url(@map.id) %>"><%= @map.name %></a>
+        <a ng-href="/maps/{{map.id}}/edit">{{map.name}}</a>
       <% else %>
-        <%=	@map.name %>
+        {{map.name}}
       <% end %>
     </h5>
     <table style="position: relative;">
       <tbody style="">
         <tr>
           <td style="width: 23px;">
-            <span style="position: absolute; top: 7px; font-size: .6em;"><%= "#{vote_percentage(1)}%" %></span>
+            <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(1)}}%</span>
           </td>
           <td style="width: 125px;">
             <div id="map-voting" style="position: absolute; top: 1px; left: 26px; color: white; height: 27px; z-index: 999; width: 123px;">
@@ -43,11 +43,11 @@
             </div>
             <div class="progress progress-striped" style="height: 28px; position: relative">
               <div class="bar" style="height: 28px; background-color: #f08080; position: absolute; width: 100%; top: 0px; left: 0px;"></div>
-              <div class="bar" style="height: 28px; background-color: green; position: absolute; width: <%= "#{vote_percentage(1)}%" %>; top: 0px; left: 0px;"></div>
+              <div class="bar" ng-style="progress_style()"></div>
             </div>
           </td>
           <td>
-            <span style="position: absolute; top: 7px; font-size: .6em;"><%= "#{vote_percentage(0)}%" %></span>
+            <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(0)}}%</span>
           </td>
         </tr>
       </tbody>
