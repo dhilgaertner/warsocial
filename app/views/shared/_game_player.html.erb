@@ -1,5 +1,5 @@
 <div class="player-stats">
-  <div class="avatar" ng-style="avatar_style" ng-show="!is_game_started() || is_player_seated()">
+  <div class="avatar" ng-style="avatar_style()" ng-show="!is_game_started() || is_player_seated()">
   </div>
   <div class="info">
     <div class="name" ng-show="is_player_seated()">
@@ -19,6 +19,6 @@
     </div>
   </div>
 </div>
-<div class="medals" style='background-color: #f8af01' ng-show="!is_game_started() || is_player_seated()">
-  <div ng-repeat="medal in medals" class="medal"></div>
+<div class="medals" ng-style="medal_style()" ng-show="!is_game_started() || is_player_seated()">
+  <div ng-repeat="medal in player_medals()" class="medal" ng-style="medal_background(medal)"></div>
 </div>

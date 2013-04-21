@@ -5,19 +5,13 @@
  * Time: 2:10 PM
  */
 
-function GameSeatsCtrl($scope, $http, pubsub) {
+function GameTimerCtrl($scope, $http, pubsub) {
     $scope.seats = [{},{},{},{},{},{},{}];
-    $scope.colors = ["#f8af01", "#3760ae", "#c22b2b", "#5fb61f", "#603bb3", "#27a7b2", "#ad3bac"];
 
     $scope.update_seats = function(players) {
         angular.forEach(players, function(player){
             $scope.seats[player.seat_id - 1].player = player;
         });
-    };
-
-    $scope.seat_color = function(seat) {
-        var index = $scope.seats.indexOf(seat);
-        return $scope.colors[index];
     };
 
     $scope.top_seats = function() {

@@ -36,6 +36,7 @@ module ApplicationHelper
     r.push("/angularjs/services.js?v=#{vers}")
     r.push("/angularjs/game_board.js?v=#{vers}")
     r.push("/angularjs/game_map_info.js?v=#{vers}")
+    r.push("/angularjs/game_timer.js?v=#{vers}")
     r.push("/angularjs/game_seats.js?v=#{vers}")
     r.push("/angularjs/game_player.js?v=#{vers}")
     r.push("/angularjs/game_lobby.js?v=#{vers}")
