@@ -7,10 +7,6 @@
 
 function GameMapInfoCtrl($scope, $http, pubsub) {
 
-    $scope.is_favorite = function() {
-
-    };
-
     $scope.is_up_vote = function() {
 
     };
@@ -34,15 +30,14 @@ function GameMapInfoCtrl($scope, $http, pubsub) {
         }
     };
 
-    $scope.vote = function(is_up) {
-        $http.get('/home/stand?game_name=' + game_name).success(function(data) {
-            //TODO: Failure Condition
-        });
-    };
+    $scope.vote = function(vote) {
+        var url = '/maps/' + $scope.map.id + '/vote';
+        var postData = {
+            vote: vote.toString()
+        };
 
-    $scope.favorite = function(is_up) {
-        $http.get('/home/stand?game_name=' + game_name).success(function(data) {
-            //TODO: Failure Condition
+        $http.post(url, postData, { withCredentials: true }).success(function(data) {
+            alert(data);
         });
     };
 

@@ -66,6 +66,10 @@ function GamePlayerSeatCtrl($scope, pubsub) {
         return $scope.is_player_seated() ? $scope.seat.player.avatar_url : "";
     };
 
+    $scope.player_medals = function() {
+        return $scope.is_player_seated() ? eval($scope.seat.player.medals_json) : [];
+    };
+
     $scope.is_player_seated = function() {
         if($scope.seat.player != null){
             return true;
@@ -89,8 +93,54 @@ function GamePlayerSeatCtrl($scope, pubsub) {
         return false;
     };
 
-    $scope.avatar_style = {
-        "background-image": "url('" + $scope.player_avatar_url() + "');",
-        "background-color": "#f8af01"
+    $scope.avatar_style = function() {
+        return {
+            "background-image": "url('" + $scope.player_avatar_url() + "');",
+            "background-color": $scope.seat_color($scope.seat) //TODO: Service for this...
+        };
+    };
+
+    $scope.medal_style = function() {
+        return {
+            "background-color": $scope.seat_color($scope.seat) //TODO: Service for this...
+        };
+    };
+
+    function finishPositionToBadge(position) {
+        var response = {
+            url: null,
+            name: null
+        };
+
+        if (position > 100) return response;
+
+        if (position > 25) {
+            response.url = badges.top100;
+            response.name = "Top 100";
+        } else if(position > 10) {
+            response.url = badges.top25;
+            response.name = "Top 25";
+        } else if(position > 3) {
+            response.url = badges.top10;
+            response.name = "Top 10";
+        } else if(position == 3) {
+            response.url = badges.bronze;
+            response.name = "3rd";
+        } else if(position == 2) {
+            response.url = badges.silver;
+            response.name = "2nd";
+        } else if(position == 1) {
+            response.url = badges.gold;
+            response.name = "1st";
+        }
+
+        return response;
+    };
+
+    $scope.medal_background = function(medal) {
+        var b = finishPositionToBadge(medal);
+        return {
+            "background": "url('" + b.url + "') repeat scroll 0% 0% transparent"
+        };
     };
 }
