@@ -6,105 +6,76 @@
  */
 
 function GameTimerCtrl($scope, $http, pubsub) {
-    $scope.seats = [{},{},{},{},{},{},{}];
 
-    $scope.update_seats = function(players) {
+    $scope.timer = null;
+    $scope.current_player = null;
+
+    $scope.current_player_name = function(){
+        if ($scope.current_player != null) {
+            return $scope.current_player.name;
+        } else {
+            return "";
+        }
+    };
+
+    $scope.update_current_player = function(players){
         angular.forEach(players, function(player){
-            $scope.seats[player.seat_id - 1].player = player;
+            if(player.is_turn){
+                $scope.current_player = player;
+                return;
+            }
         });
     };
 
-    $scope.top_seats = function() {
-        return [
-            $scope.seats[0],
-            $scope.seats[2],
-            $scope.seats[4],
-            $scope.seats[6]
-        ];
+    $scope.is_my_turn = function(){
+        if ($scope.current_player == null) return false;
+
+        return $scope.who_am_i == $scope.current_player.player_id;
     };
 
-    $scope.bottom_seats = function() {
-        return [
-            $scope.seats[1],
-            $scope.seats[3],
-            $scope.seats[5]
-        ];
-    };
-
-    $scope.am_i_seated = function() {
-        if ($scope.players != null){
-            angular.forEach($scope.players, function(player){
-                if($scope.who_am_i == player.name){
-                    return true;
-                }
+    $scope.end_turn = function(){
+        if ($scope.is_my_turn()) {
+            $http.get('/home/end_turn?game_name=' + $scope.game_name).success(function(data) {
+                //TODO: Handle errors
             });
         }
-        return false;
-    };
-
-    $scope.clear_seats = function() {
-        $scope.seats = [{},{},{},{},{},{},{}];
-    };
-
-    $scope.sit = function(game_name) {
-        $http.get('/home/sit?game_name=' + game_name).success(function(data) {
-            //TODO: Failure Condition
-        });
-    };
-
-    $scope.stand = function(game_name) {
-        $http.get('/home/stand?game_name=' + game_name).success(function(data) {
-            //TODO: Failure Condition
-        });
     };
 
     pubsub.subscribe("channel_changed", function(channel){
 
         channel.bind('game_start', function(data) {
-            $scope.$apply(function(){
-                $scope.update_seats(data.players);
-            });
-        });
-
-        channel.bind('player_sit', function(player) {
-            $scope.$apply(function(){
-                $scope.update_seats([player]);
-            });
-        });
-
-        channel.bind('player_stand', function(player) {
-            $scope.$apply(function(){
-                $scope.update_seats([player]);
-            });
-        });
-
-        channel.bind('player_quit', function(player) {
-            $scope.$apply(function(){
-                $scope.update_seats([player]);
-            });
-        });
-
-        channel.bind('attack', function(data) {
-            $scope.$apply(function(){
-                $scope.update_seats(data.players);
-            });
+            $scope.update_current_player(data.players);
+            $scope.timer.restart();
         });
 
         channel.bind('game_winner', function(player) {
-            $scope.$apply(function(){
-                $scope.clear_seats();
-            });
+            $scope.current_player = null;
+            $scope.timer.stop();
+        });
+
+        channel.bind('attack', function(player) {
+            $scope.timer.restart();
         });
 
         channel.bind('new_turn', function(data) {
-            $scope.$apply(function(){
-                $scope.update_seats([data.previous_player, data.current_player]);
-            });
+            $scope.update_current_player([data.current_player]);
+            $scope.timer.restart();
         });
+
     });
 
     pubsub.subscribe("game_init", function(data){
-        $scope.clear_seats();
-        $scope.update_seats(data.players);
+        var timer_time = $scope.game_type == "multi_day" ? 1000000 : 20;
+
+        $scope.update_current_player(data.players);
+
+        if ($scope.timer == null) {
+            $scope.timer = new TurnTimer($('#turn-timer-box'), timer_time);
+        } else {
+            $scope.timer.stop();
+            $scope.timer.change_duration(timer_time);
+        }
+
+        $scope.timer.restart();
     });
 }
