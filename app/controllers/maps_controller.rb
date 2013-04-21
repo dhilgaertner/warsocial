@@ -106,6 +106,28 @@ class MapsController < ApplicationController
     end
   end
 
+  def info
+    if (params[:id] != nil)
+      map = Map.find(params[:id])
+      votes = Map.get_vote_counts(map.id)
+      favorites = Map.get_favorite_counts(map.id)
+
+      if (current_user != nil)
+        my_votes = Map.get_votes(current_user)
+        my_library = Map.get_favorites(current_user)
+      end
+    end
+
+    data = { :map_id => map.id,
+             :map => map,
+             :votes => votes,
+             :favorites => favorites,
+             :my_votes => my_votes,
+             :my_library => my_library }
+
+    render :json => data
+  end
+
   def vote
     map_id = params[:id].to_i
     vote = params[:vote].to_i

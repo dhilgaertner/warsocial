@@ -48,13 +48,13 @@ function GameSeatsCtrl($scope, $http, pubsub) {
 
     $scope.sit = function(game_name) {
         $http.get('/home/sit?game_name=' + game_name).success(function(data) {
-            console.log(data);
+            //TODO: Failure Condition
         });
     };
 
     $scope.stand = function(game_name) {
         $http.get('/home/stand?game_name=' + game_name).success(function(data) {
-            console.log(data);
+            //TODO: Failure Condition
         });
     };
 
