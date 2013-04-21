@@ -137,10 +137,19 @@ function GamePlayerSeatCtrl($scope, pubsub) {
         return response;
     };
 
-    $scope.medal_background = function(medal) {
-        var b = finishPositionToBadge(medal);
-        return {
-            "background": "url('" + b.url + "') repeat scroll 0% 0% transparent"
-        };
+    $scope.medal_background = function(medal_spot) {
+        var medals = $scope.player_medals();
+
+        var medal = medals.length > medal_spot ? medals[medal_spot] : null;
+
+        if (medal != null) {
+            var b = finishPositionToBadge(medal);
+            return {
+                "background": "url('" + b.url + "') repeat scroll 0% 0% transparent"
+            };
+        } else {
+            return {};
+        }
+
     };
 }

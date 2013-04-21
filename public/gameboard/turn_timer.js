@@ -25,6 +25,10 @@ TurnTimer.prototype.restart = function() {
     }, 1000);
 };
 
+TurnTimer.prototype.change_duration = function(duration) {
+    this._duration = duration;
+};
+
 TurnTimer.prototype.stop = function() {
     clearInterval(this._timer);
     this._bar.width(this._default_width);

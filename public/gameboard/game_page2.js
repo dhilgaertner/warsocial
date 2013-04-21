@@ -8,16 +8,16 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
     lobby_maps = maps;
     game = null;
 
-    var is_game_started = false;
-
-    for(var i=0; i<global_init_data.players.length; i++) {
-        if (global_init_data.players[i].is_turn == true) {
-            is_game_started = true;
-        }
-    }
-    var timer_time = game_type == "multi_day" ? 1000000 : 20;
-    var seats = new Seats(user_name, 7, global_init_data.players, is_game_started, timer_time);
-    seats.update_player_data(global_init_data.players);
+//    var is_game_started = false;
+//
+//    for(var i=0; i<global_init_data.players.length; i++) {
+//        if (global_init_data.players[i].is_turn == true) {
+//            is_game_started = true;
+//        }
+//    }
+    //var timer_time = game_type == "multi_day" ? 1000000 : 20;
+    //var seats = new Seats(user_name, 7, global_init_data.players, is_game_started, timer_time);
+    //seats.update_player_data(global_init_data.players);
 
     var chatbox = new ChatBox("chat-window", seats);
     var gamelog = new GameLog("log-window", seats);
@@ -27,11 +27,11 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
     var who_am_i = user_id;
     var who_am_i_name = user_name;
 
-    for(var i=0; i<global_init_data.players.length; i++) {
-        if (global_init_data.players[i].is_turn == true) {
-            seats.turn_start(global_init_data.players[i]);
-        }
-    }
+//    for(var i=0; i<global_init_data.players.length; i++) {
+//        if (global_init_data.players[i].is_turn == true) {
+//            seats.turn_start(global_init_data.players[i]);
+//        }
+//    }
 
 //    channel.bind('game_start', function(data) {
 //        data.who_am_i = who_am_i;
