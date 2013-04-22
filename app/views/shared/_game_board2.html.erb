@@ -1,6 +1,6 @@
 <div id="game-main" style="position: relative;">
   <div ng-controller="GameTimerCtrl" id="game-settings" class="well" style="height: 41px; width: 150px; padding: 15px; padding-top: 4px">
-    <h5 style="margin-top: 0px;">Current Turn</h5>
+    <h5 style="margin-top: 0px;">{{timer_title()}}</h5>
     <div id="turn-timer-box" style="float: left; width: 110px; position: relative; background-color: #DCDDDD; height: 28px; border-radius: 4px 4px 4px 4px;">
       <span id="turn-username" style="position: absolute; top: 5px; left: 5px; color: white;">{{current_player_name()}}</span>
       <div class="turn_progress progress progress-success progress-striped active" style="height: 28px;">
@@ -12,7 +12,7 @@
     </a>
   </div>
 
-  <div id="game-map-info" ng-controller="GameMapInfoCtrl" class="well <%= map_vote_class(@my_votes, @map.id) %>" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
+  <div id="game-map-info" ng-controller="GameMapInfoCtrl" class="well" ng-class="{ thumb_up: is_thumb_up(), thumb_down: is_thumb_down() }" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
     <h5 style="margin-top: 0px;">
       Map:
       <% if (current_user != nil && current_user.admin?) %>
@@ -28,16 +28,16 @@
             <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(1)}}%</span>
           </td>
           <td style="width: 125px;">
-            <div id="map-voting" style="position: absolute; top: 1px; left: 26px; color: white; height: 27px; z-index: 999; width: 123px;">
+            <div id="map-voting" ng-mouseenter="vote_hover = true" ng-mouseleave="vote_hover = false" style="position: absolute; top: 1px; left: 26px; color: white; height: 27px; z-index: 999; width: 123px;">
               <table style="width: 100%; height: 100%;">
                 <tbody>
                   <tr>
                     <td style="width: 33%; text-align: center;">
-                      <a href="#" class="btn btn-mini btn-success vote" style="display: none;" data-vote="1"><i class="icon-white icon-thumbs-up"></i></a>
+                      <a ng-click="vote(1)" class="btn btn-mini btn-success vote" ng-show="vote_hover"><i class="icon-white icon-thumbs-up"></i></a>
                     </td>
-                    <td style="width: 33%; text-align: center; cursor: default;"><span id="vote-text">vote</span></td>
+                    <td style="width: 33%; text-align: center; cursor: default;"><span id="vote-text" ng-show="!is_thumb_up() && !is_thumb_down">vote</span></td>
                     <td style="width: 33%; text-align: center;">
-                      <a href="#" class="btn btn-mini btn-danger vote" style="display: none;" data-vote="0"><i class="icon-white icon-thumbs-down"></i></a>
+                      <a ng-click="vote(0)" class="btn btn-mini btn-danger vote" ng-show="vote_hover"><i class="icon-white icon-thumbs-down"></i></a>
                     </td>
                   </tr>
                 </tbody>

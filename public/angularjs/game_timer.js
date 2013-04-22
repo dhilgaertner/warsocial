@@ -10,6 +10,14 @@ function GameTimerCtrl($scope, $http, pubsub) {
     $scope.timer = null;
     $scope.current_player = null;
 
+    $scope.timer_title = function() {
+        if ($scope.current_player != null) {
+            return "Current Turn";
+        } else {
+            return "Waiting for Players";
+        }
+    };
+
     $scope.current_player_name = function(){
         if ($scope.current_player != null) {
             return $scope.current_player.name;
@@ -67,6 +75,7 @@ function GameTimerCtrl($scope, $http, pubsub) {
     pubsub.subscribe("game_init", function(data){
         var timer_time = $scope.game_type == "multi_day" ? 1000000 : 20;
 
+        $scope.current_player = null;
         $scope.update_current_player(data.players);
 
         if ($scope.timer == null) {
@@ -76,6 +85,8 @@ function GameTimerCtrl($scope, $http, pubsub) {
             $scope.timer.change_duration(timer_time);
         }
 
-        $scope.timer.restart();
+        if ($scope.current_player != null) {
+            $scope.timer.restart();
+        }
     });
 }

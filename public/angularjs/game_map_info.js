@@ -7,12 +7,20 @@
 
 function GameMapInfoCtrl($scope, $http, pubsub) {
 
-    $scope.is_up_vote = function() {
+    $scope.is_thumb_up = function() {
+        if ($scope.my_votes != null) {
+            return $scope.my_votes[1].indexOf($scope.map.id.toString()) > -1
+        }
 
+        return false;
     };
 
-    $scope.is_down_vote = function() {
+    $scope.is_thumb_down = function() {
+        if ($scope.my_votes != null) {
+            return $scope.my_votes[0].indexOf($scope.map.id.toString()) > -1
+        }
 
+        return false;
     };
 
     $scope.vote_percentage = function(vote) {
@@ -33,11 +41,11 @@ function GameMapInfoCtrl($scope, $http, pubsub) {
     $scope.vote = function(vote) {
         var url = '/maps/' + $scope.map.id + '/vote';
         var postData = {
-            vote: vote.toString()
+            vote: vote
         };
 
         $http.post(url, postData, { withCredentials: true }).success(function(data) {
-            alert(data);
+        //    console.log(data);
         });
     };
 
