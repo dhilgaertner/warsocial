@@ -31,8 +31,12 @@
     <div ng-controller="GameChatCtrl" id="chat-window">
       <table style="margin-left: 5px; margin-right: 5px;">
         <tbody>
-          <tr ng-repeat="message in messages">
-            <td>
+          <tr ng-repeat="message in messages"
+              ng-switch on="message.type">
+            <td ng-switch-when="server" class="well well-small">
+              <span style="color: green;">{{message.text}}</span>
+            </td>
+            <td ng-switch-default>
               <span style=""><b>{{message.username}}</b></span>: {{message.text}}
             </td>
           </tr>
