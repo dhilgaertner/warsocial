@@ -155,28 +155,28 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
         }
     );
 
-    var $mapInfo = $('#game-map-info');
-    $mapInfo.find('a.vote').click(function(){
-        var map = $mapInfo.data("map-id");
-        var vote = $(this).data("vote");
-
-        if (vote == "0") {
-            $mapInfo.addClass("thumb-down")
-            $mapInfo.removeClass("thumb-up")
-        } else {
-            $mapInfo.addClass("thumb-up")
-            $mapInfo.removeClass("thumb-down")
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/maps/" + map + "/vote",
-            data: { vote: vote.toString() },
-            dataType: 'json'
-        });
-
-        return false;
-    });
+//    var $mapInfo = $('#game-map-info');
+//    $mapInfo.find('a.vote').click(function(){
+//        var map = $mapInfo.data("map-id");
+//        var vote = $(this).data("vote");
+//
+//        if (vote == "0") {
+//            $mapInfo.addClass("thumb-down")
+//            $mapInfo.removeClass("thumb-up")
+//        } else {
+//            $mapInfo.addClass("thumb-up")
+//            $mapInfo.removeClass("thumb-down")
+//        }
+//
+//        $.ajax({
+//            type: "POST",
+//            url: "/maps/" + map + "/vote",
+//            data: { vote: vote.toString() },
+//            dataType: 'json'
+//        });
+//
+//        return false;
+//    });
 
     $('.action-sit a').bind('ajax:complete', function(evt, xhr, status) {
         switch(xhr.responseText) {
