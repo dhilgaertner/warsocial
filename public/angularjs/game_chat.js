@@ -5,7 +5,8 @@
  * Time: 2:10 PM
  */
 
-function GameChatCtrl($scope, $http, socket, pubsub) {
+function GameChatCtrl($scope, pubsub) {
+    $scope.messages = [];
 
     pubsub.subscribe("channel_changed", function(channel){
         channel.bind('pusher:subscription_succeeded', function(members) {
@@ -15,29 +16,61 @@ function GameChatCtrl($scope, $http, socket, pubsub) {
                     memArray.push(member.info.name);
                 }
             });
-            //chatbox.addChatLine("Room", "Welcome to " + global_game_name + ". Players here: " + memArray.join(", ") + ".");
+
+            $scope.$apply(function(){
+                $scope.messages.push({
+                    type: "regular",
+                    username: "Room",
+                    text: "Welcome to " + $scope.game_name + ". Players here: " + memArray.join(", ") + "."
+                });
+            });
+
         });
 
         channel.bind('pusher:member_added', function(member) {
             if (member.id != "anon") {
-                //chatbox.addChatLine("Room", member.info.name + " is here.");
+                $scope.$apply(function(){
+                    $scope.messages.push({
+                        type: "regular",
+                        username: "Room",
+                        text: member.info.name + " is here."
+                    });
+                });
             }
         });
 
         channel.bind('pusher:member_removed', function(member) {
             if (member.id != "anon") {
-                //chatbox.addChatLine("Room", member.info.name + " has left.")
+                $scope.$apply(function(){
+                    $scope.messages.push({
+                        type: "regular",
+                        username: "Room",
+                        text: member.info.name + " has left."
+                    });
+                });
             }
         });
 
         channel.bind('new_chat_line', function(data) {
             if (data.name != who_am_i_name) {
-                //chatbox.addChatLine(data.name, data.entry);
+                $scope.$apply(function(){
+                    $scope.messages.push({
+                        type: "regular",
+                        username: data.name,
+                        text: data.entry
+                    });
+                });
             }
         });
 
         channel.bind('server_message', function(data) {
-            //chatbox.addServerMessage(data);
+            $scope.$apply(function(){
+                $scope.messages.push({
+                    type: "server",
+                    username: "Server",
+                    text: member.info.name + " has left."
+                });
+            });
         });
     });
 
