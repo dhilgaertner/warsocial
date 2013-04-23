@@ -22,16 +22,16 @@
       <div class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
       <div class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
     </div>
-    <div id="log-window">
+    <div ng-controller="GameLogCtrl" id="log-window">
       <table style="width: 100%">
         <tbody>
           <tr ng-repeat="message in messages"
               ng-switch on="message.type">
-            <td ng-switch-when="game_winnner">
+            <td ng-switch-when="game_winner">
               <div><b><span style="color: black;">{{message.username}}</span> is the winner!</b></div>
             </td>
             <td ng-switch-when="attack">
-              <div><span style="color: black;"><b>{{message.defender}}</b></span> {{verb}} {{vs}}, {{total}}, {{rolls}}</div>
+              <div><b><span style="color: black;">{{message.username}}</span></b> {{message.verb}} {{message.vs}}, {{message.total}}, {{message.rolls}}</div>
             </td>
             <td ng-switch-when="turn_changed">
               <div class="divider"></div>

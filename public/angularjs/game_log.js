@@ -51,7 +51,7 @@ function GameLogCtrl($scope, pubsub) {
             var dname = null;
             angular.forEach(data.players ,function(player) {
                 if (player.player_id == dpid) {
-                    dname = this.name;
+                    dname = player.name;
                 }
             });
 
@@ -63,7 +63,7 @@ function GameLogCtrl($scope, pubsub) {
             $scope.$apply(function(){
                 $scope.messages.push({
                     type: "attack",
-                    defender: dname,
+                    username: dname,
                     verb: verb,
                     vs: vs,
                     total: total,
@@ -82,9 +82,11 @@ function GameLogCtrl($scope, pubsub) {
         });
 
         channel.bind('new_turn', function(data) {
-            $scope.messages.push({
-                type: "turn_changed",
-                username: data.current_player.name
+            $scope.$apply(function(){
+                $scope.messages.push({
+                    type: "turn_changed",
+                    username: data.current_player.name
+                });
             });
         });
 
