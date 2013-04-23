@@ -8,6 +8,10 @@
 function GameLobbyCtrl($scope, $http, pubsub) {
 
     angular.element('#game_lobby_open').bind('click', function() {
+        if ($scope.skip_fetch) {
+            $scope.skip_fetch = false;
+            return;
+        }
         $scope.fetchData();
     });
 
@@ -36,6 +40,7 @@ function GameLobbyCtrl($scope, $http, pubsub) {
     };
 
     $scope.gotoGame = function(game_name) {
+        $scope.skip_fetch = true;
         pubsub.publish("change_game", [game_name]);
         angular.element('#game_lobby_open').click();
     };

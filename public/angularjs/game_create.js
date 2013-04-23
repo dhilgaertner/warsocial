@@ -5,7 +5,7 @@
  * Time: 2:03 PM
  */
 
-function GameCreateCtrl($scope, $http) {
+function GameCreateCtrl($scope, $http, pubsub) {
     $scope.selectedMap = "default";
     $scope.selectedPlayers = 2;
     $scope.selectedWager = 0;
@@ -40,7 +40,8 @@ function GameCreateCtrl($scope, $http) {
         };
 
         $http.post('/home/create_game', postData, { withCredentials: true }).success(function(data) {
-            window.location.href = '/game/' + data;
+            pubsub.publish("change_game", [data]);
+            angular.element('#game_create_open').click();
         });
     };
 }
