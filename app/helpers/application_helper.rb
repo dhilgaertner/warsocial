@@ -41,6 +41,7 @@ module ApplicationHelper
     r.push("/angularjs/game_player.js?v=#{vers}")
     r.push("/angularjs/game_lobby.js?v=#{vers}")
     r.push("/angularjs/game_create.js?v=#{vers}")
+    r.push("/angularjs/game_log.js?v=#{vers}")
     r.push("/angularjs/game_chat.js?v=#{vers}")
 
     r.push("/bootstrap/js/bootstrap.min.js")
