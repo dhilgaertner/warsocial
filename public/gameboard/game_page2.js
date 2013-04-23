@@ -19,8 +19,8 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
     //var seats = new Seats(user_name, 7, global_init_data.players, is_game_started, timer_time);
     //seats.update_player_data(global_init_data.players);
 
-    var chatbox = new ChatBox("chat-window", seats);
-    var gamelog = new GameLog("log-window", seats);
+    //var chatbox = new ChatBox("chat-window", seats);
+//    var gamelog = new GameLog("log-window", seats);
 
     var settings_modal = new Settings("settings");
 

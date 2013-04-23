@@ -27,7 +27,7 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
         $http.get(url).success(function(data) {
             $scope.who_am_i = data.who_am_i;
             $scope.game_name = data.game_name;
-            global_game_name = data.game_name;
+            global_game_name = data.game_name;   //TODO: Remove... Exists cuz of the game-board! Doh!
             $scope.game_type = data.game_type;
             $scope.game_wager = data.game_wager;
             $scope.game_state = data.game_state;

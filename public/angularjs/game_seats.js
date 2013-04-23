@@ -15,6 +15,16 @@ function GameSeatsCtrl($scope, $http, pubsub) {
         });
     };
 
+    $scope.remove_occupant = function(player) {
+        angular.forEach($scope.seats, function(seat){
+            if (seat.player != null) {
+                if (seat.player.player_id == player.player_id){
+                    seat.player = null;
+                }
+            }
+        });
+    };
+
     $scope.seat_color = function(seat) {
         var index = $scope.seats.indexOf(seat);
         return $scope.colors[index];
@@ -80,7 +90,7 @@ function GameSeatsCtrl($scope, $http, pubsub) {
 
         channel.bind('player_stand', function(player) {
             $scope.$apply(function(){
-                $scope.update_seats([player]);
+                $scope.remove_occupant(player);
             });
         });
 
