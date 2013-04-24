@@ -28,14 +28,14 @@
           <tr ng-repeat="message in messages"
               ng-switch on="message.type">
             <td ng-switch-when="game_winner">
-              <div><b><span style="color: black;">{{message.username}}</span> is the winner!</b></div>
+              <div><b><span ng-style="colorStyle(message.username)">{{message.username}}</span> is the winner!</b></div>
             </td>
             <td ng-switch-when="attack">
-              <div><b><span style="color: black;">{{message.username}}</span></b> {{message.verb}} {{message.vs}}, {{message.total}}, {{message.rolls}}</div>
+              <div><b><span ng-style="colorStyle(message.username)">{{message.username}}</span></b> {{message.verb}} {{message.vs}}, {{message.total}}, {{message.rolls}}</div>
             </td>
             <td ng-switch-when="turn_changed">
               <div class="divider"></div>
-              <div><b><span style="color: black;">{{message.username}}</span>'s turn</b></div>
+              <div><b><span ng-style="colorStyle(message.username)">{{message.username}}</span>'s turn</b></div>
             </td>
             <td ng-switch-default>
               <div><b>Game started!</b></div>
@@ -53,7 +53,7 @@
               <span style="color: green;">{{message.text}}</span>
             </td>
             <td ng-switch-default>
-              <span style=""><b>{{message.username}}</b></span>: {{message.text}}
+              <span ng-style="colorStyle(message.username)"><b>{{message.username}}</b></span>: {{message.text}}
             </td>
           </tr>
         </tbody>

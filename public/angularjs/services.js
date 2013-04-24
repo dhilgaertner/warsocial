@@ -73,10 +73,18 @@ wsApp.factory('socket', function(pubsub) {
     return pusherController;
 });
 
+wsApp.factory('global', function() {
+    return {
+        get_player_color: function(username) {
+            return "black";
+        }
+    };
+});
+
 wsApp.directive('eatClick', function() {
     return function(scope, element, attrs) {
         $(element).click(function(event) {
             event.preventDefault();
         });
-    }
+    };
 })

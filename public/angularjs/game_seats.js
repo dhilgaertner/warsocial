@@ -5,7 +5,7 @@
  * Time: 2:10 PM
  */
 
-function GameSeatsCtrl($scope, $http, pubsub) {
+function GameSeatsCtrl($scope, $http, pubsub, global) {
     $scope.seats = [{},{},{},{},{},{},{}];
     $scope.colors = ["#f8af01", "#3760ae", "#c22b2b", "#5fb61f", "#603bb3", "#27a7b2", "#ad3bac"];
 
@@ -14,6 +14,23 @@ function GameSeatsCtrl($scope, $http, pubsub) {
             $scope.seats[player.seat_id - 1].player = player;
         });
     };
+
+    $scope.get_color_of_player = function(username) {
+        var color = "black";
+
+        $.each($scope.seats, function(index, seat) {
+            if (seat.player != null) {
+                if (seat.player.name == username) {
+                    color = $scope.colors[index];
+                    return false;
+                }
+            }
+        });
+
+        return color;
+    }
+
+    global.get_color_of_player = $scope.get_color_of_player;
 
     $scope.remove_occupant = function(player) {
         angular.forEach($scope.seats, function(seat){
@@ -31,20 +48,52 @@ function GameSeatsCtrl($scope, $http, pubsub) {
     };
 
     $scope.top_seats = function() {
-        return [
-            $scope.seats[0],
-            $scope.seats[2],
-            $scope.seats[4],
-            $scope.seats[6]
-        ];
+        if ($scope.number_of_seats > 6) {
+            return [
+                $scope.seats[0],
+                $scope.seats[2],
+                $scope.seats[4],
+                $scope.seats[6]
+            ];
+        } else if ($scope.number_of_seats > 4){
+            return [
+                $scope.seats[0],
+                $scope.seats[2],
+                $scope.seats[4]
+            ];
+        } else if ($scope.number_of_seats > 2){
+            return [
+                $scope.seats[0],
+                $scope.seats[2]
+            ];
+        } else if ($scope.number_of_seats > 0){
+            return [
+                $scope.seats[0]
+            ];
+        } else {
+            return [];
+        }
     };
 
     $scope.bottom_seats = function() {
-        return [
-            $scope.seats[1],
-            $scope.seats[3],
-            $scope.seats[5]
-        ];
+        if ($scope.number_of_seats > 5) {
+            return [
+                $scope.seats[1],
+                $scope.seats[3],
+                $scope.seats[5]
+            ];
+        } else if ($scope.number_of_seats > 3){
+            return [
+                $scope.seats[1],
+                $scope.seats[3]
+            ];
+        } else if ($scope.number_of_seats > 1){
+            return [
+                $scope.seats[1]
+            ];
+        } else {
+            return [];
+        }
     };
 
     $scope.am_i_seated = function() {
@@ -120,6 +169,7 @@ function GameSeatsCtrl($scope, $http, pubsub) {
     });
 
     pubsub.subscribe("game_init", function(data){
+        $scope.number_of_seats = data.max_player_count;
         $scope.clear_seats();
         $scope.update_seats(data.players);
     });

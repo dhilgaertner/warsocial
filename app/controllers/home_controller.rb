@@ -290,6 +290,7 @@ class HomeController < ApplicationController
                   :game_name => game.name,
                   :game_state => game.state,
                   :game_wager => game.wager_level,
+                  :max_player_count => game.max_player_count,
                   :players => game.players.values,
                   :deployment => game.lands.values }
 
