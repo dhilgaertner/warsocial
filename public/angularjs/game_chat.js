@@ -5,8 +5,19 @@
  * Time: 2:10 PM
  */
 
-function GameChatCtrl($scope, pubsub) {
+function GameChatCtrl($scope, pubsub, global) {
     $scope.messages = [];
+
+    function scroll(){
+        var element = $('#chat-window');  //TODO: AngularJS No-No
+        element.animate({ scrollTop: element.prop("scrollHeight") }, 300);
+    };
+
+    $scope.colorStyle = function(username) {
+        return {
+            color: global.get_color_of_player(username)
+        };
+    }
 
     pubsub.subscribe("channel_changed", function(channel){
         channel.bind('pusher:subscription_succeeded', function(members) {
@@ -25,6 +36,7 @@ function GameChatCtrl($scope, pubsub) {
                 });
             });
 
+            scroll();
         });
 
         channel.bind('pusher:member_added', function(member) {
@@ -36,7 +48,10 @@ function GameChatCtrl($scope, pubsub) {
                         text: member.info.name + " is here."
                     });
                 });
+
+                scroll();
             }
+
         });
 
         channel.bind('pusher:member_removed', function(member) {
@@ -48,6 +63,8 @@ function GameChatCtrl($scope, pubsub) {
                         text: member.info.name + " has left."
                     });
                 });
+
+                scroll();
             }
         });
 
@@ -60,6 +77,8 @@ function GameChatCtrl($scope, pubsub) {
                         text: data.entry
                     });
                 });
+
+                scroll();
             }
         });
 
@@ -71,6 +90,8 @@ function GameChatCtrl($scope, pubsub) {
                     text: member.info.name + " has left."
                 });
             });
+
+            scroll();
         });
     });
 

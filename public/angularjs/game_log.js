@@ -5,8 +5,19 @@
  * Time: 2:10 PM
  */
 
-function GameLogCtrl($scope, pubsub) {
+function GameLogCtrl($scope, pubsub, global) {
     $scope.messages = [];
+
+    function scroll(){
+        var element = $('#log-window');  //TODO: AngularJS No-No
+        element.animate({ scrollTop: element.prop("scrollHeight") }, 300);
+    };
+
+    $scope.colorStyle = function(username) {
+        return {
+            color: global.get_color_of_player(username)
+        };
+    }
 
     pubsub.subscribe("channel_changed", function(channel){
 
@@ -24,6 +35,7 @@ function GameLogCtrl($scope, pubsub) {
                             username: p.name
                         });
                     });
+                    scroll();
                 }
             }
         });
@@ -70,6 +82,7 @@ function GameLogCtrl($scope, pubsub) {
                     rolls: rolls
                 });
             });
+            scroll();
         });
 
         channel.bind('game_winner', function(player) {
@@ -79,6 +92,7 @@ function GameLogCtrl($scope, pubsub) {
                     username: player.name
                 });
             });
+            scroll();
         });
 
         channel.bind('new_turn', function(data) {
@@ -88,6 +102,7 @@ function GameLogCtrl($scope, pubsub) {
                     username: data.current_player.name
                 });
             });
+            scroll();
         });
 
     });
