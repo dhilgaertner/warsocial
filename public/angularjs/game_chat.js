@@ -5,7 +5,7 @@
  * Time: 2:10 PM
  */
 
-function GameChatCtrl($scope, pubsub, global) {
+function GameChatCtrl($scope, $http, pubsub, global) {
     $scope.messages = [];
 
     function scroll(){
@@ -17,7 +17,33 @@ function GameChatCtrl($scope, pubsub, global) {
         return {
             color: global.get_color_of_player(username)
         };
-    }
+    };
+
+    $scope.addChatLine = function(entry) {
+
+        if (entry.trim() == "") {
+            return;
+        }
+
+        $scope.messages.push({
+            type: "regular",
+            username: $scope.who_am_i_name,
+            text: entry
+        });
+
+        var url = '/home/add_line';
+        var postData = {
+            game_name: $scope.game_name,
+            entry: entry
+        };
+
+        $http.post(url, postData, { withCredentials: true }).success(function(data) {
+
+        });
+
+        $scope.entry = "";
+        scroll();
+    };
 
     pubsub.subscribe("channel_changed", function(channel){
         channel.bind('pusher:subscription_succeeded', function(members) {
@@ -69,7 +95,7 @@ function GameChatCtrl($scope, pubsub, global) {
         });
 
         channel.bind('new_chat_line', function(data) {
-            if (data.name != who_am_i_name) {
+            if (data.name != $scope.who_am_i_name) {
                 $scope.$apply(function(){
                     $scope.messages.push({
                         type: "regular",
