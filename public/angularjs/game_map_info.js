@@ -38,6 +38,20 @@ function GameMapInfoCtrl($scope, $http, pubsub) {
         }
     };
 
+    $scope.my_vote = function() {
+        if ($scope.my_votes == null) return -1;
+
+        var down = $.inArray($scope.map.id.toString(), $scope.my_votes[0]);
+
+        if (down != -1) return 0;
+
+        var up = $.inArray($scope.map.id.toString(), $scope.my_votes[1]);
+
+        if (up != -1) return 1;
+
+        return -1;
+    };
+
     $scope.vote = function(vote) {
         var url = '/maps/' + $scope.map.id + '/vote';
         var postData = {
@@ -45,7 +59,8 @@ function GameMapInfoCtrl($scope, $http, pubsub) {
         };
 
         $http.post(url, postData, { withCredentials: true }).success(function(data) {
-        //    console.log(data);
+            $scope.votes = data.votes;
+            $scope.my_votes = data.my_votes;
         });
     };
 

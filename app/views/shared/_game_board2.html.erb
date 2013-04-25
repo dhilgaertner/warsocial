@@ -33,11 +33,15 @@
                 <tbody>
                   <tr>
                     <td style="width: 33%; text-align: center;">
-                      <a ng-click="vote(1)" class="btn btn-mini btn-success vote" ng-show="vote_hover"><i class="icon-white icon-thumbs-up"></i></a>
+                      <a ng-click="vote(1)" class="btn btn-mini btn-success vote" ng-show="vote_hover">
+                        <i ng-class="{ 'icon-white': true, 'icon-thumbs-up': my_vote() != 1, 'icon-ok': my_vote() == 1 }"></i>
+                      </a>
                     </td>
                     <td style="width: 33%; text-align: center; cursor: default;"><span id="vote-text" ng-show="!is_thumb_up() && !is_thumb_down">vote</span></td>
                     <td style="width: 33%; text-align: center;">
-                      <a ng-click="vote(0)" class="btn btn-mini btn-danger vote" ng-show="vote_hover"><i class="icon-white icon-thumbs-down"></i></a>
+                      <a ng-click="vote(0)" class="btn btn-mini btn-danger vote" ng-show="vote_hover">
+                        <i ng-class="{ 'icon-white': true, 'icon-thumbs-down': my_vote() != 0, 'icon-ok': my_vote() == 0 }"></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
