@@ -1,6 +1,6 @@
 class MapsController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  before_filter :authenticate_user!, :except => [:index]
+  before_filter :authenticate_user!, :except => [:index, :info, :get_maps]
 
   def index
     @js_page_type = "maps"
@@ -136,8 +136,15 @@ class MapsController < ApplicationController
     if map_id != 0
       Map.vote(current_user, map_id, vote)
 
-      render :text=>"Success", :status=>200
-      return
+      votes = Map.get_vote_counts(map_id)
+      my_votes = Map.get_votes(current_user)
+
+      data = { :votes => votes,
+               :my_votes => my_votes }
+
+      render :json => data
+    else
+      render :text=>"fail", :status=>400
     end
   end
 

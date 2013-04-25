@@ -1009,10 +1009,12 @@
           </li>
         </ul>
 
-        <ul class="nav">
-          <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %></li>
-          <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
-        </ul>
+        <% if (controller_name == "home") %>
+          <ul class="nav">
+            <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %></li>
+            <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
+          </ul>
+        <% end %>
 
         <% if (current_user != nil) %>
           <ul class="nav pull-right">
