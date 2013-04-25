@@ -284,6 +284,7 @@ class HomeController < ApplicationController
     map = Map.where("name = ?", game.map_name).first
 
     init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
+                  :who_am_i_name => current_user == nil ? nil : current_user.username,
                   :map_id => map.id,
                   :map_layout => ActiveSupport::JSON.decode(game.map_json),
                   :game_type => game.game_type,

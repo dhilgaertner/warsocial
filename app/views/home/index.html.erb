@@ -44,29 +44,30 @@
         </tbody>
       </table>
     </div>
-    <div ng-controller="GameChatCtrl" id="chat-window">
-      <table style="margin-left: 5px; margin-right: 5px;">
-        <tbody>
-          <tr ng-repeat="message in messages"
-              ng-switch on="message.type">
-            <td ng-switch-when="server" class="well well-small">
-              <span style="color: green;">{{message.text}}</span>
-            </td>
-            <td ng-switch-default>
-              <span ng-style="colorStyle(message.username)"><b>{{message.username}}</b></span>: {{message.text}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <% if user_signed_in? %>
-      <%= form_tag(add_line_home_index_path, :id => "form-chat", :remote => true, :autocomplete => "off") do %>
-        <%= hidden_field_tag 'game_name', @game.name %>
-        <div class="label-over">
-          <label for="entry">Type your message here...</label>
-          <%= text_field_tag 'entry', nil, {:id => 'entry', :class => "input"} %>
-        </div>
+    <div ng-controller="GameChatCtrl">
+      <div id="chat-window">
+        <table style="margin-left: 5px; margin-right: 5px;">
+          <tbody>
+            <tr ng-repeat="message in messages"
+                ng-switch on="message.type">
+              <td ng-switch-when="server" class="well well-small">
+                <span style="color: green;">{{message.text}}</span>
+              </td>
+              <td ng-switch-default>
+                <span ng-style="colorStyle(message.username)"><b>{{message.username}}</b></span>: {{message.text}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <% if user_signed_in? %>
+        <form id="form-chat" ng-submit="addChatLine(entry)" autocomplete="off">
+          <div class="label-over">
+            <label for="entry">Type your message here...</label>
+            <input ng-model="entry" id="entry" class="input" type="text" name="entry">
+          </div>
+        </form>
       <% end %>
-    <% end %>
+    </div>
   </div>
 </div>

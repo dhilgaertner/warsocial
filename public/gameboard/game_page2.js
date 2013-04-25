@@ -96,13 +96,13 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
 //        gamelog.logTurnChange(data.current_player.name);
 //    });
 
-    $('#entry').keyup(function(event){
-        if(event.keyCode == 13){
-            chatbox.addChatLine(who_am_i_name, $('#entry').val());
-            $('#entry').val("");
-            $("#form_chat").submit();
-        }
-    });
+//    $('#entry').keyup(function(event){
+//        if(event.keyCode == 13){
+//            chatbox.addChatLine(who_am_i_name, $('#entry').val());
+//            $('#entry').val("");
+//            $("#form_chat").submit();
+//        }
+//    });
 
     $('#dice_visible').click(function() {
         var visible = $(this).hasClass('active');
@@ -146,14 +146,14 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
 
     $('div.label-over label').labelOver('over-apply')
 
-    $('#map-voting').hover(
-        function () {
-            $(this).find('.btn').show();
-        },
-        function () {
-            $(this).find('.btn').hide();
-        }
-    );
+//    $('#map-voting').hover(
+//        function () {
+//            $(this).find('.btn').show();
+//        },
+//        function () {
+//            $(this).find('.btn').hide();
+//        }
+//    );
 
 //    var $mapInfo = $('#game-map-info');
 //    $mapInfo.find('a.vote').click(function(){
@@ -178,18 +178,18 @@ function game_page_init(game_name, game_type, init_data, maps, is_production, pu
 //        return false;
 //    });
 
-    $('.action-sit a').bind('ajax:complete', function(evt, xhr, status) {
-        switch(xhr.responseText) {
-            case "not_logged_in":
-                chatbox.addChatLine("Room", "You are not currently logged in.  Please re-login.");
-                break;
-            case "not_enough_points":
-                chatbox.addChatLine("Room", "You do not have enough points to sit at this table.  This includes amounts already wagered at other tables you are currently seated at..");
-                break;
-            case "already_in_game":
-                chatbox.addChatLine("Room", "You are already seated in this game.");
-                break;
-        }
-    });
+//    $('.action-sit a').bind('ajax:complete', function(evt, xhr, status) {
+//        switch(xhr.responseText) {
+//            case "not_logged_in":
+//                chatbox.addChatLine("Room", "You are not currently logged in.  Please re-login.");
+//                break;
+//            case "not_enough_points":
+//                chatbox.addChatLine("Room", "You do not have enough points to sit at this table.  This includes amounts already wagered at other tables you are currently seated at..");
+//                break;
+//            case "already_in_game":
+//                chatbox.addChatLine("Room", "You are already seated in this game.");
+//                break;
+//        }
+//    });
 }
 
