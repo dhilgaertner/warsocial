@@ -97,14 +97,18 @@ function GameSeatsCtrl($scope, $http, pubsub, global) {
     };
 
     $scope.am_i_seated = function() {
-        if ($scope.players != null){
-            angular.forEach($scope.players, function(player){
-                if($scope.who_am_i == player.name){
-                    return true;
+        var found = false;
+
+        if ($scope.seats != null){
+            angular.forEach($scope.seats, function(seat){
+                if(seat.player != null) {
+                    if($scope.who_am_i == seat.player.player_id){
+                        found = true;
+                    }
                 }
             });
         }
-        return false;
+        return found;
     };
 
     $scope.clear_seats = function() {

@@ -7,24 +7,26 @@
 <% end %>
 
 <div ng-controller="GameBoardCtrl" id="game-container">
-  <div class="game">
+  <div ng-controller="GameSeatsCtrl">
+    <div class="game">
 
-    <%= render "shared/game_board2" %>
+      <%= render "shared/game_board2" %>
 
-  </div>
-  <div class="sidebar">
-    <div id="game-details">
-      <div class="wrapper" style="margin-top: 8px; margin-left: 10px;">
-        <button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
-        <%= link_to '<i style="margin-top: 2px;" class="icon-flag icon-white"></i>'.html_safe, flag_home_index_path(:game_name => @game.name), :remote => true, :id => "game-forfeit", :class => "btn btn-danger", :style => "display:none;", :confirm => "Are you sure you want to surrender the battle?" %>
-
-      </div>
-      <div class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
-      <div class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
     </div>
-    <div ng-controller="GameLogCtrl" id="log-window">
-      <table style="width: 100%">
-        <tbody>
+    <div class="sidebar">
+      <div id="game-details">
+        <div class="wrapper" style="margin-top: 8px; margin-left: 10px;">
+          <button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
+          <a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
+            <i class="icon-flag icon-white" style="margin-top: 2px;"></i>
+          </a>
+        </div>
+        <div class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
+        <div class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
+      </div>
+      <div ng-controller="GameLogCtrl" id="log-window">
+        <table style="width: 100%">
+          <tbody>
           <tr ng-repeat="message in messages"
               ng-switch on="message.type">
             <td ng-switch-when="game_winner">
@@ -41,13 +43,13 @@
               <div><b>Game started!</b></div>
             </td>
           </tr>
-        </tbody>
-      </table>
-    </div>
-    <div ng-controller="GameChatCtrl">
-      <div id="chat-window">
-        <table style="margin-left: 5px; margin-right: 5px;">
-          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div ng-controller="GameChatCtrl">
+        <div id="chat-window">
+          <table style="margin-left: 5px; margin-right: 5px;">
+            <tbody>
             <tr ng-repeat="message in messages"
                 ng-switch on="message.type">
               <td ng-switch-when="server" class="well well-small">
@@ -57,17 +59,18 @@
                 <span ng-style="colorStyle(message.username)"><b>{{message.username}}</b></span>: {{message.text}}
               </td>
             </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+        <% if user_signed_in? %>
+          <form id="form-chat" ng-submit="addChatLine(entry)" autocomplete="off">
+            <div class="label-over">
+              <label for="entry">Type your message here...</label>
+              <input ng-model="entry" id="entry" class="input" type="text" name="entry">
+            </div>
+          </form>
+        <% end %>
       </div>
-      <% if user_signed_in? %>
-        <form id="form-chat" ng-submit="addChatLine(entry)" autocomplete="off">
-          <div class="label-over">
-            <label for="entry">Type your message here...</label>
-            <input ng-model="entry" id="entry" class="input" type="text" name="entry">
-          </div>
-        </form>
-      <% end %>
     </div>
   </div>
 </div>

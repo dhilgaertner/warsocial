@@ -43,6 +43,12 @@ function GameBoardCtrl($scope, $http, socket, pubsub) {
 
     $scope.fetchData(null);
 
+    $scope.flag = function() {
+        $http.get("/home/flag?game_name=" + $scope.game_name).success(function(data) {
+
+        });
+    };
+
     pubsub.subscribe("change_game", function(game_name){
         $scope.fetchData(game_name);
     });
