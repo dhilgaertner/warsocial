@@ -61,7 +61,7 @@
   </div>
 
   <div id="top-players" class="players-container">
-    <div ng-controller="GameSeatsCtrl" class="players">
+    <div class="players">
       <div ng-repeat="seat in top_seats()"
            ng-controller="GamePlayerSeatCtrl"
            ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() }">
@@ -235,7 +235,7 @@
   </div>
 
   <div id="bottom-players" class="players-container">
-    <div ng-controller="GameSeatsCtrl" class="players">
+    <div class="players">
       <div ng-repeat="seat in bottom_seats()"
            ng-controller="GamePlayerSeatCtrl"
            ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() }">

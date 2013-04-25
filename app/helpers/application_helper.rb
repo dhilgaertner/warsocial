@@ -24,9 +24,6 @@ module ApplicationHelper
       r.push("/cloudinary/jquery.fileupload.js?v=#{vers}")
       r.push("/cloudinary/jquery.cloudinary.js?v=#{vers}")
 
-      r.push("/gameboard/lobby.js?v=#{vers}")
-      r.push("/gameboard/create_game.js?v=#{vers}")
-
       # Profile
       r.push("/highcharts/highcharts.js?v=#{vers}")
       r.push("/tweet/jquery.tweet.js?v=#{vers}")
@@ -84,10 +81,7 @@ module ApplicationHelper
         r.push("/gameboard/shared.js?v=#{vers}")
         r.push("/gameboard/warsocial.js?v=#{vers}")
         r.push("/gameboard/turn_timer.js?v=#{vers}")
-        r.push("/gameboard/seats2.js?v=#{vers}")
         r.push("/gameboard/settings.js?v=#{vers}")
-        r.push("/gameboard/chatbox.js?v=#{vers}")
-        r.push("/gameboard/gamelog.js?v=#{vers}")
       elsif @dev || @dev_image || @test
 
         r.push("/gameboard/game_page2.js?v=#{vers}")
@@ -126,10 +120,7 @@ module ApplicationHelper
 
         r.push("/gameboard/turn_timer.js?v=#{vers}")
 
-        r.push("/gameboard/seats2.js?v=#{vers}")
         r.push("/gameboard/settings.js?v=#{vers}")
-        r.push("/gameboard/chatbox.js?v=#{vers}")
-        r.push("/gameboard/gamelog.js?v=#{vers}")
 
       end
     end

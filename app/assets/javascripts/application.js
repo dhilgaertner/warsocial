@@ -7,5 +7,4 @@
 //= require jquery
 //= require jquery_ujs
 //= require lib
-//= require shared
 //= require cloudinary
