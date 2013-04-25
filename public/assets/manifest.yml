@@ -417,8 +417,8 @@ active_admin.js: active_admin-b4ff00de79336973727f49761ad3ad74.js
 active_admin/index.js: active_admin-b4ff00de79336973727f49761ad3ad74.js
 application.js: application-54aeb07535ab9b83544fe745546a85aa.js
 application/index.js: application-54aeb07535ab9b83544fe745546a85aa.js
-game.js: game-c746eb9ad5d0321beac85a4a0a55ac34.js
-game/index.js: game-c746eb9ad5d0321beac85a4a0a55ac34.js
+game.js: game-5a152d50903bf14835104e8b9a5b4140.js
+game/index.js: game-5a152d50903bf14835104e8b9a5b4140.js
 active_admin.css: active_admin-1da36b8afc001c4d4b5a9ad5fad8b57c.css
 active_admin/index.css: active_admin-1da36b8afc001c4d4b5a9ad5fad8b57c.css
 application.css: application-b37392971a9aeef25a494f064ef642f6.css

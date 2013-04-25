@@ -25,7 +25,7 @@
       <tbody style="">
         <tr>
           <td style="width: 23px;">
-            <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(1)}}%</span>
+            <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(1) | number:0}}%</span>
           </td>
           <td style="width: 125px;">
             <div id="map-voting" ng-mouseenter="vote_hover = true" ng-mouseleave="vote_hover = false" style="position: absolute; top: 1px; left: 26px; color: white; height: 27px; z-index: 999; width: 123px;">
@@ -53,7 +53,7 @@
             </div>
           </td>
           <td>
-            <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(0)}}%</span>
+            <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(0) | number:0}}%</span>
           </td>
         </tr>
       </tbody>
