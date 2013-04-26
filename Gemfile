@@ -5,6 +5,18 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
+
+# Bamboo Pre-installed Gems
+gem 'bundler'
+gem 'daemons'
+gem 'eventmachine'
+gem 'minitest'
+gem 'rack'
+gem 'rake'
+gem 'rdoc'
+gem 'thin'
+#######################
+
 gem 'sqlite3'
 gem 'devise'
 gem 'json'
@@ -32,6 +44,7 @@ gem 'attachinary'
 group :production do
   # gems specifically for Heroku go here
   gem "pg"
+  gem 'newrelic_rpm'
 end
 
 # Gems used only for assets and not required
@@ -49,7 +62,7 @@ gem 'jquery-rails'
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
