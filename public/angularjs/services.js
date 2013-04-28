@@ -87,4 +87,4 @@ wsApp.directive('eatClick', function() {
             event.preventDefault();
         });
     };
-})
+});

@@ -40,7 +40,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="live_game in live_games" ng-click="gotoGame(live_game.name)">
+            <tr ng-repeat="live_game in live_games"
+                ng-click="gotoGame(live_game.name)"
+                ng-style='gameRowStyle(live_game)'
+                ng-class="{ seated: live_game.am_i_seated, turn: live_game.is_my_turn }">
               <td>{{live_game.name}}</td>
               <td>{{live_game.player_count + "/" + live_game.max_players}}</td>
               <td>{{live_game.wager}}</td>
@@ -61,7 +64,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="multiday_game in multiday_games" ng-click="gotoGame(multiday_game.name)">
+            <tr ng-repeat="multiday_game in multiday_games"
+                ng-click="gotoGame(multiday_game.name)"
+                ng-style="gameRowStyle(multiday_game)"
+                ng-class="{ seated: multiday_game.am_i_seated, turn: multiday_game.is_my_turn }">
               <td>{{multiday_game.name}}</td>
               <td>{{multiday_game.player_count + "/" + multiday_game.max_players}}</td>
               <td>{{multiday_game.wager}}</td>
