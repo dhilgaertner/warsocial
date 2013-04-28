@@ -64,7 +64,7 @@
     <div class="players">
       <div ng-repeat="seat in top_seats()"
            ng-controller="GamePlayerSeatCtrl"
-           ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() }">
+           ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() || is_player_dead() }">
 
         <%= render "shared/game_player" %>
       </div>
@@ -238,7 +238,7 @@
     <div class="players">
       <div ng-repeat="seat in bottom_seats()"
            ng-controller="GamePlayerSeatCtrl"
-           ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() }">
+           ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() || is_player_dead() }">
 
         <%= render "shared/game_player" %>
       </div>

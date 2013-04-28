@@ -44,4 +44,13 @@ function GameLobbyCtrl($scope, $http, pubsub) {
         pubsub.publish("change_game", [game_name]);
         angular.element('#game_lobby_open').click();
     };
+
+    $scope.gameRowStyle = function(game){
+        var style = {
+        };
+
+        if (game.state == "game started") style["color"] = "grey";
+
+        return style;
+    }
 }
