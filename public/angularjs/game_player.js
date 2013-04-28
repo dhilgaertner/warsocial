@@ -93,11 +93,23 @@ function GamePlayerSeatCtrl($scope, pubsub) {
         return false;
     };
 
+    $scope.is_player_dead = function() {
+        if($scope.is_player_seated()){
+            return $scope.seat.player.state == "dead";
+        }
+        return false;
+    };
+
     $scope.avatar_style = function() {
-        return {
-            "background-image": "url('" + $scope.player_avatar_url() + "');",
+        var style = {
             "background-color": $scope.seat_color($scope.seat) //TODO: Service for this...
         };
+
+        if ($scope.player_avatar_url() != "") {
+            style['background-image'] =  'url(' + $scope.player_avatar_url() +')';
+        }
+
+        return style;
     };
 
     $scope.medal_style = function() {
@@ -150,6 +162,5 @@ function GamePlayerSeatCtrl($scope, pubsub) {
         } else {
             return {};
         }
-
     };
 }

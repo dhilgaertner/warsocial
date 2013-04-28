@@ -113,7 +113,7 @@ function GameChatCtrl($scope, $http, pubsub, global) {
                 $scope.messages.push({
                     type: "server",
                     username: "Server",
-                    text: member.info.name + " has left."
+                    text: data
                 });
             });
 
