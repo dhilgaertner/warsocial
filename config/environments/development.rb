@@ -33,11 +33,11 @@ Dice::Application.configure do
   
   require 'pusher'
 
-  Pusher.app_id = '11348'
-  Pusher.key    = '3b4da07cf40986103601'
-  Pusher.secret = 'b6d3f6d0a643ea2dea6f'
+  Pusher.app_id = '43025'
+  Pusher.key    = 'd3be744092460e80b964'
+  Pusher.secret = '50ec4403a2acb5717fbc'
 
-  ENV["REDISTOGO_URL"] = 'redis://127.0.0.1:6379/'
-  ENV["REDIS_URL"] = "redis://127.0.0.1:6379/"
+  ENV["REDISCLOUD_URL"] = 'redis://127.0.0.1:6379/'
+  ENV["REDIS_URL"] = 'redis://127.0.0.1:6379/'
 
 end
