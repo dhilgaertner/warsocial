@@ -176,7 +176,6 @@ GEM
     minitest (4.7.3)
     multi_json (1.5.0)
     multipart-post (1.1.5)
-    newrelic_rpm (3.6.1.87)
     oauth (0.4.6)
     oauth2 (0.6.1)
       faraday (~> 0.7)
@@ -306,7 +305,6 @@ DEPENDENCIES
   lazy_high_charts
   mark_it_up!
   minitest
-  newrelic_rpm
   omniauth-facebook
   omniauth-twitter
   pg
