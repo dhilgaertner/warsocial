@@ -115,7 +115,6 @@
     <orderEntry type="library" scope="PROVIDED" name="simple_form (v2.0.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v2.2.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sqlite3 (v1.3.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="thin (v1.5.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v0.16.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tilt (v1.3.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="treetop (v1.4.12, RVM: ruby-1.9.2-p318) [gem]" level="application" />

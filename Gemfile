@@ -14,7 +14,6 @@ gem 'minitest'
 gem 'rack'
 gem 'rake'
 gem 'rdoc'
-gem 'thin'
 #######################
 
 group :development do
