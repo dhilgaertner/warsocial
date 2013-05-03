@@ -78,7 +78,6 @@
     <orderEntry type="library" scope="PROVIDED" name="minitest (v4.7.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.5.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multipart-post (v1.1.5, RVM: ruby-1.9.2-p318) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="newrelic_rpm (v3.6.1.87, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="oauth (v0.4.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="oauth2 (v0.6.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="omniauth (v1.1.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
