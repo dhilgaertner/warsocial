@@ -17,7 +17,10 @@ gem 'rdoc'
 gem 'thin'
 #######################
 
-gem 'sqlite3'
+group :development do
+  gem 'sqlite3'
+end
+
 gem 'devise'
 gem 'json'
 gem 'omniauth-facebook'
