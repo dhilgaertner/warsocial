@@ -55,6 +55,8 @@ module Dice
     config.assets.initialize_on_precompile = false
 
     config.exceptions_app = self.routes
+
+    config.logger = Logger.new(STDOUT)
   end
 end
 
