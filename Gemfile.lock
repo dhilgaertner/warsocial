@@ -105,7 +105,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
-    daemons (1.1.9)
     delayed_job (3.0.2)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.2)
@@ -120,8 +119,6 @@ GEM
       railties (~> 3.1)
       warden (~> 1.1.1)
     erubis (2.7.0)
-    eventmachine (1.0.3)
-    eventmachine (1.0.3-x86-mingw32)
     execjs (1.3.2)
       multi_json (~> 1.0)
     faraday (0.8.0)
@@ -173,9 +170,9 @@ GEM
       activesupport (~> 3.1)
       polyamorous (~> 0.5.0)
     mime-types (1.19)
-    minitest (4.7.3)
     multi_json (1.5.0)
     multipart-post (1.1.5)
+    newrelic_rpm (3.6.1.87)
     oauth (0.4.6)
     oauth2 (0.6.1)
       faraday (~> 0.7)
@@ -289,11 +286,9 @@ DEPENDENCIES
   cancan
   cloudinary
   coffee-rails (~> 3.2.1)
-  daemons
   delayed_job_active_record
   delayed_job_admin
   devise
-  eventmachine
   forem!
   forem-textile_formatter
   forem-theme-twist!
@@ -304,12 +299,11 @@ DEPENDENCIES
   kaminari
   lazy_high_charts
   mark_it_up!
-  minitest
+  newrelic_rpm
   omniauth-facebook
   omniauth-twitter
   pg
   pusher
-  rack
   rails (= 3.2.11)
   rails_admin!
   rake

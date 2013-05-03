@@ -8,10 +8,10 @@ gem 'rails', '3.2.11'
 
 # Bamboo Pre-installed Gems
 gem 'bundler'
-gem 'daemons'
-gem 'eventmachine'
-gem 'minitest'
-gem 'rack'
+#gem 'daemons'
+#gem 'eventmachine'
+#gem 'minitest'
+#gem 'rack'
 gem 'rake'
 gem 'rdoc'
 #######################
@@ -46,7 +46,7 @@ gem 'attachinary'
 group :production do
   # gems specifically for Heroku go here
   gem "pg"
-  #gem 'newrelic_rpm'
+  gem 'newrelic_rpm'
 end
 
 # Gems used only for assets and not required
