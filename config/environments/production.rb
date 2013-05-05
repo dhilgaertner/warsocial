@@ -67,6 +67,6 @@ Dice::Application.configure do
   Pusher.key    = 'f85901afd3e9eaff226f'
   Pusher.secret = '5a1125ef70870d0d463c'
 
-  ENV["REDISTOGO_URL"] = 'redis://redistogo:fc83d03c5d4b949803cd1d1fc9a21446@cod.redistogo.com:9771/'
-  ENV["REDIS_URL"] = "redis://redistogo:fc83d03c5d4b949803cd1d1fc9a21446@cod.redistogo.com:9771/"
+  #ENV["REDISTOGO_URL"] = 'redis://redistogo:fc83d03c5d4b949803cd1d1fc9a21446@cod.redistogo.com:9771/'
+  #ENV["REDIS_URL"] = "redis://redistogo:fc83d03c5d4b949803cd1d1fc9a21446@cod.redistogo.com:9771/"
 end
