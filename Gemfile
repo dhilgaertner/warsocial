@@ -8,10 +8,10 @@ gem 'rails', '3.2.11'
 
 # Bamboo Pre-installed Gems
 gem 'bundler'
-#gem 'daemons'
-#gem 'eventmachine'
-#gem 'minitest'
-#gem 'rack'
+gem 'daemons'
+gem 'eventmachine'
+gem 'minitest'
+gem 'rack'
 gem 'rake'
 gem 'rdoc'
 #######################
