@@ -12,6 +12,11 @@ end
 module Dice
   class Application < Rails::Application
 
+    unless Dir.exists?(Rails.root.join('log'))
+      require 'fileutils'
+      FileUtils.mkdir_p(Rails.root.join('log'))
+    end
+
     require "attachinary/orm/active_record"
 
     # Settings in config/environments/* take precedence over those specified here.
