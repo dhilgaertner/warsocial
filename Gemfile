@@ -29,7 +29,7 @@ gem 'delayed_job_active_record'
 #gem 'fastercsv' # Only required on Ruby 1.8 and below
 #gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancan'
-gem 'forem', :git => 'git://github.com/radar/forem.git'
+gem 'forem', '0.0.1', :git => 'git://github.com/radar/forem.git'
 gem 'forem-theme-twist', :path => "vendor/forem-theme-twist"
 gem 'forem-textile_formatter' # rich-text formatter for forem
 gem 'redis', '2.2.2'
