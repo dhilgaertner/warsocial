@@ -177,7 +177,7 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     redcarpet (2.0.1)
-    redis (2.2.2)
+    redis (3.0.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rubypython (0.5.3)
@@ -246,7 +246,7 @@ DEPENDENCIES
   rails (= 3.2.11)
   rake
   rdoc
-  redis (~> 2.2.2)
+  redis (= 3.0.2)
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)
