@@ -2,10 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.11'
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
-
 # Bamboo Pre-installed Gems
 gem 'bundler'
 #gem 'daemons'
@@ -25,7 +21,7 @@ gem 'json'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'pusher'
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', '0.3.2'
 #gem 'fastercsv' # Only required on Ruby 1.8 and below
 #gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancan'
