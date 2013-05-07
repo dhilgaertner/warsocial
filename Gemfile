@@ -23,7 +23,6 @@ gem 'omniauth-twitter'
 gem 'pusher'
 gem 'delayed_job', '3.0.2'
 gem 'delayed_job_active_record', '0.3.2'
-#gem 'fastercsv' # Only required on Ruby 1.8 and below
 #gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancan'
 gem 'forem', :git => 'git://github.com/radar/forem.git'
@@ -43,7 +42,7 @@ gem 'attachinary'
 group :production do
   # gems specifically for Heroku go here
   gem "pg"
-  #gem 'newrelic_rpm'
+  gem 'newrelic_rpm'
 end
 
 # Gems used only for assets and not required
