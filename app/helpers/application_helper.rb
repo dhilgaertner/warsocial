@@ -70,16 +70,12 @@ module ApplicationHelper
       end
 
       if Rails.env.development? && !(@dev || @dev_image)
+        r.push("/kinectjs/kinetic-v4.5.0.min.js?v=#{vers}")
         r.push("/gameboard/game_page2.js?v=#{vers}")
         r.push("/gameboard/communications.js?v=#{vers}")
         r.push("/gameboard/soundmanager.js?v=#{vers}")
-        r.push("/gameboard/dicebox.js?v=#{vers}")
-        r.push("/gameboard/land.js?v=#{vers}")
-        r.push("/gameboard/map.js?v=#{vers}")
-        r.push("/gameboard/mapcanvas.js?v=#{vers}")
-        r.push("/gameboard/player.js?v=#{vers}")
         r.push("/gameboard/shared.js?v=#{vers}")
-        r.push("/gameboard/warsocial.js?v=#{vers}")
+        r.push("/gameboard/kjs_gameboard.js?v=#{vers}")
         r.push("/gameboard/turn_timer.js?v=#{vers}")
         r.push("/gameboard/settings.js?v=#{vers}")
       elsif @dev || @dev_image || @test
