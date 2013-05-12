@@ -25,7 +25,7 @@ WarSocial.prototype.init = function( info ) {
                 fill: 'green'
             });
 
-            var surrounding_hexs = ctx.hexagonGrid.find_surrounding_hexs(hex);
+            var surrounding_hexs = ctx.hexagonGrid.find_surrounding_hexs(this);
 
             for (var y=0; y<surrounding_hexs.length; y++) {
                 surrounding_hexs[y].shape.setAttrs({
@@ -43,7 +43,7 @@ WarSocial.prototype.init = function( info ) {
                 fill: '#00D2FF'
             });
 
-            var surrounding_hexs = ctx.hexagonGrid.find_surrounding_hexs(hex);
+            var surrounding_hexs = ctx.hexagonGrid.find_surrounding_hexs(this);
 
             for (var y=0; y<surrounding_hexs.length; y++) {
                 surrounding_hexs[y].shape.setAttrs({

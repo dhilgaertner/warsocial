@@ -1,11 +1,11 @@
 
-function Hexagon(x, y) {
+function Hexagon(x, y, color) {
     this.shape = null;
 
-    this.init(x, y);
+    this.init(x, y, color);
 }
 
-Hexagon.prototype.init = function(x, y) {
+Hexagon.prototype.init = function(x, y, color) {
 
     var hex = new Kinetic.Polygon({
         points: [
@@ -15,9 +15,9 @@ Hexagon.prototype.init = function(x, y) {
             x + 16, y + 12,
             x + 4, y + 12,
             x + 0, y + 6],
-        fill: '#00D2FF',
+        fill: color,
         stroke: 'black',
-        strokeWidth: 1,
+        strokeWidth: 0,
         lineJoin: 'bevel'
         //shadowColor: 'red',
         //shadowBlur: 10,
