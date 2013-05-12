@@ -1,0 +1,29 @@
+
+function Hexagon(x, y) {
+    this.shape = null;
+
+    this.init(x, y);
+}
+
+Hexagon.prototype.init = function(x, y) {
+
+    var hex = new Kinetic.Polygon({
+        points: [
+            x + 4, y + 0,
+            x + 16, y + 0,
+            x + 20, y + 6,
+            x + 16, y + 12,
+            x + 4, y + 12,
+            x + 0, y + 6],
+        fill: '#00D2FF',
+        stroke: 'black',
+        strokeWidth: 1,
+        lineJoin: 'bevel'
+        //shadowColor: 'red',
+        //shadowBlur: 10,
+        //shadowOffset: 5,
+        //shadowOpacity: 0.5
+    });
+
+    this.shape = hex;
+};

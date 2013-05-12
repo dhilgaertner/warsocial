@@ -75,7 +75,9 @@ module ApplicationHelper
         r.push("/gameboard/communications.js?v=#{vers}")
         r.push("/gameboard/soundmanager.js?v=#{vers}")
         r.push("/gameboard/shared.js?v=#{vers}")
-        r.push("/gameboard/kjs_gameboard.js?v=#{vers}")
+        r.push("/gameboard/new/hexagon.js?v=#{vers}")
+        r.push("/gameboard/new/hexagon_grid.js?v=#{vers}")
+        r.push("/gameboard/new/gameboard.js?v=#{vers}")
         r.push("/gameboard/turn_timer.js?v=#{vers}")
         r.push("/gameboard/settings.js?v=#{vers}")
       elsif @dev || @dev_image || @test
