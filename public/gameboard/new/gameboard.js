@@ -70,9 +70,10 @@ WarSocial.prototype.init = function( info ) {
 
     for (var group in this.hexagonGrid.groups) {
         if (this.hexagonGrid.groups.hasOwnProperty(group)) {
-            var land = new Land(group);
+            if (group == "0") continue;
+            var land = new Land(this.hexagonGrid.groups[group], ctx.hexagonGrid);
 
-            layer2.add(land);
+            layer2.add(land.shape);
         }
     }
 
