@@ -76,6 +76,7 @@ module ApplicationHelper
         r.push("/gameboard/soundmanager.js?v=#{vers}")
         r.push("/gameboard/shared.js?v=#{vers}")
         r.push("/gameboard/new/hexagon.js?v=#{vers}")
+        r.push("/gameboard/new/land.js?v=#{vers}")
         r.push("/gameboard/new/hexagon_grid.js?v=#{vers}")
         r.push("/gameboard/new/gameboard.js?v=#{vers}")
         r.push("/gameboard/turn_timer.js?v=#{vers}")

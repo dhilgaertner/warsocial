@@ -1,13 +1,13 @@
 
-function Hexagon(x, y, color) {
+function Land(group) {
     this.shape = null;
 
-    this.init(x, y, color);
+    this.init(group);
 }
 
-Hexagon.prototype.init = function(x, y, color) {
+Land.prototype.init = function( group ) {
 
-    var hex = new Kinetic.Polygon({
+    var land = new Kinetic.Polygon({
         points: [
             x + 4, y + 0,
             x + 16, y + 0,
@@ -19,11 +19,11 @@ Hexagon.prototype.init = function(x, y, color) {
         stroke: 'black',
         strokeWidth: .1,
         lineJoin: 'bevel'/*,
-        shadowColor: 'red',
-        shadowBlur: 10,
-        shadowOffset: 5,
-        shadowOpacity: 0.5*/
+         shadowColor: 'red',
+         shadowBlur: 10,
+         shadowOffset: 5,
+         shadowOpacity: 0.5*/
     });
 
-    this.shape = hex;
+    this.shape = land;
 };

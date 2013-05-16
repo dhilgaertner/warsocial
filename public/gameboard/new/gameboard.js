@@ -65,6 +65,19 @@ WarSocial.prototype.init = function( info ) {
 
     // add the layer to the stage
     this.stage.add(layer);
+
+    var layer2 = new Kinetic.Layer();
+
+    for (var group in this.hexagonGrid.groups) {
+        if (this.hexagonGrid.groups.hasOwnProperty(group)) {
+            var land = new Land(group);
+
+            layer2.add(land);
+        }
+    }
+
+    // add the layer to the stage
+    this.stage.add(layer2);
 };
 
 WarSocial.prototype.attack = function( info ) {

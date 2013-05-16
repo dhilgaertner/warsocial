@@ -2,6 +2,7 @@
 function HexagonGrid() {
     this.hexs = [];
     this.grid = [];
+    this.groups = {};
     this.map_layout = null;
 }
 
@@ -32,9 +33,13 @@ HexagonGrid.prototype.init = function( map_layout ) {
             hex.col = col;
             hex.shape.row = row;
             hex.shape.col = col;
+            hex.land_id = land_id;
 
             this.grid[row].push(hex);
             this.hexs.push(hex);
+
+            if (this.groups[land_id] == null) this.groups[land_id] = [];
+            this.groups[land_id].push(hex);
 
             i++;
         }
