@@ -26,9 +26,10 @@
     <orderEntry type="library" scope="PROVIDED" name="attachinary (v1.2.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="aws_cf_signer (v0.1.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bcrypt-ruby (v3.0.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="blankslate (v3.1.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.0.4, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v1.1.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="cancan (v1.6.7, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="cancan (v1.6.8, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="cloudinary (v1.0.44, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-rails (v3.2.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-script (v2.2.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
@@ -40,9 +41,14 @@
     <orderEntry type="library" scope="PROVIDED" name="erubis (v2.7.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="execjs (v1.3.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="faraday (v0.8.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="forem (v0.0.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ffi (v1.0.11, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="forem (v@4ef056, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="forem-redcarpet (v1.0.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="forem-textile_formatter (v0.1.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="forem-theme-twist (v[path], /Users/dhilgaertner/Documents/warsocial/vendor/forem-theme-twist) [path][gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="friendly_id (v4.0.9, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="gemoji (v1.1.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="gli (v2.5.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gravtastic (v3.2.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hashie (v1.2.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hike (v1.2.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
@@ -55,6 +61,7 @@
     <orderEntry type="library" scope="PROVIDED" name="kaminari (v0.13.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="kgio (v2.8.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="lazy_high_charts (v1.2.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="localeapp (v0.6.9, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mail (v2.4.4, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mark_it_up (v0.0.2@22c797, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v1.19, RVM: ruby-1.9.2-p318) [gem]" level="application" />
@@ -71,6 +78,7 @@
     <orderEntry type="library" scope="PROVIDED" name="pg (v0.13.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="polyglot (v0.3.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pusher (v0.9.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="pygments.rb (v0.2.4, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v1.4.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-cache (v1.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-ssl (v1.3.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
@@ -80,12 +88,13 @@
     <orderEntry type="library" scope="PROVIDED" name="raindrops (v0.11.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v10.0.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rdoc (v3.12, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="redcarpet (v2.0.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="redis (v2.2.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rest-client (v1.6.7, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rubypython (v0.5.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass (v3.1.18, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass-rails (v3.2.5, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="signature (v0.1.3, RVM: ruby-1.9.2-p318) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="simple_form (v2.0.4, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v2.2.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sqlite3 (v1.3.6, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v0.16.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
@@ -95,6 +104,7 @@
     <orderEntry type="library" scope="PROVIDED" name="uglifier (v1.2.4, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="unicorn (v4.6.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="warden (v1.1.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="workflow (v0.8.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />
