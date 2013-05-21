@@ -4,6 +4,21 @@ GIT
   specs:
     mark_it_up (0.0.2)
 
+GIT
+  remote: git://github.com/radar/forem.git
+  revision: 4ef05631c23bde974d97929b4964bc4095a58a3a
+  specs:
+    forem (1.0.0.beta1)
+      cancan (= 1.6.8)
+      decorators (~> 1.0.2)
+      forem-redcarpet (= 1.0.0)
+      friendly_id (~> 4.0, >= 4.0.9)
+      gemoji (= 1.1.2)
+      localeapp
+      rails (>= 3.1.10, < 3.3, != 3.2.9, != 3.2.8, != 3.2.7, != 3.2.6, != 3.2.5, != 3.2.4, != 3.2.3, != 3.2.2, != 3.2.10, != 3.2.1, != 3.2.0)
+      simple_form
+      workflow (= 0.8.0)
+
 PATH
   remote: vendor/forem-theme-twist
   specs:
@@ -48,8 +63,9 @@ GEM
     aws_cf_signer (0.1.1)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
+    blankslate (3.1.2)
     builder (3.0.4)
-    cancan (1.6.7)
+    cancan (1.6.8)
     cloudinary (1.0.44)
       aws_cf_signer
       rest-client
@@ -60,6 +76,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
+    decorators (1.0.3)
+      railties (>= 3.0.19, != 3.2.9, != 3.2.8, != 3.2.7, != 3.2.6, != 3.2.5, != 3.2.4, != 3.2.3, != 3.2.2, != 3.2.10, != 3.2.1, != 3.2.0, != 3.1.9, != 3.1.8, != 3.1.7, != 3.1.6, != 3.1.5, != 3.1.4, != 3.1.3, != 3.1.2, != 3.1.1, != 3.1.0)
     delayed_job (3.0.2)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.2)
@@ -78,11 +96,16 @@ GEM
       multi_json (~> 1.0)
     faraday (0.8.0)
       multipart-post (~> 1.1)
-    forem (0.0.1)
-      simple_form
+    ffi (1.0.11)
+    forem-redcarpet (1.0.0)
+      pygments.rb (= 0.2.4)
+      redcarpet (= 2.0.1)
     forem-textile_formatter (0.1.0)
       RedCloth
       forem
+    friendly_id (4.0.9)
+    gemoji (1.1.2)
+    gli (2.5.6)
     gravtastic (3.2.6)
     hashie (1.2.0)
     hike (1.2.1)
@@ -101,6 +124,12 @@ GEM
     kgio (2.8.0)
     lazy_high_charts (1.2.2)
       bundler (~> 1.0)
+    localeapp (0.6.9)
+      gli
+      i18n
+      json
+      rest-client
+      ya2yaml
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -108,6 +137,7 @@ GEM
     mime-types (1.19)
     multi_json (1.5.0)
     multipart-post (1.1.5)
+    newrelic_rpm (3.6.2.96)
     oauth (0.4.6)
     oauth2 (0.6.1)
       faraday (~> 0.7)
@@ -134,6 +164,8 @@ GEM
     pusher (0.9.3)
       multi_json (~> 1.0)
       signature (~> 0.1.2)
+    pygments.rb (0.2.4)
+      rubypython (~> 0.5.3)
     rack (1.4.3)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -160,16 +192,20 @@ GEM
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
+    redcarpet (2.0.1)
     redis (2.2.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rubypython (0.5.3)
+      blankslate (>= 2.1.2.3)
+      ffi (~> 1.0.7)
     sass (3.1.18)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
     signature (0.1.3)
-    simple_form (2.0.4)
+    simple_form (2.1.0)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
     sprockets (2.2.2)
@@ -194,6 +230,8 @@ GEM
       raindrops (~> 0.7)
     warden (1.1.1)
       rack (>= 1.0)
+    workflow (0.8.0)
+    ya2yaml (0.31)
 
 PLATFORMS
   ruby
@@ -202,13 +240,14 @@ PLATFORMS
 DEPENDENCIES
   attachinary
   bundler
-  cancan
+  cancan (= 1.6.8)
   cloudinary
   coffee-rails (~> 3.2.1)
-  delayed_job_active_record
+  delayed_job (= 3.0.2)
+  delayed_job_active_record (= 0.3.2)
   delayed_job_admin
   devise
-  forem (= 0.0.1)
+  forem (= 1.0.0.beta1)!
   forem-textile_formatter
   forem-theme-twist!
   gravtastic
@@ -218,6 +257,7 @@ DEPENDENCIES
   kaminari
   lazy_high_charts
   mark_it_up!
+  newrelic_rpm
   omniauth-facebook
   omniauth-twitter
   pg
