@@ -974,7 +974,24 @@
         top: 454px;
         left: 589px;
       }
+		div.navbar-inner{
+			background-image:none !important;
+		}
     }
+	
+	/* 
+	
+	Custom style, added by Bill, 6/2013
+	
+	*/
+	
+	.brand {
+		position:absolute;
+		width:100%;
+		left:0;
+		text-align:center;
+		margin:auto;
+	}
 
   </style>
 
@@ -989,7 +1006,12 @@
 <div class="container">
   <div class="navbar navbar-static" id="main-navbar">
     <div class="navbar-inner">
-      <div style="width: auto;" class="container">
+		<!--Logo-->
+		<div class="brand">
+			<a href="/"><img src="assets/logo2.png"/></a>
+		</div>
+		
+    	<div style="width: auto;" class="container">		
 	
 		<!--Navbar dropdown-->
 	
