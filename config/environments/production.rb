@@ -62,11 +62,11 @@ Dice::Application.configure do
   config.action_mailer.default_url_options = { :host => 'warsocial.com' }
   
   require 'pusher'
-  
-  Pusher.app_id = '11347'
-  Pusher.key    = 'f85901afd3e9eaff226f'
-  Pusher.secret = '5a1125ef70870d0d463c'
 
-  ENV["REDISTOGO_URL"] = 'redis://redistogo:fc83d03c5d4b949803cd1d1fc9a21446@cod.redistogo.com:9771/'
-  ENV["REDIS_URL"] = "redis://redistogo:fc83d03c5d4b949803cd1d1fc9a21446@cod.redistogo.com:9771/"
+  Pusher.app_id = '43024'
+  Pusher.key    = '4d3a674b4e26c6cdc108'
+  Pusher.secret = '7df7ec8f5f304a1bf318'
+
+  ENV["REDISCLOUD_URL"] = 'redis://rediscloud:wHpITF0hSUmJsWuF@pub-redis-18936.us-east-1-1.1.ec2.garantiadata.com:18936'
+  ENV["REDIS_URL"] = 'redis://rediscloud:wHpITF0hSUmJsWuF@pub-redis-18936.us-east-1-1.1.ec2.garantiadata.com:18936'
 end

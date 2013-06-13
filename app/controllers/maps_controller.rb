@@ -1,5 +1,6 @@
 class MapsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:index]
+  skip_before_filter :verify_authenticity_token
+  before_filter :authenticate_user!, :except => [:index, :info, :get_maps]
 
   def index
     @js_page_type = "maps"
@@ -15,7 +16,19 @@ class MapsController < ApplicationController
       @my_library = Map.get_favorites(current_user)
     end
 
-    render :action => "index", :layout => "application2"
+    render :action => "index", :layout => "application"
+  end
+
+  def get_maps
+    if(current_user != nil && current_user.admin?)
+      maps = Map.where("is_public = ?", true)
+    else
+      maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
+    end
+
+    response = { :maps => maps }
+
+    render :json => response
   end
 
   def new
@@ -24,7 +37,7 @@ class MapsController < ApplicationController
     @maps = Map.where("is_public = ? AND is_admin_only = ?", true, false)
     @map = Map.new
 
-    render :action => "map_creator", :layout => "application2"
+    render :action => "map_creator", :layout => "application"
   end
 
   def edit
@@ -37,7 +50,7 @@ class MapsController < ApplicationController
     @map = Map.find(map_id)
 
     if (@map.user == current_user || current_user.admin?)
-      render :action => "map_creator", :layout => "application2"
+      render :action => "map_creator", :layout => "application"
     else
       render :text=>"Permission Denied", :status=>400
     end
@@ -94,6 +107,28 @@ class MapsController < ApplicationController
     end
   end
 
+  def info
+    if (params[:id] != nil)
+      map = Map.find(params[:id])
+      votes = Map.get_vote_counts(map.id)
+      favorites = Map.get_favorite_counts(map.id)
+
+      if (current_user != nil)
+        my_votes = Map.get_votes(current_user)
+        my_library = Map.get_favorites(current_user)
+      end
+    end
+
+    data = { :map_id => map.id,
+             :map => map,
+             :votes => votes,
+             :favorites => favorites,
+             :my_votes => my_votes,
+             :my_library => my_library }
+
+    render :json => data
+  end
+
   def vote
     map_id = params[:id].to_i
     vote = params[:vote].to_i
@@ -101,8 +136,15 @@ class MapsController < ApplicationController
     if map_id != 0
       Map.vote(current_user, map_id, vote)
 
-      render :text=>"Success", :status=>200
-      return
+      votes = Map.get_vote_counts(map_id)
+      my_votes = Map.get_votes(current_user)
+
+      data = { :votes => votes,
+               :my_votes => my_votes }
+
+      render :json => data
+    else
+      render :text=>"fail", :status=>400
     end
   end
 

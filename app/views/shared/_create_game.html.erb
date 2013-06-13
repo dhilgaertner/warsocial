@@ -1,47 +1,54 @@
-<div class="modal" id="create_game" style="display: none;">
-  <%= form_tag(create_game_home_index_path, :id => "create_game_form", :remote=>true) do %>
-  <div class="modal-header">
-    <button class="close" data-dismiss="modal">×</button>
-    <h3>Create Game</h3>
-  </div>
+<div ng-controller="GameCreateCtrl" class="modal" id="create_game" style="display: none;">
   <div class="modal-body">
-    <div class="well">
-      <select class="styled" id="select_map" name="select_map" style="margin-top: 8px; margin-left: 10px; width:210px;">
-        <option>Choose Map</option>
-        <% @maps.each do |map| %>
-            <option value="<%= map.name %>"><%= map.name %></option>
-        <% end %>
-      </select>
+    <div class="well" style="height: 350px;">
+      <div style="float: left; width: 200px; height: 310px;">
+        <h3 style="margin-left: 60px; margin-bottom: 10px;">Map</h3>
+        <div id="create_game_maps" style="width: 200px; height: 310px; overflow-y: scroll;">
+          <ul class="thumbnails">
+            <li class="span2" ng-repeat="map in maps" ng-click="selectMap(map)">
+              <a href="#" class="thumbnail" ng-class="{active: map.name==selectedMap}">
+                <img ng-src="{{map.thumbnail}}" alt="">
+                <p style="margin-left: 5px; margin-top: 5px; margin-bottom: 5px;">{{map.name}}</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div style="float: right; width: 250px; height: 350;">
+        <h3 style="margin-bottom: 10px; margin-left: 85px;">Players</h3>
+        <div id="create_game_players" class="btn-group" data-toggle="buttons-radio">
+          <button class="btn btn-large active" ng-click="selectPlayers(2)">2</button>
+          <button class="btn btn-large" ng-click="selectPlayers(3)">3</button>
+          <button class="btn btn-large" ng-click="selectPlayers(4)">4</button>
+          <button class="btn btn-large" ng-click="selectPlayers(5)">5</button>
+          <button class="btn btn-large" ng-click="selectPlayers(6)">6</button>
+          <button class="btn btn-large" ng-click="selectPlayers(7)">7</button>
+        </div>
 
-      <select class="styled" name="select_players" style="margin-top: 8px; margin-left: 10px; width:120px;">
-        <option>Players</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-      </select>
+        <h3 style="margin-top: 20px; margin-bottom: 10px; margin-left: 90px;">Wager</h3>
+        <div id="create_game_wager" class="btn-group" data-toggle="buttons-radio">
+          <button class="btn btn-large active" ng-click="selectWager(0)">0</button>
+          <button class="btn btn-large" ng-click="selectWager(50)">50</button>
+          <button class="btn btn-large" ng-click="selectWager(100)">100</button>
+          <button class="btn btn-large" ng-click="selectWager(200)">200</button>
+          <button class="btn btn-large" ng-click="selectWager(500)">500</button>
+          <button class="btn btn-large" ng-click="selectWager(2000)">2k</button>
+          <button class="btn btn-large" ng-click="selectWager(5000)">5k</button>
+          <button class="btn btn-large" ng-click="selectWager(10000)">10k</button>
+        </div>
 
-      <select class="styled" name="select_wager" style="margin-top: 8px; margin-left: 10px; width:120px;">
-        <option>Wager</option>
-        <option value="0">0</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="200">200</option>
-        <option value="500">500</option>
-        <option value="1000">1,000</option>
-        <option value="2000">2,000</option>
-        <option value="5000">5,000</option>
-        <option value="10000">10,000</option>
-      </select>
+        <h3 style="margin-top: 20px; margin-bottom: 10px; margin-left: 70px;">Game Type</h3>
+        <div id="create_game_type" class="btn-group" data-toggle="buttons-radio">
+          <button class="btn btn-large active" value="normal" ng-click="selectType('normal')">Live</button>
+          <button class="btn btn-large" value="multiday" ng-click="selectType('multiday')">Multi-Day</button>
+        </div>
 
-      <div id="map_preview"></div>
+      </div>
 
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#" data-dismiss="modal" class="btn">Cancel</a> <input type="submit" class="btn btn-success" value="Create">
+    <a href="#" data-dismiss="modal" class="btn">Cancel</a>
+    <a href="#" class="btn btn-success" ng-click="createGame()">Create</a>
   </div>
-  <% end %>
 </div>

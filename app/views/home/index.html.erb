@@ -1,49 +1,76 @@
+<% content_for :title do %>
+  <title>WarSocial - Play Risk Online</title>
+<% end %>
+
 <% content_for :javascript_includes do %>
   <%= render "shared/game_js_includes" %>
 <% end %>
 
-<div id="game">
-  <div style="margin-bottom: 5px; font-size:.98em;">We are in alpha, so expect some bugs. If you can't play, try refreshing. Please report bugs in the <%= link_to "forum", "/forums/forums/1", :target => "_blank", :style => "color: blue" %>.</div>
-  <div id="game_header">
-    <div class="header_item" style="width:132px;">
-      <h3 style="text-align: center; margin-top: 4px;"><%= @game.name %></h3>
-    </div>
-    <div class="header_item" style="width: 97px;">
-      <h4 style="text-align: center; margin-top: 8px;"><%= "#{@game.wager_level} wager" %></h4>
-    </div>
-    <div class="header_item" style="width: 64px;">
-      <h4 style="text-align: center; margin-top: 8px;"><%= "#{@game.max_player_count} seats" %></h4>
-    </div>
-    <div class="header_item" style="width:482px;">
+<div ng-controller="GameBoardCtrl" id="game-container">
+  <div ng-controller="GameSeatsCtrl">
+    <div class="game">
+
+      <%= render "shared/game_board2" %>
 
     </div>
-  </div>
-
-  <%= render "shared/game_board" %>
-
-  <div id="log_window">
-    <table style="width: 100%">
-      <tbody>
-      </tbody>
-    </table>
-  </div>
-  <div id="chat_window">
-    <table style="margin-left: 5px; margin-right: 5px;">
-      <tbody>
-      </tbody>
-    </table>
+    <div class="sidebar">
+      <div id="game-details">
+        <div class="wrapper" style="margin-top: 8px; margin-left: 10px;">
+          <button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
+          <a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
+            <i class="icon-flag icon-white" style="margin-top: 2px;"></i>
+          </a>
+        </div>
+        <div class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
+        <div class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
+      </div>
+      <div ng-controller="GameLogCtrl" id="log-window">
+        <table style="width: 100%">
+          <tbody>
+          <tr ng-repeat="message in messages"
+              ng-switch on="message.type">
+            <td ng-switch-when="game_winner">
+              <div><b><span ng-style="colorStyle(message.username)">{{message.username}}</span> is the winner!</b></div>
+            </td>
+            <td ng-switch-when="attack">
+              <div><b><span ng-style="colorStyle(message.username)">{{message.username}}</span></b> {{message.verb}} {{message.vs}}, {{message.total}}, {{message.rolls}}</div>
+            </td>
+            <td ng-switch-when="turn_changed">
+              <div class="divider"></div>
+              <div><b><span ng-style="colorStyle(message.username)">{{message.username}}</span>'s turn</b></div>
+            </td>
+            <td ng-switch-default>
+              <div><b>Game started!</b></div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div ng-controller="GameChatCtrl">
+        <div id="chat-window">
+          <table style="margin-left: 5px; margin-right: 5px;">
+            <tbody>
+            <tr ng-repeat="message in messages"
+                ng-switch on="message.type">
+              <td ng-switch-when="server" class="well well-small">
+                <span style="color: green;">{{message.text}}</span>
+              </td>
+              <td ng-switch-default>
+                <span ng-style="colorStyle(message.username)"><b>{{message.username}}</b></span>: {{message.text}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <% if user_signed_in? %>
+          <form id="form-chat" ng-submit="addChatLine(entry)" autocomplete="off">
+            <div class="label-over">
+              <label for="entry">Type your message here...</label>
+              <input ng-model="entry" id="entry" class="input" type="text" name="entry">
+            </div>
+          </form>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-
-<% if user_signed_in? %>
-  <div style="text-align: center;">
-    <%= form_tag(add_line_home_index_path, :id => "form_chat", :remote => true, :autocomplete => "off") do %>
-      <%= hidden_field_tag 'game_name', @game.name %>
-      <%= text_field_tag 'entry', nil, { :size => 70, :id => 'entry', :class => "input"} %>
-      <%= submit_tag "Send", { :class => "common_button", :disable_with => "Sending...", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Chat Submit']);".html_safe } %>
-    <% end %>
-  </div>
-<% end %>
-
-<%= render "shared/game_lobby" %>
-<%= render "shared/create_game2" %>

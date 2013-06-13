@@ -1,7 +1,7 @@
 module ApplicationHelper
   def js_to_add(type)
 
-    vers = "12"
+    vers = "13"
     cn = controller.controller_name
     ca = controller.action_name
 
@@ -10,7 +10,7 @@ module ApplicationHelper
     if !Rails.env.development?
       r.push(asset_path("application.js"))
 
-      if type == "game" && !(@dev || @dev_image || @test)
+      if type == "game" && !(@dev || @dev_image)
         r.push(asset_path("game.js"))
       end
     else
@@ -24,13 +24,22 @@ module ApplicationHelper
       r.push("/cloudinary/jquery.fileupload.js?v=#{vers}")
       r.push("/cloudinary/jquery.cloudinary.js?v=#{vers}")
 
-      r.push("/gameboard/lobby.js?v=#{vers}")
-      r.push("/gameboard/create_game.js?v=#{vers}")
-
       # Profile
       r.push("/highcharts/highcharts.js?v=#{vers}")
       r.push("/tweet/jquery.tweet.js?v=#{vers}")
     end
+
+    r.push("/angularjs/angular.min.js?v=#{vers}")
+    r.push("/angularjs/services.js?v=#{vers}")
+    r.push("/angularjs/game_board.js?v=#{vers}")
+    r.push("/angularjs/game_map_info.js?v=#{vers}")
+    r.push("/angularjs/game_timer.js?v=#{vers}")
+    r.push("/angularjs/game_seats.js?v=#{vers}")
+    r.push("/angularjs/game_player.js?v=#{vers}")
+    r.push("/angularjs/game_lobby.js?v=#{vers}")
+    r.push("/angularjs/game_create.js?v=#{vers}")
+    r.push("/angularjs/game_log.js?v=#{vers}")
+    r.push("/angularjs/game_chat.js?v=#{vers}")
 
     r.push("/bootstrap/js/bootstrap.min.js")
     r.push("/utils/utils.js?v=#{vers}")
@@ -60,8 +69,8 @@ module ApplicationHelper
         r.push("/assets/lib/ws.app.js?v=#{vers}")
       end
 
-      if Rails.env.development? && !(@dev || @dev_image || @test)
-        r.push("/gameboard/game_page.js?v=#{vers}")
+      if Rails.env.development? && !(@dev || @dev_image)
+        r.push("/gameboard/game_page2.js?v=#{vers}")
         r.push("/gameboard/communications.js?v=#{vers}")
         r.push("/gameboard/soundmanager.js?v=#{vers}")
         r.push("/gameboard/dicebox.js?v=#{vers}")
@@ -72,16 +81,10 @@ module ApplicationHelper
         r.push("/gameboard/shared.js?v=#{vers}")
         r.push("/gameboard/warsocial.js?v=#{vers}")
         r.push("/gameboard/turn_timer.js?v=#{vers}")
-        r.push("/gameboard/seats.js?v=#{vers}")
-        r.push("/gameboard/chatbox.js?v=#{vers}")
-        r.push("/gameboard/gamelog.js?v=#{vers}")
+        r.push("/gameboard/settings.js?v=#{vers}")
       elsif @dev || @dev_image || @test
 
-        if @test
-          r.push("/gameboard/game_page2.js?v=#{vers}")
-        else
-          r.push("/gameboard/game_page.js?v=#{vers}")
-        end
+        r.push("/gameboard/game_page2.js?v=#{vers}")
 
         if @dev || @dev_image
           r.push("http://www.bigroundeyes.ca/clients/Dustin/warsocial/warsocial/communications.js?v=#{vers}")
@@ -116,14 +119,8 @@ module ApplicationHelper
         end
 
         r.push("/gameboard/turn_timer.js?v=#{vers}")
-        if @test
-          r.push("/gameboard/seats2.js?v=#{vers}")
-          r.push("/gameboard/settings.js?v=#{vers}")
-        else
-          r.push("/gameboard/seats.js?v=#{vers}")
-        end
-        r.push("/gameboard/chatbox.js?v=#{vers}")
-        r.push("/gameboard/gamelog.js?v=#{vers}")
+
+        r.push("/gameboard/settings.js?v=#{vers}")
 
       end
     end

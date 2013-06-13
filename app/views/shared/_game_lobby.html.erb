@@ -1,13 +1,13 @@
-<div class="modal" id="game_lobby" style="display: none;">
+<div ng-controller="GameLobbyCtrl" class="modal" id="game_lobby" style="display: none;">
   <div class="modal-header">
     <button class="close" data-dismiss="modal">×</button>
     <h3>Lobby</h3>
   </div>
   <div class="modal-body">
     <ul class="nav nav-pills">
-      <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge"></span></a></li>
-      <li class="active"><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge"></span></a></li>
-      <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important"></span><span id="multi_badge_2" class="badge"></span></a></li>
+      <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">{{online_users.length}}</span></a></li>
+      <li class="active"><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge">{{live_games.length}}</span></a></li>
+      <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">{{myTurns(multiday_games).length}}</span><span id="multi_badge_2" class="badge">{{multiday_games.length}}</span></a></li>
     </ul>
     <div class="well">
       <div class="tab-content">
@@ -15,13 +15,18 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <th>Name</th>
-              <th>Points</th>
-              <th>Last Location</th>
+              <th><a href="" ng-click="online_sort = 'username'; reverse=!reverse">Name</a></th>
+              <th><a href="" ng-click="online_sort = 'current_points'; reverse=!reverse">Points</a></th>
+              <th><a href="" ng-click="online_sort = 'location'; reverse=!reverse">Last Location</a></th>
             </tr>
             </thead>
             <tbody>
-
+            <tr ng-repeat="online_user in online_users | orderBy:online_sort:reverse"
+                ng-click="gotoGame(online_user.location)">
+              <td>{{online_user.username}}</td>
+              <td>{{online_user.current_points}}</td>
+              <td>{{online_user.location}}</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -29,14 +34,22 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <th>Name</th>
-              <th>Players</th>
-              <th>Wager</th>
-              <th>State</th>
+              <th><a href="" ng-click="live_sort = 'name'; reverse=!reverse">Name</a></th>
+              <th><a href="" ng-click="live_sort = 'player_count'; reverse=!reverse">Players</a></th>
+              <th><a href="" ng-click="live_sort = 'wager'; reverse=!reverse">Wager</a></th>
+              <th><a href="" ng-click="live_sort = 'state'; reverse=!reverse">State</a></th>
             </tr>
             </thead>
             <tbody>
-
+            <tr ng-repeat="live_game in live_games | orderBy:live_sort:reverse"
+                ng-click="gotoGame(live_game.name)"
+                ng-style='gameRowStyle(live_game)'
+                ng-class="{ seated: live_game.am_i_seated, turn: live_game.is_my_turn }">
+              <td>{{live_game.name}}</td>
+              <td>{{live_game.player_count + "/" + live_game.max_players}}</td>
+              <td>{{live_game.wager}}</td>
+              <td>{{live_game.state}}</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -44,15 +57,24 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <th>Name</th>
-              <th>Players</th>
-              <th>Wager</th>
-              <th>State</th>
-              <th>Turn</th>
+              <th><a href="" ng-click="multi_sort = 'name'; reverse=!reverse">Name</a></th>
+              <th><a href="" ng-click="multi_sort = 'player_count'; reverse=!reverse">Players</a></th>
+              <th><a href="" ng-click="multi_sort = 'wager'; reverse=!reverse">Wager</a></th>
+              <th><a href="" ng-click="multi_sort = 'state'; reverse=!reverse">State</a></th>
+              <th><a href="" ng-click="multi_sort = 'is_my_turn'; reverse=!reverse">Turn</a></th>
             </tr>
             </thead>
             <tbody>
-
+            <tr ng-repeat="multiday_game in multiday_games | orderBy:multi_sort:reverse"
+                ng-click="gotoGame(multiday_game.name)"
+                ng-style="gameRowStyle(multiday_game)"
+                ng-class="{ seated: multiday_game.am_i_seated, turn: multiday_game.is_my_turn }">
+              <td>{{multiday_game.name}}</td>
+              <td>{{multiday_game.player_count + "/" + multiday_game.max_players}}</td>
+              <td>{{multiday_game.wager}}</td>
+              <td>{{multiday_game.state}}</td>
+              <td>{{formatIsTurn(multiday_game.is_my_turn)}}</td>
+            </tr>
             </tbody>
           </table>
         </div>

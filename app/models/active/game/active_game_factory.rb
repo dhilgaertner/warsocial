@@ -44,6 +44,9 @@ class ActiveGameFactory
       REDIS.keys("game:#{name}:land:*")
     end
 
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts game_data.inspect
+
     if game_data[0].empty?
       return nil
     end

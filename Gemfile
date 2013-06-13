@@ -2,27 +2,37 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.11'
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
+# Bamboo Pre-installed Gems
+gem 'bundler'
+#gem 'daemons'
+#gem 'eventmachine'
+#gem 'minitest'
+#gem 'rack'
+gem 'rake'
+gem 'rdoc'
+#######################
 
-gem 'sqlite3'
+group :development do
+  gem 'sqlite3'
+end
+
 gem 'devise'
 gem 'json'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'pusher'
-gem 'delayed_job_active_record'
-#gem 'fastercsv' # Only required on Ruby 1.8 and below
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
-gem 'cancan'
-gem 'forem', :git => 'git://github.com/radar/forem.git'
+gem 'delayed_job', '3.0.2'
+gem 'delayed_job_active_record', '0.3.2'
+#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem 'cancan', '1.6.8'
+gem 'forem', '1.0.0.beta1', :git => 'git://github.com/radar/forem.git'
 gem 'forem-theme-twist', :path => "vendor/forem-theme-twist"
 gem 'forem-textile_formatter' # rich-text formatter for forem
-gem 'redis'
+gem 'redis', '2.2.2'
 gem 'delayed_job_admin'
 gem 'kaminari'
 gem 'mark_it_up', :git => 'git://github.com/cingel/mark_it_up.git'
-gem 'activeadmin'
+#gem 'activeadmin'
 gem 'hominid'
 gem 'gravtastic'
 gem 'lazy_high_charts'
@@ -32,6 +42,7 @@ gem 'attachinary'
 group :production do
   # gems specifically for Heroku go here
   gem "pg"
+  gem 'newrelic_rpm'
 end
 
 # Gems used only for assets and not required
@@ -49,7 +60,7 @@ gem 'jquery-rails'
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'

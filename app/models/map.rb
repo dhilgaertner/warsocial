@@ -11,6 +11,7 @@ class Map < ActiveRecord::Base
   def as_json(options={})
     { :name => self.name,
       :preview_url => self.preview? ? self.preview.path : self.preview_url,
+      :thumbnail => self.preview? ? "http://res.cloudinary.com/hedc00eau/image/upload/c_fill,h_100,w_168/#{self.preview.path}" : self.preview_url,
       :author => self.user != nil ? self.user.username : nil,
       :desc => self.desc }
   end

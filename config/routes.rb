@@ -1,11 +1,11 @@
 Dice::Application.routes.draw do
-  ActiveAdmin.routes(self)
+  #ActiveAdmin.routes(self)
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
+  #devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   mount Attachinary::Engine => "/attachinary"
-  mount RailsAdmin::Engine => '/old_admin', :as => 'rails_admin'
+  #mount RailsAdmin::Engine => '/old_admin', :as => 'rails_admin'
 
   match "mark_it_up/preview" => "mark_it_up#preview"
 
@@ -22,9 +22,11 @@ Dice::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
+  match 'game/json' => 'home#get_game'
   match 'game/:game_name/' => 'home#index'
   match 'game/:game_name/fet/:turn_count/:auth' => 'home#force_end_turn'
   match 'game/:game_name/attack' => 'home#attack'
+  match 'game/:game_name/json' => 'home#get_game'
 
   resources :home do
     collection do
@@ -53,9 +55,13 @@ Dice::Application.routes.draw do
 
   # Map Creator and Marketplace Routes
   resources :maps do
+    collection do
+      get 'get_maps'
+    end
     member do
       post 'vote'
       post 'favorite'
+      get 'info'
     end
   end
 

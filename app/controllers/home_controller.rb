@@ -6,11 +6,8 @@ require 'active/active_land'
 require 'active/active_user'
 
 class HomeController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   layout :resolve_layout
-
-  def index2
-
-  end
 
   def index
 
@@ -59,19 +56,9 @@ class HomeController < ApplicationController
     if (current_user != nil)
       @my_votes = Map.get_votes(current_user)
       @my_library = Map.get_favorites(current_user)
-
-      @active_user = ActiveUser.get_active_user(current_user.id)
-
-      @test = (params[:test] == "yes" || @active_user.layout_id == 1) ? true : false
-
-      if (@test)
-        render :action => "index2", :layout => "application2"
-      else
-        render :action => "index", :layout => "application"
-      end
-    else
-      render :action => "index", :layout => "application"
     end
+
+    render :action => "index", :layout => "application"
   end
 
   def add_line
@@ -279,6 +266,38 @@ class HomeController < ApplicationController
     render :text=>"Success", :status=>200
   end
 
+  def get_game
+    if (params[:game_name] == nil)
+      lobby_games = ActiveGameNormal.get_lobby_games(current_user)
+      running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
+      name = running_games.empty? ? "home" : running_games.first[:name]
+    else
+      name = params[:game_name]
+      has_valid_characters = /\A[a-zA-Z]+([a-zA-Z]|\d)*\Z/.match(name) != nil
+
+      if (!has_valid_characters)
+        render :text=>"Forbidden", :status=>403
+      end
+    end
+
+    game = ActiveGameFactory.get_active_game(name)
+    map = Map.where("name = ?", game.map_name).first
+
+    init_data = { :who_am_i => current_user == nil ? 0 : current_user.id,
+                  :who_am_i_name => current_user == nil ? nil : current_user.username,
+                  :map_id => map.id,
+                  :map_layout => ActiveSupport::JSON.decode(game.map_json),
+                  :game_type => game.game_type,
+                  :game_name => game.name,
+                  :game_state => game.state,
+                  :game_wager => game.wager_level,
+                  :max_player_count => game.max_player_count,
+                  :players => game.players.values,
+                  :deployment => game.lands.values }
+
+    render :json => init_data
+  end
+
   def get_lobby_games
     games = ActiveGameNormal.get_lobby_games(current_user)
     multiday_games = ActiveGameMultiDay.get_lobby_games(current_user)
@@ -300,15 +319,6 @@ class HomeController < ApplicationController
 
   private
   def resolve_layout
-    case action_name
-      when "index"
-        if (params[:test] == "yes")
-          "application2"
-        else
-          "application"
-        end
-      else
-        "application"
-    end
+    return "application"
   end
 end
