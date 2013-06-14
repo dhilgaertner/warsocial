@@ -14,7 +14,23 @@
       		<%= render "shared/game_board2" %>
     	</div>
 
-		<!--icons top right-->
+		<!--tools-->
+		
+		<div class="navbar navbar-inverse">
+			<div class="container">
+		       	<ul class="nav pull-right">
+		           	<li class="active">
+		               	<a href="#">
+		                 	<img src="assets/9x9.png"/>
+		                 </a>
+		         		<ul>
+							<li><a href="#">Hide Dice</a></li>
+							<li><a href="#">Forfeit</a></li>
+		                 </ul><!-- /Sub menu -->
+		            </li>
+		     	</ul>
+			</div><!--/.nav-collapse -->
+		</div>
 
 		<div class="sidebar">
 			<div id="game details">
@@ -40,7 +56,7 @@
 			-->
 
 			<!--Pop-up after the game is over, announcing winners-->
-			
+
 			<!--
 
       		<div ng-controller="GameLogCtrl" id="log-window">
@@ -68,7 +84,7 @@
 			-->
 
 			<!--Chat-->
-			
+
 			<!--
 
       		<div ng-controller="GameChatCtrl">

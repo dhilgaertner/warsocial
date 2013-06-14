@@ -1038,42 +1038,17 @@
 
 						<ul class="nav pull-right">
 							<li class="active" style="margin-right:30px; margin-top:5px;">
-				      			<a href="#">
-									Scratch
-									<span class="navbar-unread">3</span>
-								</a>
-								<ul class="custom-dropdown">
-									<li>
-										<a href="#">
-											Notifications   
-											<span class="badge badge-important">   3</span>
-										</a>
-									</li>
-									<li><a href="#">Settings</a></li>
-									<li><a href="#">Sign Out</a></li>
-								</ul> 
+								<%= link_to image_tag('dice_glyph.png'), "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %>
+								<span class="navbar-unread">3</span>
 							</li>
-						</ul>
+						</ul>												
 						
 						<!--Lobby-->
 						
 						<ul class="nav pull-right" style="margin-top:6px;">
 							<li>
-								<%= link_to image_tag('dice_glyph.png'), "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %>
 							</li>
-						</ul>
-						
-						<!--Tools-->
-						
-						<ul class="nav pull-right" style="margin-top:6px;">
-							<li>
-								<a href="#"><img src="assets/9x9.png"/></a>
-								<ul class="custom-dropdown">
-									<li><a href="#">Hide Dice</a></li>
-									<li><a href="#">Forfeit</a></li>
-								</ul>
-							</li>
-						</ul>
+						</ul>						
 						
 						<!--Home -->
 
@@ -1090,6 +1065,8 @@
 									<li><a href="#">Forum</a></li>
 									<li><a href="#">Blog</a></li>
 									<li><a href="#">Email Us</a></li>
+									<li><a href="#">Settings</a></li>
+									<li><a href="#">Logout</a></li>
 								</ul> 
 							</li>							
 						</ul>
