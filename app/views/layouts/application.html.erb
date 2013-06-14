@@ -11,7 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
-<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="/bootstrap/css/flat-ui.css" rel="stylesheet">
 
 <script src="/headjs/head.min.js"></script>
 
@@ -1020,21 +1021,70 @@
 		
 		<!--Navbar-->
 		
-		<div class="navbar">
-			<div class="navbar-inner">
-				<a class="brand" href="#">Title</a>
-				<ul class="nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
-				</ul>
-			</div>
-		</div>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+	      <div class="navbar-inner" style="background-color: #BDC3C7;">
+	        <div class="container">
+	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </a>
+	          <a class="brand" href="#" style="color:#2C3E50;">
+					WarSocial
+			  </a>
+	          <div class="nav-collapse collapse">
+					<ul class="nav" style="margin-top:6px;">
+		            </ul>
+
+					<!--logged in-->
+
+					<ul class="nav pull-right">
+						<li class="active" style="margin-right:30px; margin-top:5px;">
+				      		<a href="#">
+								Scratch
+								<span class="navbar-unread">3</span>
+							</a>
+							<ul class="custom-dropdown">
+								<li>
+									<a href="#">
+										Notifications   
+										<span class="badge badge-important">   3</span>
+									</a>
+								</li>
+								<li><a href="#">Settings</a></li>
+
+								<li><a href="#">Sign Out</a></li>
+							</ul> 
+						</li>
+					</ul>
+
+					<!--home -->
+
+					<ul class="nav pull-left">
+						<li class="active" style="margin-top:20px;">
+				      		<img src="/bootstrap/img/stacks.png"/>
+				          </a>
+							<ul class="custom-dropdown">
+								<li><a href="#">How to Play</a></li>
+								<li><a href="#">Leaderboard</a></li>
+								<li><a href="#">Maps Center</a></li>
+								<li><a href="#">Forum</a></li>
+								<li><a href="#">Blog</a></li>
+								<li><a href="#">Email Us</a></li>
+							</ul> 
+						</li>
+					</ul>
+
+	          </div><!--/.nav-collapse -->
+	        </div>
+	      </div>
+	    </div>
 		
 		<!--Gameboard-->
 		
+		<div style="margin-top:70px;">
   		<%= yield %>
-
+		</div>
 		<!--Footer-->
 
   		<div id="footer2"></div>
