@@ -12,43 +12,10 @@
 	<div ng-controller="GameSeatsCtrl">
 		<div class="game">
       		<%= render "shared/game_board2" %>
-    	</div>
 
 		<!--tools-->
 		
-				<div class="navbar navbar-inverse">
-					<div class="container">
-						<ul class="nav pull-right">
-							<li>
-								<a href="#">
-									<img src="assets/chat.png"/>
-								</a>
-							</li>
-						</ul>
-		       			<ul class="nav pull-right">
-		           			<li>
-		               			<a href="#">
-		                 			<img src="assets/9x9.png"/>
-		                 		</a>
-		         				<ul>
-									<li>
-										<div><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
-										<div><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
-									</li>
-									<li>
-										<button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
-									</li>
-									<li>
-										<a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
-					            			<i class="icon-flag icon-white" style="margin-top: 2px;"></i>
-					          			</a>
-									</li>
-									<li><a href="#">Game Data</a></li>
-		                 		</ul><!-- /Sub menu -->
-		            		</li>
-		     			</ul>
-					</div><!--/.container-->
-				</div><!--/.navbar-inverse-->
+		
 			
 			<!--Pop-up after the game is over, announcing winners-->
 			
@@ -102,5 +69,39 @@
           		</form>
         		<% end %>
       		</div>--><!--/Chat-->
+		</div>
 	</div><!--/GameSeatsCtrl-->
+	<div class="navbar navbar-inverse">
+				<div class="container">
+					<ul class="nav pull-right">
+						<li>
+							<a href="#">
+								<img src="assets/chat.png"/>
+							</a>
+						</li>
+					</ul>
+	       			<ul class="nav pull-right">
+	           			<li>
+	               			<a href="#">
+	                 			<img src="assets/9x9.png"/>
+	                 		</a>
+	         				<ul>
+								<li>
+									<div><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
+									<div><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
+								</li>
+								<li>
+									<button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
+								</li>
+								<li>
+									<a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
+				            			<i class="icon-flag icon-white" style="margin-top: 2px;"></i>
+				          			</a>
+								</li>
+								<li><a href="#">Game Data</a></li>
+	                 		</ul><!-- /Sub menu -->
+	            		</li>
+	     			</ul>
+				</div><!--/.container-->
+			</div><!--/.navbar-inverse-->
 </div><!--/GameBoardCtrl-->
