@@ -1022,68 +1022,74 @@
 		<!--Navbar-->
 		
 		<div class="navbar navbar-inverse navbar-fixed-top">
-	      <div class="navbar-inner" style="background-color: #BDC3C7;">
-	        <div class="container">
-	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	          </a>
-	          <a class="brand" href="#" style="color:#2C3E50;">
-					WarSocial
-			  </a>
-	          <div class="nav-collapse collapse">
-					<ul class="nav" style="margin-top:6px;">
-		            </ul>
+	    	<div class="navbar-inner" style="background-color: #BDC3C7;">
+	        	<div class="container">
+	          		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	          		</a>
+	          		<a class="brand" href="#" style="color:#2C3E50;">
+						WarSocial
+			  		</a>
+	          		<div class="nav-collapse collapse">
 
-					<!--logged in-->
+						<!--logged in-->
 
-					<ul class="nav pull-right">
-						<li class="active" style="margin-right:30px; margin-top:5px;">
-				      		<a href="#">
-								Scratch
-								<span class="navbar-unread">3</span>
-							</a>
-							<ul class="custom-dropdown">
-								<li>
-									<a href="#">
-										Notifications   
-										<span class="badge badge-important">   3</span>
-									</a>
-								</li>
-								<li><a href="#">Settings</a></li>
+						<ul class="nav pull-right">
+							<li class="active" style="margin-right:30px; margin-top:5px;">
+				      			<a href="#">
+									Scratch
+									<span class="navbar-unread">3</span>
+								</a>
+								<ul class="custom-dropdown">
+									<li>
+										<a href="#">
+											Notifications   
+											<span class="badge badge-important">   3</span>
+										</a>
+									</li>
+									<li><a href="#">Settings</a></li>
+									<li><a href="#">Sign Out</a></li>
+								</ul> 
+							</li>
+						</ul>
+						
+						<!--Lobby-->
+						
+						<ul class="nav pull-right" style="margin-top:6px;">
+							<li>
+								<%= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %>
+							</li>
+						</ul>
 
-								<li><a href="#">Sign Out</a></li>
-							</ul> 
-						</li>
-					</ul>
+						<!--Home -->
 
-					<!--home -->
-
-					<ul class="nav pull-left">
-						<li class="active" style="margin-top:20px;">
-				      		<img src="/bootstrap/img/stacks.png"/>
-				          </a>
-							<ul class="custom-dropdown">
-								<li><a href="#">How to Play</a></li>
-								<li><a href="#">Leaderboard</a></li>
-								<li><a href="#">Maps Center</a></li>
-								<li><a href="#">Forum</a></li>
-								<li><a href="#">Blog</a></li>
-								<li><a href="#">Email Us</a></li>
-							</ul> 
-						</li>
-					</ul>
-
-	          </div><!--/.nav-collapse -->
-	        </div>
-	      </div>
-	    </div>
+						<ul class="nav pull-left">
+							<li style="margin-top:20px;">
+				      			<img src="/bootstrap/img/stacks.png"/>
+								<ul class="custom-dropdown">
+									<li>
+										<%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %>
+									</li>
+									<li><a href="#">How to Play</a></li>
+									<li><a href="#">Leaderboard</a></li>
+									<li><a href="#">Maps Center</a></li>
+									<li><a href="#">Forum</a></li>
+									<li><a href="#">Blog</a></li>
+									<li><a href="#">Email Us</a></li>
+								</ul> 
+							</li>							
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div><!--/.container-->
+			</div><!--.navbar-inner-->
+		</div><!--.navbar-fixed-top-->
 		
 		<!--Gameboard-->
 		
 		<div style="margin-top:70px;">
-  		<%= yield %>
+  			<%= yield %>
 		</div>
 		<!--Footer-->
 
