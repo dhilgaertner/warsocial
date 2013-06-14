@@ -16,41 +16,40 @@
 
 		<!--tools-->
 		
-		<div class="navbar navbar-inverse">
-			<div class="container">
-		       	<ul class="nav pull-right">
-		           	<li class="active">
-		               	<a href="#">
-		                 	<img src="assets/9x9.png"/>
-		                 </a>
-		         		<ul>
-							<li><a href="#">Hide Dice</a></li>
-							<li><a href="#">Forfeit</a></li>
-		                 </ul><!-- /Sub menu -->
-		            </li>
-		     	</ul>
-			</div><!--/.nav-collapse -->
-		</div>
-
 		<div class="sidebar">
-			<div id="game details">
-
-			</div>
-		</div>
+			<div id="game-details">
+				<div class="navbar navbar-inverse">
+					<div class="container">
+		       			<ul class="nav pull-right">
+		           			<li class="active">
+		               			<a href="#">
+		                 			<img src="assets/9x9.png"/>
+		                 		</a>
+		         				<ul>
+									<li>
+										<div><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
+										<div><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
+									</li>
+									<li>
+										<button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
+									</li>
+									<li>
+										<a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
+					            			<i class="icon-flag icon-white" style="margin-top: 2px;"></i>
+					          			</a>
+									</li>
+		                 		</ul><!-- /Sub menu -->
+		            		</li>
+		     			</ul>
+					</div><!--/.container-->
+				</div><!--/.navbar-inverse-->
+			</div><!--/#game-details-->
+		</div><!--/.sidebar-->
 
 		<!--
 
     	<div class="sidebar">
       		<div id="game-details">
-        		<div class="wrapper" style="margin-top: 8px; margin-left: 10px;">
-          			<button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
-          			<a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
-            			<i class="icon-flag icon-white" style="margin-top: 2px;"></i>
-          			</a>
-        		</div>
-
-        		<div class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
-        		<div class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
       		</div>
 
 			-->
