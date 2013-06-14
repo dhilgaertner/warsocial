@@ -44,19 +44,10 @@
 					</div><!--/.container-->
 				</div><!--/.navbar-inverse-->
 			</div><!--/#game-details-->
-		</div><!--/.sidebar-->
-
-		<!--
-
-    	<div class="sidebar">
-      		<div id="game-details">
-      		</div>
-
-			-->
-
+			
 			<!--Pop-up after the game is over, announcing winners-->
-
-			<!--
+			
+			<!--Need to get rid of the hr/border at the bottom-->
 
       		<div ng-controller="GameLogCtrl" id="log-window">
         		<table style="width: 100%">
@@ -80,13 +71,9 @@
         		</table>
       		</div>
 
-			-->
-
 			<!--Chat-->
-
-			<!--
-
-      		<div ng-controller="GameChatCtrl">
+			
+			<div ng-controller="GameChatCtrl">
         		<div id="chat-window">
           			<table style="margin-left: 5px; margin-right: 5px;">
             			<tbody>
@@ -111,7 +98,7 @@
             		</div>
           		</form>
         		<% end %>
-      		</div>--><!--/Chat-->
-    	<!--</div>-->
-  	</div>
-</div>
+      		</div><!--/Chat-->
+		</div><!--/.sidebar-->
+	</div><!--/GameSeatsCtrl-->
+</div><!--/GameBoardCtrl-->
