@@ -16,12 +16,17 @@
 
 		<!--tools-->
 		
-		<div class="sidebar">
-			<div id="game-details">
 				<div class="navbar navbar-inverse">
 					<div class="container">
+						<ul class="nav pull-right">
+							<li>
+								<a href="#">
+									<img src="assets/chat.png"/>
+								</a>
+							</li>
+						</ul>
 		       			<ul class="nav pull-right">
-		           			<li class="active">
+		           			<li>
 		               			<a href="#">
 		                 			<img src="assets/9x9.png"/>
 		                 		</a>
@@ -38,17 +43,15 @@
 					            			<i class="icon-flag icon-white" style="margin-top: 2px;"></i>
 					          			</a>
 									</li>
+									<li><a href="#">Game Data</a></li>
 		                 		</ul><!-- /Sub menu -->
 		            		</li>
 		     			</ul>
 					</div><!--/.container-->
 				</div><!--/.navbar-inverse-->
-			</div><!--/#game-details-->
 			
 			<!--Pop-up after the game is over, announcing winners-->
 			
-			<!--Need to get rid of the hr/border at the bottom-->
-
       		<div ng-controller="GameLogCtrl" id="log-window">
         		<table style="width: 100%">
           			<tbody>
@@ -71,7 +74,7 @@
         		</table>
       		</div>
 
-			<!--Chat-->
+			<!--Chat
 			
 			<div ng-controller="GameChatCtrl">
         		<div id="chat-window">
@@ -98,7 +101,6 @@
             		</div>
           		</form>
         		<% end %>
-      		</div><!--/Chat-->
-		</div><!--/.sidebar-->
+      		</div>--><!--/Chat-->
 	</div><!--/GameSeatsCtrl-->
 </div><!--/GameBoardCtrl-->
