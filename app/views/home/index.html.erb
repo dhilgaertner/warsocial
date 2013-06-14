@@ -1,3 +1,5 @@
+<!--Homepage main-->
+
 <% content_for :title do %>
   <title>WarSocial</title>
 <% end %>
@@ -9,12 +11,16 @@
 <div ng-controller="GameBoardCtrl" id="game-container">
 	<div ng-controller="GameSeatsCtrl">
 		<div class="game">
-
-      	<%= render "shared/game_board2" %>
-
+      		<%= render "shared/game_board2" %>
     	</div>
 
 		<!--icons top right-->
+
+		<div class="sidebar">
+			<div id="game details">
+
+			</div>
+		</div>
 
 		<!--
 
