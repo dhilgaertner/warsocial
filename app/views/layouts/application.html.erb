@@ -1059,15 +1059,15 @@
 						
 						<ul class="nav pull-right" style="margin-top:6px;">
 							<li>
-								<%= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %>
+								<%= link_to image_tag('dice_glyph.png'), "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %>
 							</li>
 						</ul>
-
+						
 						<!--Home -->
 
 						<ul class="nav pull-left">
 							<li style="margin-top:20px;">
-				      			<img src="/bootstrap/img/stacks.png"/>
+				      			<img src="assets/stacks2.png"/>
 								<ul class="custom-dropdown">
 									<li>
 										<%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %>
