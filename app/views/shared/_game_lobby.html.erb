@@ -1,14 +1,17 @@
 <!--Lobby-->
 
 <div ng-controller="GameLobbyCtrl" class="modal" id="game_lobby" style="display: none;">
-  <div class="modal-header">
-    <button class="close" data-dismiss="modal">×</button>
-    <h3>Lobby</h3>
-  </div>
+  
+    <!-- closing 'x' button and 'Lobby' heading
+		
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+    	<h3>Lobby</h3>
+	</div>-->
   <div class="modal-body">
     <ul class="nav nav-pills">
-      <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">{{online_users.length}}</span></a></li>
-      <li class="active"><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge">{{live_games.length}}</span></a></li>
+      <!--<li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">{{online_users.length}}</span></a></li>
+      <li class="active"><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge">{{live_games.length}}</span></a></li>-->
       <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">{{myTurns(multiday_games).length}}</span><span id="multi_badge_2" class="badge">{{multiday_games.length}}</span></a></li>
     </ul>
     <div class="well">
@@ -83,7 +86,9 @@
       </div>
     </div>
   </div>
-  <div class="modal-footer">
+  <!-- Close Button
+	  
+	  <div class="modal-footer">
     <a href="#" data-dismiss="modal" class="btn">Close</a>
-  </div>
+  </div>-->
 </div>
