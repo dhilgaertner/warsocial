@@ -1039,7 +1039,10 @@
 						<ul class="nav pull-right">
 							<li class="active" style="margin-right:30px; margin-top:5px;">
 								<%= link_to image_tag('dice_glyph.png'), "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %>
-								<span class="navbar-unread">3</span>
+								<!--<span class="navbar-unread">3</span>-->
+								<div ng-controller="GameLobbyCtrl">
+									<span class="navbar-unread">{{myTurns(multiday_games).length}}</span>
+								</div>
 							</li>
 						</ul>												
 						
