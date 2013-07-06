@@ -1,41 +1,24 @@
-<!-- Avatar, Username, Icons, Sit/Stand Buttons, Medals - Rendered from /shared/game_board2 -->
-
 <div class="player-stats">
-	
-	<!--Avatar-->
-	
-	<div class="avatar"  ng-style="avatar_style()" ng-show="!is_game_started() || is_player_seated()">
-	</div>
-	<div class="info">
-	
-		<!--Username-->
-	
-    	<div class="name" ng-show="is_player_seated()">
-      		<a target='_blank' style='color: inherit;' ng-href='/u/{{player_name()}}'>{{player_name()}}</a>
-    	</div>
-
-		<!--Avatar container icons-->
-
-    	<div class="stats" ng-show="is_game_started() && is_player_seated()">
-      		<div class="col1"><i class="icon-flag"></i><div class="place">{{player_place()}}</div></div>
-      		<div class="col2"><i class="icon-map-marker"></i><div class="lands">{{player_land_count()}}</div></div>
-      		<div class="col1"><i class="icon-star"></i><div class="dice">{{player_dice_count()}} ({{player_reserves()}})</div></div>
-      		<div class="col2"><i class="icon-cog"></i><div class="points">{{player_points()}} ({{player_delta_points()}})</div></div>
-    	</div>
-
-		<!--Sit/Stand Buttons-->
-
-    	<div class="action-sit" ng-show="!is_game_started() && !is_player_me() && !is_player_seated()">
-      		<a id="sit_button" class="btn btn-large btn-success" ng-click="sit(game_name)">Sit</a>
-    	</div>
-    	<div class="action-stand" ng-show="!is_game_started() && is_player_me()">
-      		<a class="btn btn-large btn-danger" ng-click="stand(game_name)">Stand</a>
-    	</div>
-  	</div>
+  <div class="avatar"  ng-style="avatar_style()" ng-show="!is_game_started() || is_player_seated()">
+  </div>
+  <div class="info">
+    <div class="name" ng-show="is_player_seated()">
+      <a target='_blank' style='color: inherit;' ng-href='/u/{{player_name()}}'>{{player_name()}}</a>
+    </div>
+    <div class="stats" ng-show="is_game_started() && is_player_seated()">
+      <div class="col1"><i class="icon-flag"></i><div class="place">{{player_place()}}</div></div>
+      <div class="col2"><i class="icon-map-marker"></i><div class="lands">{{player_land_count()}}</div></div>
+      <div class="col1"><i class="icon-star"></i><div class="dice">{{player_dice_count()}} ({{player_reserves()}})</div></div>
+      <div class="col2"><i class="icon-cog"></i><div class="points">{{player_points()}} ({{player_delta_points()}})</div></div>
+    </div>
+    <div class="action-sit" ng-show="!is_game_started() && !is_player_me() && !is_player_seated()">
+      <a id="sit_button" class="btn btn-large btn-success" ng-click="sit(game_name)">Sit</a>
+    </div>
+    <div class="action-stand" ng-show="!is_game_started() && is_player_me()">
+      <a class="btn btn-large btn-danger" ng-click="stand(game_name)">Stand</a>
+    </div>
+  </div>
 </div>
-
-<!--Medals-->
-
 <div class="medals" ng-style="medal_style()" ng-show="!is_game_started() || is_player_seated()">
   <div ng-repeat="medal_slot in [0,1,2,3,4,5,6,7,8]" class="medal" ng-style="medal_background(medal_slot)"></div>
 </div>

@@ -6,13 +6,12 @@
 
 <meta HTTP-EQUIV="Content-Language" Content="en">
 <meta name="Description" content="WarSocial is a free turn-based real time multiplayer HTML5 social strategy game inspired by Risk.">
-<meta name="keywords" content="">
+<meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
 <meta property="og:image" content="<%= image_path "logo.png" %>"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="icon" type="image/png" href="<%=image_path "icon.png"%>">
-<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/bootstrap/css/flat-ui.css" rel="stylesheet">
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <script src="/headjs/head.min.js"></script>
 
@@ -628,14 +627,11 @@
 
     #footer2 {
       height: 25px;
-      background-color: none;
+      background-color: #2C2C2C;
     }
 
     #game-container {
-	
-		/*removed border around gameboard*/
-	
-      /*border: 1px solid #E5E8E7;*/
+      border: 1px solid #E5E8E7;
     }
 
     #game-container:before, #game-container:after {
@@ -660,10 +656,7 @@
     #game-container div.game {
       /*border: 1px solid red;*/
       float: left;
-		
-	/*Blue around map*/	
-
-    /*background-color: #A6CBE0;*/
+      background-color: #A6CBE0;
     }
 
     #game-container div.sidebar {
@@ -673,12 +666,9 @@
     }
 
     #game-container div.players-container {
-      
-	/*grey behind avatars*/
-	/*background-color: #DCDDDD;*/
-	
-    /*border: 1px solid yellow;*/
-    height: 100px;
+      background-color: #DCDDDD;
+      /*border: 1px solid yellow;*/
+      height: 100px;
     }
 
     #game-container div.players {
@@ -984,28 +974,7 @@
         top: 454px;
         left: 589px;
       }
-		div.navbar-inner{
-			background-image:none !important;
-		}
     }
-	
-	/* 
-	
-	Custom style, added by Bill, 6/2013
-	
-	*/
-	
-	.brand {
-		position:absolute;
-		width:100%;
-		left:0;
-		text-align:center;
-		margin:auto;
-	}
-	.navbar-inner {
-		background-color:#FFF !important;
-	}
-	
 
   </style>
 
@@ -1015,79 +984,65 @@
     });
   </script>
 </head>
-
 <body>
-	<div class="container">
-		
-		<!--Navbar-->
-		
-		<div class="navbar navbar-inverse navbar-fixed-top">
-	    	<div class="navbar-inner" style="background-color: #BDC3C7;">
-	        	<div class="container">
-	          		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	            		<span class="icon-bar"></span>
-	            		<span class="icon-bar"></span>
-	            		<span class="icon-bar"></span>
-	          		</a>
-	          		<a class="brand" href="#" style="color:#2C3E50;">
-						WarSocial
-			  		</a>
-	          		<div class="nav-collapse collapse">
 
-						<!--logged in-->
+<div class="container">
+  <div class="navbar navbar-static" id="main-navbar">
+    <div class="navbar-inner">
+      <div style="width: auto;" class="container">
+        <ul class="nav">
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="font-size: 1.5em;" href="#">
+              WarSocial<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Home", root_path %></li>
+              <li><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :target => @isGame ? "_blank" : "_self" %></li>
+              <li><%= link_to "Leaderboard", "/leaderboard", :target => @isGame ? "_blank" : "_self" %></li>
+              <li><%= link_to "Maps Center", "/maps", :target => @isGame ? "_blank" : "_self" %></li>
+              <li><%= link_to "Forum", "/forums/forums/1", :target => @isGame ? "_blank" : "_self" %></li>
+              <!--<li><%= link_to "Map Creator", "http://blog.warsocial.com/post/18214496263/ma1achais-map-creator", :target => @isGame ? "_blank" : "_self" %></li>-->
+              <li><%= link_to "Blog", "http://blog.warsocial.com", :target => @isGame ? "_blank" : "_self" %></li>
+              <!--<li><%= link_to "Jobs", "http://jobs.warsocial.com/", :target => @isGame ? "_blank" : "_self" %></li>-->
+              <li><%= link_to "Email Us", "mailto:hello@warsocial.com" %></li>
+            </ul>
+          </li>
+        </ul>
 
-						<ul class="nav pull-right">
-							<li class="active" style="margin-right:30px; margin-top:5px;">
-								<%= link_to image_tag('dice_glyph.png'), "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %>
-								<!--<span class="navbar-unread">3</span>-->
-								<div ng-controller="GameLobbyCtrl">
-									<span class="navbar-unread">{{myTurns(multiday_games).length}}</span>
-								</div>
-							</li>
-						</ul>												
-						
-						<!--Lobby-->
-						
-						<ul class="nav pull-right" style="margin-top:6px;">
-							<li>
-							</li>
-						</ul>						
-						
-						<!--Home -->
+        <% if (controller_name == "home") %>
+          <ul class="nav">
+            <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %></li>
+            <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
+          </ul>
+        <% end %>
 
-						<ul class="nav pull-left">
-							<li style="margin-top:20px;">
-				      			<img src="assets/stacks2.png"/>
-								<ul class="custom-dropdown">
-									<li>
-										<%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %>
-									</li>
-									<li><a href="#">How to Play</a></li>
-									<li><a href="#">Leaderboard</a></li>
-									<li><a href="#">Maps Center</a></li>
-									<li><a href="#">Forum</a></li>
-									<li><a href="#">Blog</a></li>
-									<li><a href="#">Email Us</a></li>
-									<li><a href="#">Settings</a></li>
-									<li><a href="#">Logout</a></li>
-								</ul> 
-							</li>							
-						</ul>
-					</div><!--/.nav-collapse -->
-				</div><!--/.container-->
-			</div><!--.navbar-inner-->
-		</div><!--.navbar-fixed-top-->
-		
-		<!--Gameboard-->
-		
-		<div style="margin-top:70px;">
-  			<%= yield %>
-		</div>
-		<!--Footer-->
-
-  		<div id="footer2"></div>
-
-	</div><!--/.container-->
+        <% if (current_user != nil) %>
+          <ul class="nav pull-right">
+            <li class="dropdown" id="fat-menu">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <%= current_user.username %>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Profile", "/u/#{current_user.username}", :target => "_blank" %></li>
+                <li><%= link_to "Settings", "#", "data-toggle" => "modal", :href => "#settings", :onClick => "_gaq.push(['_trackEvent', 'Link', 'Settings']);".html_safe %></li>
+                <li class="divider"></li>
+                <li><%= link_to "Logout", "/users/sign_out", :method => :delete %></li>
+              </ul>
+            </li>
+          </ul>
+        <% else %>
+          <ul class="nav pull-right">
+            <li><%= link_to image_tag("buttons/login_button.png", :border => 0), "/users/sign_in", :class => 'button', :style => "padding-top: 0px; padding-bottom: 0px; margin-top: 5px;" %></li>
+            <li><%= link_to image_tag("buttons/register_button.png", :border => 0), "/users/sign_up", :class => 'button', :style => "padding-top: 0px; padding-bottom: 0px; margin-top: 5px;" %></li>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%= yield %>
+  <div id="footer2"></div>
+</div>
 
 <%= render "shared/settings" %>
 <%= render "shared/game_lobby" %>

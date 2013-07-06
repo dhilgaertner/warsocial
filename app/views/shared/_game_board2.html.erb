@@ -1,113 +1,88 @@
-<!--Gameboard container, _game_player pulls in player data for that box-->
-
 <div id="game-main" style="position: relative;">
-	
-	<!--Turn timer-->
-	
-	<!--
-	
-	<div ng-controller="GameTimerCtrl" id="game-settings" class="well" style="height: 41px; width: 150px; padding: 15px; padding-top: 4px">
-    	<h5 style="margin-top: 0px;">{{timer_title()}}</h5>
-		<div id="turn-timer-box" style="float: left; width: 110px; position: relative; background-color: #DCDDDD; height: 28px; border-radius: 4px 4px 4px 4px;">
-			<span id="turn-username" style="position: absolute; top: 5px; left: 5px; color: white;">{{current_player_name()}}</span>
-		
-	-->
-			
-			<!--Progress bar, need to make this invisible for games not in progress-->
-			
-			<!--<div class="turn_progress progress progress-success progress-striped active" style="height: 28px;">
-				<div class="bar" style="background-color: #2C3E50; width: 100%; height: 28px;"></div>
-			</div>
-		</div>
-		<a id="game-endturn" ng-class="{ disabled: !is_my_turn() }" style="float: right;" class="btn btn-success" ng-click="end_turn()">
-			<i style="margin-top: 2px;" class="icon-ok icon-white"></i>
-    	</a>
-	</div>--><!--/.well-->
-	
-	<!--Map voting module-->
-	
-	<!--
+  <div ng-controller="GameTimerCtrl" id="game-settings" class="well" style="height: 41px; width: 150px; padding: 15px; padding-top: 4px">
+    <h5 style="margin-top: 0px;">{{timer_title()}}</h5>
+    <div id="turn-timer-box" style="float: left; width: 110px; position: relative; background-color: #DCDDDD; height: 28px; border-radius: 4px 4px 4px 4px;">
+      <span id="turn-username" style="position: absolute; top: 5px; left: 5px; color: white;">{{current_player_name()}}</span>
+      <div class="turn_progress progress progress-success progress-striped active" style="height: 28px;">
+        <div class="bar" style="background-color: #009F9D; width: 100%; height: 28px;"></div>
+      </div>
+    </div>
+    <a id="game-endturn" ng-class="{ disabled: !is_my_turn() }" style="float: right;" class="btn btn-success" ng-click="end_turn()">
+      <i style="margin-top: 2px;" class="icon-ok icon-white"></i>
+    </a>
+  </div>
 
-	<div id="game-map-info" ng-controller="GameMapInfoCtrl" class="well" ng-class="{ thumb_up: is_thumb_up(), thumb_down: is_thumb_down() }" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
-		<h5 style="margin-top: 0px;">
-      		Map:
-      		<% if (current_user != nil && current_user.admin?) %>
-        	<a ng-href="/maps/{{map.id}}/edit">{{map.name}}</a>
-      		<% else %>
-        	{{map.name}}
-      		<% end %>
-    	</h5>
-		<table style="position: relative;">
-			<tbody style="">
-				<tr>
-					<td style="width: 23px;">
-            			<span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(1) | number:0}}%</span>
-          			</td>
-          			<td style="width: 125px;">
-            			<div id="map-voting" ng-mouseenter="vote_hover = true" ng-mouseleave="vote_hover = false" style="position: absolute; top: 1px; left: 26px; color: white; height: 27px; z-index: 999; width: 123px;">
-              				<table style="width: 100%; height: 100%;">
-                				<tbody>
-                  					<tr>
-                    					<td style="width: 33%; text-align: center;">
-                      						<a ng-click="vote(1)" class="btn btn-mini btn-success vote" ng-show="vote_hover">
-                        						<i ng-class="{ 'icon-white': true, 'icon-thumbs-up': my_vote() != 1, 'icon-ok': my_vote() == 1 }"></i>
-                      						</a>
-                    					</td>
-                    					<td style="width: 33%; text-align: center; cursor: default;"><span id="vote-text" ng-show="!is_thumb_up() && !is_thumb_down">vote</span></td>
-                    					<td style="width: 33%; text-align: center;">
-                      						<a ng-click="vote(0)" class="btn btn-mini btn-danger vote" ng-show="vote_hover">
-                        						<i ng-class="{ 'icon-white': true, 'icon-thumbs-down': my_vote() != 0, 'icon-ok': my_vote() == 0 }"></i>
-                      						</a>
-                    					</td>
-                  					</tr>
-                				</tbody>
-              				</table>
-            			</div>
-            			<div class="progress progress-striped" style="height: 28px; position: relative">
-              				<div class="bar" style="height: 28px; background-color: #f08080; position: absolute; width: 100%; top: 0px; left: 0px;"></div>
-              				<div class="bar" ng-style="progress_style()"></div>
-            			</div>
-          			</td>
-          			<td>
-            			<span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(0) | number:0}}%</span>
-          			</td>
-        		</tr>
-      		</tbody>
-    	</table>
-  	</div>--><!--/.well-->
+  <div id="game-map-info" ng-controller="GameMapInfoCtrl" class="well" ng-class="{ thumb_up: is_thumb_up(), thumb_down: is_thumb_down() }" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
+    <h5 style="margin-top: 0px;">
+      Map:
+      <% if (current_user != nil && current_user.admin?) %>
+        <a ng-href="/maps/{{map.id}}/edit">{{map.name}}</a>
+      <% else %>
+        {{map.name}}
+      <% end %>
+    </h5>
+    <table style="position: relative;">
+      <tbody style="">
+        <tr>
+          <td style="width: 23px;">
+            <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(1) | number:0}}%</span>
+          </td>
+          <td style="width: 125px;">
+            <div id="map-voting" ng-mouseenter="vote_hover = true" ng-mouseleave="vote_hover = false" style="position: absolute; top: 1px; left: 26px; color: white; height: 27px; z-index: 999; width: 123px;">
+              <table style="width: 100%; height: 100%;">
+                <tbody>
+                  <tr>
+                    <td style="width: 33%; text-align: center;">
+                      <a ng-click="vote(1)" class="btn btn-mini btn-success vote" ng-show="vote_hover">
+                        <i ng-class="{ 'icon-white': true, 'icon-thumbs-up': my_vote() != 1, 'icon-ok': my_vote() == 1 }"></i>
+                      </a>
+                    </td>
+                    <td style="width: 33%; text-align: center; cursor: default;"><span id="vote-text" ng-show="!is_thumb_up() && !is_thumb_down">vote</span></td>
+                    <td style="width: 33%; text-align: center;">
+                      <a ng-click="vote(0)" class="btn btn-mini btn-danger vote" ng-show="vote_hover">
+                        <i ng-class="{ 'icon-white': true, 'icon-thumbs-down': my_vote() != 0, 'icon-ok': my_vote() == 0 }"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="progress progress-striped" style="height: 28px; position: relative">
+              <div class="bar" style="height: 28px; background-color: #f08080; position: absolute; width: 100%; top: 0px; left: 0px;"></div>
+              <div class="bar" ng-style="progress_style()"></div>
+            </div>
+          </td>
+          <td>
+            <span style="position: absolute; top: 7px; font-size: .6em;">{{vote_percentage(0) | number:0}}%</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-	<!--Top Players Container (avatar, username etc etc)-->
-
-	<div id="top-players" class="players-container">
-    	<div class="players">
-      		<div ng-repeat="seat in top_seats()"
+  <div id="top-players" class="players-container">
+    <div class="players">
+      <div ng-repeat="seat in top_seats()"
            ng-controller="GamePlayerSeatCtrl"
            ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() || is_player_dead() }">
 
         <%= render "shared/game_player" %>
-      		</div>
-    	</div>
-	</div>
+      </div>
+    </div>
+  </div>
 
-	<!--The Gameboard/Map Itself-->
+  <div id="stage">
+    <canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>
+    <canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+    <canvas id="canvas_hilight_player" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+    <canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
 
-	<div id="stage">
-		
-		<!--Shadow around the gameboard
-		
-		<canvas id="canvas_shadow" width="600" height="420" style="z-index:0; position:absolute; left:0px; top:0px;">Your browser does not support the canvas element.</canvas>-->
-		
-    	<canvas id="canvas_map" width="600" height="420" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
-
-    	<canvas id="canvas_hilight_player" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-    	<canvas id="canvas_hilight_origin" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-
-    	<canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
-    	<canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
-    	<div id="dice_container" style="z-index:3; position:absolute; left:0px; top:0px; width:600px; height:420px;"></div>
-    	<canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
-    	<div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
-    	<div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+    <canvas id="canvas_hilight_destination" width="600" height="420" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+    <canvas id="canvas_dice" width="600" height="420" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
+    <div id="dice_container" style="z-index:3; position:absolute; left:0px; top:0px; width:600px; height:420px;"></div>
+    <canvas id="canvas_dice_box" width="600" height="420" style="z-index:4; position:absolute; left:0px; top:0px;"></canvas>
+    <div id="dice_box_text_attacker" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
+    <div id="dice_box_text_defender" style="z-index:5; position:absolute; left:0px; top:0px;"></div>
 
     <% if @dev_image %>
       <%= image_tag("gameboard/dice1.png", :id => 'dice0_1', :style => 'display:none') %>
@@ -254,21 +229,19 @@
       <%= image_tag("gameboard/old/dice4.png", :id => 'dice4', :style => 'display:none') %>
       <%= image_tag("gameboard/old/dice5.png", :id => 'dice5', :style => 'display:none') %>
       <%= image_tag("gameboard/old/dice6.png", :id => 'dice6', :style => 'display:none') %>
-      <!--<%= image_tag("gameboard/old/texture.png", :id => 'pattern', :style => 'display:none') %>-->
+      <%= image_tag("gameboard/old/texture.png", :id => 'pattern', :style => 'display:none') %>
       <%= image_tag("gameboard/old/dice_shadow.png", :id => 'dice_shadow', :style => 'display:none') %>
     <% end %>
-	</div>
+  </div>
 
-	<!--Container for bottom players-->
-
-  	<div id="bottom-players" class="players-container">
-    	<div class="players">
-      		<div ng-repeat="seat in bottom_seats()"
+  <div id="bottom-players" class="players-container">
+    <div class="players">
+      <div ng-repeat="seat in bottom_seats()"
            ng-controller="GamePlayerSeatCtrl"
            ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() || is_player_dead() }">
 
         <%= render "shared/game_player" %>
-      	</div>
-    </div>	
-</div><!--Game Main-->
-</div><!--Either an errant div or it interacts with something where this is rendered from?-->
+      </div>
+    </div>
+  </div>
+</div>
