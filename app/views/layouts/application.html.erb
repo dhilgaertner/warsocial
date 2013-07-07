@@ -996,10 +996,19 @@
               WarSocial<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li style="padding-left:10px"">
-                <button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
-                <a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()"><i class="icon-flag icon-white" style="margin-top: 2px;"></i></a>
-              <li>
+              <div id="game-details">
+                <div ng-controller="GameBoardCtrl" id="game-container">
+                  <div ng-controller="GameSeatsCtrl">
+                    <div class="wrapper" style="margin-top: 8px; margin-left: 10px;">
+                      <button id="dice_visible" type="button" class="btn btn-info" data-toggle="button">
+                        <i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
+                      <a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
+                        <i class="icon-flag icon-white" style="margin-top: 2px;"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <li><%= link_to "Home", root_path %></li>
               <li><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :target => @isGame ? "_blank" : "_self" %></li>
               <li><%= link_to "Leaderboard", "/leaderboard", :target => @isGame ? "_blank" : "_self" %></li>
