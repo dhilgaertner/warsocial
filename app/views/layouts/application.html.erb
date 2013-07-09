@@ -849,14 +849,35 @@
       margin-right: 15px;
     }
 
+    /* Task #4 - Raj - Remved CSS to link logo to home page.
     #main-navbar div.navbar-inner {
       background-image: url(<%=image_path "logo2.png"%>);
       background-position: center;
 
+    }*/
+
+    /* Task #4 - Raj - Added CSS to link logo to home page. */
+    .brandlogo {
+      position:absolute;
+      left:0px;
+      top:0px;
+      width:100%;
+      z-index:5;
+      text-align:center;
+      padding-top:4px;
+    }
+
+    /* Task #4 - Raj - Added CSS to link logo to home page. */
+    .brandlogo a {
+      float:none;
+      display:inline;
     }
 
     ul.nav {
       font-size: .8em;
+    /* Task #4 - Raj - Added CSS to link logo to home page. */
+      position:relative;
+      z-index:8;
     }
 
     #log-window {
@@ -1025,11 +1046,21 @@
         <% if (controller_name == "home") %>
           <ul class="nav">
             <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %></li>
-            <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
+            <li>
+              <!-- Task #5 - Raj - Replaced Lobby link by multi game number -->
+              <%= link_to "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);", "ng-controller" => "GameLobbyCtrl" do %>
+                  Foobar {{multiday_games.length}}
+              <% end %>
+            <%#= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
             <li><%= link_to "Chat", "#", :href => "#" %></li>
           </ul>
         <% end %>
 
+          <!-- Task #4 - Raj - link logo to home page. -->
+          <div class="brandlogo">
+            <%=link_to (image_tag "logo2.png", :border=>0), root_url, {:style=>"padding: 5px 0px 0px 0px;"} %>         
+          </div>
+        
         <% if (current_user != nil) %>
           <ul class="nav pull-right">
             <li class="dropdown" id="fat-menu">
