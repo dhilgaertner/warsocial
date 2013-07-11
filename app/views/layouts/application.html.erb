@@ -6,7 +6,7 @@
 
 <meta HTTP-EQUIV="Content-Language" Content="en">
 <meta name="Description" content="WarSocial is a free turn-based real time multiplayer HTML5 social strategy game inspired by Risk.">
-<meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
+<meta name="keywords" content="">
 <meta property="og:image" content="<%= image_path "logo.png" %>"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -627,11 +627,14 @@
 
     #footer2 {
       height: 25px;
-      background-color: #2C2C2C;
+      /*making the footer white instead of black
+	  background-color: #2C2C2C;*/
+	  background-color: none;
     }
 
     #game-container {
-      border: 1px solid #E5E8E7;
+      /* remove border around gameboard
+	  border: 1px solid #E5E8E7;*/
     }
 
     #game-container:before, #game-container:after {
@@ -656,7 +659,8 @@
     #game-container div.game {
       /*border: 1px solid red;*/
       float: left;
-      background-color: #A6CBE0;
+	  /* remove blue around map
+      background-color: #A6CBE0;*/
     }
 
     #game-container div.sidebar {
@@ -666,7 +670,8 @@
     }
 
     #game-container div.players-container {
-      background-color: #DCDDDD;
+      /* remove shadow around avatar/player data
+	  background-color: #DCDDDD;*/
       /*border: 1px solid yellow;*/
       height: 100px;
     }
@@ -996,6 +1001,10 @@
         left: 589px;
       }
     }
+	.navbar-inner {
+		/* Changes navbar from black to white */
+		background-color:#FFF !important;
+	}
 
   </style>
 
@@ -1058,7 +1067,7 @@
 
           <!-- Task #4 - Raj - link logo to home page. -->
           <div class="brandlogo">
-            <%=link_to (image_tag "logo2.png", :border=>0), root_url, {:style=>"padding: 5px 0px 0px 0px;"} %>         
+            <%=link_to (image_tag "logo3.png", :border=>0), root_url, {:style=>"padding: 5px 0px 0px 0px;"} %>         
           </div>
         
         <% if (current_user != nil) %>
