@@ -814,14 +814,20 @@
     }
 
     #game-container div.medals {
-      height: 25px;
+		/* Getting rid of medals
+      height: 25px;*/
+		height: 0px;
     }
 
     #game-container div.medal {
       float: left;
-      background-color: #A4A5A5;
-      height: 17px;
-      width: 17px;
+	  /* Make medal backgroudn white
+      background-color: #A4A5A5;*/
+	  background-color: #FFF;
+	  
+      /* Getting rid of medals
+	  height: 17px;
+      width: 17px;*/
       margin-top: 4px;
       margin-left: 4px;
     }
@@ -866,7 +872,7 @@
       position:absolute;
       left:0px;
       top:0px;
-      width:100%;
+	  width:100%;
       z-index:5;
       text-align:center;
       padding-top:4px;
@@ -893,7 +899,9 @@
     }
 
     #chat-window {
-      border-top: 10px solid #E5E8E7;
+      /* Getting rid of chat separation border, going white
+	  border-top: 10px solid #E5E8E7;*/
+	  border-top: 10px;
       height: 313px;
       overflow: auto;
     }
