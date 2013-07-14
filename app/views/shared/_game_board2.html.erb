@@ -7,10 +7,15 @@
         <div class="bar" style="background-color: #009F9D; width: 100%; height: 28px;"></div>
       </div>
     </div>
-    <a id="game-endturn" ng-class="{ disabled: !is_my_turn() }" style="float: right;" class="btn btn-success" ng-click="end_turn()">
-      <i style="margin-top: 2px;" class="icon-ok icon-white"></i>
-    </a>
-  </div>
+    	<a id="game-endturn" ng-class="{ disabled: !is_my_turn() }" style="float: right;" class="btn btn-success" ng-click="end_turn()">
+     	   <i style="margin-top: 2px;" class="icon-ok icon-white"></i>
+    	</a>
+  	</div>
+	<div class="pull-right">
+	  <a href="#">
+		  <img src="assets/chat.png"/>
+      </a>
+	</div>
 
   <div id="game-map-info" ng-controller="GameMapInfoCtrl" class="well" ng-class="{ thumb_up: is_thumb_up(), thumb_down: is_thumb_down() }" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
     <h5 style="margin-top: 0px;">
