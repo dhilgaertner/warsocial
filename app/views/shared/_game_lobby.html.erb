@@ -8,12 +8,22 @@
   -->
   <div class="modal-body">
 	  
-	<!-- Who's Online/Live/Multi-Day Dividers-->
+	<!-- Who's Online/Live/Multi-Day Buttons-->
 	  
     <ul class="nav nav-pills">
+		
+	  <!-- Who's Online Button
       <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">{{online_users.length}}</span></a></li>
+	  -->
+	  
+	  <!-- Live Games Button
       <li><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge">{{live_games.length}}</span></a></li>
+	  -->
+		  
+	  <!-- Multi-Day Games Button
       <li class="active"><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">{{myTurns(multiday_games).length}}</span><span id="multi_badge_2" class="badge">{{multiday_games.length}}</span></a></li>
+	  -->
+	  
     </ul>
 	
 	<!--/-->
@@ -22,7 +32,8 @@
       <div class="tab-content">
 		
 		<!-- Who's online tab-->
-		  
+		
+		<!--
         <div class="tab-pane" id="online">
           <table class="table table-striped">
             <thead>
@@ -42,11 +53,13 @@
             </tbody>
           </table>
         </div>
+		-->
 		
 		<!--/-->
 		
 		<!--Live Games-->
 		
+		<!--
         <div class="tab-pane" id="tables">
           <table class="table table-striped">
             <thead>
@@ -70,6 +83,7 @@
             </tbody>
           </table>
         </div>
+		-->
 		
 		<!--/-->
 		
@@ -106,7 +120,13 @@
       </div>
     </div>
   </div>
+  
+  <!--Close Button (Bottom)-->
+  
+  <!--
   <div class="modal-footer">
     <a href="#" data-dismiss="modal" class="btn">Close</a>
   </div>
+  -->
+	  
 </div>
