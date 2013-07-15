@@ -28,7 +28,7 @@
 	
 	<!--/-->
 	
-    <div class="well">
+    <div class="well" style="background-color:#FFF; border:none; box-shadow:none;">
       <div class="tab-content">
 		
 		<!-- Who's online tab-->
@@ -90,14 +90,14 @@
 		<!--Multi-day Games-->
 		
         <div class="tab-pane active" id="multi-day">
-          <table class="table table-striped">
+          <table class="table">
             <thead>
             <tr>
-              <th><a href="" ng-click="multi_sort = 'name'; reverse=!reverse">Name</a></th>
-              <th><a href="" ng-click="multi_sort = 'player_count'; reverse=!reverse">Players</a></th>
-              <th><a href="" ng-click="multi_sort = 'wager'; reverse=!reverse">Wager</a></th>
-              <th><a href="" ng-click="multi_sort = 'state'; reverse=!reverse">State</a></th>
-              <th><a href="" ng-click="multi_sort = 'is_my_turn'; reverse=!reverse">Turn</a></th>
+              <!--<th><a href="" ng-click="multi_sort = 'name'; reverse=!reverse">Name</a></th>-->
+              <th style="text-align:center;"><a href="" ng-click="multi_sort = 'player_count'; reverse=!reverse">Players</a></th>
+              <th style="text-align:center;"><a href="" ng-click="multi_sort = 'wager'; reverse=!reverse">Wager</a></th>
+              <!--<th><a href="" ng-click="multi_sort = 'state'; reverse=!reverse">State</a></th>-->
+              <!--<th><a href="" ng-click="multi_sort = 'is_my_turn'; reverse=!reverse">Turn</a></th>-->
             </tr>
             </thead>
             <tbody>
@@ -105,11 +105,11 @@
                 ng-click="gotoGame(multiday_game.name)"
                 ng-style="gameRowStyle(multiday_game)"
                 ng-class="{ seated: multiday_game.am_i_seated, turn: multiday_game.is_my_turn }">
-              <td>{{multiday_game.name}}</td>
-              <td>{{multiday_game.player_count + "/" + multiday_game.max_players}}</td>
-              <td>{{multiday_game.wager}}</td>
-              <td>{{multiday_game.state}}</td>
-              <td>{{formatIsTurn(multiday_game.is_my_turn)}}</td>
+              <!--<td>{{multiday_game.name}}</td>-->
+              <td style="text-align:center;">{{multiday_game.player_count + "/" + multiday_game.max_players}}</td>
+              <td style="text-align:center;">{{multiday_game.wager}}</td>
+              <!--<td>{{multiday_game.state}}</td>-->
+              <!--<td>{{formatIsTurn(multiday_game.is_my_turn)}}</td>-->
             </tr>
             </tbody>
           </table>
