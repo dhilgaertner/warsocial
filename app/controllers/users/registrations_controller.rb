@@ -4,4 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     sign_up_confirmed_url
   end
 
+  def after_inactive_sign_up_path_for(resource)
+    '/?signup=true'
+  end
 end

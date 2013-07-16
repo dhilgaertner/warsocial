@@ -1,0 +1,37 @@
+<link rel="stylesheet" type="text/css" href="/assets/registration_popup.css">
+<div class="popupouter modal" id="register_popup" style="display: none;">
+  <div class="popupinner">
+    <a class="close" data-dismiss="modal" href="#">&times;</a>
+    <h3 class="popuptitle">
+      <%= image_tag "welcometitleimg.png", :alt => "" %>
+      </h3>
+    <div class="logo"> <a href="#">
+      <%= image_tag "logo3.png", :alt => "" %></a> </div>
+    <div class="contentrow">
+      <ul class="linkoption">
+        <li>
+          <h3>sit</h3>
+          <span class="linkbox"> <a href="#" class="link1">Sit</a> </span> </li>
+        <li>
+          <h3>Play</h3>
+          <span class="linkbox"> <a href="#" class="link2"></a> </span> </li>
+        <li>
+          <h3>Conquer</h3>
+          <span class="linkbox"> <a href="#" class="link3"></a> </span> </li>
+      </ul>
+    </div>
+    <div class="btnrow">
+      <button class="btnplay" >Play Now</button>
+      <button class="btnwatch" data-dismiss="modal">Watch</button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    head.ready(function(){
+        $('#register_popup').modal();
+    });
+</script>
+
+
+
