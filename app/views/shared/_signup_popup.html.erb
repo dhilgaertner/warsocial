@@ -21,15 +21,20 @@
       </ul>
     </div>
     <div class="btnrow">
-      <button class="btnplay" >Play Now</button>
+      <button class="btnplay" id="playnow_btn" >Play Now</button>
       <button class="btnwatch" data-dismiss="modal">Watch</button>
     </div>
   </div>
 </div>
 
+<%= render "shared/registration" %>
+
 <script type="text/javascript">
     head.ready(function(){
         $('#register_popup').modal();
+        $('#playnow_btn').click(function() {
+            $('#signup_popup').modal();
+        });
     });
 </script>
 
