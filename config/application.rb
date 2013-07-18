@@ -61,7 +61,7 @@ module Dice
 
     config.exceptions_app = self.routes
 
-    config.logger = Logger.new(STDOUT)
+    config.logger = Logger.new(File.dirname(__FILE__) + "/../log/#{Rails.env}.log", "daily")
   end
 end
 
