@@ -1,21 +1,6 @@
 
 <div class="row" style="margin-top: 139px; margin-bottom: 161px;">
-  <div class="span4 offset4">
-    <div class="well">
-      <legend>Register</legend>
-      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-
-        <div style="font-size: 0.8em; color: red;">
-          <%= devise_error_messages! %>
-        </div>
-        <%= f.text_field :username, :class => "span3", :placeholder => "Username" %>
-        <%= f.email_field :email, :class => "span3", :placeholder => "Email" %>
-        <%= f.password_field :password, :class => "span3", :placeholder => "Password" %>
-
-        <%= f.submit "Sign Up + Confirmation Email", :class => "btn btn-info", :style => "margin-top: 10px;" %>
-      <% end %>
-    </div>
-  </div>
+  <%= render :partial => "shared/registration", :locals => { :resource => resource } %>
 </div>
 
 
