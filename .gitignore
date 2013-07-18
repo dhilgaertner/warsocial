@@ -18,3 +18,4 @@
 .env
 *.sublime-project
 *.sublime-workspace
+.idea
