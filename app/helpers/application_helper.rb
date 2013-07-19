@@ -42,6 +42,7 @@ module ApplicationHelper
     r.push("/angularjs/game_chat.js?v=#{vers}")
 
     r.push("/bootstrap/js/bootstrap.min.js")
+    r.push("/angular-ui/ui-bootstrap-0.4.0.min.js?v=#{vers}")
     r.push("/utils/utils.js?v=#{vers}")
     r.push("/attachinary/attachinary.js?v=#{vers}")
 
