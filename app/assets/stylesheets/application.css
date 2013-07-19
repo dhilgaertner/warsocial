@@ -5,6 +5,7 @@
  *= require leader_board
  *= require pusher
  *= require "forem/twist/style"
+ *= require "registration_popup"
 */
 
 $default-text: #444;
@@ -27,3 +28,6 @@ form {
     font-size: 110%;
   }
 }
+
+.login, .register { padding-top: 0px; padding-bottom: 0px; margin-top: 5px; }
+.hidden { display:none; }

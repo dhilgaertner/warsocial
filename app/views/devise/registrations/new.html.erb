@@ -1,6 +1,7 @@
-
 <div class="row" style="margin-top: 139px; margin-bottom: 161px;">
-  <%= render :partial => "shared/registration", :locals => { :resource => resource } %>
+  <div class="span4 offset4">
+    <div class="well">
+      <%= render :partial => "devise/shared/registration", :locals => { :resource => resource } %>
+    </div>
+  </div>
 </div>
-
-

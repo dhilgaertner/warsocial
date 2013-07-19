@@ -1,41 +1,60 @@
-<link rel="stylesheet" type="text/css" href="/assets/registration_popup.css">
-<div class="popupouter modal" id="register_popup" style="display: none;">
-  <div class="popupinner">
-    <a class="close" data-dismiss="modal" href="#">&times;</a>
-    <h3 class="popuptitle">
-      <%= image_tag "welcometitleimg.png", :alt => "" %>
-      </h3>
-    <div class="logo"> <a href="#">
-      <%= image_tag "logo3.png", :alt => "" %></a> </div>
-    <div class="contentrow">
-      <ul class="linkoption">
-        <li>
-          <h3>Sit</h3>
-          <span class="linkbox"> <a href="#" class="link1">Sit</a> </span> </li>
-        <li>
-          <h3>Play</h3>
-          <span class="linkbox"> <a href="#" class="link2"></a> </span> </li>
-        <li>
-          <h3>Conquer</h3>
-          <span class="linkbox"> <a href="#" class="link3"></a> </span> </li>
-      </ul>
-    </div>
-    <div class="btnrow">
-      <button class="btnplay" id="playnow_btn" >Play Now</button>
-      <button class="btnwatch" data-dismiss="modal">Watch</button>
+<style type="text/css">
+  
+</style>
+<div ng-controller="WelcomeSplashBootstrapCtrl">
+  <div id="register_popup" style="display:none;">
+    <div class="popupinner">
+      <a class="close" ng-click="close(result)" href="javascript:">&times;</a>
+      <div style="position:absolute;top:18px;right:50px">
+        <a ng-click="show_sign_in()" class="button login">
+        <%= image_tag("buttons/login_button.png", :border => 0) %></a>
+      <a ng-click="show_sign_up()" class="button register">
+        <%= image_tag("buttons/register_button.png", :border => 0) %></a>
+      </div>
+
+      <div class="welcome_splash_screen">
+        <h3 class="popuptitle">
+          <%= image_tag "welcometitleimg.png", :alt => "" %>
+        </h3>
+        <div class="logo">
+          <a href="#"><%= image_tag "logo3.png", :alt => "" %></a>
+        </div>
+        <div class="contentrow">
+          <ul class="linkoption">
+            <li>
+              <h3>Sit</h3>
+              <span class="linkbox"> <a href="#" class="link1">Sit</a> </span> </li>
+            <li>
+              <h3>Play</h3>
+              <span class="linkbox"> <a href="#" class="link2"></a> </span> </li>
+            <li>
+              <h3>Conquer</h3>
+              <span class="linkbox"> <a href="#" class="link3"></a> </span> </li>
+          </ul>
+        </div>
+        <div class="btnrow">
+          <button class="btnplay" ng-click="show_sign_up()">Play Now</button>
+          <button class="btnwatch" ng-click="close(result)">Watch</button>
+        </div>
+      </div>
+
+      <div class="signup_screen row" style="display:none;">
+        <div class="span4 offset2">
+          <div class="well">
+            <%= render :partial => "devise/shared/registration", :locals => { :resource => User.new } %>
+          </div>
+        </div>
+      </div>
+      <div class="signin_screen" style="display:none;">
+        <div class="span4 offset2">
+          <div class="well">
+            <%= render :partial => "devise/shared/login", :locals => { :resource => User.new } %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<%= render "shared/registration_popup" %>
-
-<script type="text/javascript">
-    head.ready(function(){
-        $('#register_popup').modal();
-        $('#playnow_btn').click(function() {
-            $('#signup_popup').modal();
-        });
-    });
-</script>
 
 
 
