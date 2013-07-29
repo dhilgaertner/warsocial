@@ -1,17 +1,14 @@
 class Map < ActiveRecord::Base
   has_many :games
   belongs_to :user
-  has_attachment :preview, accept: [:jpg, :png, :gif]
 
-  attr_accessible :name, :json, :preview_url, :is_public, :is_admin_only, :desc
+  attr_accessible :name, :json, :is_public, :is_admin_only, :desc
 
   validates_uniqueness_of :name
   validates_length_of :name, :in => (2..15)
 
   def as_json(options={})
     { :name => self.name,
-      :preview_url => self.preview? ? self.preview.path : self.preview_url,
-      :thumbnail => self.preview? ? "http://res.cloudinary.com/hedc00eau/image/upload/c_fill,h_100,w_168/#{self.preview.path}" : self.preview_url,
       :author => self.user != nil ? self.user.username : nil,
       :desc => self.desc }
   end

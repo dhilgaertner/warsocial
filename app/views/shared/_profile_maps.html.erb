@@ -10,11 +10,6 @@
     <% @user.maps.where("is_public = ? AND is_admin_only = ?", true, false).each do |map| %>
       <li class="span2" style="min-width: 170px;">
         <div class="thumbnail">
-          <% if map.preview? %>
-            <%= cl_image_tag(map.preview.path, { size: '168x100', crop: :fill }) %>
-          <% else %>
-            <img src="<%= map.preview_url %>" alt="">
-          <% end %>
           <h3 style="margin-top: 5px;">
             <% if (current_user != nil && (current_user.admin? || current_user.id == map.user.id)) %>
               <a rel="tooltip" title="Click to edit map..." href="<%= edit_map_url(map.id) %>"><%= map.name %></a>

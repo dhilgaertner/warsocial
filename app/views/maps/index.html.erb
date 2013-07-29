@@ -204,11 +204,6 @@
               <%= map_fav_count(@map_favorites, map) %><i class="icon icon-star-empty"></i><i class="icon icon-star"></i>
             </button>
           <% end %>
-          <% if map.preview? %>
-            <%= cl_image_tag(map.preview.path, { size: '168x100', crop: :fill }) %>
-          <% else %>
-            <img src="<%= map.preview_url %>" alt="">
-          <% end %>
           <h3>
             <% if (current_user != nil && current_user.admin?) %>
               <a href="<%= edit_map_url(map.id) %>"><%= map.name %></a>
