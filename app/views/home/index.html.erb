@@ -21,13 +21,13 @@
             <i class="icon-flag icon-white" style="margin-top: 2px;"></i>
           </a>
         </div>
-        <div class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
-        <div class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
+        <div ng-cloak class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
+        <div ng-cloak class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
       </div>
       <div ng-controller="GameLogCtrl" id="log-window">
         <table style="width: 100%">
           <tbody>
-          <tr ng-repeat="message in messages"
+          <tr ng-cloak ng-repeat="message in messages"
               ng-switch on="message.type">
             <td ng-switch-when="game_winner">
               <div><b><span ng-style="colorStyle(message.username)">{{message.username}}</span> is the winner!</b></div>
@@ -50,7 +50,7 @@
         <div id="chat-window">
           <table style="margin-left: 5px; margin-right: 5px;">
             <tbody>
-            <tr ng-repeat="message in messages"
+            <tr ng-cloak ng-repeat="message in messages"
                 ng-switch on="message.type">
               <td ng-switch-when="server" class="well well-small">
                 <span style="color: green;">{{message.text}}</span>
