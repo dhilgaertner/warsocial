@@ -59,6 +59,7 @@
     <orderEntry type="library" scope="PROVIDED" name="json (v1.8.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jwt (v0.1.8, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="kaminari (v0.14.1, RVM: ruby-1.9.2-p318) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="keen (v0.7.7, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="kgio (v2.8.0, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="lazy_high_charts (v1.4.2, RVM: ruby-1.9.2-p318) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="localeapp (v0.6.10, RVM: ruby-1.9.2-p318) [gem]" level="application" />

@@ -117,6 +117,8 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    keen (0.7.7)
+      multi_json (~> 1.0)
     kgio (2.8.0)
     lazy_high_charts (1.4.2)
       bundler (>= 1.0)
@@ -249,6 +251,7 @@ DEPENDENCIES
   jquery-rails
   json
   kaminari
+  keen
   lazy_high_charts
   mark_it_up!
   newrelic_rpm

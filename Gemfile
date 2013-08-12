@@ -38,6 +38,7 @@ gem 'gravtastic'
 gem 'lazy_high_charts'
 gem 'cloudinary'
 gem 'attachinary'
+gem 'keen'
 
 group :production do
   # gems specifically for Heroku go here
