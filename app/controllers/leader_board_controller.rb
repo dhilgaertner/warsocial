@@ -94,7 +94,7 @@ class LeaderBoardController < ApplicationController
     data = Array.new
 
     leaders.each do |u|
-      ts = TimeSeries.where("name = ? AND key = ? AND created_at > ?", TimeSeriesType::POINTS, u.id.to_s, Date.new(2013,8,16)).order("created_at DESC").first(how_long)
+      ts = TimeSeries.where("name = ? AND key = ? AND created_at > ?", TimeSeriesType::POINTS, u.id.to_s, Date.new(2013,8,17)).order("created_at DESC").first(how_long)
       ts.reverse!
       data.push(create_top_series_data(ts, u))
     end
