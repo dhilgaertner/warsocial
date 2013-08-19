@@ -510,6 +510,8 @@ class ActiveGameBase < ActiveGameBaseSettings
         REDIS.rpush("games_finished", "(#{self.name})winner:#{winner.username}:players:#{self.players.values.collect { |x| x.username }.join(",")}:wager:#{self.wager_level.to_s}:#{DateTime.now.to_s}")
       end
 
+      Keen.publish("game_complete", { :winner => winner.username, :name => self.name })
+
       return true
     else
       return false

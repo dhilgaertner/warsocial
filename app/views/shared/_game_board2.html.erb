@@ -1,10 +1,10 @@
 <div id="game-main" style="position: relative;">
-  <div ng-controller="GameTimerCtrl" id="game-settings" class="well" style="height: 41px; width: 150px; padding: 15px; padding-top: 4px">
+  <div ng-cloak ng-controller="GameTimerCtrl" id="game-settings" class="well" style="height: 41px; width: 150px; padding: 15px; padding-top: 4px">
     <h5 style="margin-top: 0px;">{{timer_title()}}</h5>
     <div id="turn-timer-box" style="float: left; width: 110px; position: relative; background-color: #DCDDDD; height: 28px; border-radius: 4px 4px 4px 4px;">
       <span id="turn-username" style="position: absolute; top: 5px; left: 5px; color: white;">{{current_player_name()}}</span>
       <div class="turn_progress progress progress-success progress-striped active" style="height: 28px;">
-        <div class="bar" style="background-color: #009F9D; width: 100%; height: 28px;"></div>
+        <div class="bar" ng-style="progress_style()"></div>
       </div>
     </div>
     <a id="game-endturn" ng-class="{ disabled: !is_my_turn() }" style="float: right;" class="btn btn-success" ng-click="end_turn()">
@@ -12,7 +12,7 @@
     </a>
   </div>
 
-  <div id="game-map-info" ng-controller="GameMapInfoCtrl" class="well" ng-class="{ thumb_up: is_thumb_up(), thumb_down: is_thumb_down() }" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
+  <div ng-cloak id="game-map-info" ng-controller="GameMapInfoCtrl" class="well" ng-class="{ thumb_up: is_thumb_up(), thumb_down: is_thumb_down() }" style="height: 41px; width: 174px; padding: 4px 3px 15px 3px;" data-map-id="<%= @map.id %>">
     <h5 style="margin-top: 0px;">
       Map:
       <% if (current_user != nil && current_user.admin?) %>
@@ -62,7 +62,7 @@
 
   <div id="top-players" class="players-container">
     <div class="players">
-      <div ng-repeat="seat in top_seats()"
+      <div ng-cloak ng-repeat="seat in top_seats()"
            ng-controller="GamePlayerSeatCtrl"
            ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() || is_player_dead() }">
 
@@ -236,7 +236,7 @@
 
   <div id="bottom-players" class="players-container">
     <div class="players">
-      <div ng-repeat="seat in bottom_seats()"
+      <div ng-cloak ng-repeat="seat in bottom_seats()"
            ng-controller="GamePlayerSeatCtrl"
            ng-class="{ player: true, active: is_player_turn(), dead: !is_player_seated() || is_player_dead() }">
 

@@ -24,8 +24,8 @@ gem 'pusher'
 gem 'delayed_job', '3.0.2'
 gem 'delayed_job_active_record', '0.3.2'
 #gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
-gem 'cancan', '1.6.8'
-gem 'forem', '1.0.0.beta1', :git => 'git://github.com/radar/forem.git'
+gem 'cancan'
+gem 'forem', :git => 'git://github.com/radar/forem.git'
 gem 'forem-theme-twist', :path => "vendor/forem-theme-twist"
 gem 'forem-textile_formatter' # rich-text formatter for forem
 gem 'redis', '2.2.2'
@@ -38,6 +38,7 @@ gem 'gravtastic'
 gem 'lazy_high_charts'
 gem 'cloudinary'
 gem 'attachinary'
+gem 'keen'
 
 group :production do
   # gems specifically for Heroku go here

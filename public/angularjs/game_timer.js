@@ -5,7 +5,7 @@
  * Time: 2:10 PM
  */
 
-function GameTimerCtrl($scope, $http, pubsub) {
+function GameTimerCtrl($scope, $http, pubsub, global) {
 
     $scope.timer = null;
     $scope.current_player = null;
@@ -25,6 +25,14 @@ function GameTimerCtrl($scope, $http, pubsub) {
             return "";
         }
     };
+
+    $scope.current_player_color = function(){
+        if ($scope.current_player != null) {
+            return global.get_color_of_player($scope.current_player.name);
+        } else {
+            return "#009F9D";
+        }
+    }
 
     $scope.update_current_player = function(players){
         angular.forEach(players, function(player){
@@ -89,4 +97,12 @@ function GameTimerCtrl($scope, $http, pubsub) {
             $scope.timer.restart();
         }
     });
+
+    $scope.progress_style = function() {
+        return {
+            "width": "100%",
+            "height": "28px",
+            "background-color": $scope.current_player_color()
+        };
+    };
 }
