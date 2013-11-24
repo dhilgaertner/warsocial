@@ -1,16 +1,39 @@
 <div ng-controller="GameLobbyCtrl" class="modal" id="game_lobby" style="display: none;">
+  
+  <!-- Commenting out div at top of lobby which says 'Lobby' and has an 'x' that closes it
   <div class="modal-header">
     <button class="close" data-dismiss="modal">×</button>
     <h3>Lobby</h3>
   </div>
+  -->
   <div class="modal-body">
+	  
+	<!-- Who's Online/Live/Multi-Day Buttons-->
+	  
     <ul class="nav nav-pills">
+		
+	  <!-- Who's Online Button
       <li><a href="#online" data-toggle="tab">Who's Online<span id="online_badge" class="badge">{{online_users.length}}</span></a></li>
-      <li class="active"><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge">{{live_games.length}}</span></a></li>
-      <li><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">{{myTurns(multiday_games).length}}</span><span id="multi_badge_2" class="badge">{{multiday_games.length}}</span></a></li>
+	  -->
+	  
+	  <!-- Live Games Button
+      <li><a href="#tables" data-toggle="tab">Live<span id="tables_badge" class="badge">{{live_games.length}}</span></a></li>
+	  -->
+		  
+	  <!-- Multi-Day Games Button
+      <li class="active"><a href="#multi-day" data-toggle="tab">Multi-Day<span id="multi_badge_1" class="badge badge-important">{{myTurns(multiday_games).length}}</span><span id="multi_badge_2" class="badge">{{multiday_games.length}}</span></a></li>
+	  -->
+	  
     </ul>
-    <div class="well">
+	
+	<!--/-->
+	
+    <div class="well" style="background-color:#FFF; border:none; box-shadow:none;">
       <div class="tab-content">
+		
+		<!-- Who's online tab-->
+		
+		<!--
         <div class="tab-pane" id="online">
           <table class="table table-striped">
             <thead>
@@ -30,7 +53,14 @@
             </tbody>
           </table>
         </div>
-        <div class="tab-pane active" id="tables">
+		-->
+		
+		<!--/-->
+		
+		<!--Live Games-->
+		
+		<!--
+        <div class="tab-pane" id="tables">
           <table class="table table-striped">
             <thead>
             <tr>
@@ -53,15 +83,21 @@
             </tbody>
           </table>
         </div>
-        <div class="tab-pane" id="multi-day">
-          <table class="table table-striped">
+		-->
+		
+		<!--/-->
+		
+		<!--Multi-day Games-->
+		
+        <div class="tab-pane active" id="multi-day">
+          <table class="table">
             <thead>
             <tr>
-              <th><a href="" ng-click="multi_sort = 'name'; reverse=!reverse">Name</a></th>
-              <th><a href="" ng-click="multi_sort = 'player_count'; reverse=!reverse">Players</a></th>
-              <th><a href="" ng-click="multi_sort = 'wager'; reverse=!reverse">Wager</a></th>
-              <th><a href="" ng-click="multi_sort = 'state'; reverse=!reverse">State</a></th>
-              <th><a href="" ng-click="multi_sort = 'is_my_turn'; reverse=!reverse">Turn</a></th>
+              <!--<th><a href="" ng-click="multi_sort = 'name'; reverse=!reverse">Name</a></th>-->
+              <th style="text-align:center;"><a href="" ng-click="multi_sort = 'player_count'; reverse=!reverse">Players</a></th>
+              <th style="text-align:center;"><a href="" ng-click="multi_sort = 'wager'; reverse=!reverse">Wager</a></th>
+              <!--<th><a href="" ng-click="multi_sort = 'state'; reverse=!reverse">State</a></th>-->
+              <!--<th><a href="" ng-click="multi_sort = 'is_my_turn'; reverse=!reverse">Turn</a></th>-->
             </tr>
             </thead>
             <tbody>
@@ -69,19 +105,28 @@
                 ng-click="gotoGame(multiday_game.name)"
                 ng-style="gameRowStyle(multiday_game)"
                 ng-class="{ seated: multiday_game.am_i_seated, turn: multiday_game.is_my_turn }">
-              <td>{{multiday_game.name}}</td>
-              <td>{{multiday_game.player_count + "/" + multiday_game.max_players}}</td>
-              <td>{{multiday_game.wager}}</td>
-              <td>{{multiday_game.state}}</td>
-              <td>{{formatIsTurn(multiday_game.is_my_turn)}}</td>
+              <!--<td>{{multiday_game.name}}</td>-->
+              <td style="text-align:center;">{{multiday_game.player_count + "/" + multiday_game.max_players}}</td>
+              <td style="text-align:center;">{{multiday_game.wager}}</td>
+              <!--<td>{{multiday_game.state}}</td>-->
+              <!--<td>{{formatIsTurn(multiday_game.is_my_turn)}}</td>-->
             </tr>
             </tbody>
           </table>
         </div>
+		
+		<!--/-->
+		
       </div>
     </div>
   </div>
+  
+  <!--Close Button (Bottom)-->
+  
+  <!--
   <div class="modal-footer">
     <a href="#" data-dismiss="modal" class="btn">Close</a>
   </div>
+  -->
+	  
 </div>

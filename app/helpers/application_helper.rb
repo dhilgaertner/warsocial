@@ -31,6 +31,7 @@ module ApplicationHelper
 
     r.push("/angularjs/angular.min.js?v=#{vers}")
     r.push("/angularjs/services.js?v=#{vers}")
+    r.push("/angularjs/welcome_splash.js?v=#{vers}")
     r.push("/angularjs/game_board.js?v=#{vers}")
     r.push("/angularjs/game_map_info.js?v=#{vers}")
     r.push("/angularjs/game_timer.js?v=#{vers}")
@@ -42,6 +43,7 @@ module ApplicationHelper
     r.push("/angularjs/game_chat.js?v=#{vers}")
 
     r.push("/bootstrap/js/bootstrap.min.js")
+    r.push("/angular-ui/ui-bootstrap-0.4.0.min.js?v=#{vers}")
     r.push("/utils/utils.js?v=#{vers}")
     r.push("/attachinary/attachinary.js?v=#{vers}")
 
@@ -126,5 +128,17 @@ module ApplicationHelper
     end
 
     return r
+  end
+
+  def devise_mapping
+    Devise.mappings[:user]
+  end
+
+  def resource_name
+    devise_mapping.name
+  end
+
+  def resource_class
+    devise_mapping.to
   end
 end

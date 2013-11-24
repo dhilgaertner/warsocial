@@ -1,0 +1,97 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {margin:0px;padding:0px;}
+body {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;}
+
+h2{ width:100%; display:inline-block;}
+h2 span.logoinner{ width:auto; float:left;}
+h2 span.title{ width:auto;float:left;margin:20px 0 0 -5px;}
+h3{font-family: 'HelveticaNeueLTStd77BoldCondensed';font-size:30px;line-height:35px;color:#1c1c1c;text-align:center;text-transform:uppercase;}
+h4{font-family: 'bignoodletitlingregular';font-size:35px;line-height:30px;color:#f4f3f3;text-transform:uppercase;}
+.popuptitle{text-align:center; margin:0;width:100%;display:inline-block;}
+/*.popuptitle{text-align:center;margin:-22px 0 0;width:100%;display:inline-block;}*/
+
+.logo{ width:100%; text-align:center; margin-top:-27px;}
+
+.contentrow{width:100%; float:left;padding-top:10px;}
+.contentrow ul{list-style:none;	}
+.linkoption{text-align:center;}
+.linkoption li{width:auto;display:inline-block;margin:0 5px;}
+
+.linkbox{width:113px;height:147px;display:inline-block;background:url(/assets/linkboxbg.png) no-repeat 0 0;}
+.linkbox a{background-image:url(/assets/icons.png);background-repeat:no-repeat;display:inline-block;float:left;}
+.linkbox .link1{width:51px;height:45px;background-position:-14px 0;font-family:"Myriad Pro","Trebuchet MS", Arial, Helvetica, sans-serif;font-size:20px;line-height:45px;font-weight:normal;	color:#131313;text-decoration:none;margin:43px 0 0 30px;}
+.linkbox .link2{width:68px;height:55px;background-position:-6px -120px;margin:38px 0 0 25px;}
+.linkbox .link3{width:69px;height:63px;background-position:-5px -240px;margin:30px 0 0 21px;}
+
+.innerboxcontainer{display:block;margin:0 25px;	position:relative;min-height:498px;}
+
+.content-container{ display:inline-block; width:90%; padding:0 30px; background:url(/assets/content-box-bg.png) repeat 0 0;}
+.content-row{ width:100%; float:left; display:inline-block; background:url(/assets/dottedbdr.png) repeat-x 0 0; padding:15px 0;}
+.content-container .content-row:first-child{ background:none;}
+
+.servicesbox{ width:115px; height:115px; display:inline-block; background:url(/assets/linkbox-bg.png) no-repeat 0 0; float:left;}
+.services{background-image:url(/assets/icons.png);background-repeat:no-repeat;display:inline-block;float:left;font-family:"Myriad Pro","Trebuchet MS", Arial, Helvetica, sans-serif;}
+.services.icon1{ width:50px; height:76px; background-position:-15px -546px; float:left; margin:20px 0 0 35px}
+.services.icon2{ width:57px; height:38px; background-position:-9px -387px; float:left; margin:32px 0 0 26px; text-align:center; padding:12px 0 0; color:#131313; text-decoration:none; font-size:20px; line-height:22px;}
+
+.searchprogressicon, .linktxt{ width:100%; float:left;font:14px/16px "Myriad Pro","Trebuchet MS", Arial, Helvetica, sans-serif; color:#9e9e9e; text-align:center;}
+.searchprogressicon .progressbox{ width:74px; height:31px; float:left; background:url(/assets/scratch-boxbg.png) no-repeat 0 0; margin-left:8px;}
+.searchprogressicon .checkicon{ width:27px; height:31px; float:left; background:url(/assets/check-scratch.png) no-repeat 0 0;}
+.searchprogressicon .scratchbtn{width:auto;padding:5px 0 0 21px;float:left; background:url(/assets/scratch-progressbg.png) no-repeat 0 0; margin:0px 0 0; height:23px;}
+.linktxt{ margin:28px 0 2px;}
+.servicesicon3{ width:117px; height:46px; float:left; background:url(/assets/icon2.png) no-repeat 0 0; margin:35px 0 0;}
+
+
+.servicesdetails{ margin-left:130px; padding:15px 0 0;}
+.servicesdetails ul, .servicesdetails p{list-style:none;color:#c9c9c9;font:20px/25px "Myriad Pro","Trebuchet MS", Arial, Helvetica, sans-serif; letter-spacing:-1px;}
+.servicesdetails li{ letter-spacing:0px; padding-left:15px; background:url(/assets/bullet-img.png) no-repeat 0 12px;}
+
+.btnrow{width:100%; float:left;text-align:center;position:absolute;bottom:38px;left:0px;}
+.btnrow2{width:100%; float:left;text-align:right;position:absolute;bottom:38px;left:0px;}
+.btnplay, .btnwatch{padding:15px 20px 5px 20px;font-family: 'bignoodletitlingregular';color:#fff;font-size:24px;line-height:25px;margin:0 2px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;border:0;cursor:pointer;}
+.btnplay{background:#972a34;-webkit-box-shadow: 0 4px 0 0px #7f242c;-moz-box-shadow: 0 4px 0 0px #7f242c;box-shadow: 0 4px 0 0px #7f242c;}
+.btnwatch{background:#d3a529;-webkit-box-shadow: 0 4px 0 0px #b88c16;-moz-box-shadow: 0 4px 0 0px #b88c16;box-shadow: 0 4px 0 0px #b88c16;}
+.backbtn{ float:left; background:url(/assets/back-arrow.png) no-repeat 0 1px;font:24px/24px 'bignoodletitlingregular'; color:#c2c2c2; border:0px; text-decoration:none; padding-left:20px; margin-top:17px;}
+
+.popupouter {width:664px;height:498px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-box-shadow: 0 0px 40px 5px rgba(0, 0, 0, 0.5);-moz-box-shadow: 0 0px 40px 5px rgba(0, 0, 0, 0.5);box-shadow: 0 0px 40px 5px rgba(0, 0, 0, 0.5);position:absolute;left:50%;top:50%;margin:-256px 0 0 -304px;}
+.popupinner {width:664px;height:498px;float:left;position:relative;background:url(/assets/popupbg.jpg) no-repeat 0 0;}
+.close, .close:hover{-webkit-border-radius:25px;-moz-border-radius:25px;border-radius:25px;background:#000;color:#fff;font:14px/16px Verdana, Geneva, sans-serif;padding:7px 10px;text-decoration:none;position:absolute;right:17px;top:17px; z-index:5;}
+
+.signup_screen {
+  .offset2 {
+    margin-left: 200px;
+    margin-top: 100px;
+  }
+}
+.signin_screen {
+  .offset2 {
+    margin-left: 170px;
+    margin-top: 100px;
+  }
+}
+
+
+@font-face {
+    font-family: 'HelveticaNeueLTStd77BoldCondensed';
+    src: url('helveticaneueltstd-bdcn.eot');
+    src: url('helveticaneueltstd-bdcn.eot?#iefix') format('embedded-opentype'),
+    url('helveticaneueltstd-bdcn.woff') format('woff'),
+    url('helveticaneueltstd-bdcn.ttf') format('truetype'),
+    url('helveticaneueltstd-bdcn.svg#HelveticaNeueLTStd77BoldCondensed') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'bignoodletitlingregular';
+    src: url('bignoodletitling-webfont.eot');
+    src: url('bignoodletitling-webfont.eot?#iefix') format('embedded-opentype'),
+    url('bignoodletitling-webfont.woff') format('woff'),
+    url('bignoodletitling-webfont.ttf') format('truetype'),
+    url('bignoodletitling-webfont.svg#bignoodletitlingregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

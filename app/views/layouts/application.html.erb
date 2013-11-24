@@ -6,7 +6,7 @@
 
 <meta HTTP-EQUIV="Content-Language" Content="en">
 <meta name="Description" content="WarSocial is a free turn-based real time multiplayer HTML5 social strategy game inspired by Risk.">
-<meta name="keywords" content="WarSocial, War Social, play risk, play risk online, play risk online free, conquerclub, kdice, dicewars, lux delux, dice wars, multiplayer dicewars, strategy games, strategy war games, free strategy games, real time strategy games, multiplayer strategy games, turn based games, html5 game, html5 games, html5 strategy games">
+<meta name="keywords" content="">
 <meta property="og:image" content="<%= image_path "logo.png" %>"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -19,6 +19,7 @@
   <%= stylesheet_link_tag "application" %>
 <% else %>
   <%= stylesheet_link_tag "forem/twist/style" %>
+  <%= stylesheet_link_tag "registration_popup" %>
 <% end %>
 
 <%= yield :javascript_includes %>
@@ -627,11 +628,14 @@
 
     #footer2 {
       height: 25px;
-      background-color: #2C2C2C;
+      /*making the footer white instead of black
+	  background-color: #2C2C2C;*/
+	  background-color: none;
     }
 
     #game-container {
-      border: 1px solid #E5E8E7;
+      /* remove border around gameboard
+	  border: 1px solid #E5E8E7;*/
     }
 
     #game-container:before, #game-container:after {
@@ -656,7 +660,8 @@
     #game-container div.game {
       /*border: 1px solid red;*/
       float: left;
-      background-color: #A6CBE0;
+	  /* remove blue around map
+      background-color: #A6CBE0;*/
     }
 
     #game-container div.sidebar {
@@ -666,7 +671,8 @@
     }
 
     #game-container div.players-container {
-      background-color: #DCDDDD;
+      /* remove shadow around avatar/player data
+	  background-color: #DCDDDD;*/
       /*border: 1px solid yellow;*/
       height: 100px;
     }
@@ -809,14 +815,20 @@
     }
 
     #game-container div.medals {
-      height: 25px;
+		/* Getting rid of medals
+      height: 25px;*/
+		height: 0px;
     }
 
     #game-container div.medal {
       float: left;
-      background-color: #A4A5A5;
-      height: 17px;
-      width: 17px;
+	  /* Make medal backgroudn white
+      background-color: #A4A5A5;*/
+	  background-color: #FFF;
+	  
+      /* Getting rid of medals
+	  height: 17px;
+      width: 17px;*/
       margin-top: 4px;
       margin-left: 4px;
     }
@@ -849,14 +861,35 @@
       margin-right: 15px;
     }
 
+    /* Task #4 - Raj - Remved CSS to link logo to home page.
     #main-navbar div.navbar-inner {
       background-image: url(<%=image_path "logo2.png"%>);
       background-position: center;
 
+    }*/
+
+    /* Task #4 - Raj - Added CSS to link logo to home page. */
+    .brandlogo {
+      position:absolute;
+      left:0px;
+      top:0px;
+	  width:100%;
+      z-index:5;
+      text-align:center;
+      padding-top:4px;
+    }
+
+    /* Task #4 - Raj - Added CSS to link logo to home page. */
+    .brandlogo a {
+      float:none;
+      display:inline;
     }
 
     ul.nav {
       font-size: .8em;
+    /* Task #4 - Raj - Added CSS to link logo to home page. */
+      position:relative;
+      z-index:8;
     }
 
     #log-window {
@@ -867,7 +900,9 @@
     }
 
     #chat-window {
-      border-top: 10px solid #E5E8E7;
+      /* Getting rid of chat separation border, going white
+	  border-top: 10px solid #E5E8E7;*/
+	  border-top: 10px;
       height: 313px;
       overflow: auto;
     }
@@ -975,6 +1010,10 @@
         left: 589px;
       }
     }
+	.navbar-inner {
+		/* Changes navbar from black to white */
+		background-color:#FFF !important;
+	}
 
   </style>
 
@@ -996,6 +1035,19 @@
               WarSocial<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
+              <div id="game-details">
+                <div ng-controller="GameBoardCtrl" id="game-container">
+                  <div ng-controller="GameSeatsCtrl">
+                    <div class="wrapper" style="margin-top: 8px; margin-left: 10px;">
+                      <button id="dice_visible" type="button" class="btn btn-info" data-toggle="button">
+                        <i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
+                      <a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
+                        <i class="icon-flag icon-white" style="margin-top: 2px;"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <li><%= link_to "Home", root_path %></li>
               <li><%= link_to "How to Play", "http://blog.warsocial.com/post/18652746815/how-to-play-warsocial-rules-and-basic-strategy", :target => @isGame ? "_blank" : "_self" %></li>
               <li><%= link_to "Leaderboard", "/leaderboard", :target => @isGame ? "_blank" : "_self" %></li>
@@ -1012,12 +1064,23 @@
         <% if (controller_name == "home") %>
           <ul class="nav">
             <li><%= link_to "Create Game", "#", "data-toggle" => "modal", :id => "game_create_open", :href => "#create_game", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Create Game']);".html_safe %></li>
-            <li><%= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
+            <li>
+              <!-- Task #5 - Raj - Replaced Lobby link by multi game number -->
+              <%= link_to "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);", "ng-controller" => "GameLobbyCtrl" do %>
+                  Foobar {{multiday_games.length}}
+              <% end %>
+            <%#= link_to "Lobby", "#", "data-toggle" => "modal", :id => "game_lobby_open", :href => "#game_lobby", :onClick => "_gaq.push(['_trackEvent', 'Buttons', 'Lobby']);".html_safe %></li>
+            <li><%= link_to "Chat", "#", :href => "#" %></li>
           </ul>
         <% end %>
 
+          <!-- Task #4 - Raj - link logo to home page. -->
+          <div class="brandlogo">
+            <%=link_to (image_tag "logo3.png", :border=>0), root_url, {:style=>"padding: 5px 0px 0px 0px;"} %>         
+          </div>
+        
         <% if (current_user != nil) %>
-          <ul class="nav pull-right">
+          <ul class="nav pull-left">
             <li class="dropdown" id="fat-menu">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <%= current_user.username %>

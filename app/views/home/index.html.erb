@@ -6,6 +6,12 @@
   <%= render "shared/game_js_includes" %>
 <% end %>
 
+<% if params[:signup] %>
+   <%= render "shared/after_signup" %>
+<% elsif current_user.blank? -%>
+    <%= render "shared/signup_popup" %>
+<% end %>
+
 <div ng-controller="GameBoardCtrl" id="game-container">
   <div ng-controller="GameSeatsCtrl">
     <div class="game">
@@ -13,15 +19,12 @@
       <%= render "shared/game_board2" %>
 
     </div>
+	
+	<!--Chat&data sidebar
+		
     <div class="sidebar">
       <div id="game-details">
-        <div class="wrapper" style="margin-top: 8px; margin-left: 10px;">
-          <button id="dice_visible" type="button" class="btn btn-info" data-toggle="button"><i style="margin-top: 2px;" class="icon-eye-open icon-white"></i></button>
-          <a id="game-forfeit" class="btn btn-danger" ng-click="flag()" ng-show="is_game_started() && am_i_seated()">
-            <i class="icon-flag icon-white" style="margin-top: 2px;"></i>
-          </a>
-        </div>
-        <div ng-cloak class="wrapper room" style="margin-left: 5px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
+        <div ng-cloak class="wrapper room" style="margin-left: 10px;"><div class="icon"><i class="icon-home icon-white"></i></div>{{game_name}}</div>
         <div ng-cloak class="wrapper wager"><div class="icon"><i class="icon-cog icon-white"></i></div>{{game_wager}}</div>
       </div>
       <div ng-controller="GameLogCtrl" id="log-window">
@@ -72,5 +75,8 @@
         <% end %>
       </div>
     </div>
+	
+	chat&data sidebar-->	
   </div>
 </div>
+

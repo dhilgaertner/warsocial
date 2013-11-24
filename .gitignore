@@ -11,6 +11,7 @@
 /db/*.sqlite3
 
 # Ignore all logfiles and tempfiles and workspace settings.
+/log/*.log.*
 /log/*.log
 /tmp
 /.idea/workspace.xml
@@ -18,3 +19,7 @@
 .env
 
 logs.txt
+
+*.sublime-project
+*.sublime-workspace
+.idea

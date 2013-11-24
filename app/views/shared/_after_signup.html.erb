@@ -1,0 +1,74 @@
+<link rel="stylesheet" type="text/css" href="/assets/registration_popup.css">
+<div class="popupouter modal" id="after_signup" style="display: none;">
+  <div class="popupinner"> <a href="#" class="close" data-dismiss="modal">X</a>
+    <div class="innerboxcontainer">
+      <h2><span class="logoinner">
+        <%= image_tag "logo3.png", :alt => "" %>
+        </span> <span class="title">
+        <%= image_tag "poptitle2.png", :alt => "" %>
+        </span></h2>
+      <div class="content-container">
+        <div class="content-row">
+          <div class="servicesbox"> <a href="#" class="services icon1"></a> </div>
+          <div class="servicesdetails">
+            <h4> Multi-Day or Live Game?</h4>
+            <ul>
+              <li> multi-day games have a 24-hour turn timer</li>
+              <li>you'll get an email when it's your turn</li>
+              <li>live games are real time.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="content-row">
+          <div class="servicesbox"> <a href="#" class="services icon2">Sit</a> </div>
+          <div class="servicesdetails">
+            <h4>Join a Game</h4>
+            <p>Click the Sit button on any open seat to join a game.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow2">
+        <button class="btnplay" data-dismiss="modal">Play Now</button>
+        <button class="btnwatch" type="button" data-toggle="modal" data-target="#after_signup_next">NEXT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    head.ready(function(){
+        $('#after_signup').modal();
+        $('#after_signup_play_btn').click(function() {
+            $('#after_signup').modal('hide');
+        });
+    });
+</script>
+
+<div class="popupouter modal" id="after_signup_next" style="display: none;">
+  <div class="popupinner"> <a href="#" class="close">X</a>
+    <div class="innerboxcontainer">
+      <h2><span class="logoinner"><%= image_tag "logo3.png", :alt => "" %></span> <span class="title">
+        <%= image_tag "poptitle2.png", :alt => "" %></span></h2>
+      <div class="content-container">
+        <div class="content-row">
+          <div class="servicesbox"> <span class="linktxt">Current turn</span> <a href="#" class="searchprogressicon"> <span class="progressbox"> <span class="scratchbtn">Scratch</span> </span> <span class="checkicon"></span> </a> </div>
+          <div class="servicesdetails">
+            <h4> Your turn</h4>
+            <p>When you see the timer activated, it's your turn.</p>
+          </div>
+        </div>
+        <div class="content-row">
+          <div class="servicesbox"> <a href="#" class="servicesicon3"></a> </div>
+          <div class="servicesdetails">
+            <h4>Connect, Divide and Conquer</h4>
+            <p>Connect your lands, prevent others from connecting
+              and conquer the map.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow2"> <a href="#" class="backbtn" data-toggle="modal" data-target="#after_signup_next">BACK</a>
+        <button class="btn btnplay" data-dismiss="modal" id="after_signup_play_btn">Play1 Now</button>
+      </div>
+    </div>
+  </div>
+</div>
