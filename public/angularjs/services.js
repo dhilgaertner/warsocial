@@ -5,7 +5,7 @@
  * Time: 2:10 PM
  */
 
-var wsApp = angular.module('wsApp', []);
+var wsApp = angular.module('wsApp', ['ui.bootstrap']);
 
 /* pubsub - based on https://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js*/
 wsApp.factory('pubsub', function() {

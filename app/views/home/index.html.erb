@@ -6,6 +6,12 @@
   <%= render "shared/game_js_includes" %>
 <% end %>
 
+<% if params[:signup] %>
+  <%= render "shared/after_signup" %>
+<% elsif current_user.blank? -%>
+  <%= render "shared/signup_popup" %>
+<% end %>
+
 <div ng-controller="GameBoardCtrl" id="game-container">
   <div ng-controller="GameSeatsCtrl">
     <div class="game">

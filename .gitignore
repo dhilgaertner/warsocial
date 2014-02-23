@@ -18,3 +18,5 @@
 .env
 
 logs.txt
+
+app/assets/images/.DS_Store
