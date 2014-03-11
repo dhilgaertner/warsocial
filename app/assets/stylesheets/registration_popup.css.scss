@@ -7,7 +7,7 @@ body {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;}
 h2{ width:100%; display:inline-block;}
 h2 span.logoinner{ width:auto; float:left;}
 h2 span.title{ width:auto;float:left;margin:20px 0 0 -5px;}
-h3{font-family: 'HelveticaNeueLTStd77BoldCondensed';font-size:30px;line-height:35px;color:#1c1c1c;text-align:center;text-transform:uppercase;}
+h3{font-family: 'Helvetica';font-size:30px;line-height:35px;color:#1c1c1c;text-align:center;text-transform:uppercase;}
 h4{font-family: 'Trebuchet MS';font-size:35px;line-height:30px;color:#f4f3f3;text-transform:uppercase;}
 .popuptitle{text-align:center; margin:0;width:100%;display:inline-block;}
 /*.popuptitle{text-align:center;margin:-22px 0 0;width:100%;display:inline-block;}*/
@@ -74,12 +74,7 @@ h4{font-family: 'Trebuchet MS';font-size:35px;line-height:30px;color:#f4f3f3;tex
 
 
 @font-face {
-    font-family: 'HelveticaNeueLTStd77BoldCondensed';
-    src: url('helveticaneueltstd-bdcn.eot');
-    src: url('helveticaneueltstd-bdcn.eot?#iefix') format('embedded-opentype'),
-    url('helveticaneueltstd-bdcn.woff') format('woff'),
-    url('helveticaneueltstd-bdcn.ttf') format('truetype'),
-    url('helveticaneueltstd-bdcn.svg#HelveticaNeueLTStd77BoldCondensed') format('svg');
+    font-family: 'Helvetica';
     font-weight: normal;
     font-style: normal;
 }
