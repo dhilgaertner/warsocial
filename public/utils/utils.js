@@ -6,8 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-$.cloudinary.config({"api_key":"372649425983884","cloud_name":"hedc00eau"});
-
 //first, checks if it isn't implemented yet
 if (!String.prototype.format) {
     String.prototype.format = function() {
