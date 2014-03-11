@@ -14,10 +14,10 @@ module ApplicationHelper
         r.push("/highcharts/highcharts.js?v=#{vers}")
         r.push("/tweet/jquery.tweet.js?v=#{vers}")
 
-        r.push("/assets/lib/jquery.dataTables.min.js?v=#{vers}")
-        r.push("/assets/lib/customSelect.jquery.js")
-        r.push("/assets/lib/labelover.js")
-        r.push("/assets/lib/ws.app.js?v=#{vers}")
+        r.push("/lib/jquery.dataTables.min.js?v=#{vers}")
+        r.push("/lib/customSelect.jquery.js")
+        r.push("/lib/labelover.js")
+        r.push("/lib/ws.app.js?v=#{vers}")
 
         r.push("/gameboard/game_page2.js?v=#{vers}")
         r.push("/gameboard/communications.js?v=#{vers}")
