@@ -16,7 +16,7 @@ group :development do
   gem 'sqlite3'
 end
 
-gem 'devise'
+gem 'devise', '3.2.3'
 gem 'json'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
