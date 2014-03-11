@@ -11,6 +11,14 @@ module ApplicationHelper
       r.push(asset_path("application.js"))
 
       if type == "game" && !(@dev || @dev_image)
+        r.push("/highcharts/highcharts.js?v=#{vers}")
+        r.push("/tweet/jquery.tweet.js?v=#{vers}")
+
+        r.push("/assets/lib/jquery.dataTables.min.js?v=#{vers}")
+        r.push("/assets/lib/customSelect.jquery.js")
+        r.push("/assets/lib/labelover.js")
+        r.push("/assets/lib/ws.app.js?v=#{vers}")
+
         r.push("/gameboard/game_page2.js?v=#{vers}")
         r.push("/gameboard/communications.js?v=#{vers}")
         r.push("/gameboard/soundmanager.js?v=#{vers}")
