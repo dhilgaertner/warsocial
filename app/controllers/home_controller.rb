@@ -20,6 +20,12 @@ class HomeController < ApplicationController
     if (params[:game_name] == nil)
       lobby_games = ActiveGameNormal.get_lobby_games(current_user)
       running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
+
+      if (running_games.empty?)
+        lobby_games = ActiveGameMultiDay.get_lobby_games(current_user)
+        running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
+      end
+
       name = running_games.empty? ? "home" : running_games.first[:name]
     else
       name = params[:game_name]
@@ -270,6 +276,12 @@ class HomeController < ApplicationController
     if (params[:game_name] == nil)
       lobby_games = ActiveGameNormal.get_lobby_games(current_user)
       running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
+
+      if (running_games.empty?)
+        lobby_games = ActiveGameMultiDay.get_lobby_games(current_user)
+        running_games = lobby_games.select { |game| game[:state] == Game::STARTED_STATE }
+      end
+
       name = running_games.empty? ? "home" : running_games.first[:name]
     else
       name = params[:game_name]
